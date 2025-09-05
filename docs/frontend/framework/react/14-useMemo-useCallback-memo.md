@@ -39,6 +39,7 @@ const memoizedFunction = useMemo(() => {
 ## useCallback
 
 `useCallback` 可以缓存一个函数，避免重复创建。`useCallback` 接收两个参数：
+
 - `callback`：一个函数，返回一个值。
 - `dependencies`：一个数组，包含所有依赖项。当依赖项发生变化时，`callback` 函数会重新执行。
 
@@ -51,9 +52,14 @@ const memoizedFunction = useCallback(() => {
 ## memo
 
 `memo` 可以缓存一个组件，避免重复渲染。`memo` 接收两个参数：
+
 - `component`：一个组件，返回一个值。
 - `arePropsEqual`：可选值，一个函数，接收两个参数，`prevProps` 和 `nextProps`，当 `prevProps` 和 `nextProps` 相等时，组件不会重新渲染，通常情况下，你不需要手动进行比较，默认情况下，`memo` 会使用 `Object.is` 进行比较。
 
 ```tsx
 const MemoizedComponent = memo(SomeComponent, arePropsEqual?)
 ```
+
+> [!TIP]
+> React 通常在不进行优化的情况下也足够快，但有时你需要手动 memorize 组件和值，以保持应用程序的响应速度。手动记忆化容易出错，还会增加额外的代码维护工作。
+> [React Compiler](https://react.dev/learn/react-compiler) 会在构建时自动优化 React 应用程序，但目前处于实验阶段，且在 React 19 才得到更好支持。
