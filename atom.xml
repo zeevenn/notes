@@ -4,10 +4,11 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2025-09-05T09:12:39.202Z</updated>
+  <updated>2026-01-15T15:44:41.626Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
+  <category term="microservice"/>
   <category term="react"/>
   <category term="计算机网络"/>
   <category term="expo"/>
@@ -26,10 +27,40 @@
   <category term="Pixi"/>
   <category term="READING"/>
   <category term="JavaScript"/>
-  <category term="browser"/>
   <contributor>
     <name>patterns</name>
   </contributor>
+  <entry>
+    <title type="text">Fundamental Ideas Around Microservices</title>
+    <id>https://dribble-njr.github.io/blog/blog/backend/microsevice/01-fundamental-ideas.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/backend/microsevice/01-fundamental-ideas.html"/>
+    <updated>2026-01-15T15:43:02.000Z</updated>
+    <summary type="html"><![CDATA[<h2>What is Microservices?</h2>
+<p>将不同服务拆分为独立的微服务，每个微服务专注于特定的业务功能。</p>
+<p>单个服务拥有完整的中间件、路由和数据库支持。</p>
+<p>每个服务拥有自己的数据库，确保松耦合和独立的数据管理。</p>
+<h2>Why database per service?</h2>
+<ul>
+<li>每个服务需要独立于其他服务，避免单点故障</li>
+<li>数据库结构可能随时变化</li>
+<li>不同服务可能有不同的数据访问模式和需求（SQL、NoSQL等）</li>
+</ul>
+<h2>Data management between services</h2>]]></summary>
+    <content type="html"><![CDATA[<h2>What is Microservices?</h2>
+<p>将不同服务拆分为独立的微服务，每个微服务专注于特定的业务功能。</p>
+<p>单个服务拥有完整的中间件、路由和数据库支持。</p>
+<p>每个服务拥有自己的数据库，确保松耦合和独立的数据管理。</p>
+<h2>Why database per service?</h2>
+<ul>
+<li>每个服务需要独立于其他服务，避免单点故障</li>
+<li>数据库结构可能随时变化</li>
+<li>不同服务可能有不同的数据访问模式和需求（SQL、NoSQL等）</li>
+</ul>
+<h2>Data management between services</h2>
+]]></content>
+    <category term="microservice"/>
+    <published>2026-01-15T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">useMemo &amp; useCallback &amp; memo</title>
     <id>https://dribble-njr.github.io/blog/blog/frontend/framework/react/14-useMemo-useCallback-memo.html</id>
@@ -5376,7 +5407,7 @@ app<span class="token punctuation">.</span><span class="token function">listen</
     <title type="text">Maven</title>
     <id>https://dribble-njr.github.io/blog/blog/backend/java/tool/01-maven.html</id>
     <link href="https://dribble-njr.github.io/blog/blog/backend/java/tool/01-maven.html"/>
-    <updated>2024-11-06T15:43:46.000Z</updated>
+    <updated>2026-01-15T15:42:45.000Z</updated>
     <summary type="html"><![CDATA[<h2>什么是 Maven</h2>
 <p>Maven 是一个项目管理和构建工具，主要用于 Java 项目。它通过 POM（Project Object Model）文件来管理项目的依赖、编译、测试和打包等任务。Maven 的核心功能包括：</p>
 <ul>
@@ -5444,16 +5475,15 @@ app<span class="token punctuation">.</span><span class="token function">listen</
 <div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code>A -<span class="token operator">&gt;</span> B -<span class="token operator">&gt;</span> C -<span class="token operator">&gt;</span> X<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span>
 A -<span class="token operator">&gt;</span> D -<span class="token operator">&gt;</span> X<span class="token punctuation">(</span><span class="token number">2.0</span><span class="token punctuation">)</span>
 </code></pre></div><p>由于 X(2.0) 路径最短，所以使用 X(2.0)。</p>
-<ol start="2">
+<ol>
 <li>声明顺序优先原则：</li>
 </ol>
 <div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code>A -<span class="token operator">&gt;</span> B -<span class="token operator">&gt;</span> X<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span>
 A -<span class="token operator">&gt;</span> C -<span class="token operator">&gt;</span> X<span class="token punctuation">(</span><span class="token number">2.0</span><span class="token punctuation">)</span>
 </code></pre></div><p>在 POM 中最先声明的优先，上面的两个依赖如果先声明 B，那么最后使用 X(1.0)。</p>
-<ol start="3">
-<li>覆写优先原则：</li>
+<ol>
+<li>覆写优先原则：子 POM 内声明的依赖优先于父 POM 中声明的依赖。</li>
 </ol>
-<p>子 POM 内声明的依赖优先于父 POM 中声明的依赖。</p>
 ]]></content>
     <category term="node"/>
     <published>2024-08-30T00:00:00.000Z</published>
@@ -7231,13 +7261,13 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>中间件，处理请求中间逻辑，比如：<code>cors</code>、<code>auth</code> 等。</p>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">Middleware</span> <span class="token operator">=</span> <span class="token punctuation">(</span>req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span> res<span class="token operator">:</span> ServerResponse<span class="token punctuation">,</span> <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span>
 
-<span class="token doc-comment comment">/**
+<span class="token comment">/**
  * Manage the execution order of middleware functions.
  * It allows you to add multiple middleware functions to a queue
  * and execute them sequentially during a request.
  *
- * <span class="token keyword">@export</span>
- * <span class="token keyword">@class</span> MiddlewareManager
+ * @export
+ * @class MiddlewareManager
  */</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">MiddlewareManager</span> <span class="token punctuation">{</span>
   <span class="token keyword">private</span> <span class="token keyword">readonly</span> middlewares<span class="token operator">:</span> Middleware<span class="token punctuation">[</span><span class="token punctuation">]</span>
@@ -7464,12 +7494,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>其中 <code>path</code> 需要进行参数处理，如：<code>/category/:id</code>。处理完后参数类型应为 <code>params: Record&lt;string, string&gt;</code>，因为可能存在多个参数。</p>
 <p>解析完成后，<code>controller</code> 中需要接收 <code>params</code>，需要将 <code>params</code> 转换为 <code>request.params</code>。</p>
 <p>具体逻辑如下：</p>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token doc-comment comment">/**
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">/**
  * Execute route's middleware and controller.
  *
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>CustomIncomingMessage<span class="token punctuation">}</span> req
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>ServerResponse<span class="token punctuation">}</span> res
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>Route<span class="token punctuation">}</span> route
+ * @param {CustomIncomingMessage} req
+ * @param {ServerResponse} res
+ * @param {Route} route
  */</span>
 <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">execute</span><span class="token punctuation">(</span>
   req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span>
@@ -7492,12 +7522,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
   <span class="token keyword">await</span> mwManager<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token doc-comment comment">/**
+<span class="token comment">/**
  * Matches the provided method and pathname to a route in the Router.
  *
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> method - The HTTP method to match.
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> pathname - The URL pathname to match.
- * <span class="token keyword">@return</span> <span class="token punctuation">{</span>Object<span class="token punctuation">}</span> An object containing the matched route and parameters.
+ * @param {string} method - The HTTP method to match.
+ * @param {string} pathname - The URL pathname to match.
+ * @return {Object} An object containing the matched route and parameters.
  */</span>
 <span class="token keyword">const</span> <span class="token function-variable function">matchRoute</span> <span class="token operator">=</span> <span class="token punctuation">(</span>method<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> pathname<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> router <span class="token keyword">in</span> Router<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -9813,60 +9843,5 @@ foo:          |
 ]]></content>
     <category term="JavaScript"/>
     <published>2024-04-16T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">浏览器渲染原理</title>
-    <id>https://dribble-njr.github.io/blog/blog/frontend/browser/01-how-browser-rendering-works.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/frontend/browser/01-how-browser-rendering-works.html"/>
-    <updated>2024-11-06T15:43:46.000Z</updated>
-    <summary type="html"><![CDATA[<p>浏览器渲染主要是依靠浏览器内核也就是浏览器渲染引擎，它通过一系列的解析将 HTML 文档渲染在浏览器上。</p>
-<h2>主要流程</h2>
-<p>渲染引擎会从网络层中获取将要渲染的文档，主要的工作流程如下：</p>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/1-webkitflow.png" alt="webkit-flow" tabindex="0" loading="lazy"><figcaption>webkit-flow</figcaption></figure>]]></summary>
-    <content type="html"><![CDATA[<p>浏览器渲染主要是依靠浏览器内核也就是浏览器渲染引擎，它通过一系列的解析将 HTML 文档渲染在浏览器上。</p>
-<h2>主要流程</h2>
-<p>渲染引擎会从网络层中获取将要渲染的文档，主要的工作流程如下：</p>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/1-webkitflow.png" alt="webkit-flow" tabindex="0" loading="lazy"><figcaption>webkit-flow</figcaption></figure>
-<ol>
-<li>首先浏览器会解析 HTML 文档，将 HTML 解析成 DOM 树；CSS 样式表也会在同时进行加载，生成样式规则；而 JavaScript 会通过 DOM API 和 CSSOM API 来操作 DOM Tree 和 Style Rules。</li>
-<li>解析完成后，渲染引擎会通过 DOM Tree 和 Style Rules 创造 Render Tree，此时会计算各个 DOM 在浏览器上的具体坐标。</li>
-<li>最后渲染引擎遍历整个 Render Tree，由 UI 后端层绘制。</li>
-</ol>
-<p>整个渲染过程一个渐进的过程。为了更好的用户体验，渲染引擎将尽快在屏幕上显示内容。在开始构件和渲染 Render Tree 之前，它不会等到所有 HTML 都被解析。在部分内容被渲染的同时，渲染引擎会继续向服务器请求剩下的内容。</p>
-<h2>HTML 解析器</h2>
-<p>HTML 解析器的作用是将 HTML 解析成 DOM 树：</p>
-<div class="language-html" data-ext="html" data-title="html"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Hello World<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>example.png<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/2-dom-tree.png" alt="dom-tree" tabindex="0" loading="lazy"><figcaption>dom-tree</figcaption></figure>
-<p>HTML 解析算法包括两个阶段：</p>
-<ol>
-<li>标记化：词法分析，将输入解析为标记。HTML 标记包括开始标记、结束标记、属性名称和属性值。标记器识别 token，将它传递给树构造器，然后接受下一个字符以识别下一个标记，直到输入的结束。</li>
-<li>树构建：构建成 DOM 树。</li>
-</ol>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/3-html-parse.png" alt="html-parse" tabindex="0" loading="lazy"><figcaption>html-parse</figcaption></figure>
-<h2>CSS 解析器</h2>
-<p>解析器都会将 CSS 文件解析成 StyleSheet 对象，且每个对象都包含 CSS 规则。CSS 规则对象则包含选择器和声明对象，以及其他与 CSS 语法对应的对象。</p>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/4-css-parse.png" alt="css-parse" tabindex="0" loading="lazy"><figcaption>css-parse</figcaption></figure>
-<h2>Render Tree</h2>
-<p>在 DOM 树构建的同时，浏览器还会构建另一个树结构：呈现树。这是由可视化元素按照其显示顺序而组成的树，也是文档的可视化表示。它的作用是让您按照正确的顺序绘制内容。</p>
-<p>Render Tree 和 DOM Tree 并不是一一对应的，非可视化的 DOM 元素不会插入呈现树中，例如 <code>head</code> 元素。如果元素的 <code>display</code> 属性值为 <code>none</code>，那么也不会显示在呈现树中（但是 <code>visibility</code> 属性值为 <code>hidden</code> 的元素仍会显示）。</p>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/5-render-tree.png" alt="render-tree" tabindex="0" loading="lazy"><figcaption>render-tree</figcaption></figure>
-<p>接下来浏览器需要做的就是计算样式，将每一个 Render 对象的可视化属性计算（根据一系列规则，如层叠性、选择器权重等）出来，但是在这个过程中，并不包含位置和大小信息。计算这些值的过程叫做布局或回流。</p>
-<p>总之，到目前为止，渲染引擎已经经历了一系列的工作，可以将页面展示到浏览器上了。</p>
-<h2>参考链接</h2>
-<ol>
-<li><a href="https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/#The_order_of_processing_scripts_and_style_sheets" target="_blank" rel="noopener noreferrer">How Browsers Work: Behind the scenes of modern web browsers - HTML5 Rocks</a></li>
-<li><a href="https://coolshell.cn/articles/9666.html" target="_blank" rel="noopener noreferrer">浏览器的渲染原理简介</a></li>
-<li><a href="https://zh.wiki.hancel.org/wiki/JavaScript%E5%BC%95%E6%93%8E" target="_blank" rel="noopener noreferrer">JavaScript 引擎 - 维基百科</a></li>
-<li><a href="https://zh.m.wikipedia.org/wiki/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%BC%95%E6%93%8E" target="_blank" rel="noopener noreferrer">浏览器引擎 - 维基百科</a></li>
-<li><a href="https://cloud.tencent.com/developer/article/1679313" target="_blank" rel="noopener noreferrer">浏览器内核及分类 - 腾讯云社区</a></li>
-</ol>
-]]></content>
-    <category term="browser"/>
-    <published>2021-12-16T00:00:00.000Z</published>
   </entry>
 </feed>
