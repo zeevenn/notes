@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2026-01-15T15:44:41.626Z</updated>
+  <updated>2026-01-16T05:08:51.285Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
@@ -107,7 +107,12 @@
 <li><code>arePropsEqual</code>：可选值，一个函数，接收两个参数，<code>prevProps</code> 和 <code>nextProps</code>，当 <code>prevProps</code> 和 <code>nextProps</code> 相等时，组件不会重新渲染，通常情况下，你不需要手动进行比较，默认情况下，<code>memo</code> 会使用 <code>Object.is</code> 进行比较。</li>
 </ul>
 <div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">const</span> MemoizedComponent <span class="token operator">=</span> <span class="token function">memo</span><span class="token punctuation">(</span>SomeComponent<span class="token punctuation">,</span> arePropsEqual<span class="token operator">?</span><span class="token punctuation">)</span>
-</code></pre></div>]]></content>
+</code></pre></div><div class="hint-container tip">
+<p class="hint-container-title">提示</p>
+<p>React 通常在不进行优化的情况下也足够快，但有时你需要手动 memorize 组件和值，以保持应用程序的响应速度。手动记忆化容易出错，还会增加额外的代码维护工作。<br>
+<a href="https://react.dev/learn/react-compiler" target="_blank" rel="noopener noreferrer">React Compiler</a> 会在构建时自动优化 React 应用程序，但目前处于实验阶段，且在 React 19 才得到更好支持。</p>
+</div>
+]]></content>
     <published>2025-09-05T09:11:09.000Z</published>
   </entry>
   <entry>
@@ -7261,13 +7266,13 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>中间件，处理请求中间逻辑，比如：<code>cors</code>、<code>auth</code> 等。</p>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">Middleware</span> <span class="token operator">=</span> <span class="token punctuation">(</span>req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span> res<span class="token operator">:</span> ServerResponse<span class="token punctuation">,</span> <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span>
 
-<span class="token comment">/**
+<span class="token doc-comment comment">/**
  * Manage the execution order of middleware functions.
  * It allows you to add multiple middleware functions to a queue
  * and execute them sequentially during a request.
  *
- * @export
- * @class MiddlewareManager
+ * <span class="token keyword">@export</span>
+ * <span class="token keyword">@class</span> MiddlewareManager
  */</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">MiddlewareManager</span> <span class="token punctuation">{</span>
   <span class="token keyword">private</span> <span class="token keyword">readonly</span> middlewares<span class="token operator">:</span> Middleware<span class="token punctuation">[</span><span class="token punctuation">]</span>
@@ -7494,12 +7499,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>其中 <code>path</code> 需要进行参数处理，如：<code>/category/:id</code>。处理完后参数类型应为 <code>params: Record&lt;string, string&gt;</code>，因为可能存在多个参数。</p>
 <p>解析完成后，<code>controller</code> 中需要接收 <code>params</code>，需要将 <code>params</code> 转换为 <code>request.params</code>。</p>
 <p>具体逻辑如下：</p>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">/**
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token doc-comment comment">/**
  * Execute route's middleware and controller.
  *
- * @param {CustomIncomingMessage} req
- * @param {ServerResponse} res
- * @param {Route} route
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>CustomIncomingMessage<span class="token punctuation">}</span> req
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>ServerResponse<span class="token punctuation">}</span> res
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>Route<span class="token punctuation">}</span> route
  */</span>
 <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">execute</span><span class="token punctuation">(</span>
   req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span>
@@ -7522,12 +7527,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
   <span class="token keyword">await</span> mwManager<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token comment">/**
+<span class="token doc-comment comment">/**
  * Matches the provided method and pathname to a route in the Router.
  *
- * @param {string} method - The HTTP method to match.
- * @param {string} pathname - The URL pathname to match.
- * @return {Object} An object containing the matched route and parameters.
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> method - The HTTP method to match.
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> pathname - The URL pathname to match.
+ * <span class="token keyword">@return</span> <span class="token punctuation">{</span>Object<span class="token punctuation">}</span> An object containing the matched route and parameters.
  */</span>
 <span class="token keyword">const</span> <span class="token function-variable function">matchRoute</span> <span class="token operator">=</span> <span class="token punctuation">(</span>method<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> pathname<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> router <span class="token keyword">in</span> Router<span class="token punctuation">)</span> <span class="token punctuation">{</span>
