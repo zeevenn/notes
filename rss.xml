@@ -6,8 +6,8 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Fri, 16 Jan 2026 05:08:51 GMT</pubDate>
-    <lastBuildDate>Fri, 16 Jan 2026 05:08:51 GMT</lastBuildDate>
+    <pubDate>Fri, 16 Jan 2026 15:10:57 GMT</pubDate>
+    <lastBuildDate>Fri, 16 Jan 2026 15:10:57 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>microservice</category>
@@ -38,9 +38,11 @@
       <category>microservice</category>
       <pubDate>Thu, 15 Jan 2026 00:00:00 GMT</pubDate>
       <content:encoded><![CDATA[<h2>What is Microservices?</h2>
-<p>将不同服务拆分为独立的微服务，每个微服务专注于特定的业务功能。</p>
-<p>单个服务拥有完整的中间件、路由和数据库支持。</p>
-<p>每个服务拥有自己的数据库，确保松耦合和独立的数据管理。</p>
+<ul>
+<li>将不同服务拆分为独立的微服务，每个微服务专注于特定的业务功能。</li>
+<li>单个服务拥有完整的中间件、路由和数据库支持。</li>
+<li>每个服务拥有自己的数据库，确保松耦合和独立的数据管理。</li>
+</ul>
 <h2>Why database per service?</h2>
 <ul>
 <li>每个服务需要独立于其他服务，避免单点故障</li>
@@ -48,7 +50,11 @@
 <li>不同服务可能有不同的数据访问模式和需求（SQL、NoSQL等）</li>
 </ul>
 <h2>Data management between services</h2>
-]]></content:encoded>
+<h3>Sync communication</h3>
+<p>服务之间的同步通信通常通过 HTTP/REST 或 gRPC 实现。调用方发出请求后，必须等待被调用服务返回结果，流程才继续。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Service A  →  Service B
+   |            |
+   |</code></pre></div>]]></content:encoded>
     </item>
     <item>
       <title>useMemo &amp; useCallback &amp; memo</title>
