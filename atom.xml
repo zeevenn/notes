@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2026-01-16T15:12:51.182Z</updated>
+  <updated>2026-01-19T02:56:27.927Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
@@ -32,9 +32,9 @@
   </contributor>
   <entry>
     <title type="text">Fundamental Ideas Around Microservices</title>
-    <id>https://dribble-njr.github.io/blog/blog/backend/microsevice/01-fundamental-ideas.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/backend/microsevice/01-fundamental-ideas.html"/>
-    <updated>2026-01-16T15:09:22.000Z</updated>
+    <id>https://dribble-njr.github.io/blog/blog/backend/microservice/01-fundamental-ideas.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/backend/microservice/01-fundamental-ideas.html"/>
+    <updated>2026-01-19T02:54:47.000Z</updated>
     <summary type="html"><![CDATA[<h2>What is Microservices?</h2>
 <ul>
 <li>将不同服务拆分为独立的微服务，每个微服务专注于特定的业务功能。</li>

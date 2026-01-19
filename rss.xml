@@ -6,8 +6,8 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Fri, 16 Jan 2026 15:12:51 GMT</pubDate>
-    <lastBuildDate>Fri, 16 Jan 2026 15:12:51 GMT</lastBuildDate>
+    <pubDate>Mon, 19 Jan 2026 02:56:27 GMT</pubDate>
+    <lastBuildDate>Mon, 19 Jan 2026 02:56:27 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>microservice</category>
@@ -31,8 +31,8 @@
     <category>JavaScript</category>
     <item>
       <title>Fundamental Ideas Around Microservices</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/microsevice/01-fundamental-ideas.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/microsevice/01-fundamental-ideas.html</guid>
+      <link>https://dribble-njr.github.io/blog/blog/backend/microservice/01-fundamental-ideas.html</link>
+      <guid>https://dribble-njr.github.io/blog/blog/backend/microservice/01-fundamental-ideas.html</guid>
       <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Fundamental Ideas Around Microservices</source>
       <description>What is Microservices? 将不同服务拆分为独立的微服务，每个微服务专注于特定的业务功能。 单个服务拥有完整的中间件、路由和数据库支持。 每个服务拥有自己的数据库，确保松耦合和独立的数据管理。 Why database per service? 每个服务需要独立于其他服务，避免单点故障 数据库结构可能随时变化 不同服务可能有不同的数据...</description>
       <category>microservice</category>
