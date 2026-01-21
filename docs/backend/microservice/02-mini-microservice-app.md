@@ -22,3 +22,10 @@ A3: Seems that way now! Adding in some features starts to get really easy when w
 **Q4: This system won't correctly in the following scenarios...**
 
 A4: There are some very special things we need to consider with this design. I've got solutions for most (maybe?) of the concerns you may have.
+
+## Event Bus
+
+非常多不同的实现，比如：RabbitMQ、Kafka、NATS、Redis Pub/Sub 等等。
+
+- 接收事件、分发事件
+- 许多微妙的特性使得 async communication 变得更容易或更难
