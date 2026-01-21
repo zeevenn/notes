@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2026-01-19T02:56:27.927Z</updated>
+  <updated>2026-01-21T14:58:04.821Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
@@ -30,6 +30,28 @@
   <contributor>
     <name>patterns</name>
   </contributor>
+  <entry>
+    <title type="text">A Mini Microservice Application</title>
+    <id>https://dribble-njr.github.io/blog/blog/backend/microservice/02-mini-microservice-app.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/backend/microservice/02-mini-microservice-app.html"/>
+    <updated>2026-01-21T14:56:23.000Z</updated>
+    <summary type="html"><![CDATA[<h2>Q&amp;A</h2>
+<p><strong>Q1: Wait, so you're saying we nened to create a new service every time we need to join some data?!</strong></p>
+<p>A1: Absolutely not! In reality, might not even have posts and comments in separate services in the first place.</p>
+<p><strong>Q2: Who cares that each service is independent</strong></p>]]></summary>
+    <content type="html"><![CDATA[<h2>Q&amp;A</h2>
+<p><strong>Q1: Wait, so you're saying we nened to create a new service every time we need to join some data?!</strong></p>
+<p>A1: Absolutely not! In reality, might not even have posts and comments in separate services in the first place.</p>
+<p><strong>Q2: Who cares that each service is independent</strong></p>
+<p>A2: Independent services + the reliability that brings is one of the core reasons of using microservices in the first place.</p>
+<p><strong>Q3: This is so over the top complicated for little benefit</strong></p>
+<p>A3: Seems that way now! Adding in some features starts to get really easy when we use this architecture.</p>
+<p><strong>Q4: This system won't correctly in the following scenarios...</strong></p>
+<p>A4: There are some very special things we need to consider with this design. I've got solutions for most (maybe?) of the concerns you may have.</p>
+]]></content>
+    <category term="microservice"/>
+    <published>2026-01-21T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">Fundamental Ideas Around Microservices</title>
     <id>https://dribble-njr.github.io/blog/blog/backend/microservice/01-fundamental-ideas.html</id>
@@ -9788,73 +9810,5 @@ console<span class="token punctuation">.</span><span class="token function">log<
 ]]></content>
     <category term="JavaScript"/>
     <published>2022-04-21T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">原始值和引用值</title>
-    <id>https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/004-primitive-value-reference-value.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/004-primitive-value-reference-value.html"/>
-    <updated>2024-11-06T15:43:46.000Z</updated>
-    <summary type="html"><![CDATA[<h2>按值访问和按引用访问</h2>
-<p>ECMAScript 变量可以包含两种不同类型的数据：原始值和引用值。原始值（primitive value）就是最简单的数据，引用值（reference value）则是由多个值构成的对象。</p>
-<p>在把一个值赋给变量时，JavaScript 引擎必须确定这个值是原始值还是引用值。</p>
-<p>保存原始值的变量是 <strong>按值</strong>（by value）访问的，因为我们操作的就是存储在变量中的实际值。引用值是保存在内存中的对象。</p>
-<p>与其他语言不同，JavaScript 不允许直接访问内存位置，因此也就不能直接操作对象所在的内存空间。在操作对象时，实际上操作的是对该对象的 <strong>引用</strong>（reference）而非实际的对象本身。为此，保存引用值的变量是 <strong>按引用</strong>（by reference）访问的。</p>]]></summary>
-    <content type="html"><![CDATA[<h2>按值访问和按引用访问</h2>
-<p>ECMAScript 变量可以包含两种不同类型的数据：原始值和引用值。原始值（primitive value）就是最简单的数据，引用值（reference value）则是由多个值构成的对象。</p>
-<p>在把一个值赋给变量时，JavaScript 引擎必须确定这个值是原始值还是引用值。</p>
-<p>保存原始值的变量是 <strong>按值</strong>（by value）访问的，因为我们操作的就是存储在变量中的实际值。引用值是保存在内存中的对象。</p>
-<p>与其他语言不同，JavaScript 不允许直接访问内存位置，因此也就不能直接操作对象所在的内存空间。在操作对象时，实际上操作的是对该对象的 <strong>引用</strong>（reference）而非实际的对象本身。为此，保存引用值的变量是 <strong>按引用</strong>（by reference）访问的。</p>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/V8-stack-heap.png" alt="按值访问和按引用访问" tabindex="0" loading="lazy"><figcaption>按值访问和按引用访问</figcaption></figure>
-<h2>传递参数</h2>
-<p>ECMAScript 中所有函数的参数都是按值传递的。这意味着函数外的值会被复制到函数内部的参数中，就像从一个变量复制到另一个变量一样。</p>
-<p>如果是原始值，那么就跟原始值变量的复制一样，如果是引用值，那么就跟引用值变量的复制一样。</p>
-<div class="hint-container warning">
-<p class="hint-container-title">注意</p>
-<p>变量有按值和按引用访问，而传参则只有按值传递。</p>
-</div>
-<p>在按值传递参数时，值会被复制到一个局部变量（即一个命名参数，<code>arguments</code> 对象中的一个槽位）。来看几个例子。</p>
-<p><strong>参数为基本类型</strong></p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token number">1</span>
-<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  value <span class="token operator">=</span> <span class="token number">2</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token comment">// 输出: 2</span>
-<span class="token punctuation">}</span>
-
-<span class="token function">foo</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token comment">//输出: 1</span>
-</code></pre></div><div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>a: 1
-foo:
-  - value: 1
-</code></pre></div><p>在这个例子中，声明了一个变量 <code>a</code>，把它传入 <code>foo</code> 函数，函数中我们改变了 <code>value</code> 的值，但在函数外 <code>a</code> 的值没有改变。</p>
-<p>因为基本类型是按值传递，改变的只是 <code>value</code> 这个拷贝副本的值，对原值没有影响。</p>
-<p><strong>参数为引用类型</strong></p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">let</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">a</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span>
-<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token parameter">o</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  o<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">2</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">.</span>a<span class="token punctuation">)</span> <span class="token comment">// 输出: 2</span>
-<span class="token punctuation">}</span>
-
-<span class="token function">foo</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>a<span class="token punctuation">)</span> <span class="token comment">// 输出: 2</span>
-</code></pre></div><div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>obj: 0x01 -&gt; { a: 1 }
-foo:          |
-  - 0: 0x01 -&gt;
-</code></pre></div><p>在这里，声明了一个对象 <code>obj</code>，把它传入 <code>foo</code> 函数赋值为 <code>o</code>，此时 <code>o</code> 与外部定义的 <code>obj</code> 的值为同一个内存地址，指向同一个对象。</p>
-<p>函数中改变了 <code>o</code> 的 <code>a</code> 属性的值（按引用访问），然后可以看到在函数外 <code>obj.a</code> 的值也被改变了。</p>
-<p>再来看一个例子：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">let</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token number">1</span> <span class="token punctuation">}</span>
-<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token parameter">o</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  o <span class="token operator">=</span> <span class="token number">2</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span> <span class="token comment">// 输出：2</span>
-<span class="token punctuation">}</span>
-<span class="token function">foo</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span> 
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>value<span class="token punctuation">)</span> <span class="token comment">// 输出：1</span>
-</code></pre></div><div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>obj: 0x01 -&gt; { value: 1 }
-foo:          |
-  - o: 0x01 -&gt;
-</code></pre></div><p>这里也声明了一个对象，不同的是，<code>foo</code> 函数直接修改了 <code>o</code> 的值，将内存地址变为一个普通原始值 <code>2</code>，但是这里并没有对外部的 <code>obj</code> 地址进行修改，因此 <code>console.log(obj.value)</code> 仍然打印 <code>1</code>。</p>
-]]></content>
-    <category term="JavaScript"/>
-    <published>2024-04-16T00:00:00.000Z</published>
   </entry>
 </feed>
