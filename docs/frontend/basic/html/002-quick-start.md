@@ -207,7 +207,7 @@ DTD：文档类型定义，是一套关于标记符的语法规则。
 
 在 HTML5 以前，HTML 都是基于标准通用标记语言（Standard Generalized Markup Language，SGML）来实现的，而 SGML 使用 DTD 来定义不同版本的语法。
 
-详情请见 [DOCTYPE](003-DOCTYPE.md)
+详情请见 [DOCTYPE](003-doctype.md)
 
 :::
 
@@ -240,7 +240,7 @@ utf-8 字符集包含了大多数人类书面语言的字符。基本上它能�
 
 W3C 也将 UTF-8 标记为推荐的字符编码，所以建议在任何 HTML 文件中都添加此标签。
 
-详情请见 [字符编码](../../../computer-science/operating-system/001-character-encoding.md)
+详情请见 [字符编码](../../../computer-science/operating-system/01-character-encoding.md)
 
 :::
 

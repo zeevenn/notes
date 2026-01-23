@@ -32,7 +32,7 @@ yum install git
 
 ## 创建 git 用户
 
-创建一个 Git 的 Linux 账户，这个账户只做 Git 私服的操作，之后就要设置 Linux Git 账户的密码，但由于我之前已经 [设置了 ssh 登录](./001-set-the-ssh.md)，因此不用设置密码。
+创建一个 Git 的 Linux 账户，这个账户只做 Git 私服的操作，之后就要设置 Linux Git 账户的密码，但由于我之前已经 [设置了 ssh 登录](./01-set-the-ssh.md)，因此不用设置密码。
 
 ```bash
 adduser git

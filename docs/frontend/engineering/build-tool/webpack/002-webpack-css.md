@@ -8,9 +8,9 @@ tag:
   - webpack
 ---
 
-> 项目地址：https://github.com/Stephen-wzw/webpack-demo
+> 项目地址：<https://github.com/Stephen-wzw/webpack-demo>
 
-继续使用[之前的项目](./0005、webpack基础打包.md)，不过在以下文件做点修改：
+继续使用[之前的项目](./001-webpack-basic.md)，不过在以下文件做点修改：
 
 **index.html**
 
@@ -35,7 +35,7 @@ tag:
 
 ```diff
  const path = require("path");
- 
+
  module.exports = {
    entry: "./src/index.js",
    output: {
@@ -63,7 +63,7 @@ tag:
 +     |- style.css
     |- /js
       |- format.js
-      |- math.js  
+      |- math.js
     |- index.js
 ```
 
@@ -85,10 +85,10 @@ tag:
  import { sum } from "./js/math.js";
  const { priceFormat } = require("./js/format");
 +import "../css/style.css";
- 
+
  console.log(sum(10, 20));
  console.log(priceFormat());
- 
+
 +const div = document.createElement("div");
 +div.className = "title";
 +div.innerHTML = "webpack-css";
@@ -111,9 +111,9 @@ You may need an appropriate loader to handle this file type, currently no loader
 
 从报错信息中可以知道，需要用一个 loader 处理 css 文件。那么什么是 loader 呢？
 
-* loader 用于对模块的源代码进行转换；
-* loader 可以使你在 import 或 "load(加载)" 模块时预处理文件；
-* loader 甚至允许你直接在 JavaScript 模块中 import CSS 文件！
+- loader 用于对模块的源代码进行转换；
+- loader 可以使你在 import 或 "load(加载)" 模块时预处理文件；
+- loader 甚至允许你直接在 JavaScript 模块中 import CSS 文件！
 
 而为了能在项目中正常使用 css，需要用到 `css-loader`。
 
@@ -159,7 +159,7 @@ npm install style-loader -D
 
 ```diff
  const path = require("path");
- 
+
  module.exports = {
    entry: "./src/index.js",
    output: {
@@ -202,7 +202,7 @@ npm install style-loader -D
 +     |- title.less
     |- /js
       |- format.js
-      |- math.js  
+      |- math.js
     |- index.js
 ```
 
@@ -225,14 +225,14 @@ npm install style-loader -D
  const { priceFormat } = require("./js/format");
  import "./css/style.css";
 +import "./css/title.less";
- 
+
  console.log(sum(10, 20));
  console.log(priceFormat());
- 
+
  const div = document.createElement("div");
  div.className = "title";
  div.innerHTML = "webpack-css";
- 
+
  document.body.appendChild(div);
 ```
 
@@ -248,7 +248,7 @@ npm install less-loader -D
 
 ```diff
  const path = require("path");
- 
+
  module.exports = {
    entry: "./src/index.js",
    output: {
@@ -292,7 +292,7 @@ npm install autoprefixer -D
 
 ```diff
   const path = require("path");
-  
+
   module.exports = {
     entry: "./src/index.js",
     output: {
@@ -304,8 +304,8 @@ npm install autoprefixer -D
         {
           test: /\.(less|css)$/,
           use: [
-            'style-loader', 
-            'css-loader', 
+            'style-loader',
+            'css-loader',
 +           {
 +             loader: 'postcss-loader',
 +             options: {
@@ -331,9 +331,9 @@ npm install autoprefixer -D
   font-weight: 700;
   font-size: 30px;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 ```
 
@@ -345,10 +345,8 @@ npm install autoprefixer -D
 
 ```js
 module.exports = {
-  plugins: [
-    require("autoprefixer")
-  ]
-};
+  plugins: [require('autoprefixer')]
+}
 ```
 
 **webpack.config.js**
@@ -405,10 +403,11 @@ npm install postcss-preset-env -D
 
 ### `postcss-px-to-viewport`
 
-这个插件可以帮助我们将 px 单位转换为视口单位，这在进行移动端适配时尤为重要。详细使用见 [postcss-px-to-view](../css/0003、postcss-px-to-viewport.md)。
+这个插件可以帮助我们将 px 单位转换为视口单位，这在进行移动端适配时尤为重要。详细使用见 [postcss-px-to-view](../../../practice/005-postcss-px-to-viewport.md)。
 
 ## 总结
 
 在这个案例里，我们分别使用了 `style-loader` 加载 css 样式， `css-loader` 处理 .css 文件， `less-loader` 处理 .less 文件，以及使用 `postcss` 给样式自动添加前缀。
 
-loader 的执行顺序是从后往前的，因此需要配置规则中写成 `use: ["style-loader", "css-loader", "postcss-loader", "less-loader"]`。
+loader 的执行顺序是从后往前的，因此需要配置规则中写成 `use: ["style-loader", "css-loader", "postcss-loader", "less-loader"]` 。
+

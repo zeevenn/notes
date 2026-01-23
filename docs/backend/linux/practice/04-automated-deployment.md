@@ -21,11 +21,11 @@ tag:
 
 ### 配置 nginx
 
-登录宝塔面板，可以参考 [配置宝塔面板](0003、配置宝塔面板.md)。点击左侧网站 -> 添加站点。
+登录宝塔面板，可以参考 [配置宝塔面板](03-configure-bt.md)。点击左侧网站 -> 添加站点。
 
 ![step1-add-site](https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/step1-add-site.png)
 
-新增之后，点击设置 -> 配置文件。这三项按自己的情况配置，在后面 [git hooks](./004-automated-deployment.md#配置-hooks) 中会将 dist 文件推送到 `root` 配置项设置的文件夹下。
+新增之后，点击设置 -> 配置文件。这三项按自己的情况配置，在后面 [git hooks](./04-automated-deployment.md#配置-hooks) 中会将 dist 文件推送到 `root` 配置项设置的文件夹下。
 
 ![step2-nginx-conf](https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/step2-nginx-conf.png)
 
@@ -47,7 +47,7 @@ yarn build
 
 ### 配置 git 仓库
 
-在 [搭建 git 私服](./002-build-git-server.md) 中已经搭建好了 git 私服，因此只需要初始化 `vuepress.git` 仓库即可。
+在 [搭建 git 私服](./02-build-git-server.md) 中已经搭建好了 git 私服，因此只需要初始化 `vuepress.git` 仓库即可。
 
 ```bash
 cd /home/git

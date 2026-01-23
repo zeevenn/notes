@@ -58,14 +58,14 @@ export https_proxy=http://127.0.0.1:7890
 [Clash for Linux](https://github.com/Elegycloud/clash-for-linux-backup) 是一款功能强大的代理工具，支持多种协议，包括 HTTP、SOCKS5 等。通过 Clash for Linux，我们可以方便地在本地电脑上设置代理，并将其同步到云服务器上。
 
 ```bash
-$ git clone https://github.com/Elegycloud/clash-for-linux-backup.git
+git clone https://github.com/Elegycloud/clash-for-linux-backup.git
 ```
 
 进入到项目目录，编辑 `.env` 文件，修改变量 `CLASH_URL` 的值。
 
 ```bash
-$ cd clash-for-linux-backup
-$ vi .env
+cd clash-for-linux-backup
+vi .env
 ```
 
 > [!TIP]
@@ -97,8 +97,8 @@ Secret：xxxxxxxxxxxxx
 加载环境变量并启动服务：
 
 ```bash
-$ source /etc/profile.d/clash.sh
-$ proxy_on
+source /etc/profile.d/clash.sh
+proxy_on
 ```
 
 检查服务端口：
@@ -106,9 +106,9 @@ $ proxy_on
 ```bash
 $ sudo netstat -tuln | grep 7890
 $ netstat -tln | grep -E '9090|789.'
-tcp6       0      0 :::7892                 :::*                    LISTEN     
-tcp6       0      0 :::7890                 :::*                    LISTEN     
-tcp6       0      0 :::7891                 :::*                    LISTEN     
+tcp6       0      0 :::7892                 :::*                    LISTEN
+tcp6       0      0 :::7890                 :::*                    LISTEN
+tcp6       0      0 :::7891                 :::*                    LISTEN
 tcp6       0      0 :::9090                 :::*                    LISTEN
 ```
 

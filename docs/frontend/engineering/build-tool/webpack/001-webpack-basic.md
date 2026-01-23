@@ -8,7 +8,7 @@ tag:
   - webpack
 ---
 
-> 项目地址：https://github.com/Stephen-wzw/webpack-demo
+> 项目地址：<https://github.com/Stephen-wzw/webpack-demo>
 
 ## 基本安装
 
@@ -54,7 +54,7 @@ npm install webpack webpack-cli -D
 + |- /src
 +   |- /js
 +     |- format.js
-+     |- math.js  
++     |- math.js
 +   |- index.js
 ```
 
@@ -63,15 +63,15 @@ npm install webpack webpack-cli -D
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>webpack-demo</title>
-</head>
-<body>
-  <script src="./src/index.js" type="module"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>webpack-demo</title>
+  </head>
+  <body>
+    <script src="./src/index.js" type="module"></script>
+  </body>
 </html>
 ```
 
@@ -79,13 +79,13 @@ npm install webpack webpack-cli -D
 
 ```js
 const priceFormat = function () {
-  return "￥100.8";
-};
+  return '￥100.8'
+}
 
 // CommonJS
 module.exports = {
-  priceFormat,
-};
+  priceFormat
+}
 ```
 
 **src/js/math.js**
@@ -93,18 +93,18 @@ module.exports = {
 ```js
 // ES Module
 export function sum(num1, num2) {
-  return num1 + num2;
+  return num1 + num2
 }
 ```
 
 **src/index.js**
 
 ```js
-import { sum } from "./js/math.js";
-const { priceFormat } = require("./js/format");
+import { sum } from './js/math.js'
+const { priceFormat } = require('./js/format')
 
-console.log(sum(10, 20));
-console.log(priceFormat());
+console.log(sum(10, 20))
+console.log(priceFormat())
 ```
 
 现在用浏览器打开 index.html 文件，再打开控制台，毫无疑问地报错了：
@@ -142,7 +142,7 @@ npx webpack
   |- /src
     |- /js
       |- format.js
-      |- math.js  
+      |- math.js
     |- index.js
 ```
 
@@ -188,7 +188,7 @@ npx webpack
   |- /src
     |- /js
       |- format.js
-      |- math.js  
+      |- math.js
     |- index.js
 + |- webpack.config.js
 ```
@@ -196,15 +196,15 @@ npx webpack
 **webpack.config.js**
 
 ```js
-const path = require("path");
+const path = require('path')
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "dist"),  // 需要使用绝对路径
-  },
-};
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist') // 需要使用绝对路径
+  }
+}
 ```
 
 接下来使用 npm scripts 来执行 webpack 命令。为此需要在 package.json 中添加：
@@ -217,7 +217,7 @@ module.exports = {
    "main": "index.js",
    "scripts": {
      "test": "echo \"Error: no test specified\" && exit 1",
-+    "build": "webpack" 
++    "build": "webpack"
    },
    "keywords": [],
    "author": "",
@@ -244,3 +244,4 @@ npm run build
 而打包又可以使用 `webpack` 命令使用全局安装的 webpack 进行打包，也可以使用 `npx webpack` 使用局部安装的 webpack 进行打包。
 
 最后又引入了配置文件，并使用 npm scripts 来执行 webpack 命令。
+
