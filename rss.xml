@@ -6,8 +6,8 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Sat, 24 Jan 2026 08:27:39 GMT</pubDate>
-    <lastBuildDate>Sat, 24 Jan 2026 08:27:39 GMT</lastBuildDate>
+    <pubDate>Sat, 24 Jan 2026 14:27:00 GMT</pubDate>
+    <lastBuildDate>Sat, 24 Jan 2026 14:27:00 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
@@ -31,6 +31,25 @@
     <category>Pixi</category>
     <category>READING</category>
     <category>JavaScript</category>
+    <item>
+      <title>Primitive Types</title>
+      <link>https://dribble-njr.github.io/blog/blog/backend/java/language/02-primitive-types.html</link>
+      <guid>https://dribble-njr.github.io/blog/blog/backend/java/language/02-primitive-types.html</guid>
+      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Primitive Types</source>
+      <description>Java 有八个基本数据类型（primitive data types）： 整数类型：byte、short、int、long 浮点类型：float、double 字符类型：char 布尔类型：boolean 提示 L、f 和 d 后缀分别用于表示 long, float 和 double 类型的字面值。 字面量表示法 Java 支持多种进制的整数字面量...</description>
+      <category>java</category>
+      <pubDate>Sat, 24 Jan 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p>Java 有八个基本数据类型（primitive data types）：</p>
+<ul>
+<li>整数类型：<code>byte</code>、<code>short</code>、<code>int</code>、<code>long</code></li>
+<li>浮点类型：<code>float</code>、<code>double</code></li>
+<li>字符类型：<code>char</code></li>
+<li>布尔类型：<code>boolean</code></li>
+</ul>
+<p>| Types     | Description              | Default Value |<br>
+|</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>程序基本结构</title>
       <link>https://dribble-njr.github.io/blog/blog/backend/java/language/01-program-structure.html</link>
@@ -6512,13 +6531,13 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>中间件，处理请求中间逻辑，比如：<code>cors</code>、<code>auth</code> 等。</p>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">Middleware</span> <span class="token operator">=</span> <span class="token punctuation">(</span>req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span> res<span class="token operator">:</span> ServerResponse<span class="token punctuation">,</span> <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span>
 
-<span class="token doc-comment comment">/**
+<span class="token comment">/**
  * Manage the execution order of middleware functions.
  * It allows you to add multiple middleware functions to a queue
  * and execute them sequentially during a request.
  *
- * <span class="token keyword">@export</span>
- * <span class="token keyword">@class</span> MiddlewareManager
+ * @export
+ * @class MiddlewareManager
  */</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">MiddlewareManager</span> <span class="token punctuation">{</span>
   <span class="token keyword">private</span> <span class="token keyword">readonly</span> middlewares<span class="token operator">:</span> Middleware<span class="token punctuation">[</span><span class="token punctuation">]</span>
@@ -6745,12 +6764,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>其中 <code>path</code> 需要进行参数处理，如：<code>/category/:id</code>。处理完后参数类型应为 <code>params: Record&lt;string, string&gt;</code>，因为可能存在多个参数。</p>
 <p>解析完成后，<code>controller</code> 中需要接收 <code>params</code>，需要将 <code>params</code> 转换为 <code>request.params</code>。</p>
 <p>具体逻辑如下：</p>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token doc-comment comment">/**
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">/**
  * Execute route's middleware and controller.
  *
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>CustomIncomingMessage<span class="token punctuation">}</span> req
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>ServerResponse<span class="token punctuation">}</span> res
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>Route<span class="token punctuation">}</span> route
+ * @param {CustomIncomingMessage} req
+ * @param {ServerResponse} res
+ * @param {Route} route
  */</span>
 <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">execute</span><span class="token punctuation">(</span>
   req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span>
@@ -6773,12 +6792,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
   <span class="token keyword">await</span> mwManager<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token doc-comment comment">/**
+<span class="token comment">/**
  * Matches the provided method and pathname to a route in the Router.
  *
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> method - The HTTP method to match.
- * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> pathname - The URL pathname to match.
- * <span class="token keyword">@return</span> <span class="token punctuation">{</span>Object<span class="token punctuation">}</span> An object containing the matched route and parameters.
+ * @param {string} method - The HTTP method to match.
+ * @param {string} pathname - The URL pathname to match.
+ * @return {Object} An object containing the matched route and parameters.
  */</span>
 <span class="token keyword">const</span> <span class="token function-variable function">matchRoute</span> <span class="token operator">=</span> <span class="token punctuation">(</span>method<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> pathname<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> router <span class="token keyword">in</span> Router<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -8212,56 +8231,6 @@ person<span class="token punctuation">.</span>age <span class="token operator">=
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>options<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// [6, undefined, undefined, undefined, 6]</span>
 <span class="token comment">// join() 视空位置为空字符串</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>options<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'-'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// "1</span></code></pre></div>]]></content:encoded>
-    </item>
-    <item>
-      <title>类数组对象</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/009-array-like-object.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/009-array-like-object.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">类数组对象</source>
-      <description>概念 在 Javascript 里，有一个特殊的对象，它拥有 length 属性和若干索引属性，被称为类数组对象。常见的类数组对象有 arguments 和 DOM 方法返回的结果。 类数组对象和数组类似之处在于：访问、赋值、获取长度的操作与数组一致，因此叫做类数组对象。 使用数组方法 类数组对象不能 直接调用 数组的方法，如果想使用数组方法，需要使用...</description>
-      <category>JavaScript</category>
-      <pubDate>Wed, 24 Aug 2022 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>概念</h2>
-<p>在 Javascript 里，有一个特殊的对象，它拥有 <code>length</code> 属性和若干索引属性，被称为类数组对象。常见的类数组对象有 <code>arguments</code> 和 DOM 方法返回的结果。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> arrLike <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token number">0</span><span class="token operator">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
-  <span class="token number">1</span><span class="token operator">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
-  <span class="token literal-property property">length</span><span class="token operator">:</span> <span class="token number">2</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">// arguments 对象</span>
-<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">return</span> arguments
-<span class="token punctuation">}</span>
-<span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">// Arguments(3) [1, 2, 3, callee: ƒ, Symbol(Symbol.iterator): ƒ]</span>
-
-<span class="token comment">// DOM 方法返回的结果</span>
-document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">'img'</span><span class="token punctuation">)</span> <span class="token comment">// HTMLCollection(3) [img, img, img]</span>
-</code></pre></div><p>类数组对象和数组类似之处在于：访问、赋值、获取长度的操作与数组一致，因此叫做类数组对象。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// name</span>
-arrLike<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'wang'</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">// 2</span>
-</code></pre></div><h2>使用数组方法</h2>
-<p>类数组对象不能 <strong>直接调用</strong> 数组的方法，如果想使用数组方法，需要使用 <code>call()</code> 或 <code>apply</code> 间接调用。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>arrLike<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'hobby'</span><span class="token punctuation">)</span> <span class="token comment">// Uncaught TypeError: arrLike.push is not a function</span>
-
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">,</span> <span class="token string">'hobby'</span><span class="token punctuation">)</span> <span class="token comment">// { '0': 'name', '1': 'age', '2':  'hobby', length: 3 }</span>
-</code></pre></div><p>实际开发中，为了使操作方便，通常先将类数组对象转换为数组对象，通常使用 <code>Array.from()</code> 进行转换。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token comment">// call 调用 slice</span>
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">)</span>
-
-<span class="token comment">// call 调用 splice</span>
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-
-<span class="token comment">// apply 调用 concat</span>
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> arrLike<span class="token punctuation">)</span>
-
-<span class="token comment">// Array.from</span>
-Array<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">)</span>
-
-<span class="token comment">// 展开运算符</span>
-<span class="token punctuation">[</span><span class="token operator">...</span>arrLike<span class="token punctuation">]</span>
-</code></pre></div>]]></content:encoded>
     </item>
   </channel>
 </rss>
