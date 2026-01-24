@@ -6,8 +6,8 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Fri, 23 Jan 2026 11:58:34 GMT</pubDate>
-    <lastBuildDate>Fri, 23 Jan 2026 11:58:34 GMT</lastBuildDate>
+    <pubDate>Sat, 24 Jan 2026 07:59:42 GMT</pubDate>
+    <lastBuildDate>Sat, 24 Jan 2026 07:59:42 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
@@ -33,8 +33,8 @@
     <category>JavaScript</category>
     <item>
       <title>程序基本结构</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/java/lang/01-program-structure.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/java/lang/01-program-structure.html</guid>
+      <link>https://dribble-njr.github.io/blog/blog/backend/java/language/01-program-structure.html</link>
+      <guid>https://dribble-njr.github.io/blog/blog/backend/java/language/01-program-structure.html</guid>
       <source url="https://dribble-njr.github.io/blog/blog/rss.xml">程序基本结构</source>
       <description> 本文从「程序的基本结构」出发，解释为什么 Java 必须有明确入口，以及它与 TS / Node.js 的执行模型 在设计哲学上的根本差异。 什么是「程序结构」 从最抽象的层面看，一个程序至少要回答三个问题： 从哪里开始执行？（入口） 代码如何组织？（结构单元） 依赖如何生效？（加载 / 初始化 / 执行） 不同语言，对这三个问题的回答完全不同。 T...</description>
       <category>java</category>

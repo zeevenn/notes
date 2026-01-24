@@ -8,12 +8,12 @@
   "items": [
     {
       "title": "程序基本结构",
-      "url": "https://dribble-njr.github.io/blog/blog/backend/java/lang/01-program-structure.html",
-      "id": "https://dribble-njr.github.io/blog/blog/backend/java/lang/01-program-structure.html",
+      "url": "https://dribble-njr.github.io/blog/blog/backend/java/language/01-program-structure.html",
+      "id": "https://dribble-njr.github.io/blog/blog/backend/java/language/01-program-structure.html",
       "summary": " 本文从「程序的基本结构」出发，解释为什么 Java 必须有明确入口，以及它与 TS / Node.js 的执行模型 在设计哲学上的根本差异。 什么是「程序结构」 从最抽象的层面看，一个程序至少要回答三个问题： 从哪里开始执行？（入口） 代码如何组织？（结构单元） 依赖如何生效？（加载 / 初始化 / 执行） 不同语言，对这三个问题的回答完全不同。 T...",
       "content_html": "<blockquote>\n<p>本文从「程序的基本结构」出发，解释为什么 <strong>Java 必须有明确入口</strong>，以及它与 <strong>TS / Node.js 的执行模型</strong> 在设计哲学上的根本差异。</p>\n</blockquote>\n",
       "date_published": "2026-01-23T00:00:00.000Z",
-      "date_modified": "2026-01-23T11:57:02.000Z",
+      "date_modified": "2026-01-24T07:58:05.000Z",
       "authors": [],
       "tags": [
         "java"
