@@ -24,6 +24,8 @@ Java 有八个基本数据类型（primitive data types）：
 
 > [!TIP]
 > `L`、`f` 和 `d` 后缀分别用于表示 `long`, `float` 和 `double` 类型的字面值。
+> `int` 和 `double` 是默认的数字字面量类型。
+> 最常用的是 `int`, `double`, `char` 和 `boolean`。
 
 ## 字面量表示法
 
@@ -182,6 +184,10 @@ System.out.println(0.1 + 0.2);        // 输出：0.30000000000000004
 System.out.println(0.1 + 0.2 == 0.3); // 输出：false
 ```
 
+> [!TIP]
+> `double` 和 JavaScript 中的 `number` 类型类似，均基于 IEEE 754 双精度表示。
+> `0.1 + 0.2` 在 Java 和 JavaScript 中是一样的结果。
+
 **原因：**
 
 浮点数在二进制中无法精确表示某些十进制小数（如 0.1、0.2），导致舍入误差累积。
@@ -250,3 +256,6 @@ System.out.println(c1 + c2 + c3);  // 输出：195（字符参与运算会转为
 | `\'`     | 单引号       |
 | `\"`     | 双引号       |
 | `\uXXXX` | Unicode 字符 |
+
+> [!TIP]
+> 单个字符用 `char`，字符串用 `String` 类。详见 [String 类型](/docs/backend/java/language/03-string.md)。
