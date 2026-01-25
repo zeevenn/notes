@@ -259,3 +259,4 @@ System.out.println(c1 + c2 + c3);  // 输出：195（字符参与运算会转为
 
 > [!TIP]
 > 单个字符用 `char`，字符串用 `String` 类。详见 [String 类型](/docs/backend/java/language/03-string.md)。
+> `char` 用单引号括起，`String` 用双引号括起。

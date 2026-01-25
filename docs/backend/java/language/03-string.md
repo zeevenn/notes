@@ -6,10 +6,45 @@ category: java
 
 `String` 是 Java 中用于表示字符串的**引用类型**（Reference Type），位于 `java.lang` 包中。
 
-与基本类型不同，`String` 是一个类，但可以像基本类型一样使用字面量创建：
+`String` 可以被用做 Java 的第九个基本数据类型，可以像基本类型一样使用字面量创建，但它其实是一个类。
 
 ```java
 String s = "Hello";  // 字面量方式（推荐）
+```
+
+## 创建方式
+
+### 字面量方式（推荐）
+
+```java
+String s1 = "Hello";
+```
+
+- 自动使用字符串常量池
+- 性能更好，内存占用更少
+
+### 构造器方式
+
+```java
+String s2 = new String("Hello");
+```
+
+- 强制在堆中创建新对象
+- 即使常量池中已有相同内容，仍会创建新对象
+
+### 从字符数组创建
+
+```java
+char[] chars = {'H', 'e', 'l', 'l', 'o'};
+String s3 = new String(chars);
+```
+
+### 从字节数组创建
+
+```java
+byte[] bytes = {72, 101, 108, 108, 111};
+String s4 = new String(bytes);  // 使用平台默认编码
+String s5 = new String(bytes, "UTF-8");  // 指定编码
 ```
 
 ## 不可变性（Immutable）
@@ -65,41 +100,6 @@ String s4 = s3.intern();  // 将 s3 的值放入常量池（如果不存在）�
 System.out.println(s1 == s4);  // true
 ```
 
-## 创建方式
-
-### 字面量方式（推荐）
-
-```java
-String s1 = "Hello";
-```
-
-- 自动使用字符串常量池
-- 性能更好，内存占用更少
-
-### 构造器方式
-
-```java
-String s2 = new String("Hello");
-```
-
-- 强制在堆中创建新对象
-- 即使常量池中已有相同内容，仍会创建新对象
-
-### 从字符数组创建
-
-```java
-char[] chars = {'H', 'e', 'l', 'l', 'o'};
-String s3 = new String(chars);
-```
-
-### 从字节数组创建
-
-```java
-byte[] bytes = {72, 101, 108, 108, 111};
-String s4 = new String(bytes);  // 使用平台默认编码
-String s5 = new String(bytes, "UTF-8");  // 指定编码
-```
-
 ## 常用方法
 
 ### 长度与字符访问
@@ -110,6 +110,7 @@ String s = "Hello World";
 s.length();                    // 11
 s.charAt(0);                   // 'H'
 s.isEmpty();                   // false
+"".isBlank();                  // true（Java 11+，判断是否为空或仅包含空白）
 ```
 
 ### 子串操作
@@ -129,6 +130,30 @@ s.startsWith("Hello");         // true
 s.endsWith("World");           // true
 ```
 
+### 比较
+
+```java
+String s1 = "Hello";
+String s2 = "Hello";
+String s3 = new String("Hello");
+
+// == 比较引用（对象地址）
+s1 == s2;                      // true（常量池中的同一对象）
+s1 == s3;                      // false（s3 是堆中的新对象）
+
+// equals() 比较内容
+s1.equals(s3);                 // true（内容相同）
+s1.equalsIgnoreCase("hello");  // true（忽略大小写）
+
+// 字典序比较
+"apple".compareTo("banana");   // < 0（apple 在字典中排在 banana 前）
+"banana".compareTo("apple");   // > 0
+"hello".compareTo("hello");    // 0（相等）
+```
+
+> [!WARNING]
+> 字符串比较时应使用 `.equals()` 或 `.equalsIgnoreCase()`，而非 `==`。
+
 ### 替换（返回新对象）
 
 ```java
@@ -137,11 +162,15 @@ s.replaceAll("o", "0");        // "Hell0 W0rld"（支持正则）
 s.replaceFirst("l", "L");      // "HeLlo World"
 ```
 
-### 分割
+### 分割与拼接
 
 ```java
+// 分割
 s.split(" ");                  // ["Hello", "World"]
 "a,b,c".split(",");            // ["a", "b", "c"]
+
+// 拼接
+String.join(", ", "a", "b");   // "a, b"
 ```
 
 ### 大小写转换
@@ -160,27 +189,151 @@ s.toUpperCase();               // "HELLO WORLD"
 "  hello  ".stripTrailing();   // "  hello"（仅去除末尾）
 ```
 
-### 比较
-
-```java
-String s1 = "Hello";
-String s2 = "Hello";
-String s3 = new String("Hello");
-
-s1 == s2;                      // true（引用相同）
-s1 == s3;                      // false（引用不同）
-s1.equals(s3);                 // true（内容相同）
-s1.equalsIgnoreCase("hello");  // true（忽略大小写）
-s1.compareTo("World");         // < 0（字典序比较）
-```
-
 ### 其他常用方法
 
 ```java
 String.valueOf(123);           // "123"（任意类型转字符串）
 "hello".repeat(3);             // "hellohellohello"（Java 11+）
-"".isBlank();                  // true（Java 11+，判断是否为空或仅包含空白）
-String.join(", ", "a", "b");   // "a, b"（拼接多个字符串）
+```
+
+## 字符串格式化
+
+### String.format()
+
+```java
+String name = "Alice";
+int age = 25;
+String s = String.format("Name: %s, Age: %d", name, age);
+// "Name: Alice, Age: 25"
+```
+
+常用格式说明符：
+
+| 说明符 | 类型          | 示例       |
+| ------ | ------------- | ---------- |
+| `%s`   | 字符串        | `"Hello"`  |
+| `%d`   | 十进制整数    | `123`      |
+| `%f`   | 浮点数        | `3.14`     |
+| `%.2f` | 保留 2 位小数 | `3.14`     |
+| `%x`   | 十六进制      | `7b`       |
+| `%n`   | 换行符        | （跨平台） |
+
+### printf()（直接输出）
+
+```java
+System.out.printf("Name: %s, Age: %d%n", "Bob", 30);
+```
+
+### 文本块（Java 13+）
+
+Java 13+ 引入了**文本块（Text Blocks）**，使用 `"""` 三引号表示多行字符串，类似 JavaScript 的模板字符串 `` ` ``。
+
+```java
+String json = """
+    {
+        "name": "Alice",
+        "age": 25
+    }
+    """;
+
+// 等价于传统写法
+String json = "{\n" +
+              "    \"name\": \"Alice\",\n" +
+              "    \"age\": 25\n" +
+              "}\n";
+```
+
+**主要特性：**
+
+1. **保留换行和缩进**
+
+   ```java
+   string html = """
+       <html>
+           <body>
+               <h1>hello</h1>
+           </body>
+       </html>
+       """;
+   ```
+
+2. **无需转义双引号**
+
+   ```java
+   String message = """
+       She said "Hello" to me.
+       """;  // 双引号无需转义
+   ```
+
+3. **自动去除公共前导空白**
+
+   ```java
+   String s = """
+           Line 1
+           Line 2
+           """;  // 自动去除 8 个空格的公共缩进
+   ```
+
+4. **支持变量格式化（Java 15+）**
+
+   ```java
+   String name = "Alice";
+   String message = """
+       Hello, %s!
+       Welcome to Java.
+       """.formatted(name);
+
+   // 或使用 String.format()
+   String message = String.format("""
+       Hello, %s!
+       Welcome to Java.
+       """, name);
+   ```
+
+**与 JavaScript 模板字符串的对比：**
+
+| 特性       | JavaScript `` ` `` | Java `"""`                |
+| ---------- | ------------------ | ------------------------- |
+| 变量插值   | ✅ `${name}`       | ❌ 不支持（需手动格式化） |
+| 多行字符串 | ✅                 | ✅                        |
+| 保留格式   | ✅                 | ✅                        |
+| 转义双引号 | 不需要             | 不需要                    |
+| 版本要求   | ES6+               | Java 13+                  |
+
+> [!TIP]
+> Java 文本块**不支持**类似 JavaScript `${variable}` 的语法糖，需要使用 `.formatted()` 或 `String.format()` 进行变量替换。
+
+**实际使用示例：**
+
+```java
+// SQL 语句
+String sql = """
+    SELECT id, name, email
+    FROM users
+    WHERE status = 'active'
+    ORDER BY created_at DESC
+    """;
+
+// HTML 模板
+String html = """
+    <!DOCTYPE html>
+    <html>
+        <head><title>%s</title></head>
+        <body>
+            <h1>%s</h1>
+        </body>
+    </html>
+    """.formatted(title, heading);
+
+// JSON 数据
+String json = """
+    {
+        "users": [
+            {"name": "Alice", "age": 25},
+            {"name": "Bob", "age": 30}
+        ]
+    }
+    """;
 ```
 
 ## 字符串拼接
@@ -236,76 +389,6 @@ for (int i = 0; i < 1000; i++) {
 String result = sb.toString();
 ```
 
-## 字符串比较
-
-### == vs equals()
-
-```java
-String s1 = "Hello";
-String s2 = "Hello";
-String s3 = new String("Hello");
-
-// == 比较引用（对象地址）
-s1 == s2;           // true（常量池中的同一对象）
-s1 == s3;           // false（s3 是堆中的新对象）
-
-// equals() 比较内容
-s1.equals(s3);      // true（内容相同）
-```
-
-> [!WARNING]
-> 字符串比较时应使用 `.equals()` 或 `.equalsIgnoreCase()`，而非 `==`。
-
-### 字典序比较
-
-```java
-"apple".compareTo("banana");   // < 0（apple 在字典中排在 banana 前）
-"banana".compareTo("apple");   // > 0
-"hello".compareTo("hello");    // 0（相等）
-```
-
-## 字符串格式化
-
-### String.format()
-
-```java
-String name = "Alice";
-int age = 25;
-String s = String.format("Name: %s, Age: %d", name, age);
-// "Name: Alice, Age: 25"
-```
-
-常用格式说明符：
-
-| 说明符 | 类型          | 示例       |
-| ------ | ------------- | ---------- |
-| `%s`   | 字符串        | `"Hello"`  |
-| `%d`   | 十进制整数    | `123`      |
-| `%f`   | 浮点数        | `3.14`     |
-| `%.2f` | 保留 2 位小数 | `3.14`     |
-| `%x`   | 十六进制      | `7b`       |
-| `%n`   | 换行符        | （跨平台） |
-
-### printf()（直接输出）
-
-```java
-System.out.printf("Name: %s, Age: %d%n", "Bob", 30);
-```
-
-### 文本块（Java 15+）
-
-```java
-String json = """
-    {
-        "name": "Alice",
-        "age": 25
-    }
-    """;
-```
-
-- 保留格式（包括换行和缩进）
-- 无需转义双引号
-
 ## String vs StringBuilder vs StringBuffer
 
 | 特性     | String     | StringBuilder | StringBuffer |
@@ -351,17 +434,7 @@ if (s1 == s2) { /* ... */ }  // false
 if (s1.equals(s2)) { /* ... */ }  // true
 ```
 
-### 3. substring() 的内存泄漏（Java 6）
-
-```java
-// Java 6 中，substring() 会持有原字符串的 char[]
-String huge = "very long string...";
-String sub = huge.substring(0, 5);  // sub 仍然持有整个 huge 的内存
-
-// Java 7+ 已修复，substring() 会创建新的字符数组
-```
-
-### 4. 忘记 String 不可变
+### 3. 忘记 String 不可变
 
 ```java
 String s = "hello";
