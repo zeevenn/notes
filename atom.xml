@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2026-01-25T11:56:15.572Z</updated>
+  <updated>2026-01-26T14:21:01.025Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
@@ -32,6 +32,55 @@
   <contributor>
     <name>patterns</name>
   </contributor>
+  <entry>
+    <title type="text">Object-Oriented Programming</title>
+    <id>https://dribble-njr.github.io/blog/blog/backend/java/language/04-object-oriented-programming.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/backend/java/language/04-object-oriented-programming.html"/>
+    <updated>2026-01-26T14:19:21.000Z</updated>
+    <summary type="html"><![CDATA[<p>在 Java 中，新建文件夹就是新建一个软件包（package），它对应你在项目里用来组织类的目录。</p>
+<p>简单理解：</p>
+<ul>
+<li>包（package） = 文件夹</li>
+<li>类（class） = 文件</li>
+</ul>
+<p>在类文件开头写 package 包名来声明它属于这个包。</p>
+<div class="hint-container tip">
+<p class="hint-container-title">提示</p>
+<p>如果不声明一个包，那么类会隐式属于 default package，不推荐这么使用。</p>
+</div>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>example<span class="token punctuation">.</span>utils</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Date</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 类定义</span>
+<span class="token punctuation">}</span>
+</code></pre></div>]]></summary>
+    <content type="html"><![CDATA[<p>在 Java 中，新建文件夹就是新建一个软件包（package），它对应你在项目里用来组织类的目录。</p>
+<p>简单理解：</p>
+<ul>
+<li>包（package） = 文件夹</li>
+<li>类（class） = 文件</li>
+</ul>
+<p>在类文件开头写 package 包名来声明它属于这个包。</p>
+<div class="hint-container tip">
+<p class="hint-container-title">提示</p>
+<p>如果不声明一个包，那么类会隐式属于 default package，不推荐这么使用。</p>
+</div>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>example<span class="token punctuation">.</span>utils</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Date</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 类定义</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2>访问修饰符（Access Modifiers）</h2>
+<p>访问修饰符用于控制类、方法和变量的可见性和访问权限。Java 提供了四种访问级别。</p>
+<h3>类级别的访问修饰符</h3>
+<p><strong>顶级类</strong>（Top-level Class）是指直接定义在源文件中，而不是嵌套在其他类、类型或方法内部的类。</p>
+<p>顶级类只有<strong>两种</strong>有效的访问修饰符选项：</p>
+<p>| 访问修饰符 | 描述                                                                 |<br>
+|</p>
+]]></content>
+    <category term="java"/>
+    <published>2026-01-26T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">String</title>
     <id>https://dribble-njr.github.io/blog/blog/backend/java/language/03-string.html</id>
@@ -7607,13 +7656,13 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>中间件，处理请求中间逻辑，比如：<code>cors</code>、<code>auth</code> 等。</p>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">Middleware</span> <span class="token operator">=</span> <span class="token punctuation">(</span>req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span> res<span class="token operator">:</span> ServerResponse<span class="token punctuation">,</span> <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span>
 
-<span class="token comment">/**
+<span class="token doc-comment comment">/**
  * Manage the execution order of middleware functions.
  * It allows you to add multiple middleware functions to a queue
  * and execute them sequentially during a request.
  *
- * @export
- * @class MiddlewareManager
+ * <span class="token keyword">@export</span>
+ * <span class="token keyword">@class</span> MiddlewareManager
  */</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">MiddlewareManager</span> <span class="token punctuation">{</span>
   <span class="token keyword">private</span> <span class="token keyword">readonly</span> middlewares<span class="token operator">:</span> Middleware<span class="token punctuation">[</span><span class="token punctuation">]</span>
@@ -7840,12 +7889,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>其中 <code>path</code> 需要进行参数处理，如：<code>/category/:id</code>。处理完后参数类型应为 <code>params: Record&lt;string, string&gt;</code>，因为可能存在多个参数。</p>
 <p>解析完成后，<code>controller</code> 中需要接收 <code>params</code>，需要将 <code>params</code> 转换为 <code>request.params</code>。</p>
 <p>具体逻辑如下：</p>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">/**
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token doc-comment comment">/**
  * Execute route's middleware and controller.
  *
- * @param {CustomIncomingMessage} req
- * @param {ServerResponse} res
- * @param {Route} route
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>CustomIncomingMessage<span class="token punctuation">}</span> req
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>ServerResponse<span class="token punctuation">}</span> res
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>Route<span class="token punctuation">}</span> route
  */</span>
 <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">execute</span><span class="token punctuation">(</span>
   req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span>
@@ -7868,12 +7917,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
   <span class="token keyword">await</span> mwManager<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token comment">/**
+<span class="token doc-comment comment">/**
  * Matches the provided method and pathname to a route in the Router.
  *
- * @param {string} method - The HTTP method to match.
- * @param {string} pathname - The URL pathname to match.
- * @return {Object} An object containing the matched route and parameters.
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> method - The HTTP method to match.
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> pathname - The URL pathname to match.
+ * <span class="token keyword">@return</span> <span class="token punctuation">{</span>Object<span class="token punctuation">}</span> An object containing the matched route and parameters.
  */</span>
 <span class="token keyword">const</span> <span class="token function-variable function">matchRoute</span> <span class="token operator">=</span> <span class="token punctuation">(</span>method<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> pathname<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> router <span class="token keyword">in</span> Router<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -9310,114 +9359,5 @@ console<span class="token punctuation">.</span><span class="token function">log<
 ]]></content>
     <category term="Project"/>
     <published>2024-05-09T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">对象属性</title>
-    <id>https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/010-object-property.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/010-object-property.html"/>
-    <updated>2024-11-06T15:43:46.000Z</updated>
-    <summary type="html"><![CDATA[<p>在 JavaScript 中，对象是一组属性的「无序集合」，由键值对组成。创建对象共有两种方式：字面量和 <code>new</code>。一般开发中为了方便通常使用字面量来创建对象。</p>
-<p>对象中的属性有一些内部特性，这些内部特性的名称会用两个中括号括起来，如 <code>[[Enumerable]]</code>，根据内部特性的不同，可以将属性分为 <strong>数据属性</strong> 和 <strong>访问器属性</strong>。</p>
-<h2>数据属性</h2>
-<p>数据属性，顾名思义，它是包含一个值的属性，数据属性一共以下四个特性：</p>
-<ul>
-<li><code>[[Configurable]]</code>：属性是否可配置：是否可以 <code>delete</code> 删除，是否可以修改特性，以及是否可以改成访问器属性。默认为 <code>true</code>。</li>
-<li><code>[[Enumerable]]</code>：属性是否可以枚举（使用 <code>for-in</code>）。默认为 <code>true</code>。</li>
-<li><code>[[Writable]]</code>：属性的值是否可以被修改。默认为 <code>true</code>。</li>
-<li><code>[[Value]]</code>：属性的值。默认为 <code>undefined</code>。</li>
-</ul>]]></summary>
-    <content type="html"><![CDATA[<p>在 JavaScript 中，对象是一组属性的「无序集合」，由键值对组成。创建对象共有两种方式：字面量和 <code>new</code>。一般开发中为了方便通常使用字面量来创建对象。</p>
-<p>对象中的属性有一些内部特性，这些内部特性的名称会用两个中括号括起来，如 <code>[[Enumerable]]</code>，根据内部特性的不同，可以将属性分为 <strong>数据属性</strong> 和 <strong>访问器属性</strong>。</p>
-<h2>数据属性</h2>
-<p>数据属性，顾名思义，它是包含一个值的属性，数据属性一共以下四个特性：</p>
-<ul>
-<li><code>[[Configurable]]</code>：属性是否可配置：是否可以 <code>delete</code> 删除，是否可以修改特性，以及是否可以改成访问器属性。默认为 <code>true</code>。</li>
-<li><code>[[Enumerable]]</code>：属性是否可以枚举（使用 <code>for-in</code>）。默认为 <code>true</code>。</li>
-<li><code>[[Writable]]</code>：属性的值是否可以被修改。默认为 <code>true</code>。</li>
-<li><code>[[Value]]</code>：属性的值。默认为 <code>undefined</code>。</li>
-</ul>
-<p>使用字面量或 <code>new</code> 操作符定义对象时，默认就是一个数据属性。前三个特性都默认为 <code>true</code>，而 <code>[[value]]</code> 则为指定的值。</p>
-<p>可以使用 <code>Object.getOwnPropertyDescriptor()</code> 查看属性的描述符，他接收两个参数，第一个参数为对象，第二个参数为需要查看描述符的属性。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> o <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'wang'</span> <span class="token punctuation">}</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Object<span class="token punctuation">.</span><span class="token function">getOwnPropertyDescriptor</span><span class="token punctuation">(</span>o<span class="token punctuation">,</span> <span class="token string">'name'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment">// {</span>
-<span class="token comment">//   value: 'wang',</span>
-<span class="token comment">//   writable: true,</span>
-<span class="token comment">//   enumerable: true,</span>
-<span class="token comment">//   configurable: true</span>
-<span class="token comment">// }</span>
-</code></pre></div><p>另外除了使用字面量声明属性，还可以通过 <code>Object.defineProperty()</code> 定义属性，同时定义多个属性则可以使用 <code>Object.defineProperties()</code>，</p>
-<div class="hint-container warning">
-<p class="hint-container-title">注意</p>
-<p>在调用 <code>Object.defineProperty()</code> 时，<code>configurable</code>、<code>enumerable</code> 和 <code>writable</code> 的值如果不指定，则都默认为 <code>false</code>。</p>
-<p>在严格模式下，尝试删除不可配置属性会抛出错误，尝试修改只读属性也会抛出错误。</p>
-</div>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> o <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-
-Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>o<span class="token punctuation">,</span> <span class="token string">'name'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  <span class="token literal-property property">value</span><span class="token operator">:</span> <span class="token string">'wang'</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Object<span class="token punctuation">.</span><span class="token function">getOwnPropertyDescriptor</span><span class="token punctuation">(</span>o<span class="token punctuation">,</span> <span class="token string">'name'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment">// {</span>
-<span class="token comment">//   value: 'wang',</span>
-<span class="token comment">//   writable: false,</span>
-<span class="token comment">//   enumerable: false,</span>
-<span class="token comment">//   configurable: false</span>
-<span class="token comment">// }</span>
-</code></pre></div><h2>访问器属性</h2>
-<p>访问器属性不包含值，而是有一个 <code>getter()</code> 函数和一个 <code>setter()</code> 函数。在写入访问器属性时，会调用设置（<code>setter()</code>）函数，在读取时，会调用获取（<code>getter()</code>）函数。它一共包括四种特性：</p>
-<ul>
-<li><code>[[Configurable]]</code>：属性是否可配置：是否可以 <code>delete</code>，是否可以修改特性，以及是否可以改成数据属性。默认为 <code>true</code>。</li>
-<li><code>[[Enumerable]]</code>：属性是否可以枚举。默认为 <code>true</code>。</li>
-<li><code>[[Get]]</code>：获取函数，读取属性时调用。默认为 <code>undefined</code>。</li>
-<li><code>[[Set]]</code>：设置函数，写入属性时调用。默认为 <code>undefined</code>。</li>
-</ul>
-<p>访问器属性 <strong>只能</strong> 通过 <code>Object.defineProperty()</code> 或 <code>Object.defineProperties()</code> 定义：</p>
-<div class="hint-container warning">
-<p class="hint-container-title">注意</p>
-<p>在调用 <code>Object.defineProperty()</code> 时，<code>configurable</code> 和 <code>enumerable</code> 的值如果不指定，则都默认为 <code>false</code>。</p>
-</div>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token comment">// 定义一个对象，包含伪私有成员 year_ 和公共成员 edition</span>
-<span class="token keyword">let</span> book <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token literal-property property">year_</span><span class="token operator">:</span> <span class="token number">2017</span><span class="token punctuation">,</span>
-  <span class="token literal-property property">edition</span><span class="token operator">:</span> <span class="token number">1</span>
-<span class="token punctuation">}</span>
-
-Object<span class="token punctuation">.</span><span class="token function">defineProperty</span><span class="token punctuation">(</span>book<span class="token punctuation">,</span> <span class="token string">'year'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>year_
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token function">set</span><span class="token punctuation">(</span>newValue<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>newValue <span class="token operator">&gt;</span> <span class="token number">2017</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span>year_ <span class="token operator">=</span> newValue
-      <span class="token keyword">this</span><span class="token punctuation">.</span>edition <span class="token operator">+=</span> newValue <span class="token operator">-</span> <span class="token number">2017</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-<span class="token comment">// 设置时，会调用 setter 函数</span>
-book<span class="token punctuation">.</span>year <span class="token operator">=</span> <span class="token number">2018</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>book<span class="token punctuation">.</span>edition<span class="token punctuation">)</span> <span class="token comment">// 2</span>
-
-<span class="token comment">// 读取时，会调用 getter 函数</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>book<span class="token punctuation">.</span>year_<span class="token punctuation">)</span> <span class="token comment">// 2018</span>
-
-<span class="token comment">// configurable 和 enumerable 的值如果不指定，则都默认为 false</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Object<span class="token punctuation">.</span><span class="token function">getOwnPropertyDescriptor</span><span class="token punctuation">(</span>book<span class="token punctuation">,</span> <span class="token string">'year'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment">// {</span>
-<span class="token comment">//   get: [Function: get],</span>
-<span class="token comment">//   set: [Function: set],</span>
-<span class="token comment">//   enumerable: false,</span>
-<span class="token comment">//   configurable: false</span>
-<span class="token comment">// }</span>
-</code></pre></div><div class="hint-container tip">
-<p class="hint-container-title">提示</p>
-<p>Vue 中的计算属性就是访问器属性中的 <code>getter()</code> 和 <code>setter</code>。</p>
-</div>
-]]></content>
-    <category term="JavaScript"/>
-    <published>2022-08-25T00:00:00.000Z</published>
   </entry>
 </feed>
