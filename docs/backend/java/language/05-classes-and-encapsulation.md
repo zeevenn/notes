@@ -312,31 +312,11 @@ public void register(Database db) {
 
 ## 封装（Encapsulation）
 
-封装是面向对象编程的核心原则之一，指将数据（字段）和操作数据的方法绑定在一起，并隐藏内部实现细节。
-
-### 封装的原则
-
-1. **字段私有化**：使用 `private` 修饰字段
-2. **提供公共接口**：通过 `public` 的 getter/setter 方法访问和修改字段
-3. **隐藏实现细节**：外部只能通过方法访问，不能直接操作字段
-
-**不好的做法：**
+封装是面向对象编程的核心原则之一，指将数据（字段）私有化，通过公共方法（getter/setter）来访问和修改，以便控制访问权限和添加验证逻辑。
 
 ```java
 public class Person {
-    public String name;  // ❌ 字段暴露，任何人都可以随意修改
-    public int age;
-}
-
-Person person = new Person();
-person.age = -5;  // ❌ 可以设置不合理的值，没有验证
-```
-
-**好的做法：**
-
-```java
-public class Person {
-    private String name;  // ✅ 字段私有化
+    private String name;  // 字段私有化
     private int age;
 
     public String getName() {
@@ -361,213 +341,46 @@ public class Person {
         this.age = age;
     }
 }
-
-Person person = new Person();
-person.setAge(25);   // ✅ 通过方法设置，有验证逻辑
-// person.setAge(-5);  // ✅ 抛出异常，不允许不合理的值
 ```
 
-### Getter 和 Setter 命名规范
+### Getter/Setter 命名规范
 
-Java 遵循 **JavaBeans** 命名规范：
+| 方法类型 | 命名规则                     | 示例                        |
+| -------- | ---------------------------- | --------------------------- |
+| Getter   | `get` + 字段名（首字母大写） | `getName()`, `getAge()`     |
+| Setter   | `set` + 字段名（首字母大写） | `setName()`, `setAge()`     |
+| Boolean  | `is` + 字段名（首字母大写）  | `isActive()`, `isMarried()` |
 
-| 方法类型 | 命名规则                     | 示例                             |
-| -------- | ---------------------------- | -------------------------------- |
-| Getter   | `get` + 字段名（首字母大写） | `getName()`, `getAge()`          |
-| Setter   | `set` + 字段名（首字母大写） | `setName(String)`, `setAge(int)` |
-| Boolean  | `is` + 字段名（首字母大写）  | `isActive()`, `isMarried()`      |
+> [!TIP]
+> 现代 IDE 可以自动生成 getter/setter 方法。
+
+## JavaBeans 规范
+
+JavaBeans 是一种 Java 类的设计规范，广泛用于各种框架（如 Spring、Hibernate 等）。
+
+### 基本要求
+
+1. **必须有无参的公共构造方法**
+2. **字段私有化**
+3. **通过 getter/setter 方法访问字段**
+4. **可序列化**（可选）
 
 ```java
 public class User {
     private String username;
-    private boolean active;
-    private boolean married;
-
-    // Getter：get + 字段名
-    public String getUsername() {
-        return username;
-    }
-
-    // Setter：set + 字段名
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    // Boolean 类型的 Getter：is + 字段名
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isMarried() {
-        return married;
-    }
-
-    public void setMarried(boolean married) {
-        this.married = married;
-    }
-}
-```
-
-> [!TIP]
-> 现代 IDE（如 IntelliJ IDEA）可以自动生成符合规范的 getter/setter 方法。
-
-### 只读属性
-
-如果只提供 getter 而不提供 setter，字段就是**只读的**：
-
-```java
-public class Product {
-    private final String id;  // 一旦设置就不能修改
-    private String name;
-    private double price;
-
-    public Product(String id, String name, double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
-
-    // 只提供 getter，不提供 setter → 只读属性
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        if (price < 0) {
-            throw new IllegalArgumentException("Price cannot be negative");
-        }
-        this.price = price;
-    }
-}
-
-Product product = new Product("P001", "Laptop", 999.99);
-System.out.println(product.getId());  // ✅ 可以读取
-// product.setId("P002");  // ❌ 编译错误：没有 setId 方法
-```
-
-### 计算属性
-
-Getter 方法可以返回计算的结果，而不一定直接返回字段值：
-
-```java
-public class Rectangle {
-    private double width;
-    private double height;
-
-    public Rectangle(double width, double height) {
-        this.width = width;
-        this.height = height;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(double width) {
-        if (width <= 0) {
-            throw new IllegalArgumentException("Width must be positive");
-        }
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        if (height <= 0) {
-            throw new IllegalArgumentException("Height must be positive");
-        }
-        this.height = height;
-    }
-
-    // 计算属性：没有对应的字段，每次调用时计算
-    public double getArea() {
-        return width * height;
-    }
-
-    public double getPerimeter() {
-        return 2 * (width + height);
-    }
-}
-
-Rectangle rect = new Rectangle(10, 5);
-System.out.println(rect.getArea());       // 50.0
-System.out.println(rect.getPerimeter());  // 30.0
-```
-
-### 封装的优势
-
-1. **数据验证**：在 setter 中添加验证逻辑，防止不合法的数据
-2. **灵活性**：可以随时修改内部实现，不影响外部代码
-3. **只读/只写控制**：通过提供或不提供 getter/setter 控制访问权限
-4. **计算属性**：可以提供动态计算的属性，而不是直接暴露字段
-5. **调试和日志**：可以在 getter/setter 中添加日志，追踪数据变化
-
-## JavaBeans 规范
-
-JavaBeans 是一种 Java 类的设计规范，广泛用于各种框架（如 Spring、Hibernate、JSP 等）。
-
-### JavaBeans 的要求
-
-一个标准的 JavaBean 必须满足：
-
-1. **必须有一个无参的公共构造方法**
-2. **字段必须是私有的**
-3. **通过公共的 getter/setter 方法访问字段**
-4. **可序列化**（实现 `Serializable` 接口，可选）
-
-```java
-import java.io.Serializable;
-
-public class User implements Serializable {
-    // 1. 字段私有化
-    private String username;
-    private String email;
     private int age;
 
-    // 2. 无参构造方法（必须）
+    // 无参构造方法（必须）
     public User() {
     }
 
-    // 3. 有参构造方法（可选，但推荐提供）
-    public User(String username, String email, int age) {
-        this.username = username;
-        this.email = email;
-        this.age = age;
-    }
-
-    // 4. Getter/Setter 方法
+    // Getter/Setter 方法
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public int getAge() {
@@ -580,141 +393,113 @@ public class User implements Serializable {
 }
 ```
 
-### JavaBeans 的使用场景
+> [!TIP]
+> 很多框架（如 Spring MVC、Hibernate、Jackson）通过反射调用 getter/setter 方法来自动填充或序列化对象。
 
-**1. 框架自动绑定**
+### Record（Java 14+）
 
-很多框架会通过反射调用 getter/setter 方法：
-
-```java
-// Spring MVC 自动将请求参数绑定到 JavaBean
-@PostMapping("/users")
-public String createUser(User user) {  // 自动调用 setter 方法填充数据
-    // user 对象已经被自动填充
-    System.out.println(user.getUsername());
-    return "success";
-}
-```
-
-**2. ORM 框架（如 Hibernate、JPA）**
+**Java 14** 引入了 `record` 关键字，用于创建**不可变数据类**，自动生成构造方法、getter、`equals()`、`hashCode()` 和 `toString()` 方法。
 
 ```java
-@Entity
-@Table(name = "users")
-public class User implements Serializable {
-    @Id
-    @GeneratedValue
-    private Long id;
+// 传统写法：需要手写大量样板代码
+public class Person {
+    private final String name;
+    private final int age;
 
-    @Column(name = "username")
-    private String username;
-
-    // 必须有无参构造方法，Hibernate 需要用它创建对象
-    public User() {
-    }
-
-    // Getter/Setter 方法
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-}
-```
-
-**3. JSON 序列化/反序列化（如 Jackson、Gson）**
-
-```java
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public class Demo {
-    public void test() throws Exception {
-        User user = new User("alice", "alice@example.com", 25);
-
-        // 序列化为 JSON：调用 getter 方法
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(user);
-        System.out.println(json);  // {"username":"alice","email":"alice@example.com","age":25}
-
-        // 反序列化：调用无参构造方法 + setter 方法
-        User user2 = mapper.readValue(json, User.class);
-        System.out.println(user2.getUsername());  // alice
-    }
-}
-```
-
-### 常见的增强方法
-
-除了基本的 getter/setter，JavaBean 通常还会添加这些方法：
-
-```java
-import java.io.Serializable;
-import java.util.Objects;
-
-public class User implements Serializable {
-    private String username;
-    private String email;
-    private int age;
-
-    public User() {
-    }
-
-    public User(String username, String email, int age) {
-        this.username = username;
-        this.email = email;
+    public Person(String name, int age) {
+        this.name = name;
         this.age = age;
     }
 
-    // Getter/Setter 略...
-
-    // toString()：方便调试和日志
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                '}';
+    public String getName() {
+        return name;
     }
 
-    // equals()：判断两个对象是否相等
+    public int getAge() {
+        return age;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return age == user.age &&
-                Objects.equals(username, user.username) &&
-                Objects.equals(email, user.email);
+        // ... 很多代码
     }
 
-    // hashCode()：用于 HashMap、HashSet 等集合
     @Override
     public int hashCode() {
-        return Objects.hash(username, email, age);
+        // ... 很多代码
     }
+
+    @Override
+    public String toString() {
+        // ... 很多代码
+    }
+}
+
+// Record 写法：一行搞定
+public record Person(String name, int age) {
 }
 ```
 
+**Record 的特点：**
+
+- **自动生成构造方法**：`new Person("Alice", 25)`
+- **自动生成 getter**：`person.name()`（注意：不是 `getName()`）
+- **自动生成 `equals()`、`hashCode()`、`toString()`**
+- **所有字段都是 `final`**，对象不可变
+- **不能被继承**（隐式 `final`）
+
+```java
+public record User(String username, String email, int age) {
+}
+
+// 使用
+User user = new User("alice", "alice@example.com", 25);
+System.out.println(user.username());  // alice（getter 方法名是字段名，不是 getUsername）
+System.out.println(user.age());       // 25
+System.out.println(user);             // User[username=alice, email=alice@example.com, age=25]
+```
+
+**Record 可以添加自定义方法和验证逻辑：**
+
+```java
+public record Person(String name, int age) {
+    // 自定义构造方法：添加验证逻辑
+    public Person {
+        if (age < 0) {
+            throw new IllegalArgumentException("Age cannot be negative");
+        }
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+    }
+
+    // 自定义方法
+    public boolean isAdult() {
+        return age >= 18;
+    }
+}
+
+Person person = new Person("Alice", 25);
+System.out.println(person.isAdult());  // true
+```
+
+**Record vs 传统类：**
+
+| 特性           | Record                   | 传统类                     |
+| -------------- | ------------------------ | -------------------------- |
+| 不可变性       | ✅ 强制不可变            | ❌ 需要手动用 `final` 实现 |
+| Getter 方法名  | `fieldName()`            | `getFieldName()`           |
+| 样板代码       | ✅ 自动生成              | ❌ 需要手写或 IDE/Lombok   |
+| 继承           | ❌ 不能被继承            | ✅ 可以继承                |
+| 实现接口       | ✅ 可以                  | ✅ 可以                    |
+| 适用场景       | 纯数据对象（DTO、VO 等） | 需要可变性或继承的业务对象 |
+
 > [!TIP]
-> 现代 IDE 可以自动生成 `toString()`、`equals()` 和 `hashCode()` 方法。
-> Lombok 库可以通过注解自动生成这些方法：`@Data`、`@Getter`、`@Setter` 等。
+> Record 非常适合用作 DTO（Data Transfer Object）、API 响应对象、配置类等纯数据承载对象。
 
 ### 最佳实践
 
-1. **遵循命名规范**：严格按照 `get`/`set`/`is` 规范命名，否则框架可能无法识别
-2. **提供无参构造方法**：即使有有参构造方法，也要显式提供无参构造方法
-3. **字段验证**：在 setter 中添加必要的验证逻辑
-4. **实现 Serializable**：如果对象需要序列化（网络传输、缓存、持久化），实现 `Serializable` 接口
-5. **重写 toString()**：方便调试和日志输出
-6. **按需重写 equals() 和 hashCode()**：如果对象需要用于集合或比较，务必正确实现这两个方法
+1. **JavaBean**：用于需要框架支持（Spring、Hibernate 等）或需要可变性的场景
+2. **Record**：用于不可变的数据对象，如 DTO、值对象、配置类
+3. **重写 `toString()`、`equals()`、`hashCode()`**：JavaBean 需要手动或用 IDE/Lombok 生成，Record 自动生成
+4. **无参构造方法**：JavaBean 必须提供，Record 不支持无参构造
