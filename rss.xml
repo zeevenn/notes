@@ -6,8 +6,8 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Mon, 26 Jan 2026 14:21:01 GMT</pubDate>
-    <lastBuildDate>Mon, 26 Jan 2026 14:21:01 GMT</lastBuildDate>
+    <pubDate>Mon, 02 Feb 2026 01:39:48 GMT</pubDate>
+    <lastBuildDate>Mon, 02 Feb 2026 01:39:48 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
@@ -60,7 +60,7 @@
 <h3>类级别的访问修饰符</h3>
 <p><strong>顶级类</strong>（Top-level Class）是指直接定义在源文件中，而不是嵌套在其他类、类型或方法内部的类。</p>
 <p>顶级类只有<strong>两种</strong>有效的访问修饰符选项：</p>
-<p>| 访问修饰符 | 描述                                                                 |<br>
+<p>| 访问修饰符 | 描述                                                               |<br>
 |</p>
 ]]></content:encoded>
     </item>
