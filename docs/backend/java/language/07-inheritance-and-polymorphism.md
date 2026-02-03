@@ -34,12 +34,12 @@ public class Dog extends Animal {
 
 ### 与 TypeScript 的区别
 
-| 特性        | Java                                   | TypeScript                                    |
-| ----------- | -------------------------------------- | --------------------------------------------- |
-| 多继承      | ❌ 只支持单继承                        | ❌ 只支持单继承                               |
-| 接口多实现  | ✅ 支持实现多个接口                    | ✅ 支持                                       |
-| 根类/原型   | ✅ 所有类隐式继承 `Object`             | ✅ 所有对象继承自 `Object.prototype`          |
-| 访问修饰符  | `public/protected/private`（运行时生效） | `public/protected/private`（仅编译时检查） |
+| 特性       | Java                                     | TypeScript                                 |
+| ---------- | ---------------------------------------- | ------------------------------------------ |
+| 多继承     | ❌ 只支持单继承                          | ❌ 只支持单继承                            |
+| 接口多实现 | ✅ 支持实现多个接口                      | ✅ 支持                                    |
+| 根类/原型  | ✅ 所有类隐式继承 `Object`               | ✅ 所有对象继承自 `Object.prototype`       |
+| 访问修饰符 | `public/protected/private`（运行时生效） | `public/protected/private`（仅编译时检查） |
 
 ### Object 类
 
@@ -127,46 +127,151 @@ System.out.println(super.name);  // 父类字段
 
 ## 多态（Polymorphism）
 
-多态是指**同一个方法调用**，在不同对象上会产生不同的行为。
+多态是指**同一个引用类型**，在指向不同对象时，调用相同的方法会产生不同的行为。
 
-### 向上转型（Upcasting）
+### 多态的前提条件
 
-子类对象可以赋值给父类引用，这是**自动**的。
+1. **必须有继承关系**
+2. **子类必须重写父类的方法**
+3. **父类引用指向子类对象**
+
+### 多态的基本示例
 
 ```java
-Animal animal = new Dog("Buddy");  // 向上转型（自动）
-animal.eat();   // ✅ 可以调用 Animal 的方法
-// animal.bark();  // ❌ 不能调用 Dog 特有的方法
+// 父类
+public class Animal {
+    public void makeSound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+// 子类 1
+public class Dog extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Dog barks: Woof!");
+    }
+}
+
+// 子类 2
+public class Cat extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Cat meows: Meow!");
+    }
+}
 
 // 多态应用
-Animal[] animals = {new Dog("Buddy"), new Cat("Whiskers")};
-for (Animal animal : animals) {
-    animal.makeSound();  // 每个对象调用自己的实现
+public class Test {
+    public static void main(String[] args) {
+        // 父类引用指向不同的子类对象
+        Animal animal1 = new Dog();  // 多态
+        Animal animal2 = new Cat();  // 多态
+
+        animal1.makeSound();  // 输出：Dog barks: Woof!
+        animal2.makeSound();  // 输出：Cat meows: Meow!
+
+        // 同一个方法调用，产生不同的行为
+    }
 }
 ```
 
-### 向下转型（Downcasting）
+### 多态的实际应用
 
-父类引用转换为子类引用，需要**显式转换**，且可能失败。
+多态最大的好处是可以**编写通用的代码**，处理不同类型的对象。
 
 ```java
-Animal animal = new Dog("Buddy");
-Dog dog = (Dog) animal;  // 向下转型（显式）
-dog.bark();  // ✅
+public class AnimalFeeder {
+    // 这个方法可以喂养任何 Animal 类型的动物
+    public void feed(Animal animal) {
+        System.out.println("Feeding the animal...");
+        animal.makeSound();  // 不同动物会发出不同声音
+    }
+}
 
-// ❌ 危险：如果 animal 实际不是 Dog，会抛出 ClassCastException
+public class Test {
+    public static void main(String[] args) {
+        AnimalFeeder feeder = new AnimalFeeder();
+
+        Dog dog = new Dog();
+        Cat cat = new Cat();
+        Bird bird = new Bird();
+
+        feeder.feed(dog);   // 传入 Dog
+        feeder.feed(cat);   // 传入 Cat
+        feeder.feed(bird);  // 传入 Bird
+
+        // 同一个 feed 方法，可以处理不同类型的动物
+    }
+}
+```
+
+**数组/集合中的多态：**
+
+```java
+// 父类数组可以存储不同的子类对象
+Animal[] animals = {
+    new Dog(),
+    new Cat(),
+    new Bird()
+};
+
+for (Animal animal : animals) {
+    animal.makeSound();  // 每个动物调用自己的 makeSound 方法
+}
+
+// 输出：
+// Dog barks: Woof!
+// Cat meows: Meow!
+// Bird chirps: Tweet!
+```
+
+### 向上转型（Upcasting）
+
+子类对象赋值给父类引用，称为**向上转型**，是**自动**的。
+
+```java
+Dog dog = new Dog();
+Animal animal = dog;  // 向上转型（自动）
+
+animal.makeSound();  // ✅ 调用 Dog 的 makeSound()
+// animal.bark();    // ❌ 编译错误：Animal 类型没有 bark() 方法
+```
+
+**限制：** 虽然 `animal` 实际指向 `Dog` 对象，但编译器只知道它是 `Animal` 类型，所以只能调用 `Animal` 中定义的方法。
+
+### 向下转型（Downcasting）
+
+父类引用转换为子类引用，称为**向下转型**，需要**显式转换**。
+
+```java
+Animal animal = new Dog();  // 向上转型
+Dog dog = (Dog) animal;     // 向下转型（显式）
+dog.bark();                 // ✅ 现在可以调用 Dog 的方法了
+```
+
+**危险：** 如果 `animal` 实际不是 `Dog` 类型，会抛出 `ClassCastException`。
+
+```java
+Animal animal = new Cat();
+Dog dog = (Dog) animal;  // ❌ 运行时抛出 ClassCastException
 ```
 
 ### instanceof 关键字
 
-在向下转型前，使用 `instanceof` 检查对象类型，避免 `ClassCastException`。
+在向下转型前，使用 `instanceof` 检查对象的实际类型。
 
 ```java
-Animal animal = new Dog("Buddy");
+Animal animal = new Dog();
 
 if (animal instanceof Dog) {
     Dog dog = (Dog) animal;
     dog.bark();  // 安全
+}
+
+if (animal instanceof Cat) {
+    Cat cat = (Cat) animal;
+    cat.meow();  // 不会执行，因为 animal 不是 Cat
 }
 ```
 
@@ -175,19 +280,73 @@ if (animal instanceof Dog) {
 ```java
 // 自动转换，无需手动类型转换
 if (animal instanceof Dog dog) {
-    dog.bark();
+    dog.bark();  // 自动转换为 Dog 类型
 }
 ```
 
-### 动态绑定
+### 动态绑定（运行时多态）
 
-Java 在**运行时**根据对象的实际类型调用相应的方法（运行时多态）。
+**动态绑定**是指 Java 在**运行时**根据对象的**实际类型**决定调用哪个方法，而不是在编译时就确定。
 
 ```java
-Animal animal = new Dog("Buddy");
-// animal 的编译时类型是 Animal，运行时类型是 Dog
-animal.makeSound();  // 调用 Dog 的 makeSound()
+Animal animal = new Dog();
+// animal 的编译时类型是 Animal
+// animal 的运行时类型是 Dog
+
+animal.makeSound();  // 运行时调用 Dog 的 makeSound()
 ```
+
+**编译时 vs 运行时：**
+
+- **编译时**：编译器根据引用类型（`Animal`）检查方法是否存在
+- **运行时**：JVM 根据对象的实际类型（`Dog`）决定调用哪个方法
+
+**动态绑定 vs 向上转型的区别：**
+
+| 概念     | 含义                                   | 发生时机 |
+| -------- | -------------------------------------- | -------- |
+| 向上转型 | 子类对象赋值给父类引用（类型转换）     | 编译时   |
+| 动态绑定 | 运行时根据对象实际类型调用方法（机制） | 运行时   |
+
+```java
+// 向上转型：类型转换
+Animal animal = new Dog();  // Dog 类型 → Animal 类型
+
+// 动态绑定：方法调用机制
+animal.makeSound();  // 编译时检查 Animal 有没有 makeSound()
+                     // 运行时调用 Dog 的 makeSound()
+```
+
+**向上转型是多态的前提，动态绑定是多态的实现机制。**
+
+### 多态的好处
+
+1. **提高代码的扩展性**：新增子类无需修改现有代码
+
+   ```java
+   // 新增一个 Bird 类
+   public class Bird extends Animal {
+       @Override
+       public void makeSound() {
+           System.out.println("Bird chirps: Tweet!");
+       }
+   }
+
+   // 原有的 feed 方法无需修改，自动支持 Bird
+   feeder.feed(new Bird());
+   ```
+
+2. **提高代码的灵活性**：同一段代码可以处理不同类型的对象
+
+   ```java
+   public void processAnimals(Animal[] animals) {
+       for (Animal animal : animals) {
+           animal.makeSound();  // 可以处理任何 Animal 子类
+       }
+   }
+   ```
+
+3. **降低代码的耦合度**：依赖抽象（父类），而不是具体实现（子类）
 
 ## 构造方法链
 
