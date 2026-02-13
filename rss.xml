@@ -6,8 +6,8 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Fri, 13 Feb 2026 07:47:28 GMT</pubDate>
-    <lastBuildDate>Fri, 13 Feb 2026 07:47:28 GMT</lastBuildDate>
+    <pubDate>Fri, 13 Feb 2026 10:47:00 GMT</pubDate>
+    <lastBuildDate>Fri, 13 Feb 2026 10:47:00 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
@@ -32,6 +32,126 @@
     <category>Pixi</category>
     <category>READING</category>
     <category>JavaScript</category>
+    <item>
+      <title>String and Array</title>
+      <link>https://dribble-njr.github.io/blog/blog/backend/java/language/03-string-array.html</link>
+      <guid>https://dribble-njr.github.io/blog/blog/backend/java/language/03-string-array.html</guid>
+      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">String and Array</source>
+      <description>String（字符串） String 是 Java 中用于表示字符串的引用类型，位于 java.lang 包中。 创建方式 不可变性（Immutable） String 对象一旦创建，内容就无法修改。 为什么不可变： 安全性（防止文件路径、URL 等被恶意修改） 线程安全（无需同步） 可以缓存 hashCode（提高 HashMap 性能） 支持字符串...</description>
+      <category>java</category>
+      <pubDate>Sun, 25 Jan 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<h2>String（字符串）</h2>
+<p><code>String</code> 是 Java 中用于表示字符串的<strong>引用类型</strong>，位于 <code>java.lang</code> 包中。</p>
+<h3>创建方式</h3>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token comment">// 字面量方式（推荐）</span>
+<span class="token class-name">String</span> s1 <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>  <span class="token comment">// 使用字符串常量池</span>
+
+<span class="token comment">// 构造器方式</span>
+<span class="token class-name">String</span> s2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 强制在堆中创建新对象</span>
+
+<span class="token comment">// 从字符数组或字节数组创建</span>
+<span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> chars <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token char">'H'</span><span class="token punctuation">,</span> <span class="token char">'e'</span><span class="token punctuation">,</span> <span class="token char">'l'</span><span class="token punctuation">,</span> <span class="token char">'l'</span><span class="token punctuation">,</span> <span class="token char">'o'</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> s3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>chars<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3>不可变性（Immutable）</h3>
+<p><code>String</code> 对象一旦创建，内容就<strong>无法修改</strong>。</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+s <span class="token operator">=</span> s <span class="token operator">+</span> <span class="token string">" World"</span><span class="token punctuation">;</span>  <span class="token comment">// 并非修改原对象，而是创建了新对象</span>
+</code></pre></div><p><strong>为什么不可变：</strong></p>
+<ol>
+<li>安全性（防止文件路径、URL 等被恶意修改）</li>
+<li>线程安全（无需同步）</li>
+<li>可以缓存 hashCode（提高 HashMap 性能）</li>
+<li>支持字符串常量池</li>
+</ol>
+<h3>字符串常量池（String Pool）</h3>
+<p>JVM 在堆内存中维护一个字符串常量池，缓存字符串字面量。</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s1 <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> s2 <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s2<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true（指向常量池中的同一对象）</span>
+
+<span class="token class-name">String</span> s3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s3<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// false（new 强制在堆中创建新对象）</span>
+
+<span class="token comment">// intern() 方法：将字符串放入常量池</span>
+<span class="token class-name">String</span> s4 <span class="token operator">=</span> s3<span class="token punctuation">.</span><span class="token function">intern</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s4<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true</span>
+</code></pre></div><h3>常用方法</h3>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 长度与字符访问</span>
+s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">// 11</span>
+s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">// 'H'</span>
+s<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">// false</span>
+
+<span class="token comment">// 子串与查找</span>
+s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">// "Hello"</span>
+s<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// 6</span>
+s<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// true</span>
+s<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// true</span>
+
+<span class="token comment">// 比较</span>
+s1<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>s2<span class="token punctuation">)</span><span class="token punctuation">;</span>                 <span class="token comment">// 比较内容</span>
+s1<span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 忽略大小写</span>
+<span class="token string">"apple"</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span><span class="token string">"banana"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 字典序比较</span>
+
+<span class="token comment">// 替换与转换</span>
+s<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">,</span> <span class="token string">"Java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// "Hello Java"</span>
+s<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">// "hello world"</span>
+s<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">// "HELLO WORLD"</span>
+<span class="token string">"  hello  "</span><span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// "hello"</span>
+
+<span class="token comment">// 分割与拼接</span>
+s<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// ["Hello", "World"]</span>
+<span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">", "</span><span class="token punctuation">,</span> <span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// "a, b"</span>
+</code></pre></div><div class="hint-container warning">
+<p class="hint-container-title">注意</p>
+<p>字符串比较使用 <code>.equals()</code>，不要使用 <code>==</code>。</p>
+</div>
+<h3>字符串格式化</h3>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token comment">// String.format()</span>
+<span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"Name: %s, Age: %d"</span><span class="token punctuation">,</span> <span class="token string">"Alice"</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// printf()</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Name: %s, Age: %d%n"</span><span class="token punctuation">,</span> <span class="token string">"Bob"</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>常用格式说明符：<code>%s</code>（字符串）、<code>%d</code>（整数）、<code>%f</code>（浮点数）、<code>%.2f</code>（保留 2 位小数）</p>
+<h3>文本块（Java 13+）</h3>
+<p>Java 13+ 支持<strong>文本块（Text Blocks）</strong>，使用 <code>"""</code> 三引号表示多行字符串。</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> json <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+    {
+        "name": "Alice",
+        "age": 25
+    }
+    """</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 支持变量格式化（Java 15+）</span>
+<span class="token class-name">String</span> html <span class="token operator">=</span> <span class="token triple-quoted-string string">"""
+    &lt;html&gt;
+        &lt;body&gt;&lt;h1&gt;%s&lt;/h1&gt;&lt;/body&gt;
+    &lt;/html&gt;
+    """</span><span class="token punctuation">.</span><span class="token function">formatted</span><span class="token punctuation">(</span>title<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><strong>特性：</strong> 保留换行和缩进、无需转义双引号、自动去除公共前导空白</p>
+<div class="hint-container tip">
+<p class="hint-container-title">提示</p>
+<p>Java 文本块不支持类似 JavaScript <code>${variable}</code> 的语法糖，需要使用 <code>.formatted()</code> 或 <code>String.format()</code>。</p>
+</div>
+<h3>字符串拼接</h3>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token comment">// + 运算符（简单场景）</span>
+<span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token string">"Hello"</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> <span class="token string">"World"</span><span class="token punctuation">;</span>
+
+<span class="token comment">// StringBuilder（推荐，线程不安全）</span>
+<span class="token class-name">StringBuilder</span> sb <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+sb<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> result <span class="token operator">=</span> sb<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// StringBuffer（线程安全，性能略低）</span>
+<span class="token class-name">StringBuffer</span> buf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+buf<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><strong>性能：</strong> 循环中不要使用 <code>+</code>，应使用 <code>StringBuilder</code>。</p>
+<h3>String vs StringBuilder vs StringBuffer</h3>
+<p>| 特性     | String     | StringBuilder | StringBuffer |<br>
+|</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>Abstract Classes and Interfaces</title>
       <link>https://dribble-njr.github.io/blog/blog/backend/java/language/09-abstract-and-interface.html</link>
@@ -704,143 +824,6 @@ car<span class="token punctuation">.</span><span class="token function">honk</sp
 <li>✅ 多 case 标签（正式）</li>
 <li>🔄 模式匹配（预览，Java 21 正式）</li>
 </ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>String</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/java/language/03-string.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/java/language/03-string.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">String</source>
-      <description>String 是 Java 中用于表示字符串的引用类型（Reference Type），位于 java.lang 包中。 String 可以被用做 Java 的第九个基本数据类型，可以像基本类型一样使用字面量创建，但它其实是一个类。 创建方式 字面量方式（推荐） 自动使用字符串常量池 性能更好，内存占用更少 构造器方式 强制在堆中创建新对象 即使常量池...</description>
-      <category>java</category>
-      <pubDate>Sun, 25 Jan 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p><code>String</code> 是 Java 中用于表示字符串的<strong>引用类型</strong>（Reference Type），位于 <code>java.lang</code> 包中。</p>
-<p><code>String</code> 可以被用做 Java 的第九个基本数据类型，可以像基本类型一样使用字面量创建，但它其实是一个类。</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>  <span class="token comment">// 字面量方式（推荐）</span>
-</code></pre></div><h2>创建方式</h2>
-<h3>字面量方式（推荐）</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s1 <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
-</code></pre></div><ul>
-<li>自动使用字符串常量池</li>
-<li>性能更好，内存占用更少</li>
-</ul>
-<h3>构造器方式</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><ul>
-<li>强制在堆中创建新对象</li>
-<li>即使常量池中已有相同内容，仍会创建新对象</li>
-</ul>
-<h3>从字符数组创建</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> chars <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token char">'H'</span><span class="token punctuation">,</span> <span class="token char">'e'</span><span class="token punctuation">,</span> <span class="token char">'l'</span><span class="token punctuation">,</span> <span class="token char">'l'</span><span class="token punctuation">,</span> <span class="token char">'o'</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> s3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>chars<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><h3>从字节数组创建</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">72</span><span class="token punctuation">,</span> <span class="token number">101</span><span class="token punctuation">,</span> <span class="token number">108</span><span class="token punctuation">,</span> <span class="token number">108</span><span class="token punctuation">,</span> <span class="token number">111</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> s4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>bytes<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 使用平台默认编码</span>
-<span class="token class-name">String</span> s5 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>bytes<span class="token punctuation">,</span> <span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 指定编码</span>
-</code></pre></div><h2>不可变性（Immutable）</h2>
-<p><code>String</code> 对象一旦创建，内容就<strong>无法修改</strong>：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
-s <span class="token operator">=</span> s <span class="token operator">+</span> <span class="token string">" World"</span><span class="token punctuation">;</span>  <span class="token comment">// 并非修改原对象，而是创建了新对象</span>
-</code></pre></div><p><strong>底层原理：</strong></p>
-<ul>
-<li>Java 8 及之前：<code>String</code> 内部使用 <code>final char[]</code> 存储数据</li>
-<li>Java 9+：改为 <code>final byte[]</code> + 编码标识（节省内存）</li>
-<li>所有修改操作都会返回新的 <code>String</code> 对象</li>
-</ul>
-<p><strong>为什么要设计成不可变？</strong></p>
-<ol>
-<li><strong>安全性</strong>：字符串常用于文件路径、网络地址、数据库连接等敏感场景，不可变可防止恶意修改</li>
-<li><strong>线程安全</strong>：不可变对象天然线程安全，无需同步</li>
-<li><strong>哈希缓存</strong>：<code>String</code> 可以缓存 <code>hashCode()</code>，提高 <code>HashMap</code>、<code>HashSet</code> 等性能</li>
-<li><strong>字符串常量池</strong>：不可变才能安全共享对象</li>
-</ol>
-<h2>字符串常量池（String Pool）</h2>
-<p>JVM 会在堆内存中维护一个<strong>字符串常量池</strong>，缓存字符串字面量，避免重复创建：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s1 <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> s2 <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s2<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true（指向常量池中的同一对象）</span>
-
-<span class="token class-name">String</span> s3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s3<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// false（new 强制在堆中创建新对象）</span>
-</code></pre></div><p><strong>内存布局：</strong></p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>堆内存（Heap）
-├── 字符串常量池
-│   └── "Hello" ← s1, s2 都指向这里
-└── 普通对象区
-    └── new String("Hello") ← s3 指向这里
-</code></pre></div><p><strong>intern() 方法：</strong></p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> s4 <span class="token operator">=</span> s3<span class="token punctuation">.</span><span class="token function">intern</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 将 s3 的值放入常量池（如果不存在），返回常量池中的引用</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>s1 <span class="token operator">==</span> s4<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true</span>
-</code></pre></div><h2>常用方法</h2>
-<h3>长度与字符访问</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">;</span>
-
-s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">// 11</span>
-s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">// 'H'</span>
-s<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">// false</span>
-<span class="token string">""</span><span class="token punctuation">.</span><span class="token function">isBlank</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// true（Java 11+，判断是否为空或仅包含空白）</span>
-</code></pre></div><h3>子串操作</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code>s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">// "Hello"（不包含索引 5）</span>
-s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">// "World"（从索引 6 到末尾）</span>
-</code></pre></div><h3>查找与判断</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code>s<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// 6（首次出现的位置）</span>
-s<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">"o"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// 7（最后一次出现的位置）</span>
-s<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// true</span>
-s<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// true</span>
-s<span class="token punctuation">.</span><span class="token function">endsWith</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// true</span>
-</code></pre></div><h3>比较</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> s1 <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> s2 <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> s3 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment">// == 比较引用（对象地址）</span>
-s1 <span class="token operator">==</span> s2<span class="token punctuation">;</span>                      <span class="token comment">// true（常量池中的同一对象）</span>
-s1 <span class="token operator">==</span> s3<span class="token punctuation">;</span>                      <span class="token comment">// false（s3 是堆中的新对象）</span>
-
-<span class="token comment">// equals() 比较内容</span>
-s1<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>s3<span class="token punctuation">)</span><span class="token punctuation">;</span>                 <span class="token comment">// true（内容相同）</span>
-s1<span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true（忽略大小写）</span>
-
-<span class="token comment">// 字典序比较</span>
-<span class="token string">"apple"</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span><span class="token string">"banana"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// &lt; 0（apple 在字典中排在 banana 前）</span>
-<span class="token string">"banana"</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span><span class="token string">"apple"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// &gt; 0</span>
-<span class="token string">"hello"</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 0（相等）</span>
-</code></pre></div><div class="hint-container warning">
-<p class="hint-container-title">注意</p>
-<p>字符串比较时应使用 <code>.equals()</code> 或 <code>.equalsIgnoreCase()</code>，而非 <code>==</code>。</p>
-</div>
-<h3>替换（返回新对象）</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code>s<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">,</span> <span class="token string">"Java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// "Hello Java"</span>
-s<span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"o"</span><span class="token punctuation">,</span> <span class="token string">"0"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">// "Hell0 W0rld"（支持正则）</span>
-s<span class="token punctuation">.</span><span class="token function">replaceFirst</span><span class="token punctuation">(</span><span class="token string">"l"</span><span class="token punctuation">,</span> <span class="token string">"L"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// "HeLlo World"</span>
-</code></pre></div><h3>分割与拼接</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token comment">// 分割</span>
-s<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// ["Hello", "World"]</span>
-<span class="token string">"a,b,c"</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// ["a", "b", "c"]</span>
-
-<span class="token comment">// 拼接</span>
-<span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">", "</span><span class="token punctuation">,</span> <span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// "a, b"</span>
-</code></pre></div><h3>大小写转换</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code>s<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">// "hello world"</span>
-s<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">// "HELLO WORLD"</span>
-</code></pre></div><h3>去除空白</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token string">"  hello  "</span><span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// "hello"（去除首尾空白）</span>
-<span class="token string">"  hello  "</span><span class="token punctuation">.</span><span class="token function">strip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// "hello"（Java 11+，支持 Unicode 空白字符）</span>
-<span class="token string">"  hello  "</span><span class="token punctuation">.</span><span class="token function">stripLeading</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// "hello  "（仅去除开头）</span>
-<span class="token string">"  hello  "</span><span class="token punctuation">.</span><span class="token function">stripTrailing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// "  hello"（仅去除末尾）</span>
-</code></pre></div><h3>其他常用方法</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span><span class="token number">123</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// "123"（任意类型转字符串）</span>
-<span class="token string">"hello"</span><span class="token punctuation">.</span><span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">// "hellohellohello"（Java 11+）</span>
-</code></pre></div><h2>字符串格式化</h2>
-<h3>String.format()</h3>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> name <span class="token operator">=</span> <span class="token string">"Alice"</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> age <span class="token operator">=</span> <span class="token number">25</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">"Name: %s, Age: %d"</span><span class="token punctuation">,</span> name<span class="token punctuation">,</span> age<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// "Name: Alice, Age: 25"</span>
-</code></pre></div><p>常用格式说明符：</p>
-<p>| 说明符 | 类型          | 示例       |<br>
-|</p>
 ]]></content:encoded>
     </item>
     <item>
@@ -7343,13 +7326,13 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>中间件，处理请求中间逻辑，比如：<code>cors</code>、<code>auth</code> 等。</p>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">type</span> <span class="token class-name">Middleware</span> <span class="token operator">=</span> <span class="token punctuation">(</span>req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span> res<span class="token operator">:</span> ServerResponse<span class="token punctuation">,</span> <span class="token function-variable function">next</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span>
 
-<span class="token comment">/**
+<span class="token doc-comment comment">/**
  * Manage the execution order of middleware functions.
  * It allows you to add multiple middleware functions to a queue
  * and execute them sequentially during a request.
  *
- * @export
- * @class MiddlewareManager
+ * <span class="token keyword">@export</span>
+ * <span class="token keyword">@class</span> MiddlewareManager
  */</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">MiddlewareManager</span> <span class="token punctuation">{</span>
   <span class="token keyword">private</span> <span class="token keyword">readonly</span> middlewares<span class="token operator">:</span> Middleware<span class="token punctuation">[</span><span class="token punctuation">]</span>
@@ -7576,12 +7559,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
 <p>其中 <code>path</code> 需要进行参数处理，如：<code>/category/:id</code>。处理完后参数类型应为 <code>params: Record&lt;string, string&gt;</code>，因为可能存在多个参数。</p>
 <p>解析完成后，<code>controller</code> 中需要接收 <code>params</code>，需要将 <code>params</code> 转换为 <code>request.params</code>。</p>
 <p>具体逻辑如下：</p>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">/**
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token doc-comment comment">/**
  * Execute route's middleware and controller.
  *
- * @param {CustomIncomingMessage} req
- * @param {ServerResponse} res
- * @param {Route} route
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>CustomIncomingMessage<span class="token punctuation">}</span> req
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>ServerResponse<span class="token punctuation">}</span> res
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>Route<span class="token punctuation">}</span> route
  */</span>
 <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">execute</span><span class="token punctuation">(</span>
   req<span class="token operator">:</span> CustomIncomingMessage<span class="token punctuation">,</span>
@@ -7604,12 +7587,12 @@ category_id <span class="token keyword">INTEGER</span><span class="token punctua
   <span class="token keyword">await</span> mwManager<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token comment">/**
+<span class="token doc-comment comment">/**
  * Matches the provided method and pathname to a route in the Router.
  *
- * @param {string} method - The HTTP method to match.
- * @param {string} pathname - The URL pathname to match.
- * @return {Object} An object containing the matched route and parameters.
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> method - The HTTP method to match.
+ * <span class="token keyword">@param</span> <span class="token punctuation">{</span>string<span class="token punctuation">}</span> pathname - The URL pathname to match.
+ * <span class="token keyword">@return</span> <span class="token punctuation">{</span>Object<span class="token punctuation">}</span> An object containing the matched route and parameters.
  */</span>
 <span class="token keyword">const</span> <span class="token function-variable function">matchRoute</span> <span class="token operator">=</span> <span class="token punctuation">(</span>method<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> pathname<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> router <span class="token keyword">in</span> Router<span class="token punctuation">)</span> <span class="token punctuation">{</span>
