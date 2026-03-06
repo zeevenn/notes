@@ -7,6 +7,19 @@
   "favicon": "https://dribble-njr.github.io/blog/blog/favicon.ico",
   "items": [
     {
+      "title": "Node.js 项目 dotenv 集成方案对比",
+      "url": "https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html",
+      "id": "https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html",
+      "summary": "背景问题 在 Node.js 项目中使用 dotenv 加载环境变量时，存在一个关键的加载时机问题： 问题原因 ES Modules 的 import 提升：所有 import 语句会被提升到模块顶部执行 node-config 的初始化时机：node-config 在模块加载时就读取环境变量，不是在调用 getConfig() 时 依赖导入顺序：必须...",
+      "content_html": "<h2>背景问题</h2>\n<p>在 Node.js 项目中使用 <code>dotenv</code> 加载环境变量时，存在一个关键的<strong>加载时机问题</strong>：</p>\n<div class=\"language-typescript\" data-ext=\"ts\" data-title=\"ts\"><pre class=\"language-typescript\"><code><span class=\"token comment\">// src/index.ts</span>\n<span class=\"token keyword\">import</span> <span class=\"token punctuation\">{</span> getConfig <span class=\"token punctuation\">}</span> <span class=\"token keyword\">from</span> <span class=\"token string\">'@conan/backend/utils'</span> <span class=\"token comment\">// node-config 在此时读取 NODE_CONFIG_DIR</span>\n<span class=\"token keyword\">import</span> <span class=\"token string\">'dotenv/config'</span> <span class=\"token comment\">// 太晚了！环境变量还没设置</span>\n</code></pre></div><h3>问题原因</h3>\n<ol>\n<li><strong>ES Modules 的 import 提升</strong>：所有 <code>import</code> 语句会被提升到模块顶部执行</li>\n<li><strong>node-config 的初始化时机</strong>：<code>node-config</code> 在模块加载时就读取环境变量，不是在调用 <code>getConfig()</code> 时</li>\n<li><strong>依赖导入顺序</strong>：必须确保 <code>dotenv/config</code> 在任何读取环境变量的模块之前导入</li>\n</ol>\n<h3>错误示例</h3>\n<div class=\"language-typescript\" data-ext=\"ts\" data-title=\"ts\"><pre class=\"language-typescript\"><code><span class=\"token comment\">// 错误：依赖导入顺序，且需要 eslint-disable</span>\n<span class=\"token comment\">/* eslint-disable perfectionist/sort-imports */</span>\n<span class=\"token keyword\">import</span> <span class=\"token string\">'dotenv/config'</span> <span class=\"token comment\">// 必须第一个</span>\n<span class=\"token keyword\">import</span> <span class=\"token punctuation\">{</span> getConfig <span class=\"token punctuation\">}</span> <span class=\"token keyword\">from</span> <span class=\"token string\">'@conan/backend/utils'</span>\n</code></pre></div><p>这种方式的问题：</p>\n<ul>\n<li>代码依赖导入顺序，脆弱易出错</li>\n<li>需要 eslint-disable 注释</li>\n<li>其他开发者可能不理解为什么顺序重要</li>\n</ul>\n",
+      "date_published": "2026-03-06T00:00:00.000Z",
+      "date_modified": "2026-03-06T09:03:29.000Z",
+      "authors": [],
+      "tags": [
+        "engineering"
+      ]
+    },
+    {
       "title": "String and Array",
       "url": "https://dribble-njr.github.io/blog/blog/backend/java/language/03-string-array.html",
       "id": "https://dribble-njr.github.io/blog/blog/backend/java/language/03-string-array.html",
@@ -1325,19 +1338,6 @@
       "authors": [],
       "tags": [
         "READING"
-      ]
-    },
-    {
-      "title": "手写 new 操作符",
-      "url": "https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/014-implement-new.html",
-      "id": "https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/014-implement-new.html",
-      "summary": "new 操作符的实现过程： 首先创建一个空对象； 将空对象的隐式原型 [[prototype]] 赋值为构造函数的 prototype 对象； 让构造函数的 this 指向这个空对象，执行构造函数的代码； 判断构造函数返回值的类型，如果是基本类型，则返回创建的对象，如果是引用类型，则返回这个引用类型。 那么具体实现可以这么做： ",
-      "content_html": "<p><code>new</code> 操作符的实现过程：</p>\n<ol>\n<li>首先创建一个空对象；</li>\n<li>将空对象的隐式原型 <code>[[prototype]]</code> 赋值为构造函数的 <code>prototype</code> 对象；</li>\n<li>让构造函数的 <code>this</code> 指向这个空对象，执行构造函数的代码；</li>\n<li>判断构造函数返回值的类型，如果是基本类型，则返回创建的对象，如果是引用类型，则返回这个引用类型。</li>\n</ol>\n<p>那么具体实现可以这么做：</p>\n<div class=\"language-javascript\" data-ext=\"js\" data-title=\"js\"><pre class=\"language-javascript\"><code><span class=\"token keyword\">function</span> <span class=\"token function\">newOperator</span><span class=\"token punctuation\">(</span><span class=\"token parameter\">constructor<span class=\"token punctuation\">,</span> <span class=\"token operator\">...</span>args</span><span class=\"token punctuation\">)</span> <span class=\"token punctuation\">{</span>\n  <span class=\"token keyword\">if</span> <span class=\"token punctuation\">(</span><span class=\"token keyword\">typeof</span> constructor <span class=\"token operator\">!==</span> <span class=\"token string\">'function'</span><span class=\"token punctuation\">)</span> <span class=\"token punctuation\">{</span>\n    console<span class=\"token punctuation\">.</span><span class=\"token function\">error</span><span class=\"token punctuation\">(</span><span class=\"token string\">'type error'</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n  <span class=\"token punctuation\">}</span>\n\n  <span class=\"token comment\">// 创建一个新对象，并将构造函数的 prototype 对象作为它的原型</span>\n  <span class=\"token keyword\">const</span> instance <span class=\"token operator\">=</span> Object<span class=\"token punctuation\">.</span><span class=\"token function\">create</span><span class=\"token punctuation\">(</span>constructor<span class=\"token punctuation\">.</span>prototype<span class=\"token punctuation\">)</span>\n  <span class=\"token comment\">// 执行构造函数的代码</span>\n  <span class=\"token keyword\">const</span> res <span class=\"token operator\">=</span> <span class=\"token function\">constructor</span><span class=\"token punctuation\">.</span><span class=\"token function\">apply</span><span class=\"token punctuation\">(</span>instance<span class=\"token punctuation\">,</span> args<span class=\"token punctuation\">)</span>\n  <span class=\"token comment\">// 判断返回值的类型</span>\n  <span class=\"token keyword\">let</span> flag <span class=\"token operator\">=</span> res <span class=\"token operator\">&amp;&amp;</span> <span class=\"token punctuation\">(</span><span class=\"token keyword\">typeof</span> res <span class=\"token operator\">===</span> <span class=\"token string\">'object'</span> <span class=\"token operator\">||</span> <span class=\"token keyword\">typeof</span> res <span class=\"token operator\">===</span> <span class=\"token string\">'function'</span><span class=\"token punctuation\">)</span>\n\n  <span class=\"token keyword\">return</span> flag <span class=\"token operator\">?</span> res <span class=\"token operator\">:</span> instance\n<span class=\"token punctuation\">}</span>\n\n<span class=\"token keyword\">function</span> <span class=\"token function\">Person</span><span class=\"token punctuation\">(</span><span class=\"token parameter\">name<span class=\"token punctuation\">,</span> age</span><span class=\"token punctuation\">)</span> <span class=\"token punctuation\">{</span>\n  <span class=\"token keyword\">this</span><span class=\"token punctuation\">.</span>name <span class=\"token operator\">=</span> name\n  <span class=\"token keyword\">this</span><span class=\"token punctuation\">.</span>age <span class=\"token operator\">=</span> age\n<span class=\"token punctuation\">}</span>\n\n<span class=\"token keyword\">const</span> person <span class=\"token operator\">=</span> <span class=\"token function\">newOperator</span><span class=\"token punctuation\">(</span>Person<span class=\"token punctuation\">,</span> <span class=\"token string\">'wang'</span><span class=\"token punctuation\">,</span> <span class=\"token number\">18</span><span class=\"token punctuation\">)</span>\nconsole<span class=\"token punctuation\">.</span><span class=\"token function\">log</span><span class=\"token punctuation\">(</span>person<span class=\"token punctuation\">)</span> <span class=\"token comment\">// Person { name: 'wang', age: 18 }</span>\n</code></pre></div>",
-      "date_published": "2022-08-23T00:00:00.000Z",
-      "date_modified": "2024-11-06T15:43:46.000Z",
-      "authors": [],
-      "tags": [
-        "JavaScript"
       ]
     }
   ]

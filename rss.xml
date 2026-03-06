@@ -6,10 +6,11 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Fri, 13 Feb 2026 10:47:00 GMT</pubDate>
-    <lastBuildDate>Fri, 13 Feb 2026 10:47:00 GMT</lastBuildDate>
+    <pubDate>Fri, 06 Mar 2026 09:05:16 GMT</pubDate>
+    <lastBuildDate>Fri, 06 Mar 2026 09:05:16 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+    <category>engineering</category>
     <category>java</category>
     <category>ai</category>
     <category>mcp</category>
@@ -32,6 +33,38 @@
     <category>Pixi</category>
     <category>READING</category>
     <category>JavaScript</category>
+    <item>
+      <title>Node.js 项目 dotenv 集成方案对比</title>
+      <link>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html</link>
+      <guid>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html</guid>
+      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Node.js 项目 dotenv 集成方案对比</source>
+      <description>背景问题 在 Node.js 项目中使用 dotenv 加载环境变量时，存在一个关键的加载时机问题： 问题原因 ES Modules 的 import 提升：所有 import 语句会被提升到模块顶部执行 node-config 的初始化时机：node-config 在模块加载时就读取环境变量，不是在调用 getConfig() 时 依赖导入顺序：必须...</description>
+      <category>engineering</category>
+      <pubDate>Fri, 06 Mar 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<h2>背景问题</h2>
+<p>在 Node.js 项目中使用 <code>dotenv</code> 加载环境变量时，存在一个关键的<strong>加载时机问题</strong>：</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// src/index.ts</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> getConfig <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@conan/backend/utils'</span> <span class="token comment">// node-config 在此时读取 NODE_CONFIG_DIR</span>
+<span class="token keyword">import</span> <span class="token string">'dotenv/config'</span> <span class="token comment">// 太晚了！环境变量还没设置</span>
+</code></pre></div><h3>问题原因</h3>
+<ol>
+<li><strong>ES Modules 的 import 提升</strong>：所有 <code>import</code> 语句会被提升到模块顶部执行</li>
+<li><strong>node-config 的初始化时机</strong>：<code>node-config</code> 在模块加载时就读取环境变量，不是在调用 <code>getConfig()</code> 时</li>
+<li><strong>依赖导入顺序</strong>：必须确保 <code>dotenv/config</code> 在任何读取环境变量的模块之前导入</li>
+</ol>
+<h3>错误示例</h3>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// 错误：依赖导入顺序，且需要 eslint-disable</span>
+<span class="token comment">/* eslint-disable perfectionist/sort-imports */</span>
+<span class="token keyword">import</span> <span class="token string">'dotenv/config'</span> <span class="token comment">// 必须第一个</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> getConfig <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@conan/backend/utils'</span>
+</code></pre></div><p>这种方式的问题：</p>
+<ul>
+<li>代码依赖导入顺序，脆弱易出错</li>
+<li>需要 eslint-disable 注释</li>
+<li>其他开发者可能不理解为什么顺序重要</li>
+</ul>
+]]></content:encoded>
+    </item>
     <item>
       <title>String and Array</title>
       <link>https://dribble-njr.github.io/blog/blog/backend/java/language/03-string-array.html</link>
@@ -7876,46 +7909,6 @@ load-nvmrc
 <p>意为从当前 <code>commit</code> 后的所有提交。将 <code>pick</code> 改为 <code>edit</code>，并使用 <code>git commit --amend --author="Author Name &lt;email&gt;"</code> 修改用户。</p>
 <p>满意后使用 <code>git rebase --continue</code> 关闭本次修改。</p>
 ]]></content:encoded>
-    </item>
-    <item>
-      <title>手写 new 操作符</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/014-implement-new.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/basic/javascript/014-implement-new.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">手写 new 操作符</source>
-      <description>new 操作符的实现过程： 首先创建一个空对象； 将空对象的隐式原型 [[prototype]] 赋值为构造函数的 prototype 对象； 让构造函数的 this 指向这个空对象，执行构造函数的代码； 判断构造函数返回值的类型，如果是基本类型，则返回创建的对象，如果是引用类型，则返回这个引用类型。 那么具体实现可以这么做： </description>
-      <category>JavaScript</category>
-      <pubDate>Tue, 23 Aug 2022 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p><code>new</code> 操作符的实现过程：</p>
-<ol>
-<li>首先创建一个空对象；</li>
-<li>将空对象的隐式原型 <code>[[prototype]]</code> 赋值为构造函数的 <code>prototype</code> 对象；</li>
-<li>让构造函数的 <code>this</code> 指向这个空对象，执行构造函数的代码；</li>
-<li>判断构造函数返回值的类型，如果是基本类型，则返回创建的对象，如果是引用类型，则返回这个引用类型。</li>
-</ol>
-<p>那么具体实现可以这么做：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">newOperator</span><span class="token punctuation">(</span><span class="token parameter">constructor<span class="token punctuation">,</span> <span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> constructor <span class="token operator">!==</span> <span class="token string">'function'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">'type error'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token comment">// 创建一个新对象，并将构造函数的 prototype 对象作为它的原型</span>
-  <span class="token keyword">const</span> instance <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>constructor<span class="token punctuation">.</span>prototype<span class="token punctuation">)</span>
-  <span class="token comment">// 执行构造函数的代码</span>
-  <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token function">constructor</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>instance<span class="token punctuation">,</span> args<span class="token punctuation">)</span>
-  <span class="token comment">// 判断返回值的类型</span>
-  <span class="token keyword">let</span> flag <span class="token operator">=</span> res <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> res <span class="token operator">===</span> <span class="token string">'object'</span> <span class="token operator">||</span> <span class="token keyword">typeof</span> res <span class="token operator">===</span> <span class="token string">'function'</span><span class="token punctuation">)</span>
-
-  <span class="token keyword">return</span> flag <span class="token operator">?</span> res <span class="token operator">:</span> instance
-<span class="token punctuation">}</span>
-
-<span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token parameter">name<span class="token punctuation">,</span> age</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
-  <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age
-<span class="token punctuation">}</span>
-
-<span class="token keyword">const</span> person <span class="token operator">=</span> <span class="token function">newOperator</span><span class="token punctuation">(</span>Person<span class="token punctuation">,</span> <span class="token string">'wang'</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>person<span class="token punctuation">)</span> <span class="token comment">// Person { name: 'wang', age: 18 }</span>
-</code></pre></div>]]></content:encoded>
     </item>
   </channel>
 </rss>
