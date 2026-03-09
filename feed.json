@@ -7,13 +7,26 @@
   "favicon": "https://dribble-njr.github.io/blog/blog/favicon.ico",
   "items": [
     {
+      "title": "node-config 与 dotenv 的区别和配合使用",
+      "url": "https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/10-node-config-vs-dotenv.html",
+      "id": "https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/10-node-config-vs-dotenv.html",
+      "summary": "核心区别 dotenv 的作用 加载 .env 文件到 process.env node-config 的作用 管理多环境配置文件，支持分层、合并、类型安全 为什么需要 dotenv？ node-config 在模块加载时就会读取环境变量（如 NODE_ENV、NODE_CONFIG_DIR），而不是在你调用 config.get() 时。 问题场景 ...",
+      "content_html": "<h2>核心区别</h2>\n<h3>dotenv 的作用</h3>\n<p><strong>加载 <code>.env</code> 文件到 <code>process.env</code></strong></p>\n<div class=\"language-bash\" data-ext=\"sh\" data-title=\"sh\"><pre class=\"language-bash\"><code><span class=\"token comment\"># .env</span>\n<span class=\"token assign-left variable\">DATABASE_URL</span><span class=\"token operator\">=</span>postgres://localhost:5432/mydb\n<span class=\"token assign-left variable\">API_KEY</span><span class=\"token operator\">=</span>secret123\n<span class=\"token assign-left variable\">NODE_ENV</span><span class=\"token operator\">=</span>development\n</code></pre></div><div class=\"language-javascript\" data-ext=\"js\" data-title=\"js\"><pre class=\"language-javascript\"><code><span class=\"token keyword\">import</span> <span class=\"token string\">'dotenv/config'</span>\nconsole<span class=\"token punctuation\">.</span><span class=\"token function\">log</span><span class=\"token punctuation\">(</span>process<span class=\"token punctuation\">.</span>env<span class=\"token punctuation\">.</span><span class=\"token constant\">DATABASE_URL</span><span class=\"token punctuation\">)</span> <span class=\"token comment\">// postgres://localhost:5432/mydb</span>\nconsole<span class=\"token punctuation\">.</span><span class=\"token function\">log</span><span class=\"token punctuation\">(</span>process<span class=\"token punctuation\">.</span>env<span class=\"token punctuation\">.</span><span class=\"token constant\">API_KEY</span><span class=\"token punctuation\">)</span> <span class=\"token comment\">// secret123</span>\n</code></pre></div><h3>node-config 的作用</h3>\n<p><strong>管理多环境配置文件，支持分层、合并、类型安全</strong></p>\n<div class=\"language-text\" data-ext=\"text\" data-title=\"text\"><pre class=\"language-text\"><code>config/\n├── default.json           # 基础配置\n├── development.json       # 开发环境覆盖\n├── production.json        # 生产环境覆盖\n└── custom-environment-variables.json  # 环境变量映射\n</code></pre></div><div class=\"language-javascript\" data-ext=\"js\" data-title=\"js\"><pre class=\"language-javascript\"><code><span class=\"token keyword\">import</span> config <span class=\"token keyword\">from</span> <span class=\"token string\">'config'</span>\nconsole<span class=\"token punctuation\">.</span><span class=\"token function\">log</span><span class=\"token punctuation\">(</span>config<span class=\"token punctuation\">.</span><span class=\"token function\">get</span><span class=\"token punctuation\">(</span><span class=\"token string\">'Customer.dbConfig.host'</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">)</span> <span class=\"token comment\">// 从配置文件读取</span>\n</code></pre></div>",
+      "date_published": "2026-03-09T00:00:00.000Z",
+      "date_modified": "2026-03-09T03:47:02.000Z",
+      "authors": [],
+      "tags": [
+        "engineering"
+      ]
+    },
+    {
       "title": "Node.js 项目 dotenv 集成方案对比",
       "url": "https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html",
       "id": "https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html",
       "summary": "背景问题 在 Node.js 项目中使用 dotenv 加载环境变量时，存在一个关键的加载时机问题： 问题原因 ES Modules 的 import 提升：所有 import 语句会被提升到模块顶部执行 node-config 的初始化时机：node-config 在模块加载时就读取环境变量，不是在调用 getConfig() 时 依赖导入顺序：必须...",
       "content_html": "<h2>背景问题</h2>\n<p>在 Node.js 项目中使用 <code>dotenv</code> 加载环境变量时，存在一个关键的<strong>加载时机问题</strong>：</p>\n<div class=\"language-typescript\" data-ext=\"ts\" data-title=\"ts\"><pre class=\"language-typescript\"><code><span class=\"token comment\">// src/index.ts</span>\n<span class=\"token keyword\">import</span> <span class=\"token punctuation\">{</span> getConfig <span class=\"token punctuation\">}</span> <span class=\"token keyword\">from</span> <span class=\"token string\">'@conan/backend/utils'</span> <span class=\"token comment\">// node-config 在此时读取 NODE_CONFIG_DIR</span>\n<span class=\"token keyword\">import</span> <span class=\"token string\">'dotenv/config'</span> <span class=\"token comment\">// 太晚了！环境变量还没设置</span>\n</code></pre></div><h3>问题原因</h3>\n<ol>\n<li><strong>ES Modules 的 import 提升</strong>：所有 <code>import</code> 语句会被提升到模块顶部执行</li>\n<li><strong>node-config 的初始化时机</strong>：<code>node-config</code> 在模块加载时就读取环境变量，不是在调用 <code>getConfig()</code> 时</li>\n<li><strong>依赖导入顺序</strong>：必须确保 <code>dotenv/config</code> 在任何读取环境变量的模块之前导入</li>\n</ol>\n<h3>错误示例</h3>\n<div class=\"language-typescript\" data-ext=\"ts\" data-title=\"ts\"><pre class=\"language-typescript\"><code><span class=\"token comment\">// 错误：依赖导入顺序，且需要 eslint-disable</span>\n<span class=\"token comment\">/* eslint-disable perfectionist/sort-imports */</span>\n<span class=\"token keyword\">import</span> <span class=\"token string\">'dotenv/config'</span> <span class=\"token comment\">// 必须第一个</span>\n<span class=\"token keyword\">import</span> <span class=\"token punctuation\">{</span> getConfig <span class=\"token punctuation\">}</span> <span class=\"token keyword\">from</span> <span class=\"token string\">'@conan/backend/utils'</span>\n</code></pre></div><p>这种方式的问题：</p>\n<ul>\n<li>代码依赖导入顺序，脆弱易出错</li>\n<li>需要 eslint-disable 注释</li>\n<li>其他开发者可能不理解为什么顺序重要</li>\n</ul>\n",
       "date_published": "2026-03-06T00:00:00.000Z",
-      "date_modified": "2026-03-06T09:03:29.000Z",
+      "date_modified": "2026-03-09T03:47:02.000Z",
       "authors": [],
       "tags": [
         "engineering"
@@ -1325,19 +1338,6 @@
       "authors": [],
       "tags": [
         "database"
-      ]
-    },
-    {
-      "title": "修改提交",
-      "url": "https://dribble-njr.github.io/blog/blog/reading/pro-git/06-change-commit.html",
-      "id": "https://dribble-njr.github.io/blog/blog/reading/pro-git/06-change-commit.html",
-      "summary": "修改提交信息 在 Git 中，修改提交是通过 git commit --amend 命令来完成的。 此时就能出现一个交互式的修改提交窗口，可以修改提交信息，添加文件，或者删除文件。 修改作者信息 由于某次提交时不小心将 git user 改成了其他账户，在后续 commit 时提交了错误的用户信息，需要手动修改：git rebase -i <commi...",
-      "content_html": "<h2>修改提交信息</h2>\n<p>在 Git 中，修改提交是通过 <code>git commit --amend</code> 命令来完成的。</p>\n<div class=\"language-bash\" data-ext=\"sh\" data-title=\"sh\"><pre class=\"language-bash\"><code><span class=\"token function\">git</span> commit <span class=\"token parameter variable\">--amend</span>\n</code></pre></div><p>此时就能出现一个交互式的修改提交窗口，可以修改提交信息，添加文件，或者删除文件。</p>\n<h2>修改作者信息</h2>\n<p>由于某次提交时不小心将 <code>git user</code> 改成了其他账户，在后续 <code>commit</code> 时提交了错误的用户信息，需要手动修改：<code>git rebase -i &lt;commit-hash&gt;</code>。</p>\n<p>意为从当前 <code>commit</code> 后的所有提交。将 <code>pick</code> 改为 <code>edit</code>，并使用 <code>git commit --amend --author=\"Author Name &lt;email&gt;\"</code> 修改用户。</p>\n<p>满意后使用 <code>git rebase --continue</code> 关闭本次修改。</p>\n",
-      "date_published": "2024-07-10T00:00:00.000Z",
-      "date_modified": "2024-11-06T15:43:46.000Z",
-      "authors": [],
-      "tags": [
-        "READING"
       ]
     }
   ]

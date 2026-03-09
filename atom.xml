@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2026-03-06T09:05:16.079Z</updated>
+  <updated>2026-03-09T03:48:46.310Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
@@ -35,10 +35,46 @@
     <name>patterns</name>
   </contributor>
   <entry>
+    <title type="text">node-config 与 dotenv 的区别和配合使用</title>
+    <id>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/10-node-config-vs-dotenv.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/10-node-config-vs-dotenv.html"/>
+    <updated>2026-03-09T03:47:02.000Z</updated>
+    <summary type="html"><![CDATA[<h2>核心区别</h2>
+<h3>dotenv 的作用</h3>
+<p><strong>加载 <code>.env</code> 文件到 <code>process.env</code></strong></p>
+<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token comment"># .env</span>
+<span class="token assign-left variable">DATABASE_URL</span><span class="token operator">=</span>postgres://localhost:5432/mydb
+<span class="token assign-left variable">API_KEY</span><span class="token operator">=</span>secret123
+<span class="token assign-left variable">NODE_ENV</span><span class="token operator">=</span>development
+</code></pre></div>]]></summary>
+    <content type="html"><![CDATA[<h2>核心区别</h2>
+<h3>dotenv 的作用</h3>
+<p><strong>加载 <code>.env</code> 文件到 <code>process.env</code></strong></p>
+<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token comment"># .env</span>
+<span class="token assign-left variable">DATABASE_URL</span><span class="token operator">=</span>postgres://localhost:5432/mydb
+<span class="token assign-left variable">API_KEY</span><span class="token operator">=</span>secret123
+<span class="token assign-left variable">NODE_ENV</span><span class="token operator">=</span>development
+</code></pre></div><div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">DATABASE_URL</span><span class="token punctuation">)</span> <span class="token comment">// postgres://localhost:5432/mydb</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">API_KEY</span><span class="token punctuation">)</span> <span class="token comment">// secret123</span>
+</code></pre></div><h3>node-config 的作用</h3>
+<p><strong>管理多环境配置文件，支持分层、合并、类型安全</strong></p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>config/
+├── default.json           # 基础配置
+├── development.json       # 开发环境覆盖
+├── production.json        # 生产环境覆盖
+└── custom-environment-variables.json  # 环境变量映射
+</code></pre></div><div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> config <span class="token keyword">from</span> <span class="token string">'config'</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'Customer.dbConfig.host'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 从配置文件读取</span>
+</code></pre></div>]]></content>
+    <category term="engineering"/>
+    <published>2026-03-09T00:00:00.000Z</published>
+  </entry>
+  <entry>
     <title type="text">Node.js 项目 dotenv 集成方案对比</title>
     <id>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html</id>
     <link href="https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html"/>
-    <updated>2026-03-06T09:03:29.000Z</updated>
+    <updated>2026-03-09T03:47:02.000Z</updated>
     <summary type="html"><![CDATA[<h2>背景问题</h2>
 <p>在 Node.js 项目中使用 <code>dotenv</code> 加载环境变量时，存在一个关键的<strong>加载时机问题</strong>：</p>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// src/index.ts</span>
@@ -9060,26 +9096,5 @@ load-nvmrc
 ]]></content>
     <category term="database"/>
     <published>2024-07-17T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">修改提交</title>
-    <id>https://dribble-njr.github.io/blog/blog/reading/pro-git/06-change-commit.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/reading/pro-git/06-change-commit.html"/>
-    <updated>2024-11-06T15:43:46.000Z</updated>
-    <summary type="html"><![CDATA[<h2>修改提交信息</h2>
-<p>在 Git 中，修改提交是通过 <code>git commit --amend</code> 命令来完成的。</p>
-<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token function">git</span> commit <span class="token parameter variable">--amend</span>
-</code></pre></div><p>此时就能出现一个交互式的修改提交窗口，可以修改提交信息，添加文件，或者删除文件。</p>]]></summary>
-    <content type="html"><![CDATA[<h2>修改提交信息</h2>
-<p>在 Git 中，修改提交是通过 <code>git commit --amend</code> 命令来完成的。</p>
-<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token function">git</span> commit <span class="token parameter variable">--amend</span>
-</code></pre></div><p>此时就能出现一个交互式的修改提交窗口，可以修改提交信息，添加文件，或者删除文件。</p>
-<h2>修改作者信息</h2>
-<p>由于某次提交时不小心将 <code>git user</code> 改成了其他账户，在后续 <code>commit</code> 时提交了错误的用户信息，需要手动修改：<code>git rebase -i &lt;commit-hash&gt;</code>。</p>
-<p>意为从当前 <code>commit</code> 后的所有提交。将 <code>pick</code> 改为 <code>edit</code>，并使用 <code>git commit --amend --author="Author Name &lt;email&gt;"</code> 修改用户。</p>
-<p>满意后使用 <code>git rebase --continue</code> 关闭本次修改。</p>
-]]></content>
-    <category term="READING"/>
-    <published>2024-07-10T00:00:00.000Z</published>
   </entry>
 </feed>

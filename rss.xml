@@ -6,8 +6,8 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Fri, 06 Mar 2026 09:05:16 GMT</pubDate>
-    <lastBuildDate>Fri, 06 Mar 2026 09:05:16 GMT</lastBuildDate>
+    <pubDate>Mon, 09 Mar 2026 03:48:46 GMT</pubDate>
+    <lastBuildDate>Mon, 09 Mar 2026 03:48:46 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>engineering</category>
@@ -33,6 +33,35 @@
     <category>Pixi</category>
     <category>READING</category>
     <category>JavaScript</category>
+    <item>
+      <title>node-config 与 dotenv 的区别和配合使用</title>
+      <link>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/10-node-config-vs-dotenv.html</link>
+      <guid>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/10-node-config-vs-dotenv.html</guid>
+      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">node-config 与 dotenv 的区别和配合使用</source>
+      <description>核心区别 dotenv 的作用 加载 .env 文件到 process.env node-config 的作用 管理多环境配置文件，支持分层、合并、类型安全 为什么需要 dotenv？ node-config 在模块加载时就会读取环境变量（如 NODE_ENV、NODE_CONFIG_DIR），而不是在你调用 config.get() 时。 问题场景 ...</description>
+      <category>engineering</category>
+      <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<h2>核心区别</h2>
+<h3>dotenv 的作用</h3>
+<p><strong>加载 <code>.env</code> 文件到 <code>process.env</code></strong></p>
+<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token comment"># .env</span>
+<span class="token assign-left variable">DATABASE_URL</span><span class="token operator">=</span>postgres://localhost:5432/mydb
+<span class="token assign-left variable">API_KEY</span><span class="token operator">=</span>secret123
+<span class="token assign-left variable">NODE_ENV</span><span class="token operator">=</span>development
+</code></pre></div><div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token string">'dotenv/config'</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">DATABASE_URL</span><span class="token punctuation">)</span> <span class="token comment">// postgres://localhost:5432/mydb</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">API_KEY</span><span class="token punctuation">)</span> <span class="token comment">// secret123</span>
+</code></pre></div><h3>node-config 的作用</h3>
+<p><strong>管理多环境配置文件，支持分层、合并、类型安全</strong></p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>config/
+├── default.json           # 基础配置
+├── development.json       # 开发环境覆盖
+├── production.json        # 生产环境覆盖
+└── custom-environment-variables.json  # 环境变量映射
+</code></pre></div><div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> config <span class="token keyword">from</span> <span class="token string">'config'</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'Customer.dbConfig.host'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// 从配置文件读取</span>
+</code></pre></div>]]></content:encoded>
+    </item>
     <item>
       <title>Node.js 项目 dotenv 集成方案对比</title>
       <link>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/09-env.html</link>
@@ -7890,24 +7919,6 @@ load-nvmrc
 <p>SQL 从一种基于关系模型的查询语言发展成为现代数据库管理的核心语言，其标准在不断演进和扩展。</p>
 <p>各大数据库管理系统（如 MySQL、PostgreSQL、SQLite、SQL Server、Oracle 等）在遵循 SQL 标准的基础上，加入了自身的扩展和优化，使 SQL 成为数据操作和管理的强大工具。</p>
 <p>SQL 的发展不仅体现了技术的进步，也反映了数据管理需求的变化和增长。</p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>修改提交</title>
-      <link>https://dribble-njr.github.io/blog/blog/reading/pro-git/06-change-commit.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/reading/pro-git/06-change-commit.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">修改提交</source>
-      <description>修改提交信息 在 Git 中，修改提交是通过 git commit --amend 命令来完成的。 此时就能出现一个交互式的修改提交窗口，可以修改提交信息，添加文件，或者删除文件。 修改作者信息 由于某次提交时不小心将 git user 改成了其他账户，在后续 commit 时提交了错误的用户信息，需要手动修改：git rebase -i &amp;lt;commi...</description>
-      <category>READING</category>
-      <pubDate>Wed, 10 Jul 2024 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>修改提交信息</h2>
-<p>在 Git 中，修改提交是通过 <code>git commit --amend</code> 命令来完成的。</p>
-<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token function">git</span> commit <span class="token parameter variable">--amend</span>
-</code></pre></div><p>此时就能出现一个交互式的修改提交窗口，可以修改提交信息，添加文件，或者删除文件。</p>
-<h2>修改作者信息</h2>
-<p>由于某次提交时不小心将 <code>git user</code> 改成了其他账户，在后续 <code>commit</code> 时提交了错误的用户信息，需要手动修改：<code>git rebase -i &lt;commit-hash&gt;</code>。</p>
-<p>意为从当前 <code>commit</code> 后的所有提交。将 <code>pick</code> 改为 <code>edit</code>，并使用 <code>git commit --amend --author="Author Name &lt;email&gt;"</code> 修改用户。</p>
-<p>满意后使用 <code>git rebase --continue</code> 关闭本次修改。</p>
 ]]></content:encoded>
     </item>
   </channel>
