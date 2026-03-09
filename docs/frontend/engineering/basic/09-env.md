@@ -97,7 +97,74 @@ import { getConfig } from '@conan/backend/utils'
 
 ---
 
-### 方案 3：直接在 scripts 中设置环境变量（当前采用）
+### 方案 3：--env-file（Node.js 20.6.0+，推荐）
+
+```json
+{
+  "scripts": {
+    "dev": "NODE_OPTIONS='--env-file=.env --import @conan/backend/utils/tracer' tsx watch src/index.ts"
+  }
+}
+```
+
+**执行顺序**：
+
+1. `--env-file=.env` → 加载 .env 到环境变量
+2. `--import tracer` (ESM) → 读取 OTEL_SERVICE_NAME
+3. 应用代码 → 读取 NODE_CONFIG_DIR
+
+**优点**：
+
+- ✅ Node.js 原生支持，无需额外依赖
+- ✅ v24.10.0+ 已转为正式功能（不再是实验性）
+- ✅ 环境变量在 Node.js 启动时就加载
+- ✅ 比 `--require dotenv/config` 更语义化
+- ✅ 支持多个文件：`--env-file=.env --env-file=.env.local`（后者覆盖前者）
+- ✅ **环境变量优先**：系统环境变量不会被文件覆盖（与 dotenv-cli 默认行为一致）
+
+**缺点**：
+
+- ⚠️ 需要 Node.js 20.6.0+（正式版需 24.10.0+）
+- ⚠️ 文件不存在会抛错（可用 `--env-file-if-exists` 忽略不存在的文件）
+
+**支持的语法**：
+
+```bash
+# 基本格式
+PORT=3000
+
+# 注释
+# This is a comment
+PORT=3000 # 行尾注释
+
+# 引号（会被去除）
+USERNAME="nodejs"    # 结果：nodejs
+PASSWORD='secret'    # 结果：secret
+
+# 多行值（v21.7.0+）
+MULTI_LINE="THIS IS
+A MULTILINE"         # 结果：THIS IS\nA MULTILINE
+
+# export 关键字会被忽略
+export USERNAME="nodejs"  # 结果：nodejs
+```
+
+**覆盖优先级**：
+
+```bash
+# 系统环境变量 > .env.local > .env
+node --env-file=.env --env-file=.env.local index.js
+```
+
+| 来源            | 优先级 | 说明                     |
+| --------------- | ------ | ------------------------ |
+| 系统环境变量    | 最高   | 不会被文件覆盖           |
+| `.env.local`    | 中     | 覆盖 `.env` 中的同名变量 |
+| `.env`          | 最低   | 基础配置                 |
+
+---
+
+### 方案 4：直接在 scripts 中设置环境变量（当前采用）
 
 ```json
 {
@@ -118,6 +185,28 @@ import { getConfig } from '@conan/backend/utils'
 - scripts 命令较长
 - 敏感信息会暴露在 package.json 中（本项目不涉及）
 - 修改配置需要改 package.json
+
+---
+
+## 方案选择建议
+
+| 方案                | 推荐度 | 适用场景                                           |
+| ------------------- | ------ | -------------------------------------------------- |
+| `--env-file`        | ⭐⭐⭐⭐⭐ | Node.js 20.6.0+，追求原生方案（v24.10.0+ 转正式） |
+| `dotenv-cli`        | ⭐⭐⭐⭐   | 需要兼容旧版本 Node.js，或需要更多 CLI 功能       |
+| `NODE_OPTIONS`      | ⭐⭐⭐     | 已有复杂 NODE_OPTIONS 配置                         |
+| 直接设置环境变量    | ⭐⭐      | 变量少且不敏感                                     |
+
+### 核心对比
+
+| 特性             | `--env-file`           | `dotenv-cli`           |
+| ---------------- | ---------------------- | ---------------------- |
+| 额外依赖         | 无                     | 需安装 `dotenv-cli`    |
+| Node.js 版本     | 20.6.0+                | 任意版本               |
+| 环境变量优先级   | 系统环境变量优先       | 系统环境变量优先       |
+| 强制覆盖         | 不支持                 | 支持 `-o` 参数         |
+| 文件不存在处理   | `--env-file-if-exists` | 默认忽略               |
+| 官方支持         | Node.js 原生           | 第三方工具             |
 
 ---
 
