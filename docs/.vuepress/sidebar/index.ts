@@ -1,6 +1,7 @@
+export { default as algorithms } from './algorithms'
 export { default as backend } from './backend'
 export { default as computerScience } from './computer-science'
 export { default as frontend } from './frontend'
 export { default as project } from './project'
 export { default as reading } from './reading'
-export { default as news } from './news'
+export { default as systemDesign } from './system-design'

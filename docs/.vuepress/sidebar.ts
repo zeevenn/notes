@@ -1,15 +1,16 @@
-import { backend, computerScience, frontend, project, reading, news } from './sidebar/index'
+import { algorithms, backend, computerScience, frontend, project, reading, systemDesign } from './sidebar/index'
 
 import { sidebar } from 'vuepress-theme-hope'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
 export const Sidebar = sidebar({
+  '/algorithms/': algorithms,
   '/backend/': backend,
   '/computer-science/': computerScience,
   '/frontend/': frontend,
-  '/project/': project,
+  '/projects/': project,
   '/reading/': reading,
-  '/news/': news,
+  '/system-design/': systemDesign,
   '/': ['']
 })

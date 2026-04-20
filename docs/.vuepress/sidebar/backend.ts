@@ -5,41 +5,26 @@ export default [
     icon: 'linux',
     prefix: '/backend/linux/',
     children: [
-      {
-        text: '基础概念',
-        collapsible: true,
-        icon: 'basic',
-        prefix: 'basic/',
-        children: []
-      },
-      {
-        text: '实践',
-        collapsible: true,
-        icon: 'practice',
-        prefix: 'practice/',
-        children: [
-          '01-set-the-ssh',
-          '02-build-git-server',
-          '03-configure-bt',
-          '04-automated-deployment',
-          '05-install-docker',
-          '06-server-proxy'
-        ]
-      }
+      '01-set-the-ssh',
+      '02-build-git-server',
+      '03-configure-bt',
+      '04-automated-deployment',
+      '05-install-docker',
+      '06-server-proxy'
     ]
   },
   {
-    text: '数据库',
+    text: 'Database',
     collapsible: true,
     icon: 'database',
-    prefix: 'database/',
+    prefix: '/backend/database/',
     children: [
       {
-        text: '基础知识',
+        text: 'Fundamentals',
         collapsible: true,
         icon: 'basic',
-        prefix: 'basic/',
-        children: ['001-hello-database', '002-relation-model', '003-db-design', '004-advanced-db-model']
+        prefix: 'fundamentals/',
+        children: ['01-hello-database', '02-relation-model', '03-db-design', '04-advanced-db-model']
       },
       {
         text: 'MySQL',
@@ -61,21 +46,14 @@ export default [
     text: 'Node',
     collapsible: true,
     icon: 'nodejs',
-    prefix: 'node/',
+    prefix: '/backend/node/',
     children: [
       {
         text: 'Express',
         collapsible: true,
         icon: 'express',
         prefix: 'express/',
-        children: ['01-overview-architecture', '02-express.js', '03-application.js']
-      },
-      {
-        text: 'Module',
-        collapsible: true,
-        icon: 'npm',
-        prefix: 'module/',
-        children: ['001-finalhandler']
+        children: ['01-overview-architecture', '02-express.js']
       },
       {
         text: 'Prisma',
@@ -83,29 +61,43 @@ export default [
         icon: 'prisma',
         prefix: 'prisma/',
         children: ['', '01-quick-start']
-      }
+      },
+      {
+        text: 'Modules',
+        collapsible: true,
+        icon: 'npm',
+        prefix: 'modules/',
+        children: ['01-module-system']
+      },
+      {
+        text: 'Module',
+        collapsible: true,
+        icon: 'npm',
+        prefix: 'module/',
+        children: ['01-finalhandler']
+      },
+      '01-turso-prisma-integration'
     ]
+  },
+  {
+    text: 'Microservices',
+    collapsible: true,
+    icon: 'microservices',
+    prefix: '/backend/microservices/',
+    children: ['01-fundamental-ideas', '02-mini-microservice-app']
   },
   {
     text: 'Java',
     collapsible: true,
     icon: 'java',
-    prefix: 'java/',
-    children: [
-      {
-        text: 'tool',
-        collapsible: true,
-        icon: 'tool-fill',
-        prefix: 'tool/',
-        children: ['01-maven']
-      }
-    ]
+    prefix: '/backend/java/',
+    children: ['01-maven']
   },
   {
-    text: '实践',
+    text: 'Engineering',
     collapsible: true,
     icon: 'practice',
-    prefix: '/backend/practice/',
-    children: ['001-integrate-turso-prisma']
+    prefix: '/backend/engineering/',
+    children: ['', '01-testing', '02-ci-cd', '03-code-quality']
   }
 ]
