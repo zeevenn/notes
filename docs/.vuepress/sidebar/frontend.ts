@@ -6,22 +6,17 @@ export default [
     prefix: '/frontend/html/',
     children: [
       '',
-      '01-html-history',
-      '02-quick-start',
-      '03-doctype',
-      '04-common-elements',
-      '05-advanced-elements',
-      '06-semantic-tags',
-      '07-media-tags',
-      '08-canvas-and-svg',
-      '09-src-vs-href',
-      '10-html5-features',
-      '11-defer-vs-async',
-      '12-form-validation',
-      '13-seo-basics',
-      '14-websocket',
-      '15-web-storage',
-      '16-web-worker'
+      'src-vs-href',
+      'defer-vs-async',
+      'meta-tags',
+      'img-srcset',
+      'iframe',
+      'form-validation',
+      'canvas-vs-svg',
+      'web-components',
+      'aria-accessibility',
+      'preload-prefetch',
+      'seo-basics'
     ]
   },
   {
@@ -93,7 +88,10 @@ export default [
       '02-v8-engine',
       '03-memory-management',
       '04-cross-origin',
-      '05-url-to-page'
+      '05-url-to-page',
+      'web-storage',
+      'web-worker',
+      'service-worker'
     ]
   },
   {

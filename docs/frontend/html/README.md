@@ -5,27 +5,35 @@ icon: creative
 star: true
 ---
 
-::: tip
+> [!TIP]
+>
+> 超文本标记语言（**H**yper**T**ext **M**arkup **L**anguage, HTML）是一种用于创建网页的标记语言。
 
-超文本标记语言（**H**yper**T**ext **M**arkup **L**anguage, HTML）是一种用于创建网页的标记语言。
+## 文档与资源
 
-:::
+- [src 与 href 的区别](src-vs-href.md)
+- [defer 与 async 的区别](defer-vs-async.md)
+- [常用 meta 标签](meta-tags.md)
+- [img srcset 响应式图片](img-srcset.md)
+- [iframe](iframe.md)
 
-## 目录
+## 表单
 
-- [历史](001-html-history.md)
-- [快速开始](002-quick-start.md)
-- [DOCTYPE](003-doctype.md)
-- [常用元素](004-common-element.md)
-- [高级元素](005-advanced-element.md)
-- [语义化标签](006-semantically-meaningful-tags.md)
-- [视频和音频](007-media-tag.md)
-- [Canvas 和 SVG 的区别](008-canvas-svg.md)
-- [src 与 href 的区别](./009-src-vs-href.md)
-- [HTML5 新特性](./010-html5.md)
-- [defer 与 async 的区别](./011-defer-vs-async.md)
-- [表单验证](./012-form-validation.md)
-- [seo](./013-seo.md)
+- [表单验证](form-validation.md)
+
+## 图形
+
+- [Canvas vs SVG](canvas-vs-svg.md)
+
+## 组件化与标准
+
+- [Web Components](web-components.md)
+- [ARIA 与无障碍](aria-accessibility.md)
+
+## 其他
+
+- [preload / prefetch / preconnect](preload-prefetch.md)
+- [SEO 基础](seo-basics.md)
 
 ## 学习资料
 
