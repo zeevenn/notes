@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2026-04-21T11:33:02.844Z</updated>
+  <updated>2026-04-21T14:09:58.563Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
@@ -19,7 +19,6 @@
   <category term="计算机网络"/>
   <category term="操作系统"/>
   <category term="browser"/>
-  <category term="chakra"/>
   <category term="CSS"/>
   <entry>
     <title type="text">六个月成长计划 · 2026</title>
@@ -327,6 +326,28 @@
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
+    <title type="text">编译原理</title>
+    <id>https://dribble-njr.github.io/blog/blog/computer-science/compilation/</id>
+    <link href="https://dribble-njr.github.io/blog/blog/computer-science/compilation/"/>
+    <updated>2026-04-21T11:31:25.000Z</updated>
+    <summary type="html"><![CDATA[
+]]></summary>
+    <content type="html"><![CDATA[
+]]></content>
+    <published>2026-04-21T11:31:25.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">并发编程</title>
+    <id>https://dribble-njr.github.io/blog/blog/computer-science/concurrency/</id>
+    <link href="https://dribble-njr.github.io/blog/blog/computer-science/concurrency/"/>
+    <updated>2026-04-21T11:31:25.000Z</updated>
+    <summary type="html"><![CDATA[
+]]></summary>
+    <content type="html"><![CDATA[
+]]></content>
+    <published>2026-04-21T11:31:25.000Z</published>
+  </entry>
+  <entry>
     <title type="text">AWS</title>
     <id>https://dribble-njr.github.io/blog/blog/cloud/aws/</id>
     <link href="https://dribble-njr.github.io/blog/blog/cloud/aws/"/>
@@ -352,28 +373,6 @@
     <title type="text">云计算概念</title>
     <id>https://dribble-njr.github.io/blog/blog/cloud/concepts/</id>
     <link href="https://dribble-njr.github.io/blog/blog/cloud/concepts/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">编译原理</title>
-    <id>https://dribble-njr.github.io/blog/blog/computer-science/compilation/</id>
-    <link href="https://dribble-njr.github.io/blog/blog/computer-science/compilation/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">并发编程</title>
-    <id>https://dribble-njr.github.io/blog/blog/computer-science/concurrency/</id>
-    <link href="https://dribble-njr.github.io/blog/blog/computer-science/concurrency/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -4658,390 +4657,6 @@ Access-Control-Max-Age: 1728000 本次预检的有效期，秒
   </entry>
   <entry>
     <title type="text">快速开始</title>
-    <id>https://dribble-njr.github.io/blog/blog/frontend/chakra/01-getting-started.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/frontend/chakra/01-getting-started.html"/>
-    <updated>2026-04-20T16:21:10.000Z</updated>
-    <summary type="html"><![CDATA[<p><a href="https://chakra-ui.com/" target="_blank" rel="noopener noreferrer">Chakra UI</a> 是一个简单、模块化和可访问的组件库，可提供构建 React 应用程序所需的组件。</p>
-<div class="hint-container tip">
-<p class="hint-container-title">总结</p>
-<p>非常灵活自由，但有一定上手门槛。</p>
-</div>
-<h2>设计原则</h2>
-<p>Chakra UI 建立在保持组件一致性的原则之上。了解这些概念将有助于您更好地为 Chakra UI 做出贡献。</p>]]></summary>
-    <content type="html"><![CDATA[<p><a href="https://chakra-ui.com/" target="_blank" rel="noopener noreferrer">Chakra UI</a> 是一个简单、模块化和可访问的组件库，可提供构建 React 应用程序所需的组件。</p>
-<div class="hint-container tip">
-<p class="hint-container-title">总结</p>
-<p>非常灵活自由，但有一定上手门槛。</p>
-</div>
-<h2>设计原则</h2>
-<p>Chakra UI 建立在保持组件一致性的原则之上。了解这些概念将有助于您更好地为 Chakra UI 做出贡献。</p>
-<p>我们的目标是设计简单、可组合的组件，以解决现实生活中的用户界面设计问题。为此，我们制定了一系列原则，帮助我们始终沿着这条道路前进。</p>
-<ul>
-<li>Style Props：所有组件的样式都可以通过 <code>style props</code> 覆盖或扩展，以减少 <code>css prop</code> 或 <code>styled()</code> 的使用。从 Box 中组合新组件。</li>
-<li>简单：努力保持组件应用程序接口（API）相当简单，并展示组件在现实世界中的使用场景。</li>
-<li>组合：将组件分解成具有最小道具的较小部分，以降低复杂性，并将它们组合在一起。这将确保样式和功能的灵活性和可扩展性。</li>
-<li>可访问性：创建组件时，应将可访问性放在首位。这包括键盘导航、焦点管理、色彩对比、语音播报以及正确的 <code>aria-*</code> 属性。</li>
-<li>暗色模式：使组件兼容暗色模式。使用 <code>useColorMode</code> 钩子处理样式。了解有关 <a href="https://chakra-ui.com/docs/styled-system/color-mode" target="_blank" rel="noopener noreferrer">暗色模式</a> 的更多信息。</li>
-<li><code>Naming Props</code>：命名是最难的事情。一般来说，要确保 <code>prop name</code> 能说明其作用。<code>Boolean prop</code> 应使用助动词命名，如 <code>does</code>、<code>has</code>、<code>is</code> 和 <code>should</code>。例如，按钮使用 <code>isDisabled</code>、<code>isLoading</code> 等。</li>
-</ul>
-<h2>对比</h2>
-<h3>Tailwind CSS</h3>
-<h4>总览</h4>
-<p><a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind CSS</a>：CSS 框架，提供原子 CSS 类，帮助你为组件设计样式、可访问性、组件组成、键盘导航、样式重写等。</p>
-<p>Chakra UI：一个由精心创建的 React 组件组成的库，具有 Tailwind 的所有样式优势，并能处理所有细节。</p>
-<h4>学习曲线</h4>
-<p>Tailwind CSS：如果你有过 Bootstrap 或 Bulma CSS 背景，你可能会发现学习 Tailwind 非常容易。但是，如果你是 <code>styled-components</code> 或 <code>emotion</code> 背景，学习曲线可能会相当陡峭。</p>
-<p>Chakra UI：Chakra UI 采用非常直观、类似 CSS 和基于 <code>prop</code> 的组件样式模型，因此很容易上手。组件名称和 <code>prop</code> 名称也非常容易理解。</p>
-<h4>响应式</h4>
-<p>Tailwind CSS：在 Tailwind 中创建响应式样式需要结合伪类。随着项目的增长，这可能会变得相当冗长。</p>
-<div class="language-html" data-ext="html" data-title="html"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>w-16 md:w-32 lg:w-48<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>...<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-</code></pre></div><p>Chakra UI：以非常简单直观的方式创建响应式样式。可以使用数组或对象符号：</p>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Img</span></span> <span class="token attr-name">w</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">48</span><span class="token punctuation">]</span><span class="token punctuation">}</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>...<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Img</span></span> <span class="token attr-name">w</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> base：<span class="token number">16</span><span class="token punctuation">,</span> md：<span class="token number">32</span><span class="token punctuation">,</span> lg：<span class="token number">48</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>...<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-</span></code></pre></div><h4>样式覆盖</h4>
-<p>在大多数应用中，为满足设计要求而覆盖特定上下文的样式是一项常见的挑战。</p>
-<p>Tailwind CSS：鉴于 Tailwind 是一个 CSS 实用框架，你可能需要找出覆盖特定 classNames 或编写自定义 CSS 的最佳方法。</p>
-<p>Chakra UI：Chakra UI 的样式是基于 <code>prop</code> 的，因此覆盖就像传递 <code>prop</code> 一样简单。</p>
-<h4>可访问性</h4>
-<p>如前所述，Tailwind CSS 只是一个 CSS 框架，类似于 Bootstrap 或 Bulma CSS。这样，用户就可以处理语义 html 结构、满足 WAI-ARIA 要求、键盘导航等。</p>
-<p>Chakra 不仅提供了 Tailwind 的便利性，还具有其他所有优点。</p>
-<h4>暗色模式</h4>
-<p>Tailwind CSS：所有组件均与暗色模式兼容。</p>
-<p>Chakra UI：所有组件均兼容明暗模式。还可以在整个应用程序中创建自己的明暗模式体验。</p>
-<h3>Theme UI</h3>
-<p>Chakra UI 深受 Theme UI 的启发，并遵循系统 UI 规范。</p>
-<p>与 Theme UI 相比，Chakra UI 提供了更多组件、改进的样式 API、可访问性和直观的组件 API。</p>
-<p>可以将 Chakra 视为更强大的 Theme UI 版本，它充分利用了 <code>styled-system</code> 的全部功能，提供更好的组件样式和主题。</p>
-<h3>Material UI</h3>
-<p>Material UI React 库为用户提供了大量 UI 布局工具，但其最著名的地方在于它提供了大量预设样式的 UI 组件，开发人员可以在这些组件上应用自定义样式来覆盖开箱即用的基础样式。</p>
-<p>Chakra UI 是一个更强大、更注重布局的库，它也为开发人员提供了与 Material UI 类似的 UI 组件，但更注重创建灵活、可组合和可扩展的代码。</p>
-<p>在比较这两个框架时，需要考虑的一个核心概念是 "易于修改"。</p>
-<p>相比之下，Material UI 为与导出组件和布局相关的单个 HTML 标签添加了更多的类，这迫使开发人员在定制界面时不得不与基本样式作斗争。</p>
-<p>Chakra 为开发人员提供了更大的自由度来操作导出组件和布局的 CSS 类，而且通常只需较少的代码即可完成。</p>
-<p>例如，Material UI 需要单独的代码来控制基于视口变化的响应式样式，而 Chakra 提供了内置的响应式样式支持，无需创建 CSS 类或媒体查询。</p>
-<p>如果自定义样式并不是项目的主要关注点，Material UI 则是有益的，因为您可以避免创建该库所提供的自定义组件。</p>
-<p>如果可扩展的自定义设计对您的项目很重要（很多时候确实如此），Chakra 对开发人员的便利性比 Material UI 更为突出，尤其是在项目随时间扩展的情况下。</p>
-<h3>Ant Design</h3>
-<p>Ant Design React 库是 ant.design 设计语言的实现。这意味着组件遵循现有的设计规则和值，只允许在有限的范围内自定义某些变量。</p>
-<p>Chakra 不受任何设计系统的束缚，可以更自由地定制组件，实现自己的设计。</p>
-<h4>样式组件</h4>
-<p>Ant Design 组件是为开箱即用而构建的，因此它们的特定样式 <code>prop</code> 和自定义功能非常有限。</p>
-<p>另一方面，Chakra 组件的主要风格化方式是将样式作为 <code>prop</code>。</p>
-<p>以按钮组件为例。Chakra Button 的 <code>colorScheme</code>（色彩主题）道具在默认情况下有许多不同的值，您可以对其进行自定义和/或扩展，以应用自己的设计。</p>
-<p>相比之下，您需要记住，Antd Design 按钮只有在拥有 <code>primary prop</code> 和 <code>danger prop</code> 的情况下才能着色，而不能因为 Ant Design 的现有设计值而着色。</p>
-<p>同样的模式也可以在布局、表单和排版等其他组件中看到。</p>
-<h4>设置和自定义</h4>
-<p>Ant Design 有一长串可修改的默认变量，包括颜色、页边距、边距、动画、阴影、边框、屏幕尺寸、尺寸等，有些是通用变量，有些则是用户界面组件的特定变量。为了尊重底层设计规范，除修改这些现有变量外，不建议进行其他自定义操作。</p>
-<p>Chakra 的特点是所有全局和组件样式默认值都可以轻松定制/扩展。可以为每个组件定义新的尺寸或变体。此外，您还可以使用 Chakra Factory 从现有组件甚至非 Chakra 组件中组合出新的组件。</p>
-]]></content>
-    <category term="chakra"/>
-    <published>2024-03-07T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Style Props</title>
-    <id>https://dribble-njr.github.io/blog/blog/frontend/chakra/02-style-props.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/frontend/chakra/02-style-props.html"/>
-    <updated>2026-04-20T16:21:10.000Z</updated>
-    <summary type="html"><![CDATA[<p>Style Props 是一种通过简单传递 <code>prop</code> 来改变组件样式的方法。它通过提供有用的速记方法来改变组件的样式，从而节省时间。</p>
-<div class="hint-container tip">
-<p class="hint-container-title">提示</p>
-<p>完整 <code>prop</code> 别名见：<a href="https://chakra-ui.com/docs/styled-system/style-props" target="_blank" rel="noopener noreferrer">Chakra UI - Style Props</a>。</p>
-<p>类似 Tailwind 和 驼峰 CSS。</p>
-</div>]]></summary>
-    <content type="html"><![CDATA[<p>Style Props 是一种通过简单传递 <code>prop</code> 来改变组件样式的方法。它通过提供有用的速记方法来改变组件的样式，从而节省时间。</p>
-<div class="hint-container tip">
-<p class="hint-container-title">提示</p>
-<p>完整 <code>prop</code> 别名见：<a href="https://chakra-ui.com/docs/styled-system/style-props" target="_blank" rel="noopener noreferrer">Chakra UI - Style Props</a>。</p>
-<p>类似 Tailwind 和 驼峰 CSS。</p>
-</div>
-<h2>margin and padding</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// m={2} refers to the value of `theme.space[2]`</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">m</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Tomato</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-
-<span class="token comment">// You can also use custom values</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">maxW</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>960px<span class="token punctuation">"</span></span> <span class="token attr-name">mx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>auto<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// sets margin `8px` on all viewports and `12px` from the first breakpoint and up</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">m</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
-</code></pre></div><h2>color and background-color</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// picks up a nested color value using dot notation</span>
-<span class="token comment">// =&gt; `theme.colors.gray[50]`</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">color</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>gray.50<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// raw CSS color value</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">color</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>#f00<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// background colors</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>tomato<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// verbose prop</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">backgroundColor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>tomato<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-</code></pre></div><h2>Gradient</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box<span class="token punctuation">,</span> Text <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// adding linear gradient and color transitions</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">w</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token attr-name">h</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>200px<span class="token punctuation">"</span></span> <span class="token attr-name">bgGradient</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>linear(to-t, green.200, pink.500)<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// adding radial gradient and color transitions</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">w</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token attr-name">h</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>200px<span class="token punctuation">"</span></span> <span class="token attr-name">bgGradient</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>radial(gray.300, yellow.400, pink.200)<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// adding the text gradient</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span>
-  <span class="token attr-name">bgGradient</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>linear(to-l, #7928CA, #FF0080)<span class="token punctuation">"</span></span>
-  <span class="token attr-name">bgClip</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span>
-  <span class="token attr-name">fontSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6xl<span class="token punctuation">"</span></span>
-  <span class="token attr-name">fontWeight</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>extrabold<span class="token punctuation">"</span></span>
-<span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Welcome to Chakra UI
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Text</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2>Typography</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Text <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// font-size of `theme.fontSizes.md`</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span> <span class="token attr-name">fontSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// font-size `32px`</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span> <span class="token attr-name">fontSize</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token number">32</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// font-size `'2em'`</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span> <span class="token attr-name">fontSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>2em<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// text-align `left` on all viewports and `center` from the first breakpoint and up</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span> <span class="token attr-name">textAlign</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">[</span> <span class="token string">'left'</span><span class="token punctuation">,</span> <span class="token string">'center'</span> <span class="token punctuation">]</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
-</code></pre></div><h2>Layout, width and height</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// verbose</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token number">32</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// shorthand</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">w</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token attr-name">h</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>32px<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// use theme sizing</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxSize</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sm<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// width `256px`</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">w</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token number">256</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// width `'40px'`</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">w</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>40px<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-</code></pre></div><h2>Display</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@chakra-ui/react'</span>
-
-<span class="token comment">// hide the element on all viewports</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>none<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// hide the element by default, and show from 'md' up</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">display</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token literal-property property">base</span><span class="token operator">:</span> <span class="token string">"none"</span><span class="token punctuation">,</span> <span class="token literal-property property">md</span><span class="token operator">:</span> <span class="token string">"block"</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// shorthand</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">hideBelow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>md<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// hide the element from 'md' up</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">display</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token literal-property property">base</span><span class="token operator">:</span> <span class="token string">"block"</span><span class="token punctuation">,</span> <span class="token literal-property property">md</span><span class="token operator">:</span> <span class="token string">"none"</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// shorthand</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">hideFrom</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>md<span class="token punctuation">'</span></span> <span class="token punctuation">/&gt;</span></span>
-</code></pre></div><h2>Flexbox</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box<span class="token punctuation">,</span> Flex <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// verbose</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>flex<span class="token punctuation">"</span></span> <span class="token attr-name">alignItems</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>center<span class="token punctuation">"</span></span> <span class="token attr-name">justifyContent</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>space-between<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Box with Flex props
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-
-<span class="token comment">// shorthand using the `Flex` component</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Flex</span></span> <span class="token attr-name">align</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>center<span class="token punctuation">"</span></span> <span class="token attr-name">justify</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>center<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Flex Container
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Flex</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2>Grid Layout</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box<span class="token punctuation">,</span> Grid <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// verbose</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>grid<span class="token punctuation">"</span></span> <span class="token attr-name">gridGap</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">}</span></span> <span class="token attr-name">gridAutoFlow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>row dense<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Grid
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-
-<span class="token comment">// shorthand using the `Grid` component</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Grid</span></span> <span class="token attr-name">gap</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">}</span></span> <span class="token attr-name">autoFlow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>row dense<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Grid
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Grid</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2>Background</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// verbose</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span>
-  <span class="token attr-name">backgroundImage</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>url('/images/kyuubi.png')<span class="token punctuation">"</span></span>
-  <span class="token attr-name">backgroundPosition</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>center<span class="token punctuation">"</span></span>
-  <span class="token attr-name">backgroundRepeat</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>no-repeat<span class="token punctuation">"</span></span>
-<span class="token punctuation">/&gt;</span></span>
-
-<span class="token comment">// shorthand</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span>
-  <span class="token attr-name">bgImage</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>url('/images/gaara.png')<span class="token punctuation">"</span></span>
-  <span class="token attr-name">bgPosition</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>center<span class="token punctuation">"</span></span>
-  <span class="token attr-name">bgRepeat</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>no-repeat<span class="token punctuation">"</span></span>
-<span class="token punctuation">/&gt;</span></span>
-</code></pre></div><h2>Border</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">border</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1px<span class="token punctuation">"</span></span> <span class="token attr-name">borderColor</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gray.200<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Card
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2>Border Radius</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Button <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// This button will have no right borderRadius</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">borderRightRadius</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Button 1</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">&gt;</span></span>
-
-<span class="token comment">// This button will have no left borderRadius*/</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">borderLeftRadius</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Button 2</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">&gt;</span></span>
-
-<span class="token comment">// top left and top right radius will be `theme.radii.md` =&gt; 4px</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">borderTopRadius</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Button 2</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2>Position</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Box <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// verbose</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">position</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>absolute<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Cover</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-
-<span class="token comment">// shorthand</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">pos</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>absolute<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Cover</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">pos</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>absolute<span class="token punctuation">"</span></span> <span class="token attr-name">top</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">left</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Absolute with top and left
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">pos</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>fixed<span class="token punctuation">"</span></span> <span class="token attr-name">w</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>100%<span class="token punctuation">"</span></span> <span class="token attr-name">zIndex</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Fixed with zIndex
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2>Shadow</h2>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/20240307183600.png" alt="Shadow" tabindex="0" loading="lazy"><figcaption>Shadow</figcaption></figure>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">SimpleGrid</span></span>
-  <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gray.50<span class="token punctuation">"</span></span>
-  <span class="token attr-name">columns</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token literal-property property">sm</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token literal-property property">md</span><span class="token operator">:</span> <span class="token number">4</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span>
-  <span class="token attr-name">spacing</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>8<span class="token punctuation">"</span></span>
-  <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>10<span class="token punctuation">"</span></span>
-  <span class="token attr-name">textAlign</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>center<span class="token punctuation">"</span></span>
-  <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>lg<span class="token punctuation">"</span></span>
-  <span class="token attr-name">color</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gray.400<span class="token punctuation">"</span></span>
-<span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>xs<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    xs
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>sm<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    sm
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>base<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    Base
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    md
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>lg<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    lg
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>xl<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    xl
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2xl<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    2xl
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dark-lg<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    Dark lg
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>outline<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    Outline
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">boxShadow</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>inner<span class="token punctuation">"</span></span> <span class="token attr-name">p</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>6<span class="token punctuation">"</span></span> <span class="token attr-name">rounded</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>md<span class="token punctuation">"</span></span> <span class="token attr-name">bg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>white<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    Inner
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">SimpleGrid</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2>Filter</h2>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/20240307183703.png" alt="Filter" tabindex="0" loading="lazy"><figcaption>Filter</figcaption></figure>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">function</span> <span class="token function">Filters</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> basicBoxStyles <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token literal-property property">display</span><span class="token operator">:</span> <span class="token string">'flex'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">alignItems</span><span class="token operator">:</span> <span class="token string">'center'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">justifyContent</span><span class="token operator">:</span> <span class="token string">'center'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">textAlign</span><span class="token operator">:</span> <span class="token string">'center'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">boxSize</span><span class="token operator">:</span> <span class="token string">'250px'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">'white'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">textShadow</span><span class="token operator">:</span> <span class="token string">'0 0 20px black'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">fontWeight</span><span class="token operator">:</span> <span class="token string">'bold'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">fontSize</span><span class="token operator">:</span> <span class="token string">'20px'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">px</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">background</span><span class="token operator">:</span>
-      <span class="token string">'url(https://picsum.photos/id/1080/200/300) center/cover no-repeat'</span>
-  <span class="token punctuation">}</span>
-  <span class="token keyword">return</span> <span class="token punctuation">(</span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Flex</span></span> <span class="token attr-name">flexWrap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>wrap<span class="token punctuation">"</span></span> <span class="token attr-name">gap</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>24px<span class="token punctuation">"</span></span> <span class="token attr-name">justifyContent</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>space-evenly<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token punctuation">{</span><span class="token comment">/* adding filter property to the element */</span><span class="token punctuation">}</span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">sx</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>basicBoxStyles<span class="token punctuation">}</span></span> <span class="token attr-name">filter</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>grayscale(80%)<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        Box with Filter
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token punctuation">{</span><span class="token comment">/* adding blur property to the element */</span><span class="token punctuation">}</span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">sx</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>basicBoxStyles<span class="token punctuation">}</span></span> <span class="token attr-name">filter</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>auto<span class="token punctuation">"</span></span> <span class="token attr-name">blur</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2px<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        Box with Blur
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token punctuation">{</span><span class="token comment">/* adding brightness property to the element */</span><span class="token punctuation">}</span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span> <span class="token attr-name">sx</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>basicBoxStyles<span class="token punctuation">}</span></span> <span class="token attr-name">filter</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>auto<span class="token punctuation">"</span></span> <span class="token attr-name">brightness</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>40%<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        Box with Brightness
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Flex</span></span><span class="token punctuation">&gt;</span></span>
-  <span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2>伪类</h2>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Button <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@chakra-ui/react"</span>
-
-<span class="token comment">// :hover style</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span>
-  <span class="token attr-name">colorScheme</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>teal<span class="token punctuation">"</span></span>
-  <span class="token attr-name">_hover</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>
-    <span class="token literal-property property">background</span><span class="token operator">:</span> <span class="token string">"white"</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">"teal.500"</span><span class="token punctuation">,</span>
-  <span class="token punctuation">}</span><span class="token punctuation">}</span></span>
-<span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Hover me
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">&gt;</span></span>
-
-<span class="token comment">// apply :hover over parent element</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span>
-  <span class="token attr-name">role</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>group<span class="token punctuation">"</span></span>
-<span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span>
-    <span class="token attr-name">_hover</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token literal-property property">fontWeight</span><span class="token operator">:</span> <span class="token string">'semibold'</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span>
-    <span class="token attr-name">_groupHover</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token literal-property property">color</span><span class="token operator">:</span> <span class="token string">'tomato'</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span>
-  <span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-
-<span class="token comment">// add ::before pseudo element</span>
-<span class="token comment">// Note: the content value needs an extra set of quotes!</span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Box</span></span>
-  <span class="token attr-name">_before</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token literal-property property">content</span><span class="token operator">:</span> <span class="token string">'"🙂"'</span><span class="token punctuation">,</span> <span class="token literal-property property">display</span><span class="token operator">:</span> <span class="token string">'inline-block'</span><span class="token punctuation">,</span> <span class="token literal-property property">mr</span><span class="token operator">:</span> <span class="token string">'5px'</span> <span class="token punctuation">}</span><span class="token punctuation">}</span></span>
-<span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  A pseudo element
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Box</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2><code>as</code></h2>
-<p><code>as</code> prop 是所有组件中的一项功能，它允许您传递要呈现的 HTML 标记或组件。</p>
-<p>例如，您正在使用一个 Button 组件，但需要将其转换为一个链接。您可以像这样组成一个和 Button：</p>
-<div class="language-jsx" data-ext="jsx" data-title="jsx"><pre class="language-jsx"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">as</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>a<span class="token punctuation">"</span></span> <span class="token attr-name">target</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>_blank<span class="token punctuation">"</span></span> <span class="token attr-name">variant</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>outline<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://chakra-ui.com<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-  Hello
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Button</span></span><span class="token punctuation">&gt;</span></span>
-</code></pre></div>]]></content>
-    <category term="chakra"/>
-    <published>2024-03-07T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">chakra</title>
-    <id>https://dribble-njr.github.io/blog/blog/frontend/chakra/</id>
-    <link href="https://dribble-njr.github.io/blog/blog/frontend/chakra/"/>
-    <updated>2026-04-20T16:21:10.000Z</updated>
-    <published>2026-04-20T16:21:10.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">快速开始</title>
     <id>https://dribble-njr.github.io/blog/blog/frontend/css/01-quick-start.html</id>
     <link href="https://dribble-njr.github.io/blog/blog/frontend/css/01-quick-start.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
@@ -5774,5 +5389,257 @@ Access-Control-Max-Age: 1728000 本次预检的有效期，秒
 ]]></content>
     <category term="CSS"/>
     <published>2022-05-02T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">浮动</title>
+    <id>https://dribble-njr.github.io/blog/blog/frontend/css/08-float.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/frontend/css/08-float.html"/>
+    <updated>2026-04-20T16:21:10.000Z</updated>
+    <summary type="html"><![CDATA[<p>浮动可以让元素脱离标准文档流，指定一个元素应沿其容器的左侧或右侧放置，允许文本和内联元素环绕它。</p>
+<h2>开启浮动</h2>
+<p>浮动的基本语法 <code>float: &lt;keyword&gt;</code>。取值如下：</p>
+<ul>
+<li><code>left</code>：表明元素必须浮动在其所在的块容器左侧。</li>
+<li><code>right</code>：表明元素必须浮动在其所在的块容器右侧。</li>
+<li><code>none</code>：表明元素不进行浮动。</li>
+<li><code>inline-start</code>：表明元素必须浮动在其所在块容器的开始一侧，在 ltr 脚本中是左侧，在 rtl 脚本中是右侧。</li>
+<li><code>inline-end</code>：表明元素必须浮动在其所在块容器的结束一侧，在 ltr 脚本中是右侧，在 rtl 脚本中是左侧。</li>
+</ul>]]></summary>
+    <content type="html"><![CDATA[<p>浮动可以让元素脱离标准文档流，指定一个元素应沿其容器的左侧或右侧放置，允许文本和内联元素环绕它。</p>
+<h2>开启浮动</h2>
+<p>浮动的基本语法 <code>float: &lt;keyword&gt;</code>。取值如下：</p>
+<ul>
+<li><code>left</code>：表明元素必须浮动在其所在的块容器左侧。</li>
+<li><code>right</code>：表明元素必须浮动在其所在的块容器右侧。</li>
+<li><code>none</code>：表明元素不进行浮动。</li>
+<li><code>inline-start</code>：表明元素必须浮动在其所在块容器的开始一侧，在 ltr 脚本中是左侧，在 rtl 脚本中是右侧。</li>
+<li><code>inline-end</code>：表明元素必须浮动在其所在块容器的结束一侧，在 ltr 脚本中是右侧，在 rtl 脚本中是左侧。</li>
+</ul>
+<p>当一个元素浮动之后，它会被移出正常的文档流，然后向左或者向右平移，一直平移直到碰到了所处的容器的边框，或者碰到另外一个浮动的元素。</p>
+<p>在下面的图片中，有三个红色的正方形。其中有两个向左浮动，一个向右浮动。要注意到第二个向左浮动的正方形被放在第一个向左浮动的正方形的右边。如果还有更多的正方形这样浮动，它们会继续向右堆放，直到填满容器一整行，之后换行至下一行。</p>
+<p>浮动元素至少要与其最高的嵌套浮动子元素一样高。给父元素设置了 <code>width: 600px</code>，并将其设为浮动元素，以确保其高度足够包含其中的浮动子元素，并确保其宽度足以容纳这些元素。</p>
+
+<h2>清除浮动</h2>
+<p>由于浮动会将元素移除标准文档流，因此浮动元素会影响上下文中的其他元素，所以必须要给浮动元素清除浮动。</p>
+
+<p>以下三种方法均可清除浮动。</p>
+<div class="language-css" data-ext="css" data-title="css"><pre class="language-css"><code><span class="token comment">/* 1、父级标签定义伪类 */</span>
+<span class="token selector">.clearfix::after</span> <span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">''</span><span class="token punctuation">;</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> table<span class="token punctuation">;</span>
+  <span class="token property">clear</span><span class="token punctuation">:</span> both<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">/* 兼容IE低版本 */</span>
+<span class="token selector">.clearfix</span> <span class="token punctuation">{</span>
+  *<span class="token property">zoom</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* 2、父级标签 overflow */</span>
+<span class="token selector">.clearfix</span> <span class="token punctuation">{</span>
+  <span class="token property">overflow</span><span class="token punctuation">:</span> hidden<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* 3、添加空 div 标签 */</span>
+<span class="token selector">.clearfix</span> <span class="token punctuation">{</span>
+  <span class="token property">clear</span><span class="token punctuation">:</span> both<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>第三种方式的 demo 如下，其余两种可以自行尝试。</p>
+
+<h2>圣杯布局和双飞翼布局</h2>
+<div class="hint-container tip">
+<p class="hint-container-title">提示</p>
+<p>利用浮动可以实现两个经典布局。</p>
+</div>
+<h3>作用</h3>
+<ul>
+<li>实现 pc 端三栏布局，中间一栏最先渲染</li>
+<li>实现两边宽度固定，中间自适应</li>
+</ul>
+<p>效果如下：</p>
+<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/three-cols.png" alt="three-cols" tabindex="0" loading="lazy"><figcaption>three-cols</figcaption></figure>
+<h3>圣杯布局</h3>
+
+]]></content>
+    <category term="CSS"/>
+    <published>2022-07-18T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Flex 布局</title>
+    <id>https://dribble-njr.github.io/blog/blog/frontend/css/09-flexbox.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/frontend/css/09-flexbox.html"/>
+    <updated>2026-04-20T16:21:10.000Z</updated>
+    <summary type="html"><![CDATA[<h2>一、基本概念</h2>
+<h3>1.1 flexbox 是什么</h3>
+<p>CSS3 的新布局模式，是一种当页面需要适应不同屏幕大小以及设备类型时确保元素拥有恰当的行为的布局方式。</p>
+<p>flex 弹性盒是一个 <strong>一维布局</strong> 模型，可以在界面中的项目之间提供空间分布和强大对齐功能的布局方式。</p>
+<p>所谓一维布局模型是指：flex 在同一时刻只控制行或列。这和 <strong>二维布局模型</strong> Grid Layout （同时控制行和列）相反。</p>
+<h3>1.2 flexbox 的两个轴</h3>
+<p>flexbox 有两个轴——主轴和交叉轴。主轴由 <code>flex-direction</code> 属性定义，而交叉轴和主轴垂直。对 flexbox 做的一切操作都涉及到这两个轴，flexbox 的特点是可以将内容沿着主轴或交叉轴对齐和调整。</p>]]></summary>
+    <content type="html"><![CDATA[<h2>一、基本概念</h2>
+<h3>1.1 flexbox 是什么</h3>
+<p>CSS3 的新布局模式，是一种当页面需要适应不同屏幕大小以及设备类型时确保元素拥有恰当的行为的布局方式。</p>
+<p>flex 弹性盒是一个 <strong>一维布局</strong> 模型，可以在界面中的项目之间提供空间分布和强大对齐功能的布局方式。</p>
+<p>所谓一维布局模型是指：flex 在同一时刻只控制行或列。这和 <strong>二维布局模型</strong> Grid Layout （同时控制行和列）相反。</p>
+<h3>1.2 flexbox 的两个轴</h3>
+<p>flexbox 有两个轴——主轴和交叉轴。主轴由 <code>flex-direction</code> 属性定义，而交叉轴和主轴垂直。对 flexbox 做的一切操作都涉及到这两个轴，flexbox 的特点是可以将内容沿着主轴或交叉轴对齐和调整。</p>
+<h3>1.3 起始线和终止线</h3>
+<p>flexbox 不会对文档的书写模式提供假设。过去，CSS 的书写模式主要被认为是水平的，从左到右的。现代的布局方式涵盖了书写模式的范围，所以不再假设一行文字是从文档的左上角开始向右书写, 新的行也不是必须出现在另一行的下面。</p>
+<h3>1.4 flex 容器和项目</h3>
+<p>文档中采用了 flexbox 的区域就叫做 <strong>flex 容器（简称”容器“）</strong>。为了创建容器， 我们把一个容器的 <code>display</code> 属性值改为 <code>flex</code> （块级）或者 <code>inline-flex</code>（行级） 。完成这一步之后，容器中的直系子元素就会变为 <strong>flex 项目（简称“项目”）</strong>。</p>
+<h2>二、容器属性</h2>
+<p>以下都是父元素的属性。</p>
+<ul>
+<li><code>flex-direction</code>：决定主轴方向（即项目的排列方向）</li>
+<li><code>flex-wrap</code>：决定项目是否换行</li>
+<li><code>flex-flow</code>： <code>flex-direction</code> 和 <code>flex-wrap</code> 的简写</li>
+<li><code>justify-content</code>：项目在主轴上的对齐方式</li>
+<li><code>align-items</code>：项目在交叉轴上的对齐方式</li>
+<li><code>align-content</code>：控制多行项目的对齐方式</li>
+</ul>
+<h3>2.1 flex-direction</h3>
+<p><code>flex-direction</code> 决定主轴方向、起始线和终止线位置。</p>
+<p>它有四个<strong>取值</strong>：</p>
+<ul>
+<li><code>row</code> （默认）：主轴方向为水平方向，主轴的起始线是左边，终止线是右边</li>
+<li><code>row-reverse</code>：主轴方向为水平方向，主轴的起始线和终止线位置交换</li>
+<li><code>column</code>：主轴方向为垂直方向，主轴的起始线是上边，终止线是下边</li>
+<li><code>column-reverse</code>：主轴方向为垂直方向，主轴的起始线和终止线交换</li>
+</ul>
+<p>使用场景：网页整体布局、导航栏等等</p>
+<h3>2.2 flex-wrap</h3>
+<p><code>flex-wrap</code> 决定 flex 项目是否换行，可实现多行 flex 容器，这样做时，应把每行都看作一个新的 flex 容器。</p>
+<p>默认情况下子元素是不换行的，如果一条轴线排不下，就可以设置它来换行。</p>
+<p><strong>属性值</strong>：</p>
+<ul>
+<li><code>nowrap</code>（默认）：不换行</li>
+<li><code>wrap</code>：换行，第一行在上方</li>
+<li><code>wrap-reverse</code>：换行，第一行在下方</li>
+</ul>
+<h3>2.3 flex-flow</h3>
+<p><code>flex-flow</code> 是 <code>flex-direction</code> 和 <code>flex-wrap</code> 的简写，表示 <code>flex</code> 布局的流动特性。第一个指定的值为 <code>flex-direction</code> ，第二个指定的值为 <code>flex-wrap</code>。默认值当然是 <code>row nowrap</code>。</p>
+<h3>2.4 justify-content</h3>
+<p><code>justify-content</code> 决定项目在<strong>主轴</strong>上的排列（对齐）方式（属性决定了水平方向子项的对齐和分布方式）。</p>
+<p>有以下<strong>取值</strong>：</p>
+<ul>
+<li><code>flex-start</code> （默认值）：起始线对齐（项目从容器的起始线开始排列）</li>
+<li><code>flex-end</code>：终止线对齐（项目从容器的终止线开始排列）</li>
+<li><code>center</code>：居中对齐</li>
+<li><code>space-around</code>：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。around 是环绕的意思，意思是每个 flex 子项两侧都环绕互不干扰的等宽的空白间距，最终视觉上边缘两侧的空白只有中间空白宽度一半</li>
+<li><code>space-between</code>：两端对齐，项目之间的间隔都相等，between 是中间的意思，意思是多余的空白间距只在元素中间区域分配</li>
+<li><code>space-evenly</code>：均匀分布每个项目，每个 flex 子项两侧空白间距完全相等，项目之间的间隔和项目与边框之间的间隔相等</li>
+</ul>
+<h3>2.5 align-items</h3>
+<p><code>align-items</code> 定义项目在<strong>交叉轴</strong>上的排列（对齐）方式。</p>
+<p><strong>取值</strong>：</p>
+<ul>
+<li><code>stretch</code>（默认值）：如项目没有设置高度，或者高度为 auto，则占满整个容器</li>
+<li><code>flex-start</code>：起始线对齐</li>
+<li><code>flex-end</code>：终止线对齐</li>
+<li><code>center</code>：居中对齐</li>
+<li><code>baseline</code>： 项目的第一行文字的基线对齐</li>
+</ul>
+<h3>2.6 align-content</h3>
+<p><code>align-content</code> 用于控制多行项目在交叉轴上的对齐方式，如果项目<strong>只有一行则不会起作用</strong>。</p>
+<p><strong>取值</strong>：</p>
+<ul>
+<li><code>stretch</code>（默认值）：即在项目没设置高度，或高度为 auto 情况下让项目填满整个容器，与 align-items 类似</li>
+<li><code>flex-start</code>：与交叉轴起始线对齐</li>
+<li><code>flex-end</code>：与交叉轴的终点对齐</li>
+<li><code>center</code>：与交叉轴的中点对齐</li>
+<li><code>space-between</code>：同上</li>
+<li><code>space-around</code>：同上</li>
+<li><code>space-evenly</code>：同上</li>
+</ul>
+
+<h2>三、项目属性</h2>
+<p>项目属性针对子元素。</p>
+<ul>
+<li><code>order</code>：定义项目的排列顺序</li>
+<li><code>flex-grow</code>：定义项目放大比例</li>
+<li><code>flex-shrink</code>：定义了项目的缩小比例</li>
+<li><code>flex-basis</code>：设置项目宽度</li>
+<li><code>flex</code>：简写属性</li>
+<li><code>align-self</code>：控制单个项目在交叉轴上的排列对齐方式</li>
+</ul>
+<h3>3.1 order</h3>
+<p><code>order</code> 属性定义项目的排列顺序，数值越小，排列越靠前。</p>
+<p><strong>取值</strong>：</p>
+<ul>
+<li>默认为 0，取值为整数</li>
+</ul>
+<h3>3.2 flex-grow</h3>
+<p><code>flex-grow</code> 定义项目放大比例，放大的前提是父元素有足够空间。实际上是定义子元素占容器空间的份数。若没定义此属性，则空间按自己本身内容撑开。</p>
+<blockquote>
+<p>grow 是扩展的意思，扩展的就是 flex 子项所占据的宽度，扩展所侵占的空间就是除去元素外的剩余的空白间隙。</p>
+<p>注意：即使设置了固定宽度，若有剩余空间依旧会放大。</p>
+</blockquote>
+<p><strong>取值</strong>：</p>
+<ul>
+<li>默认为 0，不放大，取值为数值</li>
+</ul>
+<h3>3.3 flex-shrink</h3>
+<p><code>flex-shrink</code> 定义项目缩小比例，默认为 1，即如果空间不足，该项目将缩小。</p>
+<blockquote>
+<p>注意：即使设置了固定宽度，也会缩小。</p>
+<p>但如果某个项目的 flex-shrink 属性设置为 0 ，即使空间不足，自身也不缩小。</p>
+</blockquote>
+<p><strong>取值</strong>：</p>
+<ul>
+<li>默认为 1，正数</li>
+</ul>
+<h3>3.4 flex-basis</h3>
+<p>用于设置项目宽度，定义了在分配剩余空间之前元素的默认大小。默认 auto 时，项目会保持默认宽度，或者以 width 为自身的宽度，但<strong>如果设置了 flex-basis，权重会 width 属性高，因此会覆盖 width 属性。</strong></p>
+<blockquote>
+<p>实际上不建议对 flex 子项使用<code>width</code>属性，因为不够弹性。</p>
+</blockquote>
+<p><strong>取值</strong>：</p>
+<ul>
+<li>默认为 auto</li>
+</ul>
+<h3>3.5 flex</h3>
+<p><code>flex</code> 属性是 <code>flex-grow</code> ，<code>flex-shrink</code> 与 <code>flex-basis</code> 三个属性的简写，用于定义项目放大，缩小与宽度。默认为 <code>flex: 0 1 auto</code>；后两个属性值可以简写。</p>
+<p>常用：<code>flex: 1</code> 等分容器空间。</p>
+<h3>3.6 align-self</h3>
+<p><code>align-self</code> 指控制单独某一个 flex 子项的垂直对齐方式，写在 flex 容器上的这个 <code>align-items</code> 属性，后面是 items，有个 s，表示子项们，是全体；这里是 self，单独一个个体。其他区别不大，语法几乎一样：</p>
+<p><code>align-self: auto | flex-start | flex-end | center | baseline | stretch;</code></p>
+<p>唯一区别就是<code>align-self</code>多了个<code>auto</code>（默认值），表示继承自 flex 容器的<code>align-items</code>属性值。其他属性值含义一模一样。</p>
+]]></content>
+    <category term="CSS"/>
+    <published>2021-11-18T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">样式单位</title>
+    <id>https://dribble-njr.github.io/blog/blog/frontend/css/10-units.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/frontend/css/10-units.html"/>
+    <updated>2026-04-20T16:21:10.000Z</updated>
+    <summary type="html"><![CDATA[<div class="hint-container info">
+<p class="hint-container-title">相关信息</p>
+<p>更详细的内容可见 MDN。</p>
+</div>
+<p>CSS 布局里有一些不同的样式单位，常见如下：</p>
+<ul>
+<li>px：绝对单位，像素；</li>
+<li>em：相对于自身字体大小的单位；</li>
+<li>rem：相对于 html 标签字体大小的单位；</li>
+<li>vh：相对于视口高度大小的单位，20vh == (视口高度/100)*20；</li>
+<li>vw：相对于视口宽度大小的单位, 20vw == (视口宽度/100)*20；</li>
+<li>%：父元素的百分比。</li>
+</ul>]]></summary>
+    <content type="html"><![CDATA[<div class="hint-container info">
+<p class="hint-container-title">相关信息</p>
+<p>更详细的内容可见 MDN。</p>
+</div>
+<p>CSS 布局里有一些不同的样式单位，常见如下：</p>
+<ul>
+<li>px：绝对单位，像素；</li>
+<li>em：相对于自身字体大小的单位；</li>
+<li>rem：相对于 html 标签字体大小的单位；</li>
+<li>vh：相对于视口高度大小的单位，20vh == (视口高度/100)*20；</li>
+<li>vw：相对于视口宽度大小的单位, 20vw == (视口宽度/100)*20；</li>
+<li>%：父元素的百分比。</li>
+</ul>
+]]></content>
+    <category term="CSS"/>
+    <published>2022-07-18T00:00:00.000Z</published>
   </entry>
 </feed>
