@@ -3,12 +3,12 @@ title: 历史
 date: 2023-03-22
 icon: history
 category:
+  - Frontend
   - HTML
 tag:
-  - frontend
   - html
-  - basic-knowledge
   - history
+  - web-standards
 ---
 
 ## 历史
@@ -43,16 +43,14 @@ XHTML 1.0 对 HTML4 进行了重新表述，除了加入新的序列化之外，
 
 2019 年，WHATWG 和 W3C 签署了一项协议，双方合作开发 HTML 的单一版本: [HTML Living Standard](https://html.spec.whatwg.org/multipage/)。
 
-::: tip 总结
-
-HTML 主要版本：
-
-- HTML 2.0
-- HTML 3.2
-- HTML 4.0
-- HTML 5
-
-:::
+> [!TIP] 总结
+>
+> HTML 主要版本：
+>
+> - HTML 2.0
+> - HTML 3.2
+> - HTML 4.0
+> - HTML 5
 
 ## 参考
 
