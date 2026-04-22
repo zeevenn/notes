@@ -66,7 +66,7 @@ await document.fonts.ready
 createApp(App).mount('#app')
 ```
 
-**组件级等待（适合只有特定页面用到自定义字体，比如 Canvas）：**
+**组件级等待（仅适用于 Canvas 等命令式绘制场景）：**
 
 ```ts
 function useFont(family: string, descriptors = '16px') {
@@ -83,6 +83,13 @@ function useFont(family: string, descriptors = '16px') {
 
 `useState` 的初始值用惰性初始化检查字体是否已缓存，避免字体已就绪时还走一次异步流程。
 
+> [!WARNING]
+> `useFont` **不能防止 DOM 文字的 FOUT**。`useEffect` 在浏览器首次绘制之后才执行，第一帧已经用后备字体上屏，`fonts.load()` 此时还没开始——等字体就绪后重新渲染，闪烁仍然发生。
+>
+> Canvas 之所以有效，是因为可以用 `if (!fontReady) return` 完全跳过第一帧的绘制，什么都不画，等 `loaded = true` 后再执行 `drawText()`。DOM 文字没有这个控制手段。
+>
+> **DOM 文字防 FOUT，应使用全局等待方案。**
+
 ## 典型使用场景
 
 **Canvas 文字渲染** — `ctx.drawText()` 依赖精确的字体 metrics。字体未注册时绘制，文字尺寸和位置会按后备字体计算，且不会自动重绘：
@@ -98,6 +105,24 @@ useEffect(() => {
 ```
 
 **虚拟列表行高计算** — 需要用 `measureText()` 提前算出每行文字高度，同样依赖字体已注册。
+
+## font-display 与 Font Loading API
+
+`font-display` 是 CSS 层面的字体加载策略，Font Loading API 是 JavaScript 层面的控制手段，两者解决同一个问题，选一个主导即可。
+
+| 值         | 阻塞周期 | 交换周期 | 说明                       |
+| ---------- | -------- | -------- | -------------------------- |
+| `auto`     | —        | —        | 由用户代理定义，**默认值** |
+| `block`    | 短暂     | 无限     | FOIT，超时后显示后备字体   |
+| `swap`     | 极小     | 无限     | 立即显示后备字体（FOUT）   |
+| `fallback` | 极小     | 短暂     | 显示后备字体，交换窗口有限 |
+| `optional` | 极小     | 无       | 浏览器自行决定是否使用字体 |
+
+**与 Font Loading API 同时使用时的注意事项：**
+
+- **`font-display: swap` + 全局 `await fonts.ready`** — 两者冲突。`swap` 告诉浏览器先用后备字体，但 `await` 在应用挂载前就等好了，字体已就绪再渲染，`swap` 的效果被覆盖，FOUT 不会出现。选了 Font Loading API 做全局等待，`font-display` 就不需要再设置。
+- **`font-display: optional` + `fonts.load()`** — 危险组合。`optional` 在网络慢时浏览器会直接放弃加载字体，导致 `fonts.load()` 的 Promise 可能永远不 resolve，造成应用挂起。
+- **Canvas 场景** — `font-display` 完全无关。Canvas 绕过了 CSS 渲染管线，直接走字体引擎，只有 Font Loading API 有效。
 
 ## 浏览器兼容性
 
