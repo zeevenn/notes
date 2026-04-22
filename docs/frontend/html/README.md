@@ -32,7 +32,8 @@ star: true
 
 ## 其他
 
-- [preload / prefetch / preconnect](preload-prefetch.md)
+- [preload / prefetch / preconnect](preload-prefetch-preconnect.md)
+- [字体加载与 Font Loading API](font-loading.md)
 - [SEO 基础](seo-basics.md)
 
 ## 学习资料

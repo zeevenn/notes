@@ -32,7 +32,7 @@ tag:
 
 同样使用 `src` 的标签还有：
 
-- `<img src="photo.jpg" />`：空标签，内容完全由 `src` 决定，加载时也会阻塞页面；
+- `<img src="photo.jpg" />`：空标签，内容完全由 `src` 决定。与 `<script>` 不同，浏览器遇到 `<img>` 会发起网络请求后**继续解析** HTML，不阻塞解析器；
 - `<iframe src="page.html">`：嵌入另一个文档，行为类似。
 
 ## href
@@ -43,9 +43,20 @@ tag:
 <link href="style.css" rel="stylesheet" />
 ```
 
-浏览器识别到这是样式表后，会继续解析 HTML，但会在渲染前等待 CSS 加载完成（以避免 FOUC，即 Flash of Unstyled Content，无样式内容闪烁——页面先以无样式状态短暂呈现，CSS 加载后再重新渲染的现象）。
+浏览器识别到这是样式表后，会继续解析 HTML，但会在渲染前等待 CSS 加载完成（以避免 FOUC，
+即 Flash of Unstyled Content，无样式内容闪烁——页面先以无样式状态短暂呈现，CSS 加载后再重新渲染的现象）。
+
+这里涉及两个不同的阻塞概念：
+
+| 阻塞类型 | 含义                       | 典型触发者                       |
+| -------- | -------------------------- | -------------------------------- |
+| 解析阻塞 | 暂停 HTML token 的继续处理 | `<script src>`（无 defer/async） |
+| 渲染阻塞 | 阻止页面首次像素上屏       | `<link rel="stylesheet">`        |
+
+两者相互独立：CSS **不阻塞解析**，但在 CSSOM 构建完成前**阻塞渲染**；而 `<script>` 则直接阻塞解析器本身。
 
 常见使用场景：
 
 - `<a href="https://example.com">链接</a>`：定义超链接；
-- `<link href="style.css" rel="stylesheet" />`：引入外部样式表。
+- `<link href="style.css" rel="stylesheet" />`：引入外部样式表；
+- `<link href="font.woff2" rel="preload" as="font" />`：提前加载资源，详见 [preload / prefetch / preconnect](./preload-prefetch-preconnect.md)。

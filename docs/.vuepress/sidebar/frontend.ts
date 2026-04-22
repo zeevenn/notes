@@ -15,7 +15,8 @@ export default [
       'canvas-vs-svg',
       'web-components',
       'aria-accessibility',
-      'preload-prefetch',
+      'preload-prefetch-preconnect',
+      'font-loading',
       'seo-basics'
     ]
   },
