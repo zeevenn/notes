@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2026-04-21T16:01:31.259Z</updated>
+  <updated>2026-04-22T13:31:12.426Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
@@ -704,34 +704,35 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     <title type="text">src 和 href 的区别</title>
     <id>https://dribble-njr.github.io/blog/blog/frontend/html/src-vs-href.html</id>
     <link href="https://dribble-njr.github.io/blog/blog/frontend/html/src-vs-href.html"/>
-    <updated>2026-04-21T15:59:37.000Z</updated>
-    <summary type="html"><![CDATA[<p><code>src</code> 和 <code>href</code> 之间存在区别，不能互换使用。</p>
-<ul>
-<li><code>src</code>：表示对资源的 <strong>引入</strong>，它指向的内容会被浏览器替换，嵌入到当前标签所在的位置；</li>
-<li><code>href</code>：表示对资源的 <strong>引用</strong>，建立当前元素或当前文档和外部资源之间的链接关系。</li>
-</ul>
-<h2>src</h2>
-<p><code>src</code>(Source) 属性仅仅表示会在此文档当前元素的位置上嵌入资源，它会 <strong>暂停其他资源的下载和处理</strong>。比如，当浏览器读到：</p>]]></summary>
-    <content type="html"><![CDATA[<p><code>src</code> 和 <code>href</code> 之间存在区别，不能互换使用。</p>
-<ul>
-<li><code>src</code>：表示对资源的 <strong>引入</strong>，它指向的内容会被浏览器替换，嵌入到当前标签所在的位置；</li>
-<li><code>href</code>：表示对资源的 <strong>引用</strong>，建立当前元素或当前文档和外部资源之间的链接关系。</li>
-</ul>
-<h2>src</h2>
-<p><code>src</code>(Source) 属性仅仅表示会在此文档当前元素的位置上嵌入资源，它会 <strong>暂停其他资源的下载和处理</strong>。比如，当浏览器读到：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token operator">&lt;</span>script src<span class="token operator">=</span><span class="token string">"script.js"</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
-</code></pre></div><p>那么浏览器会暂停当前页面的加载，直到获取、解析并执行完这个 JS 文件。它类似于将 JS 文件的内容转存到 <code>&lt;script&gt;</code> 标签中。</p>
-<div class="hint-container tip">
-<p class="hint-container-title">提示</p>
-<p>这就是为什么需要将 <code>&lt;script&gt;</code> 标签放到最后。</p>
-</div>
-<p><code>&lt;img&gt;</code> 标签也类似，它是一个空标签，包含的内容由 <code>src</code> 属性定义，当遇到这个标签，浏览器也会停止加载页面，直到获取并加载这个图片。</p>
-<p>类似的，<code>&lt;iframe&gt;</code> 标签也一样。</p>
-<h2>href</h2>
-<p><code>href</code>(Hypertext Reference) 属性即超文本引用，它会指定 Web 资源的位置，从而定义当前链接（<code>&lt;a&gt;</code> 标签）或当前文档（<code>link</code> 标签）与目标之间的联系，<strong>不会暂停对当前文档的解析</strong>。</p>
-<p>比如：</p>
-<div class="language-html" data-ext="html" data-title="html"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>style.css<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
-</code></pre></div><p>浏览器会知道这是个 CSS 文件，HTML 的解析 <strong>不会</strong> 暂停，但是渲染有可能暂停，因为浏览器需要知道样式规则。</p>
+    <updated>2026-04-22T13:29:16.000Z</updated>
+    <summary type="html"><![CDATA[<p><code>src</code> 和 <code>href</code> 是 HTML 中两个常见属性，含义不同，不可互换：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>全称</th>
+<th>用途</th>
+<th>对页面解析的影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src</code></td>
+<td>Source</td>
+<td><strong>嵌入</strong>外部资源到当前位置</td>
+<td>阻塞解析，需等待资源加载完成</td>
+</tr>
+<tr>
+<td><code>href</code></td>
+<td>Hypertext Reference</td>
+<td><strong>链接</strong>到外部资源</td>
+<td>不阻塞解析（但可能阻塞渲染）</td>
+</tr>
+</tbody>
+</table>]]></summary>
+    <content type="html"><![CDATA[<p><code>src</code> 和 <code>href</code> 是 HTML 中两个常见属性，含义不同，不可互换：</p>
+<p>| 属性   | 全称                | 用途                       | 对页面解析的影响             |<br>
+|</p>
 ]]></content>
     <category term="HTML"/>
     <published>2022-04-28T00:00:00.000Z</published>
