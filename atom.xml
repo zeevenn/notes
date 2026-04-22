@@ -4,12 +4,12 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://dribble-njr.github.io/blog/blog/favicon.ico</icon>
-  <updated>2026-04-22T15:08:04.292Z</updated>
+  <updated>2026-04-22T15:58:33.389Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://dribble-njr.github.io/blog/blog/atom.xml"/>
   <link rel="alternate" href="https://dribble-njr.github.io/blog/blog/"/>
-  <category term="HTML"/>
   <category term="Frontend"/>
+  <category term="HTML"/>
   <category term="工程化"/>
   <category term="algorithm"/>
   <category term="LeetCode"/>
@@ -19,7 +19,131 @@
   <category term="practice"/>
   <category term="news"/>
   <category term="计算机网络"/>
-  <category term="操作系统"/>
+  <entry>
+    <title type="text">字体加载与 Font Loading API</title>
+    <id>https://dribble-njr.github.io/blog/blog/frontend/html/font-loading.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/frontend/html/font-loading.html"/>
+    <updated>2026-04-22T15:56:40.000Z</updated>
+    <summary type="html"><![CDATA[<p>浏览器加载字体分为两条独立的管线：<strong>HTTP 缓存</strong>（负责下载字节）和<strong>字体引擎</strong>（负责解码、注册字体）。两者之间没有自动桥接——字节下载完成不等于字体可用。</p>
+<h2>字体加载的完整流程</h2>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>HTML 解析到 &lt;link rel="preload"&gt; / CSS 触发 @font-face
+  → 发起网络请求，下载字体文件
+  → 浏览器解码字体文件
+  → 注册到字体引擎
+  → document.fonts.check() 返回 true ← 此时才真正可用
+</code></pre></div>]]></summary>
+    <content type="html"><![CDATA[<p>浏览器加载字体分为两条独立的管线：<strong>HTTP 缓存</strong>（负责下载字节）和<strong>字体引擎</strong>（负责解码、注册字体）。两者之间没有自动桥接——字节下载完成不等于字体可用。</p>
+<h2>字体加载的完整流程</h2>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>HTML 解析到 &lt;link rel="preload"&gt; / CSS 触发 @font-face
+  → 发起网络请求，下载字体文件
+  → 浏览器解码字体文件
+  → 注册到字体引擎
+  → document.fonts.check() 返回 true ← 此时才真正可用
+</code></pre></div><p>在注册完成之前，任何依赖字体 metrics 的操作（Canvas 绘制、行高计算）都会拿到后备字体的数据。</p>
+<h2>Font Loading API</h2>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token comment">// 检查字体是否已注册（同步）</span>
+<span class="token comment">// 参数格式为 CSS font shorthand，需包含 size 和 family，大小写敏感</span>
+document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span><span class="token function">check</span><span class="token punctuation">(</span><span class="token string">'16px MyFont'</span><span class="token punctuation">)</span>
+document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span><span class="token function">check</span><span class="token punctuation">(</span><span class="token string">'bold 16px MyFont'</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 等待指定字体注册完成（异步）</span>
+<span class="token keyword">await</span> document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">'16px MyFont'</span><span class="token punctuation">)</span>
+
+<span class="token comment">// 等待页面初始布局涉及的所有字体就绪</span>
+<span class="token keyword">await</span> document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span>ready
+</code></pre></div><p><code>document.fonts.load()</code> 内部会自行触发网络请求，不需要提前手动 <code>fetch()</code>。防止 FOUT 的关键是 <code>await</code>——等 Promise resolve 后再渲染。</p>
+<h2>常见误区：用 fetch() 作为就绪信号</h2>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// ✗ 错误：fetch 只把字节存入 HTTP 缓存，字体引擎不感知</span>
+<span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://example.com/font.woff2'</span><span class="token punctuation">)</span>
+<span class="token function">setLoading</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token comment">// 此时字体引擎尚未注册，仍会用后备字体渲染</span>
+
+<span class="token comment">// ✓ 正确：等待字体引擎真正注册完成</span>
+<span class="token keyword">await</span> document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token string">'16px MyFont'</span><span class="token punctuation">)</span>
+<span class="token function">setLoading</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+</code></pre></div><p>用 <code>fetch()</code> 作为就绪信号会造成比不处理更明显的 FOUT——<code>fetch()</code> resolved 之后 React 立即渲染，浏览器用后备字体画出文字，几十毫秒后字体引擎注册完毕再替换，闪烁肉眼可见。这类 bug 在本地开发时很难复现，只在网络较慢或首次访问时出现。</p>
+<h2>在应用中使用</h2>
+<p><strong>全局等待（适合整个应用都依赖自定义字体）：</strong></p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// main.ts</span>
+<span class="token keyword">await</span> document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span>ready
+<span class="token function">createApp</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span>
+</code></pre></div><p><strong>组件级等待（适合只有特定页面用到自定义字体，比如 Canvas）：</strong></p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">function</span> <span class="token function">useFont</span><span class="token punctuation">(</span>family<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> descriptors <span class="token operator">=</span> <span class="token string">'16px'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>loaded<span class="token punctuation">,</span> setLoaded<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span><span class="token function">check</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>descriptors<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>family<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+  <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>loaded<span class="token punctuation">)</span> <span class="token keyword">return</span>
+    document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>descriptors<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>family<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">setLoaded</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>family<span class="token punctuation">,</span> descriptors<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> loaded
+<span class="token punctuation">}</span>
+</code></pre></div><p><code>useState</code> 的初始值用惰性初始化检查字体是否已缓存，避免字体已就绪时还走一次异步流程。</p>
+<h2>典型使用场景</h2>
+<p><strong>Canvas 文字渲染</strong> — <code>ctx.drawText()</code> 依赖精确的字体 metrics。字体未注册时绘制，文字尺寸和位置会按后备字体计算，且不会自动重绘：</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">const</span> fontReady <span class="token operator">=</span> <span class="token function">useFont</span><span class="token punctuation">(</span><span class="token string">'MyFont'</span><span class="token punctuation">)</span>
+
+<span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>fontReady<span class="token punctuation">)</span> <span class="token keyword">return</span>
+  ctx<span class="token punctuation">.</span>font <span class="token operator">=</span> <span class="token string">'16px MyFont'</span>
+  ctx<span class="token punctuation">.</span><span class="token function">fillText</span><span class="token punctuation">(</span><span class="token string">'Hello'</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>fontReady<span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code></pre></div><p><strong>虚拟列表行高计算</strong> — 需要用 <code>measureText()</code> 提前算出每行文字高度，同样依赖字体已注册。</p>
+<h2>浏览器兼容性</h2>
+<p>Chrome 35、Firefox 41、Safari 10、Edge 79 起支持，覆盖率 96.72%，无需 polyfill（不支持 IE）。</p>
+<ul>
+<li><a href="https://caniuse.com/css-font-loading" target="_blank" rel="noopener noreferrer">caniuse - CSS Font Loading API</a></li>
+</ul>
+<h2>参考</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API" target="_blank" rel="noopener noreferrer">MDN - CSS Font Loading API</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet" target="_blank" rel="noopener noreferrer">MDN - FontFaceSet</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display" target="_blank" rel="noopener noreferrer">MDN - font-display</a></li>
+</ul>
+]]></content>
+    <category term="Frontend"/>
+    <category term="HTML"/>
+    <published>2026-04-22T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">preload / prefetch / preconnect</title>
+    <id>https://dribble-njr.github.io/blog/blog/frontend/html/preload-prefetch-preconnect.html</id>
+    <link href="https://dribble-njr.github.io/blog/blog/frontend/html/preload-prefetch-preconnect.html"/>
+    <updated>2026-04-22T15:56:40.000Z</updated>
+    <summary type="html"><![CDATA[<h2>区别</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>时机</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>preload</code></td>
+<td>当前页面，尽早加载</td>
+<td>当前页面必用资源</td>
+</tr>
+<tr>
+<td><code>prefetch</code></td>
+<td>空闲时加载</td>
+<td>下一个页面可能用到的资源</td>
+</tr>
+<tr>
+<td><code>preconnect</code></td>
+<td>提前建立连接</td>
+<td>第三方域名的 DNS + TCP + TLS</td>
+</tr>
+</tbody>
+</table>]]></summary>
+    <content type="html"><![CDATA[<h2>区别</h2>
+<p>| 指令         | 时机               | 用途                         |<br>
+|</p>
+]]></content>
+    <category term="Frontend"/>
+    <category term="HTML"/>
+    <published>2026-04-21T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">WebSocket</title>
     <id>https://dribble-njr.github.io/blog/blog/computer-science/networking/websocket.html</id>
@@ -587,46 +711,6 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     <published>2026-04-21T00:00:00.000Z</published>
   </entry>
   <entry>
-    <title type="text">preload / prefetch / preconnect</title>
-    <id>https://dribble-njr.github.io/blog/blog/frontend/html/preload-prefetch.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/frontend/html/preload-prefetch.html"/>
-    <updated>2026-04-21T15:59:37.000Z</updated>
-    <summary type="html"><![CDATA[<h2>区别</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">指令</th>
-<th style="text-align:center">时机</th>
-<th style="text-align:center">用途</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>preload</code></td>
-<td style="text-align:center">当前页面，尽早加载</td>
-<td style="text-align:center">当前页面必用资源</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>prefetch</code></td>
-<td style="text-align:center">空闲时加载</td>
-<td style="text-align:center">下一个页面可能用到的资源</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>preconnect</code></td>
-<td style="text-align:center">提前建立连接</td>
-<td style="text-align:center">第三方域名的 DNS + TCP + TLS</td>
-</tr>
-</tbody>
-</table>]]></summary>
-    <content type="html"><![CDATA[<h2>区别</h2>
-<p>| 指令 | 时机 | 用途 |<br>
-| :</p>
-]]></content>
-    <category term="Frontend"/>
-    <category term="HTML"/>
-    <published>2026-04-21T00:00:00.000Z</published>
-  </entry>
-  <entry>
     <title type="text">SEO</title>
     <id>https://dribble-njr.github.io/blog/blog/frontend/html/seo-basics.html</id>
     <link href="https://dribble-njr.github.io/blog/blog/frontend/html/seo-basics.html"/>
@@ -704,7 +788,7 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     <title type="text">src 和 href 的区别</title>
     <id>https://dribble-njr.github.io/blog/blog/frontend/html/src-vs-href.html</id>
     <link href="https://dribble-njr.github.io/blog/blog/frontend/html/src-vs-href.html"/>
-    <updated>2026-04-22T15:06:18.000Z</updated>
+    <updated>2026-04-22T15:56:40.000Z</updated>
     <summary type="html"><![CDATA[<p><code>src</code> 和 <code>href</code> 是 HTML 中两个常见属性，含义不同，不可互换：</p>
 <table>
 <thead>
@@ -5040,107 +5124,5 @@ Content-Type: text/html
 ]]></content>
     <category term="计算机网络"/>
     <published>2025-02-11T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">美化 Windows 终端</title>
-    <id>https://dribble-njr.github.io/blog/blog/computer-science/operating-system/02-terminal-setup.html</id>
-    <link href="https://dribble-njr.github.io/blog/blog/computer-science/operating-system/02-terminal-setup.html"/>
-    <updated>2026-04-20T16:21:10.000Z</updated>
-    <summary type="html"><![CDATA[<p>在 Windows 上的开发体验，特别是在终端方面，相较于 macOS，常常让人觉得差了一点「味道」。macOS 上的 iTerm2 配合 oh-my-zsh，颜值高、功能强大，让开发者得以拥有流畅且美观的工作体验。而 Windows 默认的命令提示符（cmd）和 PowerShell，外观简单，功能也不够灵活。</p>
-<p>幸运的是，随着 <a href="https://github.com/microsoft/terminal" target="_blank" rel="noopener noreferrer">Windows Terminal</a> 的推出，我们终于可以在 Windows 上获得更现代的终端体验。Windows Terminal 拥有标签页支持、强大的配色和字体自定义功能，通过集成 <a href="https://github.com/JanDeDobbeleer/oh-my-posh" target="_blank" rel="noopener noreferrer">oh-my-posh</a> 进行美化、安装支持丰富符号的字体、以及配置一些常用的开发工具，我们可以让 Windows 终端焕然一新，达到高颜值和高效兼具的效果。</p>]]></summary>
-    <content type="html"><![CDATA[<p>在 Windows 上的开发体验，特别是在终端方面，相较于 macOS，常常让人觉得差了一点「味道」。macOS 上的 iTerm2 配合 oh-my-zsh，颜值高、功能强大，让开发者得以拥有流畅且美观的工作体验。而 Windows 默认的命令提示符（cmd）和 PowerShell，外观简单，功能也不够灵活。</p>
-<p>幸运的是，随着 <a href="https://github.com/microsoft/terminal" target="_blank" rel="noopener noreferrer">Windows Terminal</a> 的推出，我们终于可以在 Windows 上获得更现代的终端体验。Windows Terminal 拥有标签页支持、强大的配色和字体自定义功能，通过集成 <a href="https://github.com/JanDeDobbeleer/oh-my-posh" target="_blank" rel="noopener noreferrer">oh-my-posh</a> 进行美化、安装支持丰富符号的字体、以及配置一些常用的开发工具，我们可以让 Windows 终端焕然一新，达到高颜值和高效兼具的效果。</p>
-<figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/20250111181530.png" alt="最终效果" tabindex="0" loading="lazy"><figcaption>最终效果</figcaption></figure>
-<p>接下来，让我们一步步将 Windows 终端打造成一个高效、好看且符合开发者习惯的环境，为平时的开发工作增添一份愉悦和舒适。</p>
-<h2>安装 Windows Terminal</h2>
-<p>Windows Terminal 是微软官方推出的现代终端工具，支持多标签页、GPU 加速、Unicode 和 Emoji 显示等特性，推荐直接在 <a href="https://apps.microsoft.com/detail/9n0dx20hk701?rtc=1&amp;hl=zh-cn&amp;gl=CN" target="_blank" rel="noopener noreferrer">微软商店</a> 直接安装 Windows Terminal。</p>
-<p>然后设置一下透明度，这里我选择的是 80%，并打开亚克力效果，这会让终端跟随底色增加透明模糊效果。</p>
-<h2>升级 PowerShell 7.x</h2>
-<p>Windows 10 或 Windows 11 默认的 PowerShell 版本较低，无法使用更多新特性，推荐升级到 PowerShell 7.x，PowerShell 7.x 是跨平台的，并且修复了很多 PowerShell 5.1 中的兼容性问题。</p>
-<p>安装方式：</p>
-<ul>
-<li>访问 <a href="https://github.com/PowerShell/PowerShell/releases" target="_blank" rel="noopener noreferrer">PowerShell GitHub Release 页面</a> 下载适合你系统的版本。</li>
-<li>或者，可以直接通过 Windows 包管理器 安装（需要 Windows 10 1809 或更高版本）：<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>winget install <span class="token operator">--</span>id Microsoft<span class="token punctuation">.</span>Powershell <span class="token operator">--</span>source winget
-</code></pre></div></li>
-<li>如果你使用 Chocolatey 包管理器，也可以通过以下命令安装：<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>choco install powershell-core
-</code></pre></div></li>
-</ul>
-<p>安装完后，重新启动 Windows Terminal 以使用 PowerShell 7。</p>
-<h2>安装 oh-my-posh</h2>
-<p><a href="https://ohmyposh.dev/docs/installation/windows" target="_blank" rel="noopener noreferrer">安装 oh-my-posh</a> 可以使用如下命令：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>winget install JanDeDobbeleer<span class="token punctuation">.</span>OhMyPosh <span class="token operator">-</span>s winget
-</code></pre></div><p>这会安装 <code>oh-my-posh.exe</code> 和 oh-my-posh 的所有最新 <a href="https://ohmyposh.dev/docs/themes" target="_blank" rel="noopener noreferrer">主题</a>。</p>
-<div class="hint-container tip">
-<p class="hint-container-title">提示</p>
-<p>为了重新加载 PATH，建议重新启动终端。如果 oh-my-posh 未被识别为命令，可以重新运行安装程序，或手动将其添加到 PATH。 例如：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code><span class="token variable">$env</span>:PATH <span class="token operator">+=</span> <span class="token string">";C:\Users\&lt;username&gt;\AppData\Local\Programs\oh-my-posh\bin"</span>
-</code></pre></div></div>
-<p>为了在打开终端后自动加载 oh-my-posh，需要在 PowerShell 配置文件 <code>$PROFILE</code> 中添加以下内容：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>oh-my-posh init pwsh <span class="token operator">--</span>config <span class="token string">"<span class="token variable">$env</span>:POSH_THEMES_PATH\jandedobbeleer.omp.json"</span> <span class="token punctuation">|</span> <span class="token function">Invoke-Expression</span>
-</code></pre></div><p><code>--config</code> 参数指定主题配置文件路径，<code>$env:POSH_THEMES_PATH</code> 是 oh-my-posh 主题文件夹路径，可以通过 <code>Get-PoshThemes</code> 查看所有主题。</p>
-<div class="hint-container tip">
-<p class="hint-container-title">提示</p>
-<p><code>$PROFILE</code> 文件类似 <code>~/.zshrc</code> 或 <code>~/.bashrc</code>，以下命令会使用系统默认的文本编辑器打开：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>notepad <span class="token variable">$PROFILE</span>
-</code></pre></div><p>编辑完成后，可以使用 <code>. $PROFILE</code> 重新加载配置。</p>
-</div>
-<h3>设置字体</h3>
-<p>oh-my-posh 使用 <a href="https://www.nerdfonts.com/" target="_blank" rel="noopener noreferrer">Nerd Fonts</a> 做为设计字体，官方推荐安装 <a href="https://www.nerdfonts.com/font-downloads" target="_blank" rel="noopener noreferrer">Meslo Nerd Font</a>。这里我选择了 <a href="https://www.nerdfonts.com/font-downloads" target="_blank" rel="noopener noreferrer">BitstromWera Nerd Font</a>。</p>
-<p>可以在 <a href="https://www.nerdfonts.com/font-downloads" target="_blank" rel="noopener noreferrer">Nerd Fonts</a> 页面下载和预览字体。也可以通过 oh-my-posh 提供的 CLI 安装：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>oh-my-posh font install
-</code></pre></div><p>安装完成后，需要在 Windows Terminal 中设置字体，按 <code>CTRL + SHIFT + ,</code> 打开配置文件，在 <code>defaults</code> 属性下添加：</p>
-<div class="language-json" data-ext="json" data-title="json"><pre class="language-json"><code><span class="token punctuation">{</span>
-  <span class="token property">"profiles"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token property">"defaults"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token property">"font"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-        <span class="token property">"face"</span><span class="token operator">:</span> <span class="token string">"MesloLGM Nerd Font"</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>如果使用了 VSCode，可以在 <code>settings.json</code> 中添加：</p>
-<div class="language-json" data-ext="json" data-title="json"><pre class="language-json"><code><span class="token property">"terminal.integrated.fontFamily"</span><span class="token operator">:</span> <span class="token string">"Bitstream Vera Sans Mono Nerd Font"</span>
-</code></pre></div><h2>环境配置</h2>
-<h3>Chocolatey</h3>
-<p><a href="https://chocolatey.org/" target="_blank" rel="noopener noreferrer">Chocolatey</a> 是一个 Windows 下的包管理器，可以方便地安装和管理软件。</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code><span class="token function">Set-ExecutionPolicy</span> Bypass <span class="token operator">-</span>Scope <span class="token keyword">Process</span> <span class="token operator">-</span>Force<span class="token punctuation">;</span> <span class="token namespace">[System.Net.ServicePointManager]</span>::SecurityProtocol = <span class="token namespace">[System.Net.SecurityProtocolType]</span>::Tls12<span class="token punctuation">;</span> <span class="token function">iex</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">New-Object</span> System<span class="token punctuation">.</span>Net<span class="token punctuation">.</span>WebClient<span class="token punctuation">)</span><span class="token punctuation">.</span>DownloadString<span class="token punctuation">(</span><span class="token string">'https://community.chocolatey.org/install.ps1'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-</code></pre></div><h3>vim</h3>
-<p>PowerShell 默认不支持 vim，需要安装 <a href="https://github.com/vim/vim" target="_blank" rel="noopener noreferrer">vim</a> 或 <a href="https://github.com/neovim/neovim" target="_blank" rel="noopener noreferrer">neovim</a>。</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>choco install vim
-</code></pre></div><p>安装完成后即可使用 <code>vim</code> 命令，再也不用使用 <code>notepad</code> 打开文件了。</p>
-<h3>zoxide</h3>
-<p><a href="https://github.com/ajeetdsouza/zoxide" target="_blank" rel="noopener noreferrer">zoxide</a> 是一个跨平台的命令行工具，可以快速跳转到指定目录。</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>choco install zoxide
-</code></pre></div><p>安装完成后，配置 zoxide 到 PowerShell 中：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>notepad <span class="token variable">$PROFILE</span>
-</code></pre></div><p>在文件末尾添加：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code><span class="token function">Invoke-Expression</span> <span class="token punctuation">(</span>&amp; <span class="token punctuation">{</span> <span class="token punctuation">(</span>zoxide init powershell <span class="token punctuation">|</span> <span class="token function">Out-String</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><p>重新加载 PowerShell 配置文件：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code><span class="token punctuation">.</span> <span class="token variable">$PROFILE</span>
-</code></pre></div><h3>git</h3>
-<p>使用 Chocolatey 安装 git：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>choco install git
-</code></pre></div><p>安装完成后，配置 git 用户信息：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>git config <span class="token operator">--</span>global user<span class="token punctuation">.</span>name <span class="token string">"Your Name"</span>
-git config <span class="token operator">--</span>global user<span class="token punctuation">.</span>email <span class="token string">"your.email@example.com"</span>
-</code></pre></div><h3>ssh</h3>
-<p>PowerShell 默认自带 ssh 客户端，可以直接使用。</p>
-<p>生成 ssh key：</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>ssh-keygen <span class="token operator">-</span>t rsa <span class="token operator">-</span>C <span class="token string">"your_email@example.com"</span>
-</code></pre></div><p>将生成的 ssh key 添加到 GitHub，在 <code>Settings</code> -&gt; <code>SSH and GPG keys</code> 页面添加。</p>
-<p>然后使用 <code>ssh -T git@github.com</code> 测试连接。</p>
-<p>如果出现以下报错，可以更改 ssh 客户端配置。</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>ssh: connect to host github<span class="token punctuation">.</span>com port 22: Connection refused
-</code></pre></div><p>在 <code>C:\Users\&lt;username&gt;\.ssh\config</code> 文件（没有则创建）中添加以下内容：</p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Host github.com
-  HostName ssh.github.com
-  Port 443
-</code></pre></div><p>这时再使用 <code>ssh -T git@github.com</code> 测试连接，应该就可以正常连接了。</p>
-<div class="language-powershell" data-ext="powershell" data-title="powershell"><pre class="language-powershell"><code>ssh <span class="token operator">-</span>T git@github<span class="token punctuation">.</span>com
-</code></pre></div><h3>node</h3>
-<p>推荐使用  安装 node。</p>
-]]></content>
-    <category term="操作系统"/>
-    <published>2024-11-07T00:00:00.000Z</published>
   </entry>
 </feed>
