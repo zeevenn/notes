@@ -93,7 +93,7 @@
       "summary": "HTML 中在页面插入 JavaScript 的主要方式就是使用 <script> 元素，可以直接在页面中嵌入 JavaScript 代码，但是一般来说，通常会通过 src 属性来引入外部脚本。 在 中提到了 src 会暂停当前页面的加载，直到获取、解析并执行完这个 JS 文件。这样就会阻塞后续文档的加载。 而使用 defer 和 async 都可以 ...",
       "content_html": "<p>HTML 中在页面插入 JavaScript 的主要方式就是使用 <code>&lt;script&gt;</code> 元素，可以直接在页面中嵌入 JavaScript 代码，但是一般来说，通常会通过 <code>src</code> 属性来引入外部脚本。</p>\n<p>在  中提到了 <code>src</code> 会暂停当前页面的加载，直到获取、解析并执行完这个 JS 文件。这样就会阻塞后续文档的加载。</p>\n<p>而使用 <code>defer</code> 和 <code>async</code> 都可以 <strong>异步加载</strong> 外部的 JavaScript 脚本，主要区别如下：</p>\n<ul>\n<li><strong>执行顺序</strong>：多个带 <code>async</code> 属性的标签，不能保证加载的顺序；多个带 <code>defer</code> 属性的标签，按照加载顺序执行；</li>\n<li><strong>脚本何时执行</strong>：<code>async</code> 属性表示脚本加载完成后立即执行，不会等到文档解析完成。<code>defer</code> 属性表示脚本加载完成后还需等到所有元素解析完成，即 <code>DOMContentLoaded</code> 事件触发前完成。</li>\n</ul>\n",
       "date_published": "2022-07-25T00:00:00.000Z",
-      "date_modified": "2026-04-21T15:59:37.000Z",
+      "date_modified": "2026-04-22T15:06:18.000Z",
       "authors": [],
       "tags": [
         "HTML"
@@ -189,7 +189,7 @@
       "summary": "src 和 href 是 HTML 中两个常见属性，含义不同，不可互换： src src 属性指向的资源会被嵌入到当前元素所在位置，浏览器遇到它时会 暂停页面解析，直到资源获取、解析并执行完毕。 浏览器解析到上面的标签后，会暂停 HTML 的继续解析，待 script.js 下载并执行完成后才恢复。其行为等价于将脚本内容内联到 <script> 标签中...",
       "content_html": "<p><code>src</code> 和 <code>href</code> 是 HTML 中两个常见属性，含义不同，不可互换：</p>\n<p>| 属性   | 全称                | 用途                       | 对页面解析的影响             |<br>\n|</p>\n",
       "date_published": "2022-04-28T00:00:00.000Z",
-      "date_modified": "2026-04-22T13:29:16.000Z",
+      "date_modified": "2026-04-22T15:06:18.000Z",
       "authors": [],
       "tags": [
         "HTML"
