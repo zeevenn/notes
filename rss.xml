@@ -6,8 +6,8 @@
     <link>https://dribble-njr.github.io/blog/blog/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Wed, 22 Apr 2026 15:58:33 GMT</pubDate>
-    <lastBuildDate>Wed, 22 Apr 2026 15:58:33 GMT</lastBuildDate>
+    <pubDate>Wed, 22 Apr 2026 16:30:02 GMT</pubDate>
+    <lastBuildDate>Wed, 22 Apr 2026 16:30:02 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>Frontend</category>
@@ -64,7 +64,7 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// main.ts</span>
 <span class="token keyword">await</span> document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span>ready
 <span class="token function">createApp</span><span class="token punctuation">(</span>App<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mount</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span>
-</code></pre></div><p><strong>组件级等待（适合只有特定页面用到自定义字体，比如 Canvas）：</strong></p>
+</code></pre></div><p><strong>组件级等待（仅适用于 Canvas 等命令式绘制场景）：</strong></p>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">function</span> <span class="token function">useFont</span><span class="token punctuation">(</span>family<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> descriptors <span class="token operator">=</span> <span class="token string">'16px'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">const</span> <span class="token punctuation">[</span>loaded<span class="token punctuation">,</span> setLoaded<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> document<span class="token punctuation">.</span>fonts<span class="token punctuation">.</span><span class="token function">check</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>descriptors<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>family<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
@@ -76,6 +76,12 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
   <span class="token keyword">return</span> loaded
 <span class="token punctuation">}</span>
 </code></pre></div><p><code>useState</code> 的初始值用惰性初始化检查字体是否已缓存，避免字体已就绪时还走一次异步流程。</p>
+<div class="hint-container warning">
+<p class="hint-container-title">注意</p>
+<p><code>useFont</code> <strong>不能防止 DOM 文字的 FOUT</strong>。<code>useEffect</code> 在浏览器首次绘制之后才执行，第一帧已经用后备字体上屏，<code>fonts.load()</code> 此时还没开始——等字体就绪后重新渲染，闪烁仍然发生。</p>
+<p>Canvas 之所以有效，是因为可以用 <code>if (!fontReady) return</code> 完全跳过第一帧的绘制，什么都不画，等 <code>loaded = true</code> 后再执行 <code>drawText()</code>。DOM 文字没有这个控制手段。</p>
+<p><strong>DOM 文字防 FOUT，应使用全局等待方案。</strong></p>
+</div>
 <h2>典型使用场景</h2>
 <p><strong>Canvas 文字渲染</strong> — <code>ctx.drawText()</code> 依赖精确的字体 metrics。字体未注册时绘制，文字尺寸和位置会按后备字体计算，且不会自动重绘：</p>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">const</span> fontReady <span class="token operator">=</span> <span class="token function">useFont</span><span class="token punctuation">(</span><span class="token string">'MyFont'</span><span class="token punctuation">)</span>
@@ -86,17 +92,10 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
   ctx<span class="token punctuation">.</span><span class="token function">fillText</span><span class="token punctuation">(</span><span class="token string">'Hello'</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>fontReady<span class="token punctuation">]</span><span class="token punctuation">)</span>
 </code></pre></div><p><strong>虚拟列表行高计算</strong> — 需要用 <code>measureText()</code> 提前算出每行文字高度，同样依赖字体已注册。</p>
-<h2>浏览器兼容性</h2>
-<p>Chrome 35、Firefox 41、Safari 10、Edge 79 起支持，覆盖率 96.72%，无需 polyfill（不支持 IE）。</p>
-<ul>
-<li><a href="https://caniuse.com/css-font-loading" target="_blank" rel="noopener noreferrer">caniuse - CSS Font Loading API</a></li>
-</ul>
-<h2>参考</h2>
-<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API" target="_blank" rel="noopener noreferrer">MDN - CSS Font Loading API</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet" target="_blank" rel="noopener noreferrer">MDN - FontFaceSet</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display" target="_blank" rel="noopener noreferrer">MDN - font-display</a></li>
-</ul>
+<h2>font-display 与 Font Loading API</h2>
+<p><code>font-display</code> 是 CSS 层面的字体加载策略，Font Loading API 是 JavaScript 层面的控制手段，两者解决同一个问题，选一个主导即可。</p>
+<p>| 值         | 阻塞周期 | 交换周期 | 说明                       |<br>
+|</p>
 ]]></content:encoded>
     </item>
     <item>
