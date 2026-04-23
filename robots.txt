@@ -2,4 +2,4 @@
 User-agent:*
 Disallow:
 
-Sitemap: https://dribble-njr.github.io/blog/blog/sitemap.xml
+Sitemap: https://dribble-njr.github.io/blog/notes/sitemap.xml

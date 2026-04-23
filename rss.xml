@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="https://dribble-njr.github.io/blog/blog/rss.xsl"?>
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="https://dribble-njr.github.io/blog/notes/rss.xsl"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <atom:link href="https://dribble-njr.github.io/blog/blog/rss.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://dribble-njr.github.io/blog/notes/rss.xml" rel="self" type="application/rss+xml"/>
     <title></title>
-    <link>https://dribble-njr.github.io/blog/blog/</link>
+    <link>https://dribble-njr.github.io/blog/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Wed, 22 Apr 2026 16:30:02 GMT</pubDate>
-    <lastBuildDate>Wed, 22 Apr 2026 16:30:02 GMT</lastBuildDate>
+    <pubDate>Thu, 23 Apr 2026 13:42:31 GMT</pubDate>
+    <lastBuildDate>Thu, 23 Apr 2026 13:42:31 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>Frontend</category>
@@ -23,9 +23,9 @@
     <category>计算机网络</category>
     <item>
       <title>字体加载与 Font Loading API</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/font-loading.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/font-loading.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">字体加载与 Font Loading API</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/font-loading.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/font-loading.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">字体加载与 Font Loading API</source>
       <description>浏览器加载字体分为两条独立的管线：HTTP 缓存（负责下载字节）和字体引擎（负责解码、注册字体）。两者之间没有自动桥接——字节下载完成不等于字体可用。 字体加载的完整流程 在注册完成之前，任何依赖字体 metrics 的操作（Canvas 绘制、行高计算）都会拿到后备字体的数据。 Font Loading API document.fonts.load...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -100,9 +100,9 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
     </item>
     <item>
       <title>preload / prefetch / preconnect</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/preload-prefetch-preconnect.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/preload-prefetch-preconnect.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">preload / prefetch / preconnect</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/preload-prefetch-preconnect.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/preload-prefetch-preconnect.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">preload / prefetch / preconnect</source>
       <description>区别 preload prefetch preconnect 使用场景 preload — 当前页面首屏必须用到的资源，越早加载越好： prefetch — SPA 中预取下一个路由的 JS chunk： preconnect — 页面依赖第三方域名时提前建立连接： 注意事项 preload 字体必须带 crossorigin 字体请求默认走 CORS...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -114,9 +114,9 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
     </item>
     <item>
       <title>WebSocket</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/networking/websocket.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/networking/websocket.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">WebSocket</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/websocket.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/websocket.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">WebSocket</source>
       <description>WebSocket 是 HTML5 一种协议，是在 http 协议上实现了 socket 协议的长链接，只需要客户端和服务端建立一次连接，就可以互相传送数据。 主要应用在网页即时通讯和服务端消息推送中，使客户端和服务端之间的交互变得更加简单。 http 协议是客户端请求，服务端响应，而 socket 协议可以使服务端主动向客户端发送消息。 传统 aja...</description>
       <category>HTML</category>
       <pubDate>Mon, 25 Jul 2022 00:00:00 GMT</pubDate>
@@ -160,9 +160,9 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
     </item>
     <item>
       <title>Service Worker</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/browser/service-worker.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/browser/service-worker.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Service Worker</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/browser/service-worker.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/browser/service-worker.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Service Worker</source>
       <description>是什么 Service Worker 是运行在浏览器后台的独立线程，可拦截网络请求、管理缓存，是 PWA 的核心技术。 与 Web Worker 的区别： 生命周期 注册（register） 安装（install） 激活（activate） 拦截请求（fetch） 基本用法 缓存策略 Cache First：先查缓存，没有再请求网络（适合静态资源） N...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -176,9 +176,9 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
     </item>
     <item>
       <title>cookie、localStorage 和 sessionStorage</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/browser/web-storage.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/browser/web-storage.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">cookie、localStorage 和 sessionStorage</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/browser/web-storage.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/browser/web-storage.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">cookie、localStorage 和 sessionStorage</source>
       <description>在使用 Vuex、Pinia 等状态管理库的时候，网页刷新会导致所有数据清空。因此需要用到本地存储，前端本地存储的方式有三种：cookie、localStorage 和 sessionStorage。 cookie HTTP Cookie（也叫 Web Cookie 或浏览器 Cookie）是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器...</description>
       <category>HTML</category>
       <pubDate>Tue, 02 Aug 2022 00:00:00 GMT</pubDate>
@@ -270,17 +270,17 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Web Worker</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/browser/web-worker.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/browser/web-worker.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Web Worker</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/browser/web-worker.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/browser/web-worker.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Web Worker</source>
       <category>HTML</category>
       <pubDate>Tue, 02 Aug 2022 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>ARIA 与无障碍</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/aria-accessibility.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/aria-accessibility.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">ARIA 与无障碍</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/aria-accessibility.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/aria-accessibility.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">ARIA 与无障碍</source>
       <description>是什么 ARIA（Accessible Rich Internet Applications）是一组 HTML 属性，帮助屏幕阅读器等辅助技术理解页面内容。 核心原则：优先使用语义化 HTML 能用原生元素就不用 ARIA： 常用属性 典型场景 参考 MDN - ARIA WAI-ARIA Authoring Practices </description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -301,9 +301,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Canvas vs SVG</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/canvas-vs-svg.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/canvas-vs-svg.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Canvas vs SVG</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/canvas-vs-svg.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/canvas-vs-svg.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Canvas vs SVG</source>
       <description>核心区别 如何选择 用 Canvas： 游戏、粒子效果等高帧率场景 图形元素数量极多（&amp;gt; 数千） 需要像素级操作（图片处理、滤镜） 用 SVG： 图标、插图、数据可视化（折线图、饼图） 需要无损缩放（响应式设计） 需要 CSS 动画或交互事件 性能临界点 实践经验 参考 MDN - Canvas API MDN - SVG </description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -315,9 +315,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>defer 和 async 的区别</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/defer-vs-async.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/defer-vs-async.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">defer 和 async 的区别</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/defer-vs-async.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/defer-vs-async.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">defer 和 async 的区别</source>
       <description>HTML 中在页面插入 JavaScript 的主要方式就是使用 &amp;lt;script&amp;gt; 元素，可以直接在页面中嵌入 JavaScript 代码，但是一般来说，通常会通过 src 属性来引入外部脚本。 在 中提到了 src 会暂停当前页面的加载，直到获取、解析并执行完这个 JS 文件。这样就会阻塞后续文档的加载。 而使用 defer 和 async 都可以 ...</description>
       <category>HTML</category>
       <pubDate>Mon, 25 Jul 2022 00:00:00 GMT</pubDate>
@@ -332,9 +332,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>表单数据校验</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/form-validation.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/form-validation.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">表单数据校验</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/form-validation.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/form-validation.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">表单数据校验</source>
       <description>表单校验帮助我们确保用户以正确格式填写表单数据，确保提交的数据能使我们的应用程序正常工作。 什么是表单数据校验 表单校验——验证你输入表单的数据是否正确。 该字段是必填的 请输入你的电话号码，它的格式是：xxx-xxxx 请输入一个合法的邮箱地址 你的密码长度应该是 8 至 30 位的，并且至少应该包含一个大写字母、一个符号以及一个数字 不同类型的表单...</description>
       <category>HTML</category>
       <pubDate>Tue, 19 Mar 2024 00:00:00 GMT</pubDate>
@@ -433,9 +433,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>iframe</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/iframe.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/iframe.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">iframe</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/iframe.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/iframe.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">iframe</source>
       <description>优点 隔离第三方内容（广告、地图、支付页面），样式和脚本互不影响 可嵌入独立部署的子应用（微前端常见方案） 异步加载，不阻塞父页面渲染 缺点 性能：每个 iframe 都有独立的浏览器上下文，内存开销大 SEO：iframe 内容不被搜索引擎索引 通信复杂：跨域需要 postMessage，调试困难 历史记录：iframe 内部的导航会污染浏览器 hi...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -468,9 +468,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>img srcset 响应式图片</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/img-srcset.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/img-srcset.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">img srcset 响应式图片</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/img-srcset.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/img-srcset.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">img srcset 响应式图片</source>
       <description>是什么 srcset 让浏览器根据设备像素密度或视口宽度自动选择最合适的图片，避免在小屏上加载大图。 像素密度描述符（x） 适合固定尺寸的图片（如头像、logo）： 浏览器在 2x 屏（Retina）加载 avatar@2x.jpg，普通屏加载 avatar.jpg。 宽度描述符（w）+ sizes 适合响应式布局中宽度随视口变化的图片： sizes ...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -513,9 +513,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>常用 meta 标签</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/meta-tags.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/meta-tags.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">常用 meta 标签</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/meta-tags.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/meta-tags.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">常用 meta 标签</source>
       <description>字符编码 视口（移动端必加） SEO 相关 注 keywords 已被 Google 忽略，Baidu 仍参考。description 影响点击率但不影响排名。 Open Graph（社交分享） 兼容性 安全相关 参考 MDN - meta </description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -554,9 +554,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>SEO</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/seo-basics.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/seo-basics.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">SEO</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/seo-basics.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/seo-basics.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">SEO</source>
       <description>什么是 SEO SEO（Search Engine Optimization，搜索引擎优化）。这是一套指导原则，旨在使网站在搜索结果中的排名高于其他网站。特别是针对有机（未付费）搜索结果。 提示 谷歌是迄今为止全球最主要的搜索引擎。作为行业领导者，谷歌为其他搜索引擎定下了基调。 过去 在 2000 年代，搜索引擎优化意味着通过一系列肮脏的手段来提高网站...</description>
       <category>HTML</category>
       <pubDate>Sun, 24 Mar 2024 00:00:00 GMT</pubDate>
@@ -621,9 +621,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>src 和 href 的区别</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/src-vs-href.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/src-vs-href.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">src 和 href 的区别</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/src-vs-href.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/src-vs-href.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">src 和 href 的区别</source>
       <description>src 和 href 是 HTML 中两个常见属性，含义不同，不可互换： src src 属性指向的资源会被嵌入到当前元素所在位置，浏览器遇到它时会 暂停页面解析，直到资源获取、解析并执行完毕。 浏览器解析到上面的标签后，会暂停 HTML 的继续解析，待 script.js 下载并执行完成后才恢复。其行为等价于将脚本内容内联到 &amp;lt;script&amp;gt; 标签中...</description>
       <category>HTML</category>
       <pubDate>Thu, 28 Apr 2022 00:00:00 GMT</pubDate>
@@ -634,9 +634,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Web Components</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/html/web-components.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/html/web-components.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Web Components</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/html/web-components.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/web-components.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Web Components</source>
       <description>三大核心技术 Custom Elements：自定义 HTML 元素 Shadow DOM：封装的独立 DOM 子树，样式隔离 HTML Templates：&amp;lt;template&amp;gt; 和 &amp;lt;slot&amp;gt; 定义可复用结构 Custom Elements Shadow DOM mode: &amp;apos;open&amp;apos; 允许外部 JS 访问 shadow root；closed ...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -672,9 +672,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>六个月成长计划 · 2026</title>
-      <link>https://dribble-njr.github.io/blog/blog/roadmap-2026.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/roadmap-2026.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">六个月成长计划 · 2026</source>
+      <link>https://dribble-njr.github.io/blog/notes/roadmap-2026.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/roadmap-2026.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">六个月成长计划 · 2026</source>
       <description>六个月成长计划 · 2026 时间跨度：2026.04 – 2026.10 三线并行：博客迁移 · reReact Fiber · RN 音乐库 面试备战：Month 3 起叠加算法 + 系统设计 技术选型备忘 主动学习轮转表 每周固定 2–3 小时，独立于项目之外。按优先级排序，P0 最先，P3 靠后或视时间取舍。 Month 1 · 三线启动 Ap...</description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -687,9 +687,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>AI</title>
-      <link>https://dribble-njr.github.io/blog/blog/ai/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/ai/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">AI</source>
+      <link>https://dribble-njr.github.io/blog/notes/ai/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/ai/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">AI</source>
       <description>AI </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -697,9 +697,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>架构设计</title>
-      <link>https://dribble-njr.github.io/blog/blog/architecture/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/architecture/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">架构设计</source>
+      <link>https://dribble-njr.github.io/blog/notes/architecture/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/architecture/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">架构设计</source>
       <description>架构设计 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -707,9 +707,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>云服务</title>
-      <link>https://dribble-njr.github.io/blog/blog/cloud/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/cloud/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">云服务</source>
+      <link>https://dribble-njr.github.io/blog/notes/cloud/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/cloud/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">云服务</source>
       <description>云服务 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -717,9 +717,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>DevOps</title>
-      <link>https://dribble-njr.github.io/blog/blog/devops/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/devops/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">DevOps</source>
+      <link>https://dribble-njr.github.io/blog/notes/devops/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/devops/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">DevOps</source>
       <description>DevOps </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -727,9 +727,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>性能优化</title>
-      <link>https://dribble-njr.github.io/blog/blog/performance/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/performance/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">性能优化</source>
+      <link>https://dribble-njr.github.io/blog/notes/performance/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/performance/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">性能优化</source>
       <description>性能优化 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -737,9 +737,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>安全</title>
-      <link>https://dribble-njr.github.io/blog/blog/security/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/security/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">安全</source>
+      <link>https://dribble-njr.github.io/blog/notes/security/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/security/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">安全</source>
       <description>安全 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -747,9 +747,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>开发工具</title>
-      <link>https://dribble-njr.github.io/blog/blog/tools/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/tools/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">开发工具</source>
+      <link>https://dribble-njr.github.io/blog/notes/tools/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/tools/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">开发工具</source>
       <description>开发工具 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -757,9 +757,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>AI Agent</title>
-      <link>https://dribble-njr.github.io/blog/blog/ai/agents/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/ai/agents/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">AI Agent</source>
+      <link>https://dribble-njr.github.io/blog/notes/ai/agents/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/ai/agents/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">AI Agent</source>
       <description>AI Agent </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -767,9 +767,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>模型微调</title>
-      <link>https://dribble-njr.github.io/blog/blog/ai/fine-tuning/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/ai/fine-tuning/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">模型微调</source>
+      <link>https://dribble-njr.github.io/blog/notes/ai/fine-tuning/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/ai/fine-tuning/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">模型微调</source>
       <description>模型微调 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -777,9 +777,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>LLM 基础</title>
-      <link>https://dribble-njr.github.io/blog/blog/ai/llm-fundamentals/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/ai/llm-fundamentals/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">LLM 基础</source>
+      <link>https://dribble-njr.github.io/blog/notes/ai/llm-fundamentals/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/ai/llm-fundamentals/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">LLM 基础</source>
       <description>LLM 基础 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -787,9 +787,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>提示词工程</title>
-      <link>https://dribble-njr.github.io/blog/blog/ai/prompt-engineering/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/ai/prompt-engineering/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">提示词工程</source>
+      <link>https://dribble-njr.github.io/blog/notes/ai/prompt-engineering/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/ai/prompt-engineering/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">提示词工程</source>
       <description>提示词工程 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -797,9 +797,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>RAG 检索增强生成</title>
-      <link>https://dribble-njr.github.io/blog/blog/ai/rag/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/ai/rag/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">RAG 检索增强生成</source>
+      <link>https://dribble-njr.github.io/blog/notes/ai/rag/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/ai/rag/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">RAG 检索增强生成</source>
       <description>RAG 检索增强生成 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -807,9 +807,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>整洁架构</title>
-      <link>https://dribble-njr.github.io/blog/blog/architecture/clean-architecture/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/architecture/clean-architecture/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">整洁架构</source>
+      <link>https://dribble-njr.github.io/blog/notes/architecture/clean-architecture/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/architecture/clean-architecture/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">整洁架构</source>
       <description>整洁架构 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -817,9 +817,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>领域驱动设计</title>
-      <link>https://dribble-njr.github.io/blog/blog/architecture/ddd/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/architecture/ddd/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">领域驱动设计</source>
+      <link>https://dribble-njr.github.io/blog/notes/architecture/ddd/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/architecture/ddd/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">领域驱动设计</source>
       <description>领域驱动设计 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -827,9 +827,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>设计模式</title>
-      <link>https://dribble-njr.github.io/blog/blog/architecture/design-patterns/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/architecture/design-patterns/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">设计模式</source>
+      <link>https://dribble-njr.github.io/blog/notes/architecture/design-patterns/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/architecture/design-patterns/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">设计模式</source>
       <description>设计模式 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -837,9 +837,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>事件驱动架构</title>
-      <link>https://dribble-njr.github.io/blog/blog/architecture/event-driven/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/architecture/event-driven/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">事件驱动架构</source>
+      <link>https://dribble-njr.github.io/blog/notes/architecture/event-driven/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/architecture/event-driven/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">事件驱动架构</source>
       <description>事件驱动架构 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -847,9 +847,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>微服务架构</title>
-      <link>https://dribble-njr.github.io/blog/blog/architecture/microservices/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/architecture/microservices/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">微服务架构</source>
+      <link>https://dribble-njr.github.io/blog/notes/architecture/microservices/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/architecture/microservices/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">微服务架构</source>
       <description>微服务架构 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -857,9 +857,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>API 设计</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/api-design/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/api-design/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">API 设计</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/api-design/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/api-design/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">API 设计</source>
       <description>API 设计 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -867,9 +867,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>认证与鉴权</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/authentication/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/authentication/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">认证与鉴权</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/authentication/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/authentication/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">认证与鉴权</source>
       <description>认证与鉴权 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -877,9 +877,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Go</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/go/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/go/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Go</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/go/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/go/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Go</source>
       <description>Go </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -887,9 +887,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>消息队列</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/message-queue/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/message-queue/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">消息队列</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/message-queue/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/message-queue/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">消息队列</source>
       <description>消息队列 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -897,9 +897,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Python</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/python/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/python/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Python</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/python/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/python/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Python</source>
       <description>Python </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -907,9 +907,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Redis</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/redis/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/redis/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Redis</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/redis/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/redis/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Redis</source>
       <description>Redis </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -917,9 +917,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>AWS</title>
-      <link>https://dribble-njr.github.io/blog/blog/cloud/aws/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/cloud/aws/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">AWS</source>
+      <link>https://dribble-njr.github.io/blog/notes/cloud/aws/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/cloud/aws/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">AWS</source>
       <description>AWS </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -927,9 +927,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>CDN</title>
-      <link>https://dribble-njr.github.io/blog/blog/cloud/cdn/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/cloud/cdn/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">CDN</source>
+      <link>https://dribble-njr.github.io/blog/notes/cloud/cdn/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/cloud/cdn/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">CDN</source>
       <description>CDN </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -937,9 +937,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>云计算概念</title>
-      <link>https://dribble-njr.github.io/blog/blog/cloud/concepts/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/cloud/concepts/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">云计算概念</source>
+      <link>https://dribble-njr.github.io/blog/notes/cloud/concepts/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/cloud/concepts/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">云计算概念</source>
       <description>云计算概念 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -947,9 +947,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>编译原理</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/compilation/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/compilation/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">编译原理</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/compilation/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/compilation/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">编译原理</source>
       <description>编译原理 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -957,9 +957,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>并发编程</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/concurrency/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/concurrency/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">并发编程</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/concurrency/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/concurrency/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">并发编程</source>
       <description>并发编程 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -967,9 +967,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>CI/CD</title>
-      <link>https://dribble-njr.github.io/blog/blog/devops/ci-cd/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/devops/ci-cd/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">CI/CD</source>
+      <link>https://dribble-njr.github.io/blog/notes/devops/ci-cd/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/devops/ci-cd/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">CI/CD</source>
       <description>CI/CD </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -977,9 +977,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Docker</title>
-      <link>https://dribble-njr.github.io/blog/blog/devops/docker/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/devops/docker/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Docker</source>
+      <link>https://dribble-njr.github.io/blog/notes/devops/docker/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/devops/docker/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Docker</source>
       <description>Docker </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -987,9 +987,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Kubernetes</title>
-      <link>https://dribble-njr.github.io/blog/blog/devops/kubernetes/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/devops/kubernetes/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Kubernetes</source>
+      <link>https://dribble-njr.github.io/blog/notes/devops/kubernetes/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/devops/kubernetes/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Kubernetes</source>
       <description>Kubernetes </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -997,9 +997,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>监控</title>
-      <link>https://dribble-njr.github.io/blog/blog/devops/monitoring/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/devops/monitoring/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">监控</source>
+      <link>https://dribble-njr.github.io/blog/notes/devops/monitoring/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/devops/monitoring/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">监控</source>
       <description>监控 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1007,9 +1007,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Nginx</title>
-      <link>https://dribble-njr.github.io/blog/blog/devops/nginx/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/devops/nginx/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Nginx</source>
+      <link>https://dribble-njr.github.io/blog/notes/devops/nginx/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/devops/nginx/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Nginx</source>
       <description>Nginx </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1017,9 +1017,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>动画</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/animation/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/animation/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">动画</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/animation/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/animation/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">动画</source>
       <description>动画 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1027,9 +1027,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>移动端</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/mobile/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/mobile/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">移动端</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/mobile/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/mobile/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">移动端</source>
       <description>移动端 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1037,9 +1037,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>前端性能优化</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/performance/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/performance/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">前端性能优化</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/performance/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/performance/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">前端性能优化</source>
       <description>前端性能优化 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1047,9 +1047,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>前端安全</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/security/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/security/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">前端安全</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/security/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/security/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">前端安全</source>
       <description>前端安全 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1057,9 +1057,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>状态管理</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/state-management/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/state-management/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">状态管理</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/state-management/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/state-management/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">状态管理</source>
       <description>状态管理 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1067,9 +1067,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>前端测试</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/testing/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/testing/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">前端测试</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/testing/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/testing/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">前端测试</source>
       <description>前端测试 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1077,9 +1077,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>TypeScript</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/typescript/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/typescript/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">TypeScript</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">TypeScript</source>
       <description>TypeScript </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1087,9 +1087,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>后端性能</title>
-      <link>https://dribble-njr.github.io/blog/blog/performance/backend/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/performance/backend/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">后端性能</source>
+      <link>https://dribble-njr.github.io/blog/notes/performance/backend/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/performance/backend/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">后端性能</source>
       <description>后端性能 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1097,9 +1097,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>前端性能</title>
-      <link>https://dribble-njr.github.io/blog/blog/performance/frontend/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/performance/frontend/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">前端性能</source>
+      <link>https://dribble-njr.github.io/blog/notes/performance/frontend/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/performance/frontend/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">前端性能</source>
       <description>前端性能 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1107,9 +1107,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>网络性能</title>
-      <link>https://dribble-njr.github.io/blog/blog/performance/network/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/performance/network/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">网络性能</source>
+      <link>https://dribble-njr.github.io/blog/notes/performance/network/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/performance/network/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">网络性能</source>
       <description>网络性能 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1117,9 +1117,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>性能分析</title>
-      <link>https://dribble-njr.github.io/blog/blog/performance/profiling/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/performance/profiling/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">性能分析</source>
+      <link>https://dribble-njr.github.io/blog/notes/performance/profiling/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/performance/profiling/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">性能分析</source>
       <description>性能分析 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1127,9 +1127,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>认证与授权</title>
-      <link>https://dribble-njr.github.io/blog/blog/security/auth/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/security/auth/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">认证与授权</source>
+      <link>https://dribble-njr.github.io/blog/notes/security/auth/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/security/auth/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">认证与授权</source>
       <description>认证与授权 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1137,9 +1137,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>密码学</title>
-      <link>https://dribble-njr.github.io/blog/blog/security/cryptography/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/security/cryptography/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">密码学</source>
+      <link>https://dribble-njr.github.io/blog/notes/security/cryptography/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/security/cryptography/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">密码学</source>
       <description>密码学 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1147,9 +1147,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>网络安全</title>
-      <link>https://dribble-njr.github.io/blog/blog/security/network-security/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/security/network-security/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">网络安全</source>
+      <link>https://dribble-njr.github.io/blog/notes/security/network-security/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/security/network-security/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">网络安全</source>
       <description>网络安全 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1157,9 +1157,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Web 安全</title>
-      <link>https://dribble-njr.github.io/blog/blog/security/web-security/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/security/web-security/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Web 安全</source>
+      <link>https://dribble-njr.github.io/blog/notes/security/web-security/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/security/web-security/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Web 安全</source>
       <description>Web 安全 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1167,9 +1167,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>系统设计模式</title>
-      <link>https://dribble-njr.github.io/blog/blog/system-design/patterns/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/system-design/patterns/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">系统设计模式</source>
+      <link>https://dribble-njr.github.io/blog/notes/system-design/patterns/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/system-design/patterns/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">系统设计模式</source>
       <description>系统设计模式 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1177,9 +1177,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>AI 开发工具</title>
-      <link>https://dribble-njr.github.io/blog/blog/tools/ai-tools/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/tools/ai-tools/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">AI 开发工具</source>
+      <link>https://dribble-njr.github.io/blog/notes/tools/ai-tools/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/tools/ai-tools/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">AI 开发工具</source>
       <description>AI 开发工具 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1187,9 +1187,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Git 进阶</title>
-      <link>https://dribble-njr.github.io/blog/blog/tools/git/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/tools/git/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Git 进阶</source>
+      <link>https://dribble-njr.github.io/blog/notes/tools/git/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/tools/git/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Git 进阶</source>
       <description>Git 进阶 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1197,9 +1197,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>终端工具</title>
-      <link>https://dribble-njr.github.io/blog/blog/tools/terminal/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/tools/terminal/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">终端工具</source>
+      <link>https://dribble-njr.github.io/blog/notes/tools/terminal/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/tools/terminal/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">终端工具</source>
       <description>终端工具 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1207,9 +1207,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>VS Code</title>
-      <link>https://dribble-njr.github.io/blog/blog/tools/vscode/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/tools/vscode/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">VS Code</source>
+      <link>https://dribble-njr.github.io/blog/notes/tools/vscode/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/tools/vscode/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">VS Code</source>
       <description>VS Code </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1217,9 +1217,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>TypeScript 配置文件</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/08-tsconfig.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/engineering/basic/08-tsconfig.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">TypeScript 配置文件</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/engineering/basic/08-tsconfig.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/engineering/basic/08-tsconfig.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">TypeScript 配置文件</source>
       <description>基础结构 常用编译选项 基础配置 target: 编译目标版本（ES5/ES6/ES2020等） module: 模块系统（CommonJS/ESNext/UMD等） lib: 需要包含的库文件（ES2020/DOM等） outDir: 输出目录 rootDir: 源码根目录 严格检查 strict: 启用所有严格类型检查选项 noImplicitAn...</description>
       <category>工程化</category>
       <pubDate>Tue, 03 Mar 2026 00:00:00 GMT</pubDate>
@@ -1374,9 +1374,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>高级类型</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/typescript/advanced-types/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/typescript/advanced-types/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">高级类型</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/advanced-types/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/advanced-types/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">高级类型</source>
       <description>高级类型 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1384,9 +1384,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>最佳实践</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/typescript/best-practices/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/typescript/best-practices/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">最佳实践</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/best-practices/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/best-practices/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">最佳实践</source>
       <description>最佳实践 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1394,9 +1394,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>声明文件</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/typescript/declaration-files/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/typescript/declaration-files/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">声明文件</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/declaration-files/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/declaration-files/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">声明文件</source>
       <description>声明文件 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1404,9 +1404,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>类型系统</title>
-      <link>https://dribble-njr.github.io/blog/blog/frontend/typescript/type-system/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/frontend/typescript/type-system/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">类型系统</source>
+      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/type-system/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/type-system/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">类型系统</source>
       <description>类型系统 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -1414,9 +1414,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Algorithm</title>
-      <link>https://dribble-njr.github.io/blog/blog/algorithms/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/algorithms/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Algorithm</source>
+      <link>https://dribble-njr.github.io/blog/notes/algorithms/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/algorithms/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Algorithm</source>
       <description>使用 TypeScript，按照数据结构和算法的分类，整理了一些常见的算法题。 </description>
       <pubDate>Mon, 20 Apr 2026 16:21:10 GMT</pubDate>
       <content:encoded><![CDATA[<p>使用 <code>TypeScript</code>，按照数据结构和算法的分类，整理了一些常见的算法题。</p>
@@ -1427,9 +1427,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Project</title>
-      <link>https://dribble-njr.github.io/blog/blog/projects/</link>
-      <guid>https://dribble-njr.github.io/blog/blog/projects/</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Project</source>
+      <link>https://dribble-njr.github.io/blog/notes/projects/</link>
+      <guid>https://dribble-njr.github.io/blog/notes/projects/</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Project</source>
       <description>个人开发 开源项目 </description>
       <pubDate>Mon, 20 Apr 2026 16:21:10 GMT</pubDate>
       <content:encoded><![CDATA[<h2>个人开发</h2>
@@ -1445,9 +1445,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>数组</title>
-      <link>https://dribble-njr.github.io/blog/blog/algorithms/data-structures/01-array.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/algorithms/data-structures/01-array.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">数组</source>
+      <link>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/01-array.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/01-array.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">数组</source>
       <description>JavaScript 中数组是一种特殊的对象，用于存储多个值。数组的每个元素都有一个数字索引，用于访问数组中的元素。 常见初始化数组的方式： 数组是一种线性表数据结构，它用一组连续的内存空间，来存储一组具有相同类型的数据。 常见的解题思路有： 二分查找 双指针 滑动窗口 暴力解法 n 数之和 一般思路为使用哈希表、双指针、排序等方法。 两数之和 原题链...</description>
       <category>algorithm</category>
       <pubDate>Thu, 15 Feb 2024 00:00:00 GMT</pubDate>
@@ -1868,9 +1868,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>二叉树</title>
-      <link>https://dribble-njr.github.io/blog/blog/algorithms/data-structures/02-binary-tree.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/algorithms/data-structures/02-binary-tree.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">二叉树</source>
+      <link>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/02-binary-tree.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/02-binary-tree.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">二叉树</source>
       <description>通常二叉树有两种做法，分别对应着回溯算法和动态规划： 一次遍历二叉树：用 traverse 函数配合外部变量，实质上是一个回溯框架； 分解问题：通过分解为左右子树问题解决，实质上是动态规划。 一次遍历（回溯） 二叉树的最大深度 在前序位置（进入当前节点）中将当前深度 +1，并计算最大深度，再后序位置（离开当前节点）中将深度 -1。本质上就是一个回溯算法...</description>
       <category>LeetCode</category>
       <pubDate>Thu, 23 Jun 2022 00:00:00 GMT</pubDate>
@@ -2463,9 +2463,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>二叉搜索树</title>
-      <link>https://dribble-njr.github.io/blog/blog/algorithms/data-structures/03-binary-search-tree.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/algorithms/data-structures/03-binary-search-tree.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">二叉搜索树</source>
+      <link>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/03-binary-search-tree.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/03-binary-search-tree.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">二叉搜索树</source>
       <description>特性 二叉搜索树(BST)特性： 对于 BST 的每一个节点 node，左子树的节点都要比当前 node 小，右子树的节点都比当前 node 大； 所有左子树和右子树也都是二叉搜索树； 二叉搜索树的中序遍历为一个升序的数组。 二叉搜索树中第 k 小的元素 由于二叉搜索树的中序遍历是升序数组，所以找第 k 小的元素可以先生成一个中序遍历的数组，再返回数组...</description>
       <category>LeetCode</category>
       <pubDate>Fri, 24 Jun 2022 00:00:00 GMT</pubDate>
@@ -2791,9 +2791,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>链表</title>
-      <link>https://dribble-njr.github.io/blog/blog/algorithms/data-structures/04-linked-list.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/algorithms/data-structures/04-linked-list.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">链表</source>
+      <link>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/04-linked-list.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/04-linked-list.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">链表</source>
       <description>反转链表 反转链表 II </description>
       <category>LeetCode</category>
       <pubDate>Tue, 02 Aug 2022 00:00:00 GMT</pubDate>
@@ -2851,9 +2851,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>动态规划</title>
-      <link>https://dribble-njr.github.io/blog/blog/algorithms/patterns/01-dynamic-programming.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/algorithms/patterns/01-dynamic-programming.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">动态规划</source>
+      <link>https://dribble-njr.github.io/blog/notes/algorithms/patterns/01-dynamic-programming.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/algorithms/patterns/01-dynamic-programming.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">动态规划</source>
       <description>动态规划的一般形式是求最值，核心问题就是穷举。将所有可行的子问题答案穷举出来（二叉树的分解问题形式），然后在其中寻找最值。 动态规划需要判断问题是否具备最优子问题，还需要写出正确的状态转移方程，另外，由于动态规划存在重叠子问题，需要优化穷举过程（备忘录或 dp 数组），否则会超时。 基础 动态规划问题其实都可以使用暴力递归求解，如何消除重叠子问题就可以...</description>
       <category>LeetCode</category>
       <pubDate>Mon, 01 Aug 2022 00:00:00 GMT</pubDate>
@@ -3423,9 +3423,9 @@ shadow<span class="token punctuation">.</span>innerHTML <span class="token opera
     </item>
     <item>
       <title>Maven</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/java/01-maven.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/java/01-maven.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Maven</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/java/01-maven.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/java/01-maven.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Maven</source>
       <description>什么是 Maven Maven 是一个项目管理和构建工具，主要用于 Java 项目。它通过 POM（Project Object Model）文件来管理项目的依赖、编译、测试和打包等任务。Maven 的核心功能包括： 依赖管理：通过定义 POM 文件中的依赖项，Maven 能够自动下载和配置项目所需的库。 构建自动化：Maven 可以自动化执行从编译、...</description>
       <category>node</category>
       <pubDate>Fri, 30 Aug 2024 00:00:00 GMT</pubDate>
@@ -3501,9 +3501,9 @@ A -<span class="token operator">&gt;</span> C -<span class="token operator">&gt;
     </item>
     <item>
       <title>服务器设置 ssh 密钥登录</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/linux/01-set-the-ssh.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/linux/01-set-the-ssh.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">服务器设置 ssh 密钥登录</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/linux/01-set-the-ssh.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/01-set-the-ssh.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">服务器设置 ssh 密钥登录</source>
       <description> 提示 使用密码登录服务器并不安全，因此我们需要设置密钥登录。 创建密钥对 登录阿里云控制台 -&amp;gt; 云服务 ECS -&amp;gt; 网络与安全 -&amp;gt; 密钥对 -&amp;gt; 创建密钥对。 step1-create-sshstep1-create-ssh 创建成功之后，浏览器会自动下载一个 .pem 私钥文件，记住这个文件的位置，之后要用。 绑定密钥对 选中刚才创建的密钥对...</description>
       <category>linux</category>
       <pubDate>Wed, 12 May 2021 00:00:00 GMT</pubDate>
@@ -3555,9 +3555,9 @@ PubkeyAuthentication <span class="token function">yes</span>
     </item>
     <item>
       <title>搭建 git 私服</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/linux/02-build-git-server.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/linux/02-build-git-server.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">搭建 git 私服</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/linux/02-build-git-server.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/02-build-git-server.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">搭建 git 私服</source>
       <description> 提示 git 私服作用： 自己电脑和公司（或者实验室）电脑随时同步资料 GitHub、Gitee 私有仓库都是限流的，文件一旦多了，或者有图片文件，git pull 的时候半天拉不下来 保存一些隐私文件 开始搭建 服务器：centos7.9 本地电脑: Windows10 如果服务器没装 git 可以使用以下命令安装： 创建 git 用户 创建一个 ...</description>
       <category>linux</category>
       <pubDate>Wed, 12 May 2021 00:00:00 GMT</pubDate>
@@ -3668,9 +3668,9 @@ Host key verification failed.
     </item>
     <item>
       <title>配置宝塔面板</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/linux/03-configure-bt.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/linux/03-configure-bt.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">配置宝塔面板</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/linux/03-configure-bt.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/03-configure-bt.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">配置宝塔面板</source>
       <description> 提示 服务器系统：centos 7.9。 其他系统可以参照 官网 进行搭建。 为了方便一键配置部署环境，因此选择宝塔面板。 安装宝塔面板 大概过两分钟即可安装成功，复制外网面板地址到浏览器打开，输入下面的 username 和 password。进去之后会弹出 推荐安装套件，因为只要部署 vuepress， 因此这里安装 nginx 就好。选择编译安...</description>
       <category>linux</category>
       <pubDate>Wed, 12 May 2021 00:00:00 GMT</pubDate>
@@ -3698,9 +3698,9 @@ Host key verification failed.
     </item>
     <item>
       <title>自动部署 Vuepress 到服务器</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/linux/04-automated-deployment.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/linux/04-automated-deployment.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">自动部署 Vuepress 到服务器</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/linux/04-automated-deployment.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/04-automated-deployment.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">自动部署 Vuepress 到服务器</source>
       <description> 提示 服务器：centos 7.9 本地电脑：Windows 10 服务器端 配置 nginx 登录宝塔面板，可以参考 。点击左侧网站 -&amp;gt; 添加站点。 step1-add-sitestep1-add-site 新增之后，点击设置 -&amp;gt; 配置文件。这三项按自己的情况配置，在后面 中会将 dist 文件推送到 root 配置项设置的文件夹下。 step...</description>
       <category>linux</category>
       <pubDate>Wed, 12 May 2021 00:00:00 GMT</pubDate>
@@ -3829,9 +3829,9 @@ chattr <span class="token parameter variable">-i</span> .user.ini
     </item>
     <item>
       <title>centos 安装 docker</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/linux/05-install-docker.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/linux/05-install-docker.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">centos 安装 docker</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/linux/05-install-docker.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/05-install-docker.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">centos 安装 docker</source>
       <description> 提示 需要保证 centos 版本： centos 7 centos 8 centos 9 卸载旧版本 注意 必须先完成这一步，否则会出现不可预见的错误。 运行下列命令： 出现成功提示后即可。 使用 rpm repository 安装 设置镜像 安装 yum-utils 软件包（提供 yum-config-manager 实用工具）并设置软件源。 安...</description>
       <category>linux</category>
       <pubDate>Fri, 12 Jan 2024 00:00:00 GMT</pubDate>
@@ -3886,9 +3886,9 @@ chattr <span class="token parameter variable">-i</span> .user.ini
     </item>
     <item>
       <title>云服务器设置代理</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/linux/06-server-proxy.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/linux/06-server-proxy.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">云服务器设置代理</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/linux/06-server-proxy.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/06-server-proxy.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">云服务器设置代理</source>
       <description>在许多开发和部署场景中，使用代理服务器能够帮助我们绕过网络限制，提升安全性，或者加速访问。在本篇文章中，我们将讨论如何在云服务器上设置代理，主要包括通过隧道技术与使用 Clash for Linux 两种方式。 使用 SSH 隧道设置代理 SSH 隧道是一种通过安全通道将本地端口转发到远程服务器的方法。使用 SSH 隧道可以通过云服务器作为中介，绕过局...</description>
       <category>linux</category>
       <pubDate>Wed, 04 Dec 2024 00:00:00 GMT</pubDate>
@@ -3974,9 +3974,9 @@ proxy_on
     </item>
     <item>
       <title>Fundamental Ideas Around Microservices</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/microservices/01-fundamental-ideas.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/microservices/01-fundamental-ideas.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Fundamental Ideas Around Microservices</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/microservices/01-fundamental-ideas.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/microservices/01-fundamental-ideas.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Fundamental Ideas Around Microservices</source>
       <description>What is Microservices? 将不同服务拆分为独立的微服务，每个微服务专注于特定的业务功能。 单个服务拥有完整的中间件、路由和数据库支持。 每个服务拥有自己的数据库，确保松耦合和独立的数据管理。 Why database per service? 每个服务需要独立于其他服务，避免单点故障 数据库结构可能随时变化 不同服务可能有不同的数据...</description>
       <category>microservice</category>
       <pubDate>Thu, 15 Jan 2026 00:00:00 GMT</pubDate>
@@ -4001,9 +4001,9 @@ proxy_on
     </item>
     <item>
       <title>A Mini Microservice Application</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/microservices/02-mini-microservice-app.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/microservices/02-mini-microservice-app.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">A Mini Microservice Application</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/microservices/02-mini-microservice-app.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/microservices/02-mini-microservice-app.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">A Mini Microservice Application</source>
       <description>Q&amp;A Q1: Wait, so you&amp;apos;re saying we nened to create a new service every time we need to join some data?! A1: Absolutely not! In reality, might not even have posts and comments in ...</description>
       <category>microservice</category>
       <pubDate>Wed, 21 Jan 2026 00:00:00 GMT</pubDate>
@@ -4026,9 +4026,9 @@ proxy_on
     </item>
     <item>
       <title>Turso 集成 Prisma</title>
-      <link>https://dribble-njr.github.io/blog/blog/backend/node/01-turso-prisma-integration.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/backend/node/01-turso-prisma-integration.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">Turso 集成 Prisma</source>
+      <link>https://dribble-njr.github.io/blog/notes/backend/node/01-turso-prisma-integration.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/backend/node/01-turso-prisma-integration.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Turso 集成 Prisma</source>
       <description>在现代应用开发中，数据库和 ORM（对象关系映射）工具的选择对项目的开发效率和数据管理至关重要。Prisma 是一款优秀的 ORM，它不仅能为你生成类型安全的数据库查询，还可以通过自动迁移管理数据库模式。而 Turso 是一种基于 libSQL 的托管云数据库，提供了生产环境级别的 SQLite 数据库。本文将介绍如何将 Turso 和 Prisma ...</description>
       <category>practice</category>
       <pubDate>Tue, 24 Sep 2024 00:00:00 GMT</pubDate>
@@ -4149,9 +4149,9 @@ datasource db {
     </item>
     <item>
       <title>2024 前端生态报告</title>
-      <link>https://dribble-njr.github.io/blog/blog/changelog/2024/01-state-of-fe-2024.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/changelog/2024/01-state-of-fe-2024.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">2024 前端生态报告</source>
+      <link>https://dribble-njr.github.io/blog/notes/changelog/2024/01-state-of-fe-2024.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/changelog/2024/01-state-of-fe-2024.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">2024 前端生态报告</source>
       <description>最近，tsh.io 发布了一份关于 2024 年 前端生态的报告，其中包含了一些有趣的数据和趋势。 框架 前端框架 过去一年使用的框架过去一年使用的框架 React 和 Vue.js 在使用率和喜爱度上表现出色，仍是市场的主流选择。 Svelte 和 HTMX 展现出很高的学习兴趣，可能在未来成为更加流行的选择。 Angular 系列 虽然仍有稳定的用...</description>
       <category>news</category>
       <pubDate>Sun, 29 Dec 2024 00:00:00 GMT</pubDate>
@@ -4296,9 +4296,9 @@ datasource db {
     </item>
     <item>
       <title>GET 和 POST 的区别</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/networking/03-get-vs-post.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/networking/03-get-vs-post.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">GET 和 POST 的区别</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/03-get-vs-post.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/03-get-vs-post.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">GET 和 POST 的区别</source>
       <description>概述 GET 和 POST 是 HTTP 协议中发送请求的方法。 GET：请求资源，从服务器获取数据； POST：将数据提交到指定地址。 二者本质上都是 TCP 链接，因此本质上没有区别，但由于 HTTP 规定和浏览器/服务器的限制，导致它们在实际操作中会有一定区别。 区别 GET 在浏览器回退时是无害的，而 POST 会再次提交请求。 GET 产生的...</description>
       <category>计算机网络</category>
       <pubDate>Sun, 24 Apr 2022 00:00:00 GMT</pubDate>
@@ -4357,9 +4357,9 @@ datasource db {
     </item>
     <item>
       <title>HTTP 性能演变</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/networking/04-http-evolution.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/networking/04-http-evolution.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">HTTP 性能演变</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/04-http-evolution.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/04-http-evolution.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">HTTP 性能演变</source>
       <description>整个 HTTP 的演变史就是一个在不断优化性能的过程。 HTTP/0.9 - 单行协议 最初版本的 HTTP 协议并没有版本号，后来它的版本号被定位在 0.9 以区分后来的版本。 HTTP/0.9 极其简单：请求由单行指令构成，以唯一可用方法 GET 开头，其后跟目标资源的路径（一旦连接到服务器，协议、服务器、端口号这些都不是必须的）。 HTTP/0....</description>
       <category>计算机网络</category>
       <pubDate>Tue, 26 Apr 2022 00:00:00 GMT</pubDate>
@@ -4435,9 +4435,9 @@ Content-Type: text/html
     </item>
     <item>
       <title>HTTP 缓存</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/networking/05-http-caching.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/networking/05-http-caching.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">HTTP 缓存</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/05-http-caching.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/05-http-caching.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">HTTP 缓存</source>
       <description>对于一些相同的请求，通过复用以前获取的资源，显著提高网页的性能。Web 缓存减少了等待时间和流量，因此减少了显示资源的渲染时间。 HTTP 缓存的实现有两种方式，分别是强制缓存和协商缓存。 强缓存 强缓存是指：只要浏览器判断缓存没有过期，则直接使用本地缓存，不会向服务器发送请求。 强缓存是利用下面这两个字段实现的，它们都用来表示资源在客户端缓存的有效期...</description>
       <category>计算机网络</category>
       <pubDate>Wed, 04 May 2022 00:00:00 GMT</pubDate>
@@ -4504,9 +4504,9 @@ Content-Type: text/html
     </item>
     <item>
       <title>TCP 三次握手与四次挥手</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/networking/07-tcp-handshake-teardown.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/networking/07-tcp-handshake-teardown.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">TCP 三次握手与四次挥手</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/07-tcp-handshake-teardown.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/07-tcp-handshake-teardown.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">TCP 三次握手与四次挥手</source>
       <description>传输层控制协议（Transmission Control Protocol, TCP）是一种面向连接的、可靠的、基于字节流的传输层通信协议。 三次握手 三报文握手具体过程（客户端和服务端交换三个报文段）： 三次握手三次握手 第一次握手： 起初两端都处于 CLOSED 关闭状态。一开始，服务器就进入监听状态，被动等待客户端的连接请求。 在打算建立 TCP...</description>
       <category>计算机网络</category>
       <pubDate>Fri, 06 May 2022 00:00:00 GMT</pubDate>
@@ -4555,13 +4555,13 @@ Content-Type: text/html
 <h2>参考链接</h2>
 <p><a href="https://www.bilibili.com/video/BV1c4411d7jb" target="_blank" rel="noopener noreferrer">计算机网络微课堂</a></p>
 ]]></content:encoded>
-      <enclosure url="https://dribble-njr.github.io/blog/blog/assets/image/computer-science/networking/007/three.png" type="image/png"/>
+      <enclosure url="https://dribble-njr.github.io/blog/notes/assets/image/computer-science/networking/007/three.png" type="image/png"/>
     </item>
     <item>
       <title>TCP 与 UDP 的区别</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/networking/08-tcp-vs-udp.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/networking/08-tcp-vs-udp.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">TCP 与 UDP 的区别</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/08-tcp-vs-udp.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/08-tcp-vs-udp.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">TCP 与 UDP 的区别</source>
       <description>TCP 和 UDP 都是传输层协议，属于 TCP/IP 协议族。 UDP 用户数据报协议（User Datagram Protocol，UDP）用来处理数据包，是一种无连接的协议，它的特点如下： 无连接 不需要像 TCP 一样进行三次握手进行连接，并且也只是数据报文的搬运工，不会对报文进行任何的加工处理。 单播、多播、广播 UDP 支持一对一、一对多、...</description>
       <category>计算机网络</category>
       <pubDate>Fri, 06 May 2022 00:00:00 GMT</pubDate>
@@ -4602,9 +4602,9 @@ Content-Type: text/html
     </item>
     <item>
       <title>登陆失败 HTTP 状态码</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/networking/09-auth-status-codes.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/networking/09-auth-status-codes.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">登陆失败 HTTP 状态码</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/09-auth-status-codes.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/09-auth-status-codes.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">登陆失败 HTTP 状态码</source>
       <description>如果用户尝试登陆，但用户名或密码不正确，应该返回什么状态码？ 这个问题在社区中有一定争议，有些人认为应该返回 403 Forbidden，有些人认为应该返回 404 Not Found，有些人认为应该返回 400 Bad Request，有些人认为应该返回 401 Unauthorized。 403 Forbidden 表示拒绝访问，但是请求接口是可以...</description>
       <category>计算机网络</category>
       <pubDate>Wed, 10 Jul 2024 00:00:00 GMT</pubDate>
@@ -4619,9 +4619,9 @@ Content-Type: text/html
     </item>
     <item>
       <title>401 和 403 状态码</title>
-      <link>https://dribble-njr.github.io/blog/blog/computer-science/networking/10-401-vs-403.html</link>
-      <guid>https://dribble-njr.github.io/blog/blog/computer-science/networking/10-401-vs-403.html</guid>
-      <source url="https://dribble-njr.github.io/blog/blog/rss.xml">401 和 403 状态码</source>
+      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/10-401-vs-403.html</link>
+      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/10-401-vs-403.html</guid>
+      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">401 和 403 状态码</source>
       <description>401 Unauthorized（未授权） 含义：表示客户端请求的资源需要身份验证，但身份验证失败或未提供正确的认证信息。 触发情况：当服务器要求用户提供凭据（例如用户名和密码），但用户未提供凭据，或提供的凭据无效时，服务器返回 401。 处理方式： 客户端应该提供有效的凭据，如登录信息、API 密钥或 token。 一般情况下，服务器会在响应中包含一...</description>
       <category>计算机网络</category>
       <pubDate>Tue, 11 Feb 2025 00:00:00 GMT</pubDate>

@@ -1,1 +1,1 @@
-{"name":"Site","short_name":"Site","description":"Personal frontend knowledge base","lang":"zh-CN","start_url":"/blog/","scope":"/blog/","display":"standalone","theme_color":"#46bd87","background_color":"#ffffff","orientation":"portrait-primary","prefer_related_applications":false}
+{"name":"Site","short_name":"Site","description":"Personal frontend knowledge base","lang":"zh-CN","start_url":"/notes/","scope":"/notes/","display":"standalone","theme_color":"#46bd87","background_color":"#ffffff","orientation":"portrait-primary","prefer_related_applications":false}
