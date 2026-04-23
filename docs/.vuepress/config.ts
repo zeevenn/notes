@@ -7,16 +7,13 @@ import theme from './theme.ts'
 const __dirname = getDirname(import.meta.url)
 
 export default defineUserConfig({
-  base: '/blog/',
+  base: '/notes/',
   lang: 'zh-CN',
   description: 'Personal frontend knowledge base',
   theme,
 
   alias: {
-    '@theme-hope/modules/navbar/components/NavbarBrand': path.resolve(
-      __dirname,
-      './components/NavLogo.vue'
-    )
+    '@theme-hope/modules/navbar/components/NavbarBrand': path.resolve(__dirname, './components/NavLogo.vue')
   },
 
   plugins: [orderedHeader],
