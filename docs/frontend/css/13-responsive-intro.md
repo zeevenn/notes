@@ -35,20 +35,15 @@ tag:
   <h1>Fixed-width design</h1>
   <article>
     <p>
-      If you specify a fixed width for your layout, then your layout will only
-      look good at that specific width. If a visitor to your site has a screen
-      that is wider than the width you have specified, then there’ll be wasted
-      space on the screen. You can center the content of your pages to
-      distribute that space more evenly (instead of having empty space on one
-      side) but you still wouldn’t be taking full advantage of the available
-      space.
+      If you specify a fixed width for your layout, then your layout will only look good at that specific width. If a
+      visitor to your site has a screen that is wider than the width you have specified, then there’ll be wasted space
+      on the screen. You can center the content of your pages to distribute that space more evenly (instead of having
+      empty space on one side) but you still wouldn’t be taking full advantage of the available space.
     </p>
     <p>
-      Similarly, if the visitor arrives with a screen that is narrower than the
-      width you’ve chosen, then your content won’t fit horizontally. The browser
-      generates a crawlbar—the horizontal equivalent of a scrollbar—and the user
-      has to move the whole page left and right in order to see all of the
-      content.
+      Similarly, if the visitor arrives with a screen that is narrower than the width you’ve chosen, then your content
+      won’t fit horizontally. The browser generates a crawlbar—the horizontal equivalent of a scrollbar—and the user has
+      to move the whole page left and right in order to see all of the content.
     </p>
   </article>
 </div>
@@ -84,35 +79,30 @@ h1 {
   <h1>Liquid layout</h1>
   <article>
     <p>
-      Instead of using fixed widths for your layouts you could make a flexible
-      layout using percentages for your column widths. This will work in more
-      situations than a fixed-width layout that only looks right at one specific
-      size. These were called liquid layouts.
+      Instead of using fixed widths for your layouts you could make a flexible layout using percentages for your column
+      widths. This will work in more situations than a fixed-width layout that only looks right at one specific size.
+      These were called liquid layouts.
     </p>
     <p>
-      But while a liquid layout will look good across a wide range of widths, it
-      will begin to worsen at the extremes. On a wide screen the layout will
-      look like it’s been stretched out too far. On a narrow screen the layout
-      will look like it’s been squashed. Both scenarios feel uncomfortable.
+      But while a liquid layout will look good across a wide range of widths, it will begin to worsen at the extremes.
+      On a wide screen the layout will look like it’s been stretched out too far. On a narrow screen the layout will
+      look like it’s been squashed. Both scenarios feel uncomfortable.
     </p>
     <p>
-      You can mitigate these problems by using <code>min-width</code> and
-      <code>max-width</code> for your layout. But then at any sizes below the
-      minimum width or above the maximum width, you’ve got the same issues you’d
-      have with a fixed-width layout. On a wide screen there’d be unused space
-      going to waste. On a narrow screen, the user would have to move the whole
-      page left and right in order to see everything.
+      You can mitigate these problems by using <code>min-width</code> and <code>max-width</code> for your layout. But
+      then at any sizes below the minimum width or above the maximum width, you’ve got the same issues you’d have with a
+      fixed-width layout. On a wide screen there’d be unused space going to waste. On a narrow screen, the user would
+      have to move the whole page left and right in order to see everything.
     </p>
   </article>
   <aside>
     <p>
-      The word “liquid” is just one of the terms used to describe this kind of
-      layout. These kinds of designs were also called fluid layouts or flexible
-      layouts. The terminology was as fluid as the technique.
+      The word “liquid” is just one of the terms used to describe this kind of layout. These kinds of designs were also
+      called fluid layouts or flexible layouts. The terminology was as fluid as the technique.
     </p>
     <p>
-      This example is using the CSS <code>float</code> property to create
-      columns. That was a popular technique before CSS grid or flexbox existed.
+      This example is using the CSS <code>float</code> property to create columns. That was a popular technique before
+      CSS grid or flexbox existed.
     </p>
   </aside>
 </div>
@@ -159,27 +149,25 @@ h1 {
   <h1>Adaptive design</h1>
   <article>
     <p>
-      When media queries arrived in CSS it opened the door to making layouts
-      more flexible. But developers were still most comfortable making
-      fixed-width layouts. One technique involved switching between a handful of
-      fixed-width layouts at specified widths.
+      When media queries arrived in CSS it opened the door to making layouts more flexible. But developers were still
+      most comfortable making fixed-width layouts. One technique involved switching between a handful of fixed-width
+      layouts at specified widths.
     </p>
     <p>
-      This allowed designers to provide layouts that looked good at a few
-      different sizes but the design never looked quite right when viewed
-      <em>between</em> those sizes. The problem of excess space persisted
-      although it wasn’t as bad as in a fixed-width layout.
+      This allowed designers to provide layouts that looked good at a few different sizes but the design never looked
+      quite right when viewed
+      <em>between</em> those sizes. The problem of excess space persisted although it wasn’t as bad as in a fixed-width
+      layout.
     </p>
   </article>
   <aside>
     <p>
-      Ultimately this technique wasn’t very popular. The term “adaptive” was
-      also used to refer to other approaches so it can be a confusing descriptor
-      for what was quite a niche technique.
+      Ultimately this technique wasn’t very popular. The term “adaptive” was also used to refer to other approaches so
+      it can be a confusing descriptor for what was quite a niche technique.
     </p>
     <p>
-      This example is using the CSS <code>float</code> property to create
-      columns. That was a popular technique before CSS grid or flexbox existed.
+      This example is using the CSS <code>float</code> property to create columns. That was a popular technique before
+      CSS grid or flexbox existed.
     </p>
   </aside>
 </div>
@@ -254,12 +242,9 @@ h1 {
   <h1>Responsive design</h1>
   <article>
     <p>
-      If adaptive layouts are a mashup of media queries and fixed-width layouts,
-      responsive web design is a mashup of media queries and liquid layouts. The
-      term was coined by Ethan Marcotte in
-      <a href="https://alistapart.com/article/responsive-web-design/"
-        >an article in A List Apart</a
-      >
+      If adaptive layouts are a mashup of media queries and fixed-width layouts, responsive web design is a mashup of
+      media queries and liquid layouts. The term was coined by Ethan Marcotte in
+      <a href="https://alistapart.com/article/responsive-web-design/">an article in A List Apart</a>
       in 2010.
     </p>
     <p>Ethan defined three criteria for responsive design:</p>
@@ -268,15 +253,12 @@ h1 {
       <li>Fluid media</li>
       <li>Media queries</li>
     </ol>
-    <p>
-      If a site was responsive, its layout and images would look good on any
-      device.
-    </p>
+    <p>If a site was responsive, its layout and images would look good on any device.</p>
   </article>
   <aside>
     <p>
-      This example is using the CSS <code>float</code> property to create
-      columns. That was a popular technique before CSS grid or flexbox existed.
+      This example is using the CSS <code>float</code> property to create columns. That was a popular technique before
+      CSS grid or flexbox existed.
     </p>
   </aside>
 </div>

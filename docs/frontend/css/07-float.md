@@ -37,11 +37,9 @@ tag:
   <div class="left">2</div>
   <div class="right">3</div>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique
-    sapien ac erat tincidunt, sit amet dignissim lectus vulputate. Donec id
-    iaculis velit. Aliquam vel malesuada erat. Praesent non magna ac massa
-    aliquet tincidunt vel in massa. Phasellus feugiat est vel leo finibus
-    congue.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique sapien ac erat tincidunt, sit amet
+    dignissim lectus vulputate. Donec id iaculis velit. Aliquam vel malesuada erat. Praesent non magna ac massa aliquet
+    tincidunt vel in massa. Phasellus feugiat est vel leo finibus congue.
   </p>
 </section>
 ```
@@ -85,11 +83,9 @@ div {
   <div class="left">2</div>
   <div class="right">3</div>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique
-    sapien ac erat tincidunt, sit amet dignissim lectus vulputate. Donec id
-    iaculis velit. Aliquam vel malesuada erat. Praesent non magna ac massa
-    aliquet tincidunt vel in massa. Phasellus feugiat est vel leo finibus
-    congue.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique sapien ac erat tincidunt, sit amet
+    dignissim lectus vulputate. Donec id iaculis velit. Aliquam vel malesuada erat. Praesent non magna ac massa aliquet
+    tincidunt vel in massa. Phasellus feugiat est vel leo finibus congue.
   </p>
 </section>
 ```
@@ -157,11 +153,9 @@ div {
   <div class="left">2</div>
   <div class="right">3</div>
   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique
-    sapien ac erat tincidunt, sit amet dignissim lectus vulputate. Donec id
-    iaculis velit. Aliquam vel malesuada erat. Praesent non magna ac massa
-    aliquet tincidunt vel in massa. Phasellus feugiat est vel leo finibus
-    congue.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique sapien ac erat tincidunt, sit amet
+    dignissim lectus vulputate. Donec id iaculis velit. Aliquam vel malesuada erat. Praesent non magna ac massa aliquet
+    tincidunt vel in massa. Phasellus feugiat est vel leo finibus congue.
   </p>
 </section>
 ```
@@ -199,138 +193,7 @@ div {
 
 :::
 
-## 圣杯布局和双飞翼布局
-
-::: tip
-
-利用浮动可以实现两个经典布局。
-
-:::
-
-### 作用
-
-- 实现 pc 端三栏布局，中间一栏最先渲染
-- 实现两边宽度固定，中间自适应
-
-效果如下：
-
-![three-cols](https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/three-cols.png)
-
-### 圣杯布局
-
-::: normal-demo 圣杯布局
-
-```html
-<div class="container clearfix">
-  <div class="main float">中</div>
-  <div class="left float">左</div>
-  <div class="right float">右</div>
-</div>
-```
-
-```css
-.container {
-  padding: 0 200px;
-  background-color: #eee;
-}
-
-/* 清除浮动 */
-.clearfix::after {
-  content: '';
-  display: table;
-  clear: both;
-}
-
-/* 关键 */
-.float {
-  float: left;
-}
-
-.main {
-  width: 100%;
-  height: 200px;
-  background-color: #ccc;
-}
-
-.left {
-  width: 200px;
-  height: 200px;
-  /* ---关键--- */
-  position: relative;
-  right: 200px;
-  margin-left: -100%;
-  /* ---关键--- */
-  background-color: orange;
-}
-
-.right {
-  width: 200px;
-  height: 200px;
-  /* ---关键--- */
-  margin-right: -200px;
-  /* ---关键--- */
-  background-color: skyblue;
-}
-```
-
-:::
-
-### 双飞翼布局
-
-::: normal-demo 双飞翼布局
-
-```html
-<div class="float wrapper">
-  <div class="main">中</div>
-</div>
-<div class="left float">左</div>
-<div class="right float">右</div>
-```
-
-```css
-/* 关键 */
-.float {
-  float: left;
-}
-
-.wrapper {
-  width: 100%;
-  height: 200px;
-  background-color: #ccc;
-}
-
-/* 关键 */
-.wrapper .main {
-  height: 200px;
-  margin-left: 200px;
-  margin-right: 200px;
-}
-
-.left {
-  width: 200px;
-  height: 200px;
-  /* 关键 */
-  margin-left: -100%;
-  background-color: orange;
-}
-
-.right {
-  width: 200px;
-  height: 200px;
-  /* 关键 */
-  margin-left: -200px;
-  background-color: skyblue;
-}
-```
-
-:::
-
-### 对比
-
-|              | 圣杯布局                  | 双飞翼布局         |
-| ------------ | ------------------------- | ------------------ |
-| HTML         | 包裹三栏                  | 只包裹中间一栏     |
-| 是否定位     | 相对定位                  | 无需定位           |
-| 左右栏的空间 | 使用 `padding` 预留       | 使用 `margin` 预留 |
-| 左栏处理     | `positon` + `margin-left` | `margin-left`      |
-| 右栏处理     | `margin-right`            | `margin-left`      |
+> [!TIP]
+>
+> 浮动曾被广泛用于实现多栏布局（如圣杯布局、双飞翼布局），现代项目中这些场景已由 Flexbox 和 Grid 完全替代。
+> 了解浮动机制有助于阅读旧代码，新项目无需使用浮动布局。

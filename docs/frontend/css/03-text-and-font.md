@@ -10,11 +10,9 @@ tag:
   - basic-knowledge
 ---
 
-::: tip
-
-仅介绍一些常用属性，详见 [CSS 参考](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference)。
-
-:::
+> [!TIP]
+>
+> 仅介绍一些常用属性，详见 [CSS 参考](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference)。
 
 ## 文本布局
 
@@ -29,13 +27,11 @@ tag:
 - `center`：居中对齐
 - `justify`：两端对齐。
 
-:::warning
-
-`text-align` 并不控制块元素自己的对齐，只控制它的行内内容的对齐。
-
-常用于做行内元素的居中效果。
-
-:::
+> [!WARNING]
+>
+> `text-align` 并不控制块元素自己的对齐，只控制它的行内内容的对齐。
+>
+> 常用于做行内元素的居中效果。
 
 ::: normal-demo 左对齐
 
@@ -84,9 +80,8 @@ p {
 ```html
 <p>文字向两侧对齐，对最后一行无效。</p>
 <p>
-  Integer elementum massa at nulla placerat varius. Suspendisse in libero risus,
-  in interdum massa. Vestibulum ac leo vitae metus faucibus gravida ac in neque.
-  Nullam est eros, suscipit sed dictum quis, accumsan a ligula.
+  Integer elementum massa at nulla placerat varius. Suspendisse in libero risus, in interdum massa. Vestibulum ac leo
+  vitae metus faucibus gravida ac in neque. Nullam est eros, suscipit sed dictum quis, accumsan a ligula.
 </p>
 ```
 
@@ -183,7 +178,9 @@ p {
 ```css
 @font-face {
   font-family: 'MyFont';
-  src: url('myfont.woff2') format('woff2'), url('myfont.woff') format('woff');
+  src:
+    url('myfont.woff2') format('woff2'),
+    url('myfont.woff') format('woff');
 }
 
 body {
@@ -191,14 +188,12 @@ body {
 }
 ```
 
-::: tip
-
-`src` 用于指定字体资源：
-
-- `url` 指定资源的路径
-- `format` 用于帮助浏览器快速识别字体的格式;
-
-:::
+> [!TIP]
+>
+> `src` 用于指定字体资源：
+>
+> - `url` 指定资源的路径
+> - `format` 用于帮助浏览器快速识别字体的格式;
 
 字体可以设计成各式各样的形状，那么能不能把字体直接设计成图标的样子呢？
 
@@ -224,14 +219,16 @@ body {
 ```css
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/c/font_3926422_ow6xq98wxi.woff2?t=1682664437328') format('woff2'),
-       url('//at.alicdn.com/t/c/font_3926422_ow6xq98wxi.woff?t=1682664437328') format('woff'),
-       url('//at.alicdn.com/t/c/font_3926422_ow6xq98wxi.ttf?t=1682664437328') format('truetype');
+  src:
+    url('//at.alicdn.com/t/c/font_3926422_ow6xq98wxi.woff2?t=1682664437328') format('woff2'),
+    url('//at.alicdn.com/t/c/font_3926422_ow6xq98wxi.woff?t=1682664437328') format('woff'),
+    url('//at.alicdn.com/t/c/font_3926422_ow6xq98wxi.ttf?t=1682664437328') format('truetype');
 }
 
-.iconfont{
-  font-family:"iconfont" !important;
-  font-size:16px;font-style:normal;
+.iconfont {
+  font-family: 'iconfont' !important;
+  font-size: 16px;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
@@ -240,11 +237,9 @@ body {
 
 :::
 
-::: tip
-
-其他更多使用方式：[iconfonts 代码应用](https://www.iconfont.cn/help/detail?spm=a313x.help_detail.i1.d8d11a391.7bb83a81XO2rxN&helptype=code)。
-
-:::
+> [!TIP]
+>
+> 其他更多使用方式：[iconfonts 代码应用](https://www.iconfont.cn/help/detail?spm=a313x.help_detail.i1.d8d11a391.7bb83a81XO2rxN&helptype=code)。
 
 ### `font-weight`
 
@@ -272,15 +267,13 @@ body {
 
 `font` 是一个缩写属性，用来作为 [`font-sytle`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-style)、[`font-variant`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-variant)、`font-weight`、`font-size`、`line-height` 和 `font-family` 的简写。
 
-::: tip
-
-书写规则：`font-style font-variant font-weight font-size/line-height font-family`
-
-- `font-sytle`、`font-variant` 和 `font-weight` 可以随意调换顺序，也可以省略；
-- `/line-height` 可以省略，如果不省略，必须跟在 `font-size` 后面；
-- `font-size` 和 `font-family` 不可以调换顺序，也不可省略。
-
-:::
+> [!TIP]
+>
+> 书写规则：`font-style font-variant font-weight font-size/line-height font-family`
+>
+> - `font-sytle`、`font-variant` 和 `font-weight` 可以随意调换顺序，也可以省略；
+> - `/line-height` 可以省略，如果不省略，必须跟在 `font-size` 后面；
+> - `font-size` 和 `font-family` 不可以调换顺序，也不可省略。
 
 ::: normal-demo font
 

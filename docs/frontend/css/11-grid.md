@@ -269,11 +269,9 @@ span {
 
 :::
 
-::: warning
-
-注意，设为网格布局以后，容器子元素（项目）的 `float`、`display: inline-block`、`display: table-cell`、`vertical-align` 和 `column-\*` 等设置都将失效。
-
-:::
+> [!WARNING]
+>
+> 注意，设为网格布局以后，容器子元素（项目）的 `float`、`display: inline-block`、`display: table-cell`、`vertical-align` 和 `column-\*` 等设置都将失效。
 
 ### `grid-template-columns` 和 `grid-template-rows`
 
@@ -381,11 +379,9 @@ grid-template-columns: repeat(2, 100px 20px 80px);
 
 有时，单元格的大小是固定的，但是容器的大小不确定。如果希望每一行（或每一列）容纳尽可能多的单元格，这时可以使用 `auto-fill` 关键字表示自动填充。
 
-::: info 注意
-
-非常有用，开发中经常出现这种情况。
-
-:::
+> [!NOTE] 注意
+>
+> 非常有用，开发中经常出现这种情况。
 
 ::: normal-demo `auto-fill`
 
@@ -654,23 +650,19 @@ grid-gap: <grid-row-gap> <grid-column-gap>;
 
 如果 `grid-gap` 省略了第二个值，浏览器认为第二个值等于第一个值。
 
-::: info 注意
-
-根据最新标准，上面三个属性名的 `grid-` 前缀已经删除，`grid-column-gap` 和 `grid-row-gap` 写成 `column-gap` 和 `row-gap`，`grid-gap` 写成 `gap`。
-
-间隙距离可以用任何长度单位包括百分比来表示，但不能使用 `fr` 单位。
-
-:::
+> [!NOTE] 注意
+>
+> 根据最新标准，上面三个属性名的 `grid-` 前缀已经删除，`grid-column-gap` 和 `grid-row-gap` 写成 `column-gap` 和 `row-gap`，`grid-gap` 写成 `gap`。
+>
+> 间隙距离可以用任何长度单位包括百分比来表示，但不能使用 `fr` 单位。
 
 ### `grid-template-areas`
 
 定义好网格后（行、列、间距），需要设定网格中放置元素的规则。
 
-::: info 注意
-
-可以使用 [网格线](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Grids#%E5%9F%BA%E4%BA%8E%E7%BA%BF%E7%9A%84%E5%85%83%E7%B4%A0%E6%94%BE%E7%BD%AE) 放置元素内容，但是该方式不太直观，因此推荐使用网格区域放置元素。
-
-:::
+> [!NOTE] 注意
+>
+> 可以使用 [网格线](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Grids#%E5%9F%BA%E4%BA%8E%E7%BA%BF%E7%9A%84%E5%85%83%E7%B4%A0%E6%94%BE%E7%BD%AE) 放置元素内容，但是该方式不太直观，因此推荐使用网格区域放置元素。
 
 ```css
 .container {
@@ -707,32 +699,26 @@ grid-template-areas:
   <article>
     <h1>My article</h1>
     <p>
-      Duis felis orci, pulvinar id metus ut, rutrum luctus orci. Cras porttitor
-      imperdiet nunc, at ultricies tellus laoreet sit amet. Sed auctor cursus
-      massa at porta. Integer ligula ipsum, tristique sit amet orci vel, viverra
-      egestas ligula. Curabitur vehicula tellus neque, ac ornare ex malesuada
-      et. In vitae convallis lacus. Aliquam erat volutpat. Suspendisse ac
-      imperdiet turpis. Aenean finibus sollicitudin eros pharetra congue. Duis
-      ornare egestas augue ut luctus. Proin blandit quam nec lacus varius
-      commodo et a urna. Ut id ornare felis, eget fermentum sapien.
+      Duis felis orci, pulvinar id metus ut, rutrum luctus orci. Cras porttitor imperdiet nunc, at ultricies tellus
+      laoreet sit amet. Sed auctor cursus massa at porta. Integer ligula ipsum, tristique sit amet orci vel, viverra
+      egestas ligula. Curabitur vehicula tellus neque, ac ornare ex malesuada et. In vitae convallis lacus. Aliquam erat
+      volutpat. Suspendisse ac imperdiet turpis. Aenean finibus sollicitudin eros pharetra congue. Duis ornare egestas
+      augue ut luctus. Proin blandit quam nec lacus varius commodo et a urna. Ut id ornare felis, eget fermentum sapien.
     </p>
 
     <p>
-      Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada
-      ultrices. Phasellus turpis est, posuere sit amet dapibus ut, facilisis sed
-      est. Nam id risus quis ante semper consectetur eget aliquam lorem. Vivamus
-      tristique elit dolor, sed pretium metus suscipit vel. Mauris ultricies
-      lectus sed lobortis finibus. Vivamus eu urna eget velit cursus viverra
-      quis vestibulum sem. Aliquam tincidunt eget purus in interdum. Cum sociis
-      natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+      Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada ultrices. Phasellus turpis est, posuere
+      sit amet dapibus ut, facilisis sed est. Nam id risus quis ante semper consectetur eget aliquam lorem. Vivamus
+      tristique elit dolor, sed pretium metus suscipit vel. Mauris ultricies lectus sed lobortis finibus. Vivamus eu
+      urna eget velit cursus viverra quis vestibulum sem. Aliquam tincidunt eget purus in interdum. Cum sociis natoque
+      penatibus et magnis dis parturient montes, nascetur ridiculus mus.
     </p>
   </article>
   <aside>
     <h2>Other things</h2>
     <p>
-      Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada
-      ultrices. Phasellus turpis est, posuere sit amet dapibus ut, facilisis sed
-      est.
+      Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada ultrices. Phasellus turpis est, posuere
+      sit amet dapibus ut, facilisis sed est.
     </p>
   </aside>
   <footer>Contact me@mysite.com</footer>
@@ -996,11 +982,9 @@ place-items: start end;
 
 :::
 
-::: tip
-
-项目重叠可以使用 `z-index` 调整顺序。
-
-:::
+> [!TIP]
+>
+> 项目重叠可以使用 `z-index` 调整顺序。
 
 ### `grid-area`
 
@@ -1158,11 +1142,9 @@ place-self: <align-self> <justify-self>;
 
 ## 参考指南
 
-::: tip
-
-可以尝试 [技能测试：网格布局](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Grid_skills) 查看掌握程度。
-
-:::
+> [!TIP]
+>
+> 可以尝试 [技能测试：网格布局](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Grid_skills) 查看掌握程度。
 
 - [MDN 网格布局](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_grid_layout)
 - [CSS Grid 网格布局教程](https://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html)

@@ -5,38 +5,41 @@ icon: creative
 star: true
 ---
 
-::: tip CSS
-
-层叠样式表（**C**ascading **S**tyle **S**heet, CSS）是一种用于给网页添加样式的计算机语言，它并不是真正的编程语言，甚至不是标记语言，只是一种样式表语言。
-
-:::
+> [!TIP]
+>
+> 层叠样式表（**C**ascading **S**tyle **S**heet, CSS）是一种用于给网页添加样式的计算机语言，它并不是真正的编程语言，甚至不是标记语言，只是一种样式表语言。
 
 ## 目录
 
 ### 基础
 
-- [快速开始](001-quick-start.md)
-- [选择器](002-selector.md)
-- [盒模型](003-box-model.md)
-- [文本与字体](004-text-font.md)
-- [层叠与继承](005-cascade-inheritance.md)
-- [背景与边框](006-background-border.md)
-- [样式单位](010-unit.md)
-- [BFC 块级格式化上下文](./013-BFC.md)
+- [选择器](01-selectors.md)
+- [盒模型](02-box-model.md)
+- [文本与字体](03-text-and-font.md)
+- [层叠与继承](04-cascade-and-inheritance.md)
+- [背景与边框](05-background-and-border.md)
+- [样式单位](09-units.md)
+- [BFC 块级格式化上下文](12-bfc.md)
 
-### 基础布局
+### 布局
 
-- [定位](007-position.md)
-- [浮动](008-float.md)
-- [弹性盒](009-flex.md)
-- [居中](011-center.md)
-- [网格布局](012-grid.md)
+- [定位](06-position.md)
+- [浮动](07-float.md)
+- [弹性盒](08-flexbox.md)
+- [居中](10-centering.md)
+- [网格布局](11-grid.md)
+
+### 视觉与效果
+
+- [自定义属性](15-variables.md)
+- [过渡](16-transitions.md)
+- [变换](17-transforms.md)
+- [动画](18-animations.md)
 
 ### 响应式布局
 
-- [响应式介绍](./014-responsive-design-intro.md)
-- [响应式设计](./015-responsive-design.md)
-- [怎样实现响应式网页布局](./016-how-to-responsive.md)
+- [响应式介绍](13-responsive-intro.md)
+- [响应式设计](14-responsive-techniques.md)
 
 ## 学习资料
 

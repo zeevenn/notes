@@ -128,3 +128,34 @@ tag:
 ```
 
 :::
+
+### grid
+
+`place-items: center` 是 `align-items` 和 `justify-items` 的简写，一行实现双轴居中，是目前最简洁的方式。
+
+::: normal-demo grid
+
+```html
+<div class="parent">
+  <div class="children"></div>
+</div>
+```
+
+```css
+.parent {
+  width: 200px;
+  height: 200px;
+  background-color: #eee;
+
+  display: grid;
+  place-items: center;
+}
+
+.children {
+  background-color: #333;
+  width: 100px;
+  height: 100px;
+}
+```
+
+:::
