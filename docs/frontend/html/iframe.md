@@ -39,12 +39,12 @@ tag:
 
 常用值：
 
-| 值 | 作用 |
-| :---: | :--- |
-| `allow-scripts` | 允许执行脚本 |
+| 值                  | 作用                           |
+| ------------------- | ------------------------------ |
+| `allow-scripts`     | 允许执行脚本                   |
 | `allow-same-origin` | 允许同源访问（去掉则视为跨域） |
-| `allow-forms` | 允许提交表单 |
-| `allow-popups` | 允许弹窗 |
+| `allow-forms`       | 允许提交表单                   |
+| `allow-popups`      | 允许弹窗                       |
 
 > [!WARNING]
 >

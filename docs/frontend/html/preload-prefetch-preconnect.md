@@ -19,23 +19,21 @@ tag:
 | `prefetch`   | 空闲时加载         | 下一个页面可能用到的资源     |
 | `preconnect` | 提前建立连接       | 第三方域名的 DNS + TCP + TLS |
 
-## preload
+还有一个更轻量的指令 `dns-prefetch`，只做 DNS 解析，不建立 TCP/TLS 连接：
 
 ```html
-<link rel="preload" href="font.woff2" as="font" crossorigin />
+<link rel="dns-prefetch" href="https://cdn.example.com" />
 ```
 
-## prefetch
+`preconnect` 包含了 `dns-prefetch` 的效果，但开销更大。不确定是否会真正发起请求时，用 `dns-prefetch` 更安全。
 
-```html
-<link rel="prefetch" href="/next-page.js" />
-```
+## 优先级与执行时机
 
-## preconnect
+浏览器在处理 resource hints 时有自己的优先级策略：
 
-```html
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-```
+- `preload` 的优先级由 `as` 属性决定，`as="font"` 和 `as="script"` 的优先级不同
+- `prefetch` 是最低优先级，浏览器在空闲时才下载，且可能被丢弃
+- 同一页面的 `preconnect` 建议不超过 4~6 个，多了反而浪费
 
 ## 使用场景
 

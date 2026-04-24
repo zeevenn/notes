@@ -20,11 +20,7 @@ tag:
 适合固定尺寸的图片（如头像、logo）：
 
 ```html
-<img
-  src="avatar.jpg"
-  srcset="avatar@2x.jpg 2x, avatar@3x.jpg 3x"
-  alt="avatar"
-/>
+<img src="avatar.jpg" srcset="avatar@2x.jpg 2x, avatar@3x.jpg 3x" alt="avatar" />
 ```
 
 浏览器在 2x 屏（Retina）加载 `avatar@2x.jpg`，普通屏加载 `avatar.jpg`。

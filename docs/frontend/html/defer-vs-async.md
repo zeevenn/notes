@@ -8,11 +8,51 @@ tag:
   - HTML
 ---
 
-HTML 中在页面插入 JavaScript 的主要方式就是使用 `<script>` 元素，可以直接在页面中嵌入 JavaScript 代码，但是一般来说，通常会通过 `src` 属性来引入外部脚本。
+普通 `<script src>` 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。`defer` 和 `async` 都允许脚本异步下载，区别在于**何时执行**。
 
-在 [src 和 href 的区别](./src-vs-href.md) 中提到了 `src` 会暂停当前页面的加载，直到获取、解析并执行完这个 JS 文件。这样就会阻塞后续文档的加载。
+## 对比
 
-而使用 `defer` 和 `async` 都可以 **异步加载** 外部的 JavaScript 脚本，主要区别如下：
+| | 普通 `<script>` | `async` | `defer` |
+| --- | --- | --- | --- |
+| 下载时机 | 阻塞解析，立即下载 | 并行下载 | 并行下载 |
+| 执行时机 | 下载完立即执行 | 下载完立即执行 | HTML 解析完成后，`DOMContentLoaded` 前 |
+| 执行顺序 | 文档顺序 | 不保证（谁先下完谁先执行） | 保证文档顺序 |
+| 阻塞解析 | 是 | 是（执行时阻塞） | 否 |
 
-- **执行顺序**：多个带 `async` 属性的标签，不能保证加载的顺序；多个带 `defer` 属性的标签，按照加载顺序执行；
-- **脚本何时执行**：`async` 属性表示脚本加载完成后立即执行，不会等到文档解析完成。`defer` 属性表示脚本加载完成后还需等到所有元素解析完成，即 `DOMContentLoaded` 事件触发前完成。
+## 时序
+
+```
+普通 <script>:
+HTML ----[暂停]--[下载+执行]----→ 继续解析
+
+async:
+HTML ──────────────────────────→ 继续解析
+     ↘[下载]↗[立即执行，可能打断解析]
+
+defer:
+HTML ──────────────────────────→ 解析完成
+     ↘[下载...........↗[执行] → DOMContentLoaded
+```
+
+## 使用场景
+
+**`defer`** — 依赖 DOM 或需要保证执行顺序的脚本（绝大多数业务脚本）：
+
+```html
+<script defer src="main.js"></script>
+<script defer src="analytics.js"></script>
+<!-- 保证 main.js 先于 analytics.js 执行 -->
+```
+
+**`async`** — 完全独立、不依赖 DOM 和其他脚本的脚本（统计、广告）：
+
+```html
+<script async src="gtag.js"></script>
+```
+
+> [!TIP]
+> 现代构建工具（Vite、webpack）生成的入口 `<script>` 默认加 `type="module"`，模块脚本天然具有 `defer` 行为，不需要手动添加。
+
+## 参考
+
+- [MDN - script](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script)
