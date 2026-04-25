@@ -366,23 +366,40 @@ h1 {
 
 ## 优先级
 
-CSS 优先级可以分为 0~5 级共 6 个等级，前 4 个等级由选择器决定，后 2 个等级由书写形式和特定语法决定。
+选择器的优先级（Specificity）由 `(A,B,C)` 三列数值决定，比较时从左到右逐列对比，列值大者优先：
 
-优先级大小可以由数值计算出，出现一个 0 级选择器，优先值数值加 0，1 级选择器加 1，2 级选择器加 10，3 级选择器加 100，以此类推。
+- **A**：ID 选择器的数量
+- **B**：类选择器、属性选择器、伪类的数量
+- **C**：标签选择器、伪元素的数量
 
-0 级优先级包括：通配符选择器、选择符（5 种）和逻辑组合伪类（`:not()` `:is()` `:where`）。
+几个特殊规则：
 
-1 级优先级就是标签选择器。
+- 通配符选择器、选择符不计入任何列，均为 `(0,0,0)`；
+- `:is()`、`:not()`、`:has()` 自身不计入，以其参数中**最高优先级**的选择器替代；
+- `:nth-child()`、`:nth-last-child()` 自身计为一个伪类（B+1），再加上参数中最高优先级的选择器；
+- `:where()` 始终为 `(0,0,0)`，专为"零优先级"场景设计。
 
-2 级优先级包括：类选择器、属性选择器和其他伪类。
+除选择器优先级外，还有两种更高层级的规则：
 
-3 级优先级为 ID 选择器。
+- **内联样式**（`style=""`）：直接写在元素上，优先级高于任何选择器；
+- **`!important`**：属于级联（Cascade）层面，会强制覆盖所有优先级规则，包括内联样式。
 
-4 级优先级为内联样式。
-
-5 级优先级为 `!important`。
+```text
+Examples:
+*                     /* a=0 b=0 c=0 */
+LI                    /* a=0 b=0 c=1 */
+UL LI                 /* a=0 b=0 c=2 */
+UL OL+LI              /* a=0 b=0 c=3 */
+H1 + *[REL=up]        /* a=0 b=1 c=1 */
+UL OL LI.red          /* a=0 b=1 c=3 */
+LI.red.level          /* a=0 b=2 c=1 */
+#x34y                 /* a=1 b=0 c=0 */
+#s12:not(FOO)         /* a=1 b=0 c=1 */
+.foo :is(.bar, #baz)  /* a=1 b=1 c=0 */
+```
 
 ## 参考
 
 - [MDN 伪类](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Pseudo-classes)
 - [MDN 伪元素](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Pseudo-elements)
+- [Selectors Level](https://drafts.csswg.org/selectors/#specificity-rules)
