@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="https://dribble-njr.github.io/blog/notes/rss.xsl"?>
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="https://zeevenn.github.io/notes/notes/rss.xsl"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <atom:link href="https://dribble-njr.github.io/blog/notes/rss.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://zeevenn.github.io/notes/notes/rss.xml" rel="self" type="application/rss+xml"/>
     <title></title>
-    <link>https://dribble-njr.github.io/blog/notes/</link>
+    <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Sat, 25 Apr 2026 07:52:47 GMT</pubDate>
-    <lastBuildDate>Sat, 25 Apr 2026 07:52:47 GMT</lastBuildDate>
+    <pubDate>Sat, 25 Apr 2026 08:26:58 GMT</pubDate>
+    <lastBuildDate>Sat, 25 Apr 2026 08:26:58 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>CSS</category>
@@ -20,9 +20,9 @@
     <category>linux</category>
     <item>
       <title>选择器</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/01-selectors.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/01-selectors.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">选择器</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/01-selectors.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/01-selectors.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">选择器</source>
       <description>CSS 中可以通过选择器来选中 HTML 文档中的元素。 种类 CSS 的选择器一共分为四种，分别是： 基本选择器 选择符 伪类 伪元素 基本选择器 基本选择器共五个，是指平时使用的通配符选择器、标签选择器、ID 选择器、类选择器、属性选择器。 选择符 选择符一共有五个，分别如下： 伪类 伪类的特征是前面会有一个冒号 :，通常与浏览器行为和用户行为相关...</description>
       <category>CSS</category>
       <pubDate>Wed, 03 Aug 2022 00:00:00 GMT</pubDate>
@@ -174,9 +174,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>盒模型</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/02-box-model.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/02-box-model.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">盒模型</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/02-box-model.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/02-box-model.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">盒模型</source>
       <description>盒模型 所有的 HTML 元素都可以看作一个盒子，他由外边距 margin、边框 border、内边距 padding和内容区 content 组成。 盒模型盒模型 标准盒模型和怪异盒模型 现代的浏览器一般都有两种渲染模式：标准模式和怪异模式。 他们表现在盒模型中差异： 标准盒模型：width 和 height 的计算值都不包含 border 和 pa...</description>
       <category>CSS</category>
       <pubDate>Thu, 28 Apr 2022 00:00:00 GMT</pubDate>
@@ -239,13 +239,13 @@ LI.red.level          /* a=0 b=2 c=1 */
 <p>但是，它不会跳转到新行，如果显式添加 <code>width</code> 和 <code>height</code> 属性，它只会变得比其内容更大。</p>
 
 ]]></content:encoded>
-      <enclosure url="https://dribble-njr.github.io/blog/notes/assets/image/frontend/basic/css/003/box.png" type="image/png"/>
+      <enclosure url="https://zeevenn.github.io/notes/notes/assets/image/frontend/basic/css/003/box.png" type="image/png"/>
     </item>
     <item>
       <title>文本和字体</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/03-text-and-font.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/03-text-and-font.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">文本和字体</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/03-text-and-font.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/03-text-and-font.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">文本和字体</source>
       <description> 提示 仅介绍一些常用属性，详见 CSS 参考。 文本布局 文本布局可以作用于文本的间距以及其他布局功能的属性，比如，允许操纵行与字之间的空间，以及在内容框中，文本如何对齐。 text-align text-align 用来定义行内内容（例如文字）如何相对它的块父元素对齐，比如左对齐、居中、右对齐等等。 left：左对齐 right：右对齐； cent...</description>
       <category>CSS</category>
       <pubDate>Tue, 28 Mar 2023 00:00:00 GMT</pubDate>
@@ -351,9 +351,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>层叠和继承</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/04-cascade-and-inheritance.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/04-cascade-and-inheritance.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">层叠和继承</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/04-cascade-and-inheritance.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/04-cascade-and-inheritance.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">层叠和继承</source>
       <description> [!TIP] W3C 规范 REC-css-cascade-3。 CSS 的基本设计原则之一是 层叠，它允许多个样式表影响文档的表示。 当不同的声明尝试为同一元素设置值时，必须以某种方式解决冲突。 而在默认情况下，若没有声明为元素设置值时，则会通过 继承 或使用属性的默认值来计算最终的结果。 注 与层叠密切相关的概念是 。 值的计算过程 一旦浏览器将...</description>
       <category>CSS</category>
       <pubDate>Tue, 28 Mar 2023 00:00:00 GMT</pubDate>
@@ -437,9 +437,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>背景和边框</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/05-background-and-border.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/05-background-and-border.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">背景和边框</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/05-background-and-border.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/05-background-and-border.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">背景和边框</source>
       <description>在网页开发中，背景和边框是常用的 CSS 属性，可以帮助我们美化网页的外观和布局。 背景属性 CSS 中的 background 属性可以为元素设置背景颜色、图片、渐变色、重复模式等。下面是一些常见的 CSS 背景属性。 background-color background-color 属性用于设置元素的背景颜色。它可以接受各种颜色值，例如颜色名称、...</description>
       <category>CSS</category>
       <pubDate>Wed, 26 Apr 2023 00:00:00 GMT</pubDate>
@@ -562,9 +562,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>定位</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/06-position.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/06-position.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">定位</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/06-position.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/06-position.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">定位</source>
       <description>为什么会有 positon 定位 HTML 中每个元素都是盒子，布局就像搭积木一样，从上往下挨个堆盒子，就能完成各式各样的页面，然而多实现几个页面就会发现：文档流中任意一个元素位置调整都会影响后面的元素。 这种布局方式称为标准流。它按从左到右、从上到下布局页面，互相不存在层叠现象。 image-20230829181307056image-202308...</description>
       <category>CSS</category>
       <pubDate>Mon, 02 May 2022 00:00:00 GMT</pubDate>
@@ -640,9 +640,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>浮动</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/07-float.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/07-float.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">浮动</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/07-float.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/07-float.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">浮动</source>
       <description>浮动可以让元素脱离标准文档流，指定一个元素应沿其容器的左侧或右侧放置，允许文本和内联元素环绕它。 开启浮动 浮动的基本语法 float: &amp;lt;keyword&amp;gt;。取值如下： left：表明元素必须浮动在其所在的块容器左侧。 right：表明元素必须浮动在其所在的块容器右侧。 none：表明元素不进行浮动。 inline-start：表明元素必须浮动在其所在...</description>
       <category>CSS</category>
       <pubDate>Mon, 18 Jul 2022 00:00:00 GMT</pubDate>
@@ -695,9 +695,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>Flex 布局</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/08-flexbox.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/08-flexbox.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Flex 布局</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/08-flexbox.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/08-flexbox.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Flex 布局</source>
       <description>一、基本概念 1.1 flexbox 是什么 CSS3 的新布局模式，是一种当页面需要适应不同屏幕大小以及设备类型时确保元素拥有恰当的行为的布局方式。 flex 弹性盒是一个 一维布局 模型，可以在界面中的项目之间提供空间分布和强大对齐功能的布局方式。 所谓一维布局模型是指：flex 在同一时刻只控制行或列。这和 二维布局模型 Grid Layout ...</description>
       <category>CSS</category>
       <pubDate>Thu, 18 Nov 2021 00:00:00 GMT</pubDate>
@@ -833,9 +833,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>样式单位</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/09-units.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/09-units.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">样式单位</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/09-units.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/09-units.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">样式单位</source>
       <description>CSS 中的单位分为绝对单位和相对单位。相对单位是响应式设计的基础。 绝对单位 px：像素，屏幕上最小的显示单位。在高 DPI（Retina）屏上，1 CSS px 对应多个物理像素，但视觉大小保持一致。 相对单位 字体相对 em：相对于当前元素的 font-size。嵌套使用时会叠乘，容易引发&amp;quot;em 嵌套陷阱&amp;quot;。 rem（root em）：相对于 h...</description>
       <category>CSS</category>
       <pubDate>Mon, 18 Jul 2022 00:00:00 GMT</pubDate>
@@ -885,9 +885,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>居中</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/10-centering.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/10-centering.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">居中</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/10-centering.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/10-centering.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">居中</source>
       <description>元素居中是比较常见的一个需求，有几种常见方法。 行内元素水平垂直居中 设置父级标签。 水平居中： text-align: center 垂直居中： line-height：盒子高度 块级元素水平垂直居中 flex 只需给父元素设置 flex 即可。 定位 有两种方案，先给父元素设置 relative，再给子元素设置 absolute，最后给子元素设置：...</description>
       <category>CSS</category>
       <pubDate>Fri, 01 Jul 2022 00:00:00 GMT</pubDate>
@@ -918,9 +918,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>Grid 布局</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/11-grid.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/11-grid.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Grid 布局</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/11-grid.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/11-grid.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Grid 布局</source>
       <description>什么是 grid 布局 flex 布局是 一维布局 模型，当面对一些场景时无法满足要求，比如下面这种情况，会出现最后一行无法左侧对齐的场景。 此时就需要使用 grid 布局，先看具体效果。 基本概念 容器和项目 和 flex 一样，采用网格布局的区域，被称为容器，其中的子元素称为项目。 行、列、间距 一个网格通常具有许多的列（column）与行（row...</description>
       <category>CSS</category>
       <pubDate>Sat, 23 Dec 2023 00:00:00 GMT</pubDate>
@@ -1120,9 +1120,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>BFC 块级格式化上下文</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/12-bfc.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/12-bfc.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">BFC 块级格式化上下文</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/12-bfc.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/12-bfc.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">BFC 块级格式化上下文</source>
       <description>什么是 BFC 块级格式化上下文（Block Formatting Context，BFC），其实是块级盒子的布局过程发生的区域，在这个区域内会有特定的布局规则。实际上他相当于一个 结界：如果一个元素具有 BFC，那么内部子元素无法影响外部的元素。 触发 BFC 触发 BFC 的 CSS 属性： &amp;lt;html&amp;gt; 根元素 浮动元素：float: left ...</description>
       <category>CSS</category>
       <pubDate>Mon, 18 Jul 2022 00:00:00 GMT</pubDate>
@@ -1181,9 +1181,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>响应式设计介绍</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/13-responsive-intro.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/13-responsive-intro.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">响应式设计介绍</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/13-responsive-intro.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/13-responsive-intro.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">响应式设计介绍</source>
       <description>响应式设计是一种使网页内容适应各种设备的不同屏幕和窗口尺寸的网页设计方法。 它并不是设计网站的第一种方法。在采用响应式设计之前的几年里，网页设计师和开发人员尝试过许多不同的技术。 固定宽度设计 20 世纪 90 年代初，当网络开始流行时，大多数显示器的屏幕尺寸为宽 640 像素、高 480 像素。这些显示器是凸面阴极射线管，与现在的平面液晶显示器不同。...</description>
       <category>CSS</category>
       <pubDate>Mon, 04 Mar 2024 00:00:00 GMT</pubDate>
@@ -1216,9 +1216,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>响应式设计</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/14-responsive-techniques.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/14-responsive-techniques.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">响应式设计</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/14-responsive-techniques.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/14-responsive-techniques.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">响应式设计</source>
       <description>概念 响应式网页设计可让网页在所有设备上都美观大方。 响应式网页设计只使用 HTML 和 CSS。 响应式网页设计不是一个程序或 JavaScript。 网页可以通过多种不同设备浏览：台式电脑、平板电脑和手机。无论使用何种设备，您的网页都应美观大方，易于使用。 网页不应为了适应较小的设备而遗漏信息，而应调整内容以适应任何设备： 适应任何设备适应任何设备...</description>
       <category>CSS</category>
       <pubDate>Wed, 28 Feb 2024 00:00:00 GMT</pubDate>
@@ -1732,9 +1732,9 @@ LI.red.level          /* a=0 b=2 c=1 */
     </item>
     <item>
       <title>CSS 自定义属性</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/15-variables.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/15-variables.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">CSS 自定义属性</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/15-variables.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/15-variables.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">CSS 自定义属性</source>
       <description>CSS 自定义属性（CSS Variables）允许在整个文档中复用值，是现代 CSS 主题化和可维护性的核心工具。 声明与使用 var() 支持回退值，第二个参数在变量未定义时生效： 作用域 CSS 变量遵循层叠规则，声明在哪个选择器上，就在该元素及其后代中生效。 JS 动态修改 主题切换 </description>
       <category>CSS</category>
       <pubDate>Tue, 23 Apr 2024 00:00:00 GMT</pubDate>
@@ -1792,9 +1792,9 @@ document<span class="token punctuation">.</span>documentElement<span class="toke
     </item>
     <item>
       <title>CSS 过渡</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/16-transitions.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/16-transitions.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">CSS 过渡</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/16-transitions.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/16-transitions.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">CSS 过渡</source>
       <description>CSS 过渡（Transition）让属性值的变化从「瞬间切换」变为「平滑动画」。 基本语法 四个子属性： 多个属性用逗号分隔： 常用 timing-function ease：慢→快→慢（默认） linear：匀速 ease-in：慢→快 ease-out：快→慢（交互反馈常用） cubic-bezier(x1, y1, x2, y2)：自定义曲线 ...</description>
       <category>CSS</category>
       <pubDate>Tue, 23 Apr 2024 00:00:00 GMT</pubDate>
@@ -1811,9 +1811,9 @@ document<span class="token punctuation">.</span>documentElement<span class="toke
     </item>
     <item>
       <title>CSS 变换</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/17-transforms.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/17-transforms.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">CSS 变换</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/17-transforms.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/17-transforms.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">CSS 变换</source>
       <description>CSS transform 属性对元素做几何变换，不影响文档流（不触发重排）。 2D 变换 变换原点 transform-origin 控制变换的基准点，默认为元素中心 50% 50%。 3D 变换 需先在父元素设置透视距离： 常用 3D 变换： 居中技巧 translate(-50%, -50%) 配合绝对定位实现不依赖元素尺寸的居中（见 ）： </description>
       <category>CSS</category>
       <pubDate>Tue, 23 Apr 2024 00:00:00 GMT</pubDate>
@@ -1867,9 +1867,9 @@ document<span class="token punctuation">.</span>documentElement<span class="toke
     </item>
     <item>
       <title>CSS 动画</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/css/18-animations.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/css/18-animations.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">CSS 动画</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/css/18-animations.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/css/18-animations.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">CSS 动画</source>
       <description>CSS 动画通过 @keyframes 定义关键帧，再用 animation 属性驱动，比 Transition 更灵活，可自动循环、有中间状态。 @keyframes animation 属性 子属性一览： fill-mode 控制动画开始前和结束后元素的状态： none（默认）：动画结束后回到初始状态 forwards：动画结束后保持最后一帧 ba...</description>
       <category>CSS</category>
       <pubDate>Tue, 23 Apr 2024 00:00:00 GMT</pubDate>
@@ -1909,9 +1909,9 @@ document<span class="token punctuation">.</span>documentElement<span class="toke
     </item>
     <item>
       <title>字体加载与 Font Loading API</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/html/font-loading.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/font-loading.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">字体加载与 Font Loading API</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/font-loading.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/font-loading.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">字体加载与 Font Loading API</source>
       <description>浏览器加载字体分为两条独立的管线：HTTP 缓存（负责下载字节）和字体引擎（负责解码、注册字体）。两者之间没有自动桥接——字节下载完成不等于字体可用。 字体加载的完整流程 在注册完成之前，任何依赖字体 metrics 的操作（Canvas 绘制、行高计算）都会拿到后备字体的数据。 Font Loading API document.fonts.load...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -1986,9 +1986,9 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
     </item>
     <item>
       <title>preload / prefetch / preconnect</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/html/preload-prefetch-preconnect.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/preload-prefetch-preconnect.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">preload / prefetch / preconnect</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/preload-prefetch-preconnect.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/preload-prefetch-preconnect.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">preload / prefetch / preconnect</source>
       <description>区别 还有一个更轻量的指令 dns-prefetch，只做 DNS 解析，不建立 TCP/TLS 连接： preconnect 包含了 dns-prefetch 的效果，但开销更大。不确定是否会真正发起请求时，用 dns-prefetch 更安全。 优先级与执行时机 浏览器在处理 resource hints 时有自己的优先级策略： preload 的...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -2000,9 +2000,9 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
     </item>
     <item>
       <title>WebSocket</title>
-      <link>https://dribble-njr.github.io/blog/notes/computer-science/networking/websocket.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/computer-science/networking/websocket.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">WebSocket</source>
+      <link>https://zeevenn.github.io/notes/notes/computer-science/networking/websocket.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/computer-science/networking/websocket.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">WebSocket</source>
       <description>WebSocket 是 HTML5 一种协议，是在 http 协议上实现了 socket 协议的长链接，只需要客户端和服务端建立一次连接，就可以互相传送数据。 主要应用在网页即时通讯和服务端消息推送中，使客户端和服务端之间的交互变得更加简单。 http 协议是客户端请求，服务端响应，而 socket 协议可以使服务端主动向客户端发送消息。 传统 aja...</description>
       <category>HTML</category>
       <pubDate>Mon, 25 Jul 2022 00:00:00 GMT</pubDate>
@@ -2046,9 +2046,9 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
     </item>
     <item>
       <title>Service Worker</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/browser/service-worker.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/browser/service-worker.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Service Worker</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/browser/service-worker.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/browser/service-worker.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Service Worker</source>
       <description>是什么 Service Worker 是运行在浏览器后台的独立线程，可拦截网络请求、管理缓存，是 PWA 的核心技术。 与 Web Worker 的区别： 生命周期 注册（register） 安装（install） 激活（activate） 拦截请求（fetch） 基本用法 缓存策略 Cache First：先查缓存，没有再请求网络（适合静态资源） N...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -2062,9 +2062,9 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
     </item>
     <item>
       <title>cookie、localStorage 和 sessionStorage</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/browser/web-storage.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/browser/web-storage.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">cookie、localStorage 和 sessionStorage</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/browser/web-storage.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/browser/web-storage.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">cookie、localStorage 和 sessionStorage</source>
       <description>在使用 Vuex、Pinia 等状态管理库的时候，网页刷新会导致所有数据清空。因此需要用到本地存储，前端本地存储的方式有三种：cookie、localStorage 和 sessionStorage。 cookie HTTP Cookie（也叫 Web Cookie 或浏览器 Cookie）是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器...</description>
       <category>HTML</category>
       <pubDate>Tue, 02 Aug 2022 00:00:00 GMT</pubDate>
@@ -2156,17 +2156,17 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Web Worker</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/browser/web-worker.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/browser/web-worker.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Web Worker</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/browser/web-worker.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/browser/web-worker.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Web Worker</source>
       <category>HTML</category>
       <pubDate>Tue, 02 Aug 2022 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Canvas vs SVG</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/html/canvas-vs-svg.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/canvas-vs-svg.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Canvas vs SVG</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/canvas-vs-svg.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/canvas-vs-svg.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Canvas vs SVG</source>
       <description>核心区别 如何选择 用 Canvas： 游戏、粒子效果等高帧率场景 图形元素数量极多（&amp;gt; 数千） 需要像素级操作（图片处理、滤镜） 用 SVG： 图标、插图、数据可视化（折线图、饼图） 需要无损缩放（响应式设计） 需要 CSS 动画或交互事件 性能临界点 没有精确数字，取决于图形复杂度和更新频率，但通用参考： SVG：元素数量超过 ~1000 个节点后...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -2178,9 +2178,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>defer 和 async 的区别</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/html/defer-vs-async.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/defer-vs-async.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">defer 和 async 的区别</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">defer 和 async 的区别</source>
       <description>普通 &amp;lt;script src&amp;gt; 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。defer 和 async 都允许脚本异步下载，区别在于何时执行。 对比 时序 使用场景 defer — 依赖 DOM 或需要保证执行顺序的脚本（绝大多数业务脚本）： async — 完全独立、不依赖 DOM 和其他脚本的脚本（统计、广告）： ...</description>
       <category>HTML</category>
       <pubDate>Mon, 25 Jul 2022 00:00:00 GMT</pubDate>
@@ -2192,9 +2192,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>iframe</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/html/iframe.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/iframe.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">iframe</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/iframe.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/iframe.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">iframe</source>
       <description>优点 隔离第三方内容（广告、地图、支付页面），样式和脚本互不影响 可嵌入独立部署的子应用（微前端常见方案） 异步加载，不阻塞父页面渲染 缺点 性能：每个 iframe 都有独立的浏览器上下文，内存开销大 SEO：iframe 内容不被搜索引擎索引 通信复杂：跨域需要 postMessage，调试困难 历史记录：iframe 内部的导航会污染浏览器 hi...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -2227,9 +2227,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>img srcset 响应式图片</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/html/img-srcset.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/img-srcset.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">img srcset 响应式图片</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/img-srcset.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/img-srcset.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">img srcset 响应式图片</source>
       <description>是什么 srcset 让浏览器根据设备像素密度或视口宽度自动选择最合适的图片，避免在小屏上加载大图。 像素密度描述符（x） 适合固定尺寸的图片（如头像、logo）： 浏览器在 2x 屏（Retina）加载 avatar@2x.jpg，普通屏加载 avatar.jpg。 宽度描述符（w）+ sizes 适合响应式布局中宽度随视口变化的图片： sizes ...</description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -2268,9 +2268,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>常用 meta 标签</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/html/meta-tags.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/meta-tags.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">常用 meta 标签</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/meta-tags.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/meta-tags.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">常用 meta 标签</source>
       <description>字符编码 视口（移动端必加） SEO 相关 注 keywords 已被 Google 忽略，Baidu 仍参考。description 影响点击率但不影响排名。 Open Graph（社交分享） 兼容性 安全相关 参考 MDN - meta </description>
       <category>Frontend</category>
       <category>HTML</category>
@@ -2309,9 +2309,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>src 和 href 的区别</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/html/src-vs-href.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/html/src-vs-href.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">src 和 href 的区别</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/src-vs-href.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/src-vs-href.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">src 和 href 的区别</source>
       <description>src 和 href 是 HTML 中两个常见属性，含义不同，不可互换： src src 属性指向的资源会被嵌入到当前元素所在位置，浏览器遇到它时会 暂停页面解析，直到资源获取、解析并执行完毕。 浏览器解析到上面的标签后，会暂停 HTML 的继续解析，待 script.js 下载并执行完成后才恢复。其行为等价于将脚本内容内联到 &amp;lt;script&amp;gt; 标签中...</description>
       <category>HTML</category>
       <pubDate>Thu, 28 Apr 2022 00:00:00 GMT</pubDate>
@@ -2322,9 +2322,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>六个月成长计划 · 2026</title>
-      <link>https://dribble-njr.github.io/blog/notes/roadmap-2026.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/roadmap-2026.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">六个月成长计划 · 2026</source>
+      <link>https://zeevenn.github.io/notes/notes/roadmap-2026.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/roadmap-2026.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">六个月成长计划 · 2026</source>
       <description>六个月成长计划 · 2026 时间跨度：2026.04 – 2026.10 三线并行：博客迁移 · reReact Fiber · RN 音乐库 面试备战：Month 3 起叠加算法 + 系统设计 技术选型备忘 主动学习轮转表 每周固定 2–3 小时，独立于项目之外。按优先级排序，P0 最先，P3 靠后或视时间取舍。 Month 1 · 三线启动 Ap...</description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2337,9 +2337,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>AI</title>
-      <link>https://dribble-njr.github.io/blog/notes/ai/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/ai/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">AI</source>
+      <link>https://zeevenn.github.io/notes/notes/ai/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">AI</source>
       <description>AI </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2347,9 +2347,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>架构设计</title>
-      <link>https://dribble-njr.github.io/blog/notes/architecture/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/architecture/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">架构设计</source>
+      <link>https://zeevenn.github.io/notes/notes/architecture/</link>
+      <guid>https://zeevenn.github.io/notes/notes/architecture/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">架构设计</source>
       <description>架构设计 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2357,9 +2357,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>云服务</title>
-      <link>https://dribble-njr.github.io/blog/notes/cloud/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/cloud/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">云服务</source>
+      <link>https://zeevenn.github.io/notes/notes/cloud/</link>
+      <guid>https://zeevenn.github.io/notes/notes/cloud/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">云服务</source>
       <description>云服务 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2367,9 +2367,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>DevOps</title>
-      <link>https://dribble-njr.github.io/blog/notes/devops/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/devops/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">DevOps</source>
+      <link>https://zeevenn.github.io/notes/notes/devops/</link>
+      <guid>https://zeevenn.github.io/notes/notes/devops/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">DevOps</source>
       <description>DevOps </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2377,9 +2377,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>性能优化</title>
-      <link>https://dribble-njr.github.io/blog/notes/performance/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/performance/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">性能优化</source>
+      <link>https://zeevenn.github.io/notes/notes/performance/</link>
+      <guid>https://zeevenn.github.io/notes/notes/performance/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">性能优化</source>
       <description>性能优化 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2387,9 +2387,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>安全</title>
-      <link>https://dribble-njr.github.io/blog/notes/security/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/security/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">安全</source>
+      <link>https://zeevenn.github.io/notes/notes/security/</link>
+      <guid>https://zeevenn.github.io/notes/notes/security/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">安全</source>
       <description>安全 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2397,9 +2397,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>开发工具</title>
-      <link>https://dribble-njr.github.io/blog/notes/tools/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/tools/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">开发工具</source>
+      <link>https://zeevenn.github.io/notes/notes/tools/</link>
+      <guid>https://zeevenn.github.io/notes/notes/tools/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">开发工具</source>
       <description>开发工具 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2407,9 +2407,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>AI Agent</title>
-      <link>https://dribble-njr.github.io/blog/notes/ai/agents/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/ai/agents/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">AI Agent</source>
+      <link>https://zeevenn.github.io/notes/notes/ai/agents/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/agents/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">AI Agent</source>
       <description>AI Agent </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2417,9 +2417,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>模型微调</title>
-      <link>https://dribble-njr.github.io/blog/notes/ai/fine-tuning/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/ai/fine-tuning/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">模型微调</source>
+      <link>https://zeevenn.github.io/notes/notes/ai/fine-tuning/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/fine-tuning/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">模型微调</source>
       <description>模型微调 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2427,9 +2427,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>LLM 基础</title>
-      <link>https://dribble-njr.github.io/blog/notes/ai/llm-fundamentals/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/ai/llm-fundamentals/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">LLM 基础</source>
+      <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">LLM 基础</source>
       <description>LLM 基础 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2437,9 +2437,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>提示词工程</title>
-      <link>https://dribble-njr.github.io/blog/notes/ai/prompt-engineering/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/ai/prompt-engineering/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">提示词工程</source>
+      <link>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">提示词工程</source>
       <description>提示词工程 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2447,9 +2447,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>RAG 检索增强生成</title>
-      <link>https://dribble-njr.github.io/blog/notes/ai/rag/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/ai/rag/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">RAG 检索增强生成</source>
+      <link>https://zeevenn.github.io/notes/notes/ai/rag/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/rag/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">RAG 检索增强生成</source>
       <description>RAG 检索增强生成 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2457,9 +2457,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>整洁架构</title>
-      <link>https://dribble-njr.github.io/blog/notes/architecture/clean-architecture/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/architecture/clean-architecture/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">整洁架构</source>
+      <link>https://zeevenn.github.io/notes/notes/architecture/clean-architecture/</link>
+      <guid>https://zeevenn.github.io/notes/notes/architecture/clean-architecture/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">整洁架构</source>
       <description>整洁架构 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2467,9 +2467,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>领域驱动设计</title>
-      <link>https://dribble-njr.github.io/blog/notes/architecture/ddd/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/architecture/ddd/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">领域驱动设计</source>
+      <link>https://zeevenn.github.io/notes/notes/architecture/ddd/</link>
+      <guid>https://zeevenn.github.io/notes/notes/architecture/ddd/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">领域驱动设计</source>
       <description>领域驱动设计 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2477,9 +2477,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>设计模式</title>
-      <link>https://dribble-njr.github.io/blog/notes/architecture/design-patterns/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/architecture/design-patterns/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">设计模式</source>
+      <link>https://zeevenn.github.io/notes/notes/architecture/design-patterns/</link>
+      <guid>https://zeevenn.github.io/notes/notes/architecture/design-patterns/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">设计模式</source>
       <description>设计模式 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2487,9 +2487,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>事件驱动架构</title>
-      <link>https://dribble-njr.github.io/blog/notes/architecture/event-driven/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/architecture/event-driven/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">事件驱动架构</source>
+      <link>https://zeevenn.github.io/notes/notes/architecture/event-driven/</link>
+      <guid>https://zeevenn.github.io/notes/notes/architecture/event-driven/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">事件驱动架构</source>
       <description>事件驱动架构 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2497,9 +2497,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>微服务架构</title>
-      <link>https://dribble-njr.github.io/blog/notes/architecture/microservices/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/architecture/microservices/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">微服务架构</source>
+      <link>https://zeevenn.github.io/notes/notes/architecture/microservices/</link>
+      <guid>https://zeevenn.github.io/notes/notes/architecture/microservices/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">微服务架构</source>
       <description>微服务架构 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2507,9 +2507,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>API 设计</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/api-design/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/api-design/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">API 设计</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/api-design/</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/api-design/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">API 设计</source>
       <description>API 设计 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2517,9 +2517,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>认证与鉴权</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/authentication/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/authentication/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">认证与鉴权</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/authentication/</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/authentication/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">认证与鉴权</source>
       <description>认证与鉴权 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2527,9 +2527,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Go</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/go/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/go/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Go</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/go/</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/go/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Go</source>
       <description>Go </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2537,9 +2537,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>消息队列</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/message-queue/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/message-queue/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">消息队列</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/message-queue/</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/message-queue/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">消息队列</source>
       <description>消息队列 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2547,9 +2547,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Python</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/python/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/python/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Python</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/python/</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/python/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Python</source>
       <description>Python </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2557,9 +2557,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Redis</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/redis/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/redis/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Redis</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/redis/</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/redis/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Redis</source>
       <description>Redis </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2567,9 +2567,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>AWS</title>
-      <link>https://dribble-njr.github.io/blog/notes/cloud/aws/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/cloud/aws/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">AWS</source>
+      <link>https://zeevenn.github.io/notes/notes/cloud/aws/</link>
+      <guid>https://zeevenn.github.io/notes/notes/cloud/aws/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">AWS</source>
       <description>AWS </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2577,9 +2577,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>CDN</title>
-      <link>https://dribble-njr.github.io/blog/notes/cloud/cdn/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/cloud/cdn/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">CDN</source>
+      <link>https://zeevenn.github.io/notes/notes/cloud/cdn/</link>
+      <guid>https://zeevenn.github.io/notes/notes/cloud/cdn/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">CDN</source>
       <description>CDN </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2587,9 +2587,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>云计算概念</title>
-      <link>https://dribble-njr.github.io/blog/notes/cloud/concepts/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/cloud/concepts/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">云计算概念</source>
+      <link>https://zeevenn.github.io/notes/notes/cloud/concepts/</link>
+      <guid>https://zeevenn.github.io/notes/notes/cloud/concepts/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">云计算概念</source>
       <description>云计算概念 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2597,9 +2597,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>编译原理</title>
-      <link>https://dribble-njr.github.io/blog/notes/computer-science/compilation/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/computer-science/compilation/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">编译原理</source>
+      <link>https://zeevenn.github.io/notes/notes/computer-science/compilation/</link>
+      <guid>https://zeevenn.github.io/notes/notes/computer-science/compilation/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">编译原理</source>
       <description>编译原理 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2607,9 +2607,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>并发编程</title>
-      <link>https://dribble-njr.github.io/blog/notes/computer-science/concurrency/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/computer-science/concurrency/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">并发编程</source>
+      <link>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</link>
+      <guid>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">并发编程</source>
       <description>并发编程 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2617,9 +2617,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>CI/CD</title>
-      <link>https://dribble-njr.github.io/blog/notes/devops/ci-cd/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/devops/ci-cd/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">CI/CD</source>
+      <link>https://zeevenn.github.io/notes/notes/devops/ci-cd/</link>
+      <guid>https://zeevenn.github.io/notes/notes/devops/ci-cd/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">CI/CD</source>
       <description>CI/CD </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2627,9 +2627,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Docker</title>
-      <link>https://dribble-njr.github.io/blog/notes/devops/docker/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/devops/docker/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Docker</source>
+      <link>https://zeevenn.github.io/notes/notes/devops/docker/</link>
+      <guid>https://zeevenn.github.io/notes/notes/devops/docker/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Docker</source>
       <description>Docker </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2637,9 +2637,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Kubernetes</title>
-      <link>https://dribble-njr.github.io/blog/notes/devops/kubernetes/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/devops/kubernetes/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Kubernetes</source>
+      <link>https://zeevenn.github.io/notes/notes/devops/kubernetes/</link>
+      <guid>https://zeevenn.github.io/notes/notes/devops/kubernetes/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Kubernetes</source>
       <description>Kubernetes </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2647,9 +2647,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>监控</title>
-      <link>https://dribble-njr.github.io/blog/notes/devops/monitoring/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/devops/monitoring/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">监控</source>
+      <link>https://zeevenn.github.io/notes/notes/devops/monitoring/</link>
+      <guid>https://zeevenn.github.io/notes/notes/devops/monitoring/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">监控</source>
       <description>监控 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2657,9 +2657,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Nginx</title>
-      <link>https://dribble-njr.github.io/blog/notes/devops/nginx/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/devops/nginx/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Nginx</source>
+      <link>https://zeevenn.github.io/notes/notes/devops/nginx/</link>
+      <guid>https://zeevenn.github.io/notes/notes/devops/nginx/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Nginx</source>
       <description>Nginx </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2667,9 +2667,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>动画</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/animation/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/animation/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">动画</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/animation/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/animation/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">动画</source>
       <description>动画 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2677,9 +2677,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>移动端</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/mobile/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/mobile/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">移动端</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/mobile/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/mobile/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">移动端</source>
       <description>移动端 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2687,9 +2687,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>前端性能优化</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/performance/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/performance/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">前端性能优化</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/performance/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/performance/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">前端性能优化</source>
       <description>前端性能优化 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2697,9 +2697,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>前端安全</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/security/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/security/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">前端安全</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/security/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/security/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">前端安全</source>
       <description>前端安全 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2707,9 +2707,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>状态管理</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/state-management/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/state-management/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">状态管理</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/state-management/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/state-management/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">状态管理</source>
       <description>状态管理 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2717,9 +2717,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>前端测试</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/testing/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/testing/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">前端测试</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/testing/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/testing/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">前端测试</source>
       <description>前端测试 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2727,9 +2727,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>TypeScript</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">TypeScript</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/typescript/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/typescript/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">TypeScript</source>
       <description>TypeScript </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2737,9 +2737,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>后端性能</title>
-      <link>https://dribble-njr.github.io/blog/notes/performance/backend/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/performance/backend/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">后端性能</source>
+      <link>https://zeevenn.github.io/notes/notes/performance/backend/</link>
+      <guid>https://zeevenn.github.io/notes/notes/performance/backend/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">后端性能</source>
       <description>后端性能 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2747,9 +2747,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>前端性能</title>
-      <link>https://dribble-njr.github.io/blog/notes/performance/frontend/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/performance/frontend/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">前端性能</source>
+      <link>https://zeevenn.github.io/notes/notes/performance/frontend/</link>
+      <guid>https://zeevenn.github.io/notes/notes/performance/frontend/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">前端性能</source>
       <description>前端性能 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2757,9 +2757,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>网络性能</title>
-      <link>https://dribble-njr.github.io/blog/notes/performance/network/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/performance/network/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">网络性能</source>
+      <link>https://zeevenn.github.io/notes/notes/performance/network/</link>
+      <guid>https://zeevenn.github.io/notes/notes/performance/network/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">网络性能</source>
       <description>网络性能 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2767,9 +2767,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>性能分析</title>
-      <link>https://dribble-njr.github.io/blog/notes/performance/profiling/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/performance/profiling/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">性能分析</source>
+      <link>https://zeevenn.github.io/notes/notes/performance/profiling/</link>
+      <guid>https://zeevenn.github.io/notes/notes/performance/profiling/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">性能分析</source>
       <description>性能分析 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2777,9 +2777,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>认证与授权</title>
-      <link>https://dribble-njr.github.io/blog/notes/security/auth/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/security/auth/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">认证与授权</source>
+      <link>https://zeevenn.github.io/notes/notes/security/auth/</link>
+      <guid>https://zeevenn.github.io/notes/notes/security/auth/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">认证与授权</source>
       <description>认证与授权 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2787,9 +2787,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>密码学</title>
-      <link>https://dribble-njr.github.io/blog/notes/security/cryptography/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/security/cryptography/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">密码学</source>
+      <link>https://zeevenn.github.io/notes/notes/security/cryptography/</link>
+      <guid>https://zeevenn.github.io/notes/notes/security/cryptography/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">密码学</source>
       <description>密码学 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2797,9 +2797,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>网络安全</title>
-      <link>https://dribble-njr.github.io/blog/notes/security/network-security/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/security/network-security/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">网络安全</source>
+      <link>https://zeevenn.github.io/notes/notes/security/network-security/</link>
+      <guid>https://zeevenn.github.io/notes/notes/security/network-security/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">网络安全</source>
       <description>网络安全 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2807,9 +2807,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Web 安全</title>
-      <link>https://dribble-njr.github.io/blog/notes/security/web-security/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/security/web-security/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Web 安全</source>
+      <link>https://zeevenn.github.io/notes/notes/security/web-security/</link>
+      <guid>https://zeevenn.github.io/notes/notes/security/web-security/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Web 安全</source>
       <description>Web 安全 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2817,9 +2817,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>系统设计模式</title>
-      <link>https://dribble-njr.github.io/blog/notes/system-design/patterns/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/system-design/patterns/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">系统设计模式</source>
+      <link>https://zeevenn.github.io/notes/notes/system-design/patterns/</link>
+      <guid>https://zeevenn.github.io/notes/notes/system-design/patterns/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">系统设计模式</source>
       <description>系统设计模式 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2827,9 +2827,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>AI 开发工具</title>
-      <link>https://dribble-njr.github.io/blog/notes/tools/ai-tools/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/tools/ai-tools/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">AI 开发工具</source>
+      <link>https://zeevenn.github.io/notes/notes/tools/ai-tools/</link>
+      <guid>https://zeevenn.github.io/notes/notes/tools/ai-tools/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">AI 开发工具</source>
       <description>AI 开发工具 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2837,9 +2837,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Git 进阶</title>
-      <link>https://dribble-njr.github.io/blog/notes/tools/git/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/tools/git/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Git 进阶</source>
+      <link>https://zeevenn.github.io/notes/notes/tools/git/</link>
+      <guid>https://zeevenn.github.io/notes/notes/tools/git/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Git 进阶</source>
       <description>Git 进阶 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2847,9 +2847,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>终端工具</title>
-      <link>https://dribble-njr.github.io/blog/notes/tools/terminal/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/tools/terminal/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">终端工具</source>
+      <link>https://zeevenn.github.io/notes/notes/tools/terminal/</link>
+      <guid>https://zeevenn.github.io/notes/notes/tools/terminal/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">终端工具</source>
       <description>终端工具 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2857,9 +2857,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>VS Code</title>
-      <link>https://dribble-njr.github.io/blog/notes/tools/vscode/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/tools/vscode/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">VS Code</source>
+      <link>https://zeevenn.github.io/notes/notes/tools/vscode/</link>
+      <guid>https://zeevenn.github.io/notes/notes/tools/vscode/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">VS Code</source>
       <description>VS Code </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -2867,9 +2867,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>TypeScript 配置文件</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/engineering/basic/08-tsconfig.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/engineering/basic/08-tsconfig.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">TypeScript 配置文件</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/engineering/basic/08-tsconfig.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/engineering/basic/08-tsconfig.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">TypeScript 配置文件</source>
       <description>基础结构 常用编译选项 基础配置 target: 编译目标版本（ES5/ES6/ES2020等） module: 模块系统（CommonJS/ESNext/UMD等） lib: 需要包含的库文件（ES2020/DOM等） outDir: 输出目录 rootDir: 源码根目录 严格检查 strict: 启用所有严格类型检查选项 noImplicitAn...</description>
       <category>工程化</category>
       <pubDate>Tue, 03 Mar 2026 00:00:00 GMT</pubDate>
@@ -3024,9 +3024,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>高级类型</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/advanced-types/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/advanced-types/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">高级类型</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/typescript/advanced-types/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/typescript/advanced-types/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">高级类型</source>
       <description>高级类型 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -3034,9 +3034,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>最佳实践</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/best-practices/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/best-practices/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">最佳实践</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/typescript/best-practices/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/typescript/best-practices/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">最佳实践</source>
       <description>最佳实践 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -3044,9 +3044,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>声明文件</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/declaration-files/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/declaration-files/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">声明文件</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/typescript/declaration-files/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/typescript/declaration-files/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">声明文件</source>
       <description>声明文件 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -3054,9 +3054,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>类型系统</title>
-      <link>https://dribble-njr.github.io/blog/notes/frontend/typescript/type-system/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/frontend/typescript/type-system/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">类型系统</source>
+      <link>https://zeevenn.github.io/notes/notes/frontend/typescript/type-system/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/typescript/type-system/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">类型系统</source>
       <description>类型系统 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
@@ -3064,9 +3064,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Algorithm</title>
-      <link>https://dribble-njr.github.io/blog/notes/algorithms/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/algorithms/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Algorithm</source>
+      <link>https://zeevenn.github.io/notes/notes/algorithms/</link>
+      <guid>https://zeevenn.github.io/notes/notes/algorithms/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Algorithm</source>
       <description>使用 TypeScript，按照数据结构和算法的分类，整理了一些常见的算法题。 </description>
       <pubDate>Mon, 20 Apr 2026 16:21:10 GMT</pubDate>
       <content:encoded><![CDATA[<p>使用 <code>TypeScript</code>，按照数据结构和算法的分类，整理了一些常见的算法题。</p>
@@ -3077,9 +3077,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Project</title>
-      <link>https://dribble-njr.github.io/blog/notes/projects/</link>
-      <guid>https://dribble-njr.github.io/blog/notes/projects/</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Project</source>
+      <link>https://zeevenn.github.io/notes/notes/projects/</link>
+      <guid>https://zeevenn.github.io/notes/notes/projects/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Project</source>
       <description>个人开发 开源项目 </description>
       <pubDate>Mon, 20 Apr 2026 16:21:10 GMT</pubDate>
       <content:encoded><![CDATA[<h2>个人开发</h2>
@@ -3095,9 +3095,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>数组</title>
-      <link>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/01-array.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/01-array.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">数组</source>
+      <link>https://zeevenn.github.io/notes/notes/algorithms/data-structures/01-array.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/algorithms/data-structures/01-array.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">数组</source>
       <description>JavaScript 中数组是一种特殊的对象，用于存储多个值。数组的每个元素都有一个数字索引，用于访问数组中的元素。 常见初始化数组的方式： 数组是一种线性表数据结构，它用一组连续的内存空间，来存储一组具有相同类型的数据。 常见的解题思路有： 二分查找 双指针 滑动窗口 暴力解法 n 数之和 一般思路为使用哈希表、双指针、排序等方法。 两数之和 原题链...</description>
       <category>algorithm</category>
       <pubDate>Thu, 15 Feb 2024 00:00:00 GMT</pubDate>
@@ -3518,9 +3518,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>二叉树</title>
-      <link>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/02-binary-tree.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/02-binary-tree.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">二叉树</source>
+      <link>https://zeevenn.github.io/notes/notes/algorithms/data-structures/02-binary-tree.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/algorithms/data-structures/02-binary-tree.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">二叉树</source>
       <description>通常二叉树有两种做法，分别对应着回溯算法和动态规划： 一次遍历二叉树：用 traverse 函数配合外部变量，实质上是一个回溯框架； 分解问题：通过分解为左右子树问题解决，实质上是动态规划。 一次遍历（回溯） 二叉树的最大深度 在前序位置（进入当前节点）中将当前深度 +1，并计算最大深度，再后序位置（离开当前节点）中将深度 -1。本质上就是一个回溯算法...</description>
       <category>LeetCode</category>
       <pubDate>Thu, 23 Jun 2022 00:00:00 GMT</pubDate>
@@ -4113,9 +4113,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>二叉搜索树</title>
-      <link>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/03-binary-search-tree.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/03-binary-search-tree.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">二叉搜索树</source>
+      <link>https://zeevenn.github.io/notes/notes/algorithms/data-structures/03-binary-search-tree.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/algorithms/data-structures/03-binary-search-tree.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">二叉搜索树</source>
       <description>特性 二叉搜索树(BST)特性： 对于 BST 的每一个节点 node，左子树的节点都要比当前 node 小，右子树的节点都比当前 node 大； 所有左子树和右子树也都是二叉搜索树； 二叉搜索树的中序遍历为一个升序的数组。 二叉搜索树中第 k 小的元素 由于二叉搜索树的中序遍历是升序数组，所以找第 k 小的元素可以先生成一个中序遍历的数组，再返回数组...</description>
       <category>LeetCode</category>
       <pubDate>Fri, 24 Jun 2022 00:00:00 GMT</pubDate>
@@ -4441,9 +4441,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>链表</title>
-      <link>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/04-linked-list.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/04-linked-list.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">链表</source>
+      <link>https://zeevenn.github.io/notes/notes/algorithms/data-structures/04-linked-list.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/algorithms/data-structures/04-linked-list.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">链表</source>
       <description>反转链表 反转链表 II </description>
       <category>LeetCode</category>
       <pubDate>Tue, 02 Aug 2022 00:00:00 GMT</pubDate>
@@ -4501,9 +4501,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>动态规划</title>
-      <link>https://dribble-njr.github.io/blog/notes/algorithms/patterns/01-dynamic-programming.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/algorithms/patterns/01-dynamic-programming.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">动态规划</source>
+      <link>https://zeevenn.github.io/notes/notes/algorithms/patterns/01-dynamic-programming.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/algorithms/patterns/01-dynamic-programming.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">动态规划</source>
       <description>动态规划的一般形式是求最值，核心问题就是穷举。将所有可行的子问题答案穷举出来（二叉树的分解问题形式），然后在其中寻找最值。 动态规划需要判断问题是否具备最优子问题，还需要写出正确的状态转移方程，另外，由于动态规划存在重叠子问题，需要优化穷举过程（备忘录或 dp 数组），否则会超时。 基础 动态规划问题其实都可以使用暴力递归求解，如何消除重叠子问题就可以...</description>
       <category>LeetCode</category>
       <pubDate>Mon, 01 Aug 2022 00:00:00 GMT</pubDate>
@@ -5073,9 +5073,9 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     </item>
     <item>
       <title>Maven</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/java/01-maven.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/java/01-maven.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">Maven</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/java/01-maven.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/java/01-maven.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Maven</source>
       <description>什么是 Maven Maven 是一个项目管理和构建工具，主要用于 Java 项目。它通过 POM（Project Object Model）文件来管理项目的依赖、编译、测试和打包等任务。Maven 的核心功能包括： 依赖管理：通过定义 POM 文件中的依赖项，Maven 能够自动下载和配置项目所需的库。 构建自动化：Maven 可以自动化执行从编译、...</description>
       <category>node</category>
       <pubDate>Fri, 30 Aug 2024 00:00:00 GMT</pubDate>
@@ -5151,9 +5151,9 @@ A -<span class="token operator">&gt;</span> C -<span class="token operator">&gt;
     </item>
     <item>
       <title>服务器设置 ssh 密钥登录</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/linux/01-set-the-ssh.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/01-set-the-ssh.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">服务器设置 ssh 密钥登录</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/linux/01-set-the-ssh.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/linux/01-set-the-ssh.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">服务器设置 ssh 密钥登录</source>
       <description> 提示 使用密码登录服务器并不安全，因此我们需要设置密钥登录。 创建密钥对 登录阿里云控制台 -&amp;gt; 云服务 ECS -&amp;gt; 网络与安全 -&amp;gt; 密钥对 -&amp;gt; 创建密钥对。 step1-create-sshstep1-create-ssh 创建成功之后，浏览器会自动下载一个 .pem 私钥文件，记住这个文件的位置，之后要用。 绑定密钥对 选中刚才创建的密钥对...</description>
       <category>linux</category>
       <pubDate>Wed, 12 May 2021 00:00:00 GMT</pubDate>
@@ -5205,9 +5205,9 @@ PubkeyAuthentication <span class="token function">yes</span>
     </item>
     <item>
       <title>搭建 git 私服</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/linux/02-build-git-server.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/02-build-git-server.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">搭建 git 私服</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/linux/02-build-git-server.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/linux/02-build-git-server.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">搭建 git 私服</source>
       <description> 提示 git 私服作用： 自己电脑和公司（或者实验室）电脑随时同步资料 GitHub、Gitee 私有仓库都是限流的，文件一旦多了，或者有图片文件，git pull 的时候半天拉不下来 保存一些隐私文件 开始搭建 服务器：centos7.9 本地电脑: Windows10 如果服务器没装 git 可以使用以下命令安装： 创建 git 用户 创建一个 ...</description>
       <category>linux</category>
       <pubDate>Wed, 12 May 2021 00:00:00 GMT</pubDate>
@@ -5318,9 +5318,9 @@ Host key verification failed.
     </item>
     <item>
       <title>配置宝塔面板</title>
-      <link>https://dribble-njr.github.io/blog/notes/backend/linux/03-configure-bt.html</link>
-      <guid>https://dribble-njr.github.io/blog/notes/backend/linux/03-configure-bt.html</guid>
-      <source url="https://dribble-njr.github.io/blog/notes/rss.xml">配置宝塔面板</source>
+      <link>https://zeevenn.github.io/notes/notes/backend/linux/03-configure-bt.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/backend/linux/03-configure-bt.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">配置宝塔面板</source>
       <description> 提示 服务器系统：centos 7.9。 其他系统可以参照 官网 进行搭建。 为了方便一键配置部署环境，因此选择宝塔面板。 安装宝塔面板 大概过两分钟即可安装成功，复制外网面板地址到浏览器打开，输入下面的 username 和 password。进去之后会弹出 推荐安装套件，因为只要部署 vuepress， 因此这里安装 nginx 就好。选择编译安...</description>
       <category>linux</category>
       <pubDate>Wed, 12 May 2021 00:00:00 GMT</pubDate>

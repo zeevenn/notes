@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="https://dribble-njr.github.io/blog/notes/atom.xsl"?>
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="https://zeevenn.github.io/notes/notes/atom.xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
-  <id>https://dribble-njr.github.io/blog/notes/</id>
+  <id>https://zeevenn.github.io/notes/notes/</id>
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
-  <icon>https://dribble-njr.github.io/blog/notes/favicon.ico</icon>
-  <updated>2026-04-25T07:52:47.705Z</updated>
+  <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
+  <updated>2026-04-25T08:26:58.552Z</updated>
   <generator>@vuepress/plugin-feed</generator>
-  <link rel="self" href="https://dribble-njr.github.io/blog/notes/atom.xml"/>
-  <link rel="alternate" href="https://dribble-njr.github.io/blog/notes/"/>
+  <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
+  <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
   <category term="CSS"/>
   <category term="Frontend"/>
   <category term="HTML"/>
@@ -18,8 +18,8 @@
   <category term="linux"/>
   <entry>
     <title type="text">选择器</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/01-selectors.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/01-selectors.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/01-selectors.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/01-selectors.html"/>
     <updated>2026-04-25T07:51:11.000Z</updated>
     <summary type="html"><![CDATA[<p>CSS 中可以通过选择器来选中 HTML 文档中的元素。</p>
 <h2>种类</h2>
@@ -204,8 +204,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">盒模型</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/02-box-model.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/02-box-model.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/02-box-model.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/02-box-model.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<h2>盒模型</h2>
 <p>所有的 HTML 元素都可以看作一个盒子，他由外边距 <code>margin</code>、边框 <code>border</code>、内边距 <code>padding</code>和内容区 <code>content</code> 组成。</p>
@@ -275,8 +275,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">文本和字体</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/03-text-and-font.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/03-text-and-font.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/03-text-and-font.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/03-text-and-font.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<div class="hint-container tip">
 <p class="hint-container-title">提示</p>
@@ -388,8 +388,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">层叠和继承</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/04-cascade-and-inheritance.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/04-cascade-and-inheritance.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/04-cascade-and-inheritance.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/04-cascade-and-inheritance.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<blockquote>
 <p>[!TIP] W3C 规范</p>
@@ -480,8 +480,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">背景和边框</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/05-background-and-border.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/05-background-and-border.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/05-background-and-border.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/05-background-and-border.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>在网页开发中，背景和边框是常用的 CSS 属性，可以帮助我们美化网页的外观和布局。</p>
 <h2>背景属性</h2>
@@ -613,8 +613,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">定位</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/06-position.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/06-position.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/06-position.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/06-position.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<h2>为什么会有 positon 定位</h2>
 <p>HTML 中每个元素都是盒子，布局就像搭积木一样，从上往下挨个堆盒子，就能完成各式各样的页面，然而多实现几个页面就会发现：<strong>文档流中任意一个元素位置调整都会影响后面的元素</strong>。</p>
@@ -693,8 +693,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">浮动</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/07-float.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/07-float.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/07-float.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/07-float.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>浮动可以让元素脱离标准文档流，指定一个元素应沿其容器的左侧或右侧放置，允许文本和内联元素环绕它。</p>
 <h2>开启浮动</h2>
@@ -757,8 +757,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">Flex 布局</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/08-flexbox.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/08-flexbox.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/08-flexbox.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/08-flexbox.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<h2>一、基本概念</h2>
 <h3>1.1 flexbox 是什么</h3>
@@ -901,8 +901,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">样式单位</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/09-units.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/09-units.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/09-units.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/09-units.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>CSS 中的单位分为绝对单位和相对单位。相对单位是响应式设计的基础。</p>
 <h2>绝对单位</h2>
@@ -964,8 +964,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">居中</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/10-centering.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/10-centering.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/10-centering.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/10-centering.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>元素居中是比较常见的一个需求，有几种常见方法。</p>
 <h2>行内元素水平垂直居中</h2>
@@ -1009,8 +1009,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">Grid 布局</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/11-grid.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/11-grid.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/11-grid.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/11-grid.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<h2>什么是 grid 布局</h2>
 <p>flex 布局是 <strong>一维布局</strong> 模型，当面对一些场景时无法满足要求，比如下面这种情况，会出现最后一行无法左侧对齐的场景。</p>
@@ -1220,8 +1220,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">BFC 块级格式化上下文</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/12-bfc.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/12-bfc.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/12-bfc.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/12-bfc.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<h2>什么是 BFC</h2>
 <p>块级格式化上下文（Block Formatting Context，BFC），其实是块级盒子的布局过程发生的区域，在这个区域内会有特定的布局规则。实际上他相当于一个 <strong>结界</strong>：如果一个元素具有 BFC，那么内部子元素无法影响外部的元素。</p>
@@ -1291,8 +1291,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">响应式设计介绍</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/13-responsive-intro.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/13-responsive-intro.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/13-responsive-intro.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/13-responsive-intro.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>响应式设计是一种使网页内容适应各种设备的不同屏幕和窗口尺寸的网页设计方法。</p>
 <p>它并不是设计网站的第一种方法。在采用响应式设计之前的几年里，网页设计师和开发人员尝试过许多不同的技术。</p>
@@ -1330,8 +1330,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">响应式设计</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/14-responsive-techniques.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/14-responsive-techniques.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/14-responsive-techniques.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/14-responsive-techniques.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<h2>概念</h2>
 <ul>
@@ -1853,8 +1853,8 @@ LI.red.level          /* a=0 b=2 c=1 */
   </entry>
   <entry>
     <title type="text">CSS 自定义属性</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/15-variables.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/15-variables.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/15-variables.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/15-variables.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>CSS 自定义属性（CSS Variables）允许在整个文档中复用值，是现代 CSS 主题化和可维护性的核心工具。</p>
 <h2>声明与使用</h2>
@@ -1926,8 +1926,8 @@ document<span class="token punctuation">.</span>documentElement<span class="toke
   </entry>
   <entry>
     <title type="text">CSS 过渡</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/16-transitions.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/16-transitions.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/16-transitions.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/16-transitions.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>CSS 过渡（Transition）让属性值的变化从「瞬间切换」变为「平滑动画」。</p>
 <h2>基本语法</h2>
@@ -1951,8 +1951,8 @@ document<span class="token punctuation">.</span>documentElement<span class="toke
   </entry>
   <entry>
     <title type="text">CSS 变换</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/17-transforms.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/17-transforms.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/17-transforms.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/17-transforms.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>CSS <code>transform</code> 属性对元素做几何变换，<strong>不影响文档流</strong>（不触发重排）。</p>
 <h2>2D 变换</h2>
@@ -2026,8 +2026,8 @@ document<span class="token punctuation">.</span>documentElement<span class="toke
   </entry>
   <entry>
     <title type="text">CSS 动画</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/css/18-animations.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/css/18-animations.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/css/18-animations.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/css/18-animations.html"/>
     <updated>2026-04-23T15:31:53.000Z</updated>
     <summary type="html"><![CDATA[<p>CSS 动画通过 <code>@keyframes</code> 定义关键帧，再用 <code>animation</code> 属性驱动，比 Transition 更灵活，可自动循环、有中间状态。</p>
 <h2>@keyframes</h2>
@@ -2092,8 +2092,8 @@ document<span class="token punctuation">.</span>documentElement<span class="toke
   </entry>
   <entry>
     <title type="text">字体加载与 Font Loading API</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/html/font-loading.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/html/font-loading.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/font-loading.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/font-loading.html"/>
     <updated>2026-04-22T16:28:11.000Z</updated>
     <summary type="html"><![CDATA[<p>浏览器加载字体分为两条独立的管线：<strong>HTTP 缓存</strong>（负责下载字节）和<strong>字体引擎</strong>（负责解码、注册字体）。两者之间没有自动桥接——字节下载完成不等于字体可用。</p>
 <h2>字体加载的完整流程</h2>
@@ -2176,8 +2176,8 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
   </entry>
   <entry>
     <title type="text">preload / prefetch / preconnect</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/html/preload-prefetch-preconnect.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/html/preload-prefetch-preconnect.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/preload-prefetch-preconnect.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/preload-prefetch-preconnect.html"/>
     <updated>2026-04-24T11:33:12.000Z</updated>
     <summary type="html"><![CDATA[<h2>区别</h2>
 <table>
@@ -2216,8 +2216,8 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
   </entry>
   <entry>
     <title type="text">WebSocket</title>
-    <id>https://dribble-njr.github.io/blog/notes/computer-science/networking/websocket.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/computer-science/networking/websocket.html"/>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/networking/websocket.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/networking/websocket.html"/>
     <updated>2026-04-21T15:59:37.000Z</updated>
     <summary type="html"><![CDATA[<p>WebSocket 是 HTML5 一种协议，是在 http 协议上实现了 socket 协议的长链接，只需要客户端和服务端建立一次连接，就可以互相传送数据。</p>
 <p>主要应用在网页即时通讯和服务端消息推送中，使客户端和服务端之间的交互变得更加简单。</p>
@@ -2268,8 +2268,8 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
   </entry>
   <entry>
     <title type="text">Service Worker</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/browser/service-worker.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/browser/service-worker.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/browser/service-worker.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/browser/service-worker.html"/>
     <updated>2026-04-21T15:59:37.000Z</updated>
     <summary type="html"><![CDATA[<h2>是什么</h2>
 <p>Service Worker 是运行在浏览器后台的独立线程，可拦截网络请求、管理缓存，是 PWA 的核心技术。</p>
@@ -2312,8 +2312,8 @@ document<span class="token punctuation">.</span>fonts<span class="token punctuat
   </entry>
   <entry>
     <title type="text">cookie、localStorage 和 sessionStorage</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/browser/web-storage.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/browser/web-storage.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/browser/web-storage.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/browser/web-storage.html"/>
     <updated>2026-04-21T15:59:37.000Z</updated>
     <summary type="html"><![CDATA[<p>在使用 Vuex、Pinia 等状态管理库的时候，网页刷新会导致所有数据清空。因此需要用到本地存储，前端本地存储的方式有三种：cookie、localStorage 和 sessionStorage。</p>
 <h2>cookie</h2>
@@ -2409,16 +2409,16 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Web Worker</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/browser/web-worker.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/browser/web-worker.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/browser/web-worker.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/browser/web-worker.html"/>
     <updated>2026-04-21T15:59:37.000Z</updated>
     <category term="HTML"/>
     <published>2022-08-02T00:00:00.000Z</published>
   </entry>
   <entry>
     <title type="text">Canvas vs SVG</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/html/canvas-vs-svg.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/html/canvas-vs-svg.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/canvas-vs-svg.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/canvas-vs-svg.html"/>
     <updated>2026-04-24T11:33:12.000Z</updated>
     <summary type="html"><![CDATA[<h2>核心区别</h2>
 <table>
@@ -2467,8 +2467,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">defer 和 async 的区别</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/html/defer-vs-async.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/html/defer-vs-async.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html"/>
     <updated>2026-04-24T11:33:12.000Z</updated>
     <summary type="html"><![CDATA[<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>
 <h2>对比</h2>
@@ -2518,8 +2518,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">iframe</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/html/iframe.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/html/iframe.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/iframe.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/iframe.html"/>
     <updated>2026-04-24T11:33:12.000Z</updated>
     <summary type="html"><![CDATA[<h2>优点</h2>
 <ul>
@@ -2566,8 +2566,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">img srcset 响应式图片</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/html/img-srcset.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/html/img-srcset.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/img-srcset.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/img-srcset.html"/>
     <updated>2026-04-24T11:33:12.000Z</updated>
     <summary type="html"><![CDATA[<h2>是什么</h2>
 <p><code>srcset</code> 让浏览器根据设备像素密度或视口宽度自动选择最合适的图片，避免在小屏上加载大图。</p>
@@ -2612,8 +2612,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">常用 meta 标签</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/html/meta-tags.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/html/meta-tags.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/meta-tags.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/meta-tags.html"/>
     <updated>2026-04-21T15:59:37.000Z</updated>
     <summary type="html"><![CDATA[<h2>字符编码</h2>
 <div class="language-html" data-ext="html" data-title="html"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span>
@@ -2655,8 +2655,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">src 和 href 的区别</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/html/src-vs-href.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/html/src-vs-href.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/src-vs-href.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/src-vs-href.html"/>
     <updated>2026-04-22T15:56:40.000Z</updated>
     <summary type="html"><![CDATA[<p><code>src</code> 和 <code>href</code> 是 HTML 中两个常见属性，含义不同，不可互换：</p>
 <table>
@@ -2692,8 +2692,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">六个月成长计划 · 2026</title>
-    <id>https://dribble-njr.github.io/blog/notes/roadmap-2026.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/roadmap-2026.html"/>
+    <id>https://zeevenn.github.io/notes/notes/roadmap-2026.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/roadmap-2026.html"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 <blockquote>
@@ -2744,8 +2744,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">AI</title>
-    <id>https://dribble-njr.github.io/blog/notes/ai/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/ai/"/>
+    <id>https://zeevenn.github.io/notes/notes/ai/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2755,8 +2755,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">架构设计</title>
-    <id>https://dribble-njr.github.io/blog/notes/architecture/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/architecture/"/>
+    <id>https://zeevenn.github.io/notes/notes/architecture/</id>
+    <link href="https://zeevenn.github.io/notes/notes/architecture/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2766,8 +2766,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">云服务</title>
-    <id>https://dribble-njr.github.io/blog/notes/cloud/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/cloud/"/>
+    <id>https://zeevenn.github.io/notes/notes/cloud/</id>
+    <link href="https://zeevenn.github.io/notes/notes/cloud/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2777,8 +2777,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">DevOps</title>
-    <id>https://dribble-njr.github.io/blog/notes/devops/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/devops/"/>
+    <id>https://zeevenn.github.io/notes/notes/devops/</id>
+    <link href="https://zeevenn.github.io/notes/notes/devops/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2788,8 +2788,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">性能优化</title>
-    <id>https://dribble-njr.github.io/blog/notes/performance/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/performance/"/>
+    <id>https://zeevenn.github.io/notes/notes/performance/</id>
+    <link href="https://zeevenn.github.io/notes/notes/performance/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2799,8 +2799,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">安全</title>
-    <id>https://dribble-njr.github.io/blog/notes/security/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/security/"/>
+    <id>https://zeevenn.github.io/notes/notes/security/</id>
+    <link href="https://zeevenn.github.io/notes/notes/security/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2810,8 +2810,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">开发工具</title>
-    <id>https://dribble-njr.github.io/blog/notes/tools/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/tools/"/>
+    <id>https://zeevenn.github.io/notes/notes/tools/</id>
+    <link href="https://zeevenn.github.io/notes/notes/tools/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2821,8 +2821,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">AI Agent</title>
-    <id>https://dribble-njr.github.io/blog/notes/ai/agents/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/ai/agents/"/>
+    <id>https://zeevenn.github.io/notes/notes/ai/agents/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/agents/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2832,8 +2832,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">模型微调</title>
-    <id>https://dribble-njr.github.io/blog/notes/ai/fine-tuning/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/ai/fine-tuning/"/>
+    <id>https://zeevenn.github.io/notes/notes/ai/fine-tuning/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/fine-tuning/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2843,8 +2843,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">LLM 基础</title>
-    <id>https://dribble-njr.github.io/blog/notes/ai/llm-fundamentals/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/ai/llm-fundamentals/"/>
+    <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2854,8 +2854,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">提示词工程</title>
-    <id>https://dribble-njr.github.io/blog/notes/ai/prompt-engineering/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/ai/prompt-engineering/"/>
+    <id>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/prompt-engineering/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2865,8 +2865,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">RAG 检索增强生成</title>
-    <id>https://dribble-njr.github.io/blog/notes/ai/rag/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/ai/rag/"/>
+    <id>https://zeevenn.github.io/notes/notes/ai/rag/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/rag/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2876,8 +2876,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">整洁架构</title>
-    <id>https://dribble-njr.github.io/blog/notes/architecture/clean-architecture/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/architecture/clean-architecture/"/>
+    <id>https://zeevenn.github.io/notes/notes/architecture/clean-architecture/</id>
+    <link href="https://zeevenn.github.io/notes/notes/architecture/clean-architecture/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2887,8 +2887,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">领域驱动设计</title>
-    <id>https://dribble-njr.github.io/blog/notes/architecture/ddd/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/architecture/ddd/"/>
+    <id>https://zeevenn.github.io/notes/notes/architecture/ddd/</id>
+    <link href="https://zeevenn.github.io/notes/notes/architecture/ddd/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2898,8 +2898,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">设计模式</title>
-    <id>https://dribble-njr.github.io/blog/notes/architecture/design-patterns/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/architecture/design-patterns/"/>
+    <id>https://zeevenn.github.io/notes/notes/architecture/design-patterns/</id>
+    <link href="https://zeevenn.github.io/notes/notes/architecture/design-patterns/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2909,8 +2909,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">事件驱动架构</title>
-    <id>https://dribble-njr.github.io/blog/notes/architecture/event-driven/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/architecture/event-driven/"/>
+    <id>https://zeevenn.github.io/notes/notes/architecture/event-driven/</id>
+    <link href="https://zeevenn.github.io/notes/notes/architecture/event-driven/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2920,8 +2920,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">微服务架构</title>
-    <id>https://dribble-njr.github.io/blog/notes/architecture/microservices/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/architecture/microservices/"/>
+    <id>https://zeevenn.github.io/notes/notes/architecture/microservices/</id>
+    <link href="https://zeevenn.github.io/notes/notes/architecture/microservices/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2931,8 +2931,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">API 设计</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/api-design/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/api-design/"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/api-design/</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/api-design/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2942,8 +2942,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">认证与鉴权</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/authentication/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/authentication/"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/authentication/</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/authentication/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2953,8 +2953,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Go</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/go/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/go/"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/go/</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/go/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2964,8 +2964,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">消息队列</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/message-queue/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/message-queue/"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/message-queue/</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/message-queue/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2975,8 +2975,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Python</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/python/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/python/"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/python/</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/python/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2986,8 +2986,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Redis</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/redis/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/redis/"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/redis/</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/redis/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -2997,8 +2997,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">AWS</title>
-    <id>https://dribble-njr.github.io/blog/notes/cloud/aws/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/cloud/aws/"/>
+    <id>https://zeevenn.github.io/notes/notes/cloud/aws/</id>
+    <link href="https://zeevenn.github.io/notes/notes/cloud/aws/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3008,8 +3008,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">CDN</title>
-    <id>https://dribble-njr.github.io/blog/notes/cloud/cdn/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/cloud/cdn/"/>
+    <id>https://zeevenn.github.io/notes/notes/cloud/cdn/</id>
+    <link href="https://zeevenn.github.io/notes/notes/cloud/cdn/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3019,8 +3019,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">云计算概念</title>
-    <id>https://dribble-njr.github.io/blog/notes/cloud/concepts/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/cloud/concepts/"/>
+    <id>https://zeevenn.github.io/notes/notes/cloud/concepts/</id>
+    <link href="https://zeevenn.github.io/notes/notes/cloud/concepts/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3030,8 +3030,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">编译原理</title>
-    <id>https://dribble-njr.github.io/blog/notes/computer-science/compilation/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/computer-science/compilation/"/>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/compilation/</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/compilation/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3041,8 +3041,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">并发编程</title>
-    <id>https://dribble-njr.github.io/blog/notes/computer-science/concurrency/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/computer-science/concurrency/"/>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/concurrency/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3052,8 +3052,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">CI/CD</title>
-    <id>https://dribble-njr.github.io/blog/notes/devops/ci-cd/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/devops/ci-cd/"/>
+    <id>https://zeevenn.github.io/notes/notes/devops/ci-cd/</id>
+    <link href="https://zeevenn.github.io/notes/notes/devops/ci-cd/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3063,8 +3063,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Docker</title>
-    <id>https://dribble-njr.github.io/blog/notes/devops/docker/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/devops/docker/"/>
+    <id>https://zeevenn.github.io/notes/notes/devops/docker/</id>
+    <link href="https://zeevenn.github.io/notes/notes/devops/docker/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3074,8 +3074,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Kubernetes</title>
-    <id>https://dribble-njr.github.io/blog/notes/devops/kubernetes/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/devops/kubernetes/"/>
+    <id>https://zeevenn.github.io/notes/notes/devops/kubernetes/</id>
+    <link href="https://zeevenn.github.io/notes/notes/devops/kubernetes/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3085,8 +3085,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">监控</title>
-    <id>https://dribble-njr.github.io/blog/notes/devops/monitoring/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/devops/monitoring/"/>
+    <id>https://zeevenn.github.io/notes/notes/devops/monitoring/</id>
+    <link href="https://zeevenn.github.io/notes/notes/devops/monitoring/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3096,8 +3096,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Nginx</title>
-    <id>https://dribble-njr.github.io/blog/notes/devops/nginx/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/devops/nginx/"/>
+    <id>https://zeevenn.github.io/notes/notes/devops/nginx/</id>
+    <link href="https://zeevenn.github.io/notes/notes/devops/nginx/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3107,8 +3107,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">动画</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/animation/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/animation/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/animation/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/animation/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3118,8 +3118,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">移动端</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/mobile/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/mobile/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/mobile/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/mobile/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3129,8 +3129,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">前端性能优化</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/performance/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/performance/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/performance/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/performance/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3140,8 +3140,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">前端安全</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/security/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/security/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/security/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/security/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3151,8 +3151,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">状态管理</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/state-management/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/state-management/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/state-management/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/state-management/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3162,8 +3162,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">前端测试</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/testing/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/testing/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/testing/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/testing/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3173,8 +3173,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">TypeScript</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/typescript/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/typescript/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/typescript/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/typescript/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3184,8 +3184,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">后端性能</title>
-    <id>https://dribble-njr.github.io/blog/notes/performance/backend/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/performance/backend/"/>
+    <id>https://zeevenn.github.io/notes/notes/performance/backend/</id>
+    <link href="https://zeevenn.github.io/notes/notes/performance/backend/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3195,8 +3195,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">前端性能</title>
-    <id>https://dribble-njr.github.io/blog/notes/performance/frontend/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/performance/frontend/"/>
+    <id>https://zeevenn.github.io/notes/notes/performance/frontend/</id>
+    <link href="https://zeevenn.github.io/notes/notes/performance/frontend/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3206,8 +3206,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">网络性能</title>
-    <id>https://dribble-njr.github.io/blog/notes/performance/network/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/performance/network/"/>
+    <id>https://zeevenn.github.io/notes/notes/performance/network/</id>
+    <link href="https://zeevenn.github.io/notes/notes/performance/network/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3217,8 +3217,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">性能分析</title>
-    <id>https://dribble-njr.github.io/blog/notes/performance/profiling/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/performance/profiling/"/>
+    <id>https://zeevenn.github.io/notes/notes/performance/profiling/</id>
+    <link href="https://zeevenn.github.io/notes/notes/performance/profiling/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3228,8 +3228,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">认证与授权</title>
-    <id>https://dribble-njr.github.io/blog/notes/security/auth/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/security/auth/"/>
+    <id>https://zeevenn.github.io/notes/notes/security/auth/</id>
+    <link href="https://zeevenn.github.io/notes/notes/security/auth/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3239,8 +3239,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">密码学</title>
-    <id>https://dribble-njr.github.io/blog/notes/security/cryptography/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/security/cryptography/"/>
+    <id>https://zeevenn.github.io/notes/notes/security/cryptography/</id>
+    <link href="https://zeevenn.github.io/notes/notes/security/cryptography/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3250,8 +3250,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">网络安全</title>
-    <id>https://dribble-njr.github.io/blog/notes/security/network-security/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/security/network-security/"/>
+    <id>https://zeevenn.github.io/notes/notes/security/network-security/</id>
+    <link href="https://zeevenn.github.io/notes/notes/security/network-security/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3261,8 +3261,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Web 安全</title>
-    <id>https://dribble-njr.github.io/blog/notes/security/web-security/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/security/web-security/"/>
+    <id>https://zeevenn.github.io/notes/notes/security/web-security/</id>
+    <link href="https://zeevenn.github.io/notes/notes/security/web-security/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3272,8 +3272,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">系统设计模式</title>
-    <id>https://dribble-njr.github.io/blog/notes/system-design/patterns/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/system-design/patterns/"/>
+    <id>https://zeevenn.github.io/notes/notes/system-design/patterns/</id>
+    <link href="https://zeevenn.github.io/notes/notes/system-design/patterns/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3283,8 +3283,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">AI 开发工具</title>
-    <id>https://dribble-njr.github.io/blog/notes/tools/ai-tools/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/tools/ai-tools/"/>
+    <id>https://zeevenn.github.io/notes/notes/tools/ai-tools/</id>
+    <link href="https://zeevenn.github.io/notes/notes/tools/ai-tools/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3294,8 +3294,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Git 进阶</title>
-    <id>https://dribble-njr.github.io/blog/notes/tools/git/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/tools/git/"/>
+    <id>https://zeevenn.github.io/notes/notes/tools/git/</id>
+    <link href="https://zeevenn.github.io/notes/notes/tools/git/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3305,8 +3305,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">终端工具</title>
-    <id>https://dribble-njr.github.io/blog/notes/tools/terminal/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/tools/terminal/"/>
+    <id>https://zeevenn.github.io/notes/notes/tools/terminal/</id>
+    <link href="https://zeevenn.github.io/notes/notes/tools/terminal/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3316,8 +3316,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">VS Code</title>
-    <id>https://dribble-njr.github.io/blog/notes/tools/vscode/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/tools/vscode/"/>
+    <id>https://zeevenn.github.io/notes/notes/tools/vscode/</id>
+    <link href="https://zeevenn.github.io/notes/notes/tools/vscode/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3327,8 +3327,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">TypeScript 配置文件</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/engineering/basic/08-tsconfig.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/engineering/basic/08-tsconfig.html"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/engineering/basic/08-tsconfig.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/engineering/basic/08-tsconfig.html"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[<h2>基础结构</h2>
 <div class="language-json" data-ext="json" data-title="json"><pre class="language-json"><code><span class="token punctuation">{</span>
@@ -3495,8 +3495,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">高级类型</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/typescript/advanced-types/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/typescript/advanced-types/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/typescript/advanced-types/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/typescript/advanced-types/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3506,8 +3506,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">最佳实践</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/typescript/best-practices/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/typescript/best-practices/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/typescript/best-practices/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/typescript/best-practices/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3517,8 +3517,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">声明文件</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/typescript/declaration-files/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/typescript/declaration-files/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/typescript/declaration-files/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/typescript/declaration-files/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3528,8 +3528,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">类型系统</title>
-    <id>https://dribble-njr.github.io/blog/notes/frontend/typescript/type-system/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/frontend/typescript/type-system/"/>
+    <id>https://zeevenn.github.io/notes/notes/frontend/typescript/type-system/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/typescript/type-system/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3539,8 +3539,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Algorithm</title>
-    <id>https://dribble-njr.github.io/blog/notes/algorithms/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/algorithms/"/>
+    <id>https://zeevenn.github.io/notes/notes/algorithms/</id>
+    <link href="https://zeevenn.github.io/notes/notes/algorithms/"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<p>使用 <code>TypeScript</code>，按照数据结构和算法的分类，整理了一些常见的算法题。</p>
 <ul>
@@ -3556,8 +3556,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Project</title>
-    <id>https://dribble-njr.github.io/blog/notes/projects/</id>
-    <link href="https://dribble-njr.github.io/blog/notes/projects/"/>
+    <id>https://zeevenn.github.io/notes/notes/projects/</id>
+    <link href="https://zeevenn.github.io/notes/notes/projects/"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<h2>个人开发</h2>
 <ul>
@@ -3583,8 +3583,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">数组</title>
-    <id>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/01-array.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/algorithms/data-structures/01-array.html"/>
+    <id>https://zeevenn.github.io/notes/notes/algorithms/data-structures/01-array.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/algorithms/data-structures/01-array.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<p><code>JavaScript</code> 中数组是一种特殊的对象，用于存储多个值。数组的每个元素都有一个数字索引，用于访问数组中的元素。</p>
 <p>常见初始化数组的方式：</p>
@@ -4010,8 +4010,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">二叉树</title>
-    <id>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/02-binary-tree.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/algorithms/data-structures/02-binary-tree.html"/>
+    <id>https://zeevenn.github.io/notes/notes/algorithms/data-structures/02-binary-tree.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/algorithms/data-structures/02-binary-tree.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<p>通常二叉树有两种做法，分别对应着回溯算法和动态规划：</p>
 <ol>
@@ -4611,8 +4611,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">二叉搜索树</title>
-    <id>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/03-binary-search-tree.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/algorithms/data-structures/03-binary-search-tree.html"/>
+    <id>https://zeevenn.github.io/notes/notes/algorithms/data-structures/03-binary-search-tree.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/algorithms/data-structures/03-binary-search-tree.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<h2>特性</h2>
 <p>二叉搜索树(BST)特性：</p>
@@ -4946,8 +4946,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">链表</title>
-    <id>https://dribble-njr.github.io/blog/notes/algorithms/data-structures/04-linked-list.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/algorithms/data-structures/04-linked-list.html"/>
+    <id>https://zeevenn.github.io/notes/notes/algorithms/data-structures/04-linked-list.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/algorithms/data-structures/04-linked-list.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<h2><a class="header-anchor" href="#反转链表"><span></span></a><a href="https://leetcode.cn/problems/reverse-linked-list/" target="_blank" rel="noopener noreferrer">反转链表</a></h2>
 <div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">function</span> <span class="token function">reverseList</span><span class="token punctuation">(</span>head<span class="token operator">:</span> ListNode <span class="token operator">|</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token operator">:</span> ListNode <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token punctuation">{</span>
@@ -5019,8 +5019,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">动态规划</title>
-    <id>https://dribble-njr.github.io/blog/notes/algorithms/patterns/01-dynamic-programming.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/algorithms/patterns/01-dynamic-programming.html"/>
+    <id>https://zeevenn.github.io/notes/notes/algorithms/patterns/01-dynamic-programming.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/algorithms/patterns/01-dynamic-programming.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<p>动态规划的一般形式是<strong>求最值</strong>，核心问题就是<strong>穷举</strong>。将所有可行的子问题答案穷举出来（二叉树的分解问题形式），然后在其中寻找最值。</p>
 <p>动态规划需要判断问题是否具备<strong>最优子问题</strong>，还需要写出正确的<strong>状态转移方程</strong>，另外，由于动态规划存在<strong>重叠子问题</strong>，需要优化穷举过程（备忘录或 <code>dp</code> 数组），否则会超时。</p>
@@ -5594,8 +5594,8 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
   </entry>
   <entry>
     <title type="text">Maven</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/java/01-maven.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/java/01-maven.html"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/java/01-maven.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/java/01-maven.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<h2>什么是 Maven</h2>
 <p>Maven 是一个项目管理和构建工具，主要用于 Java 项目。它通过 POM（Project Object Model）文件来管理项目的依赖、编译、测试和打包等任务。Maven 的核心功能包括：</p>
@@ -5679,8 +5679,8 @@ A -<span class="token operator">&gt;</span> C -<span class="token operator">&gt;
   </entry>
   <entry>
     <title type="text">服务器设置 ssh 密钥登录</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/linux/01-set-the-ssh.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/linux/01-set-the-ssh.html"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/linux/01-set-the-ssh.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/linux/01-set-the-ssh.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<div class="hint-container tip">
 <p class="hint-container-title">提示</p>
@@ -5738,8 +5738,8 @@ PubkeyAuthentication <span class="token function">yes</span>
   </entry>
   <entry>
     <title type="text">搭建 git 私服</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/linux/02-build-git-server.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/linux/02-build-git-server.html"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/linux/02-build-git-server.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/linux/02-build-git-server.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<div class="hint-container tip">
 <p class="hint-container-title">提示</p>
@@ -5864,8 +5864,8 @@ Host key verification failed.
   </entry>
   <entry>
     <title type="text">配置宝塔面板</title>
-    <id>https://dribble-njr.github.io/blog/notes/backend/linux/03-configure-bt.html</id>
-    <link href="https://dribble-njr.github.io/blog/notes/backend/linux/03-configure-bt.html"/>
+    <id>https://zeevenn.github.io/notes/notes/backend/linux/03-configure-bt.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/linux/03-configure-bt.html"/>
     <updated>2026-04-20T16:21:10.000Z</updated>
     <summary type="html"><![CDATA[<div class="hint-container tip">
 <p class="hint-container-title">提示</p>
