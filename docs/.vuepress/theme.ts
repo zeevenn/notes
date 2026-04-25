@@ -4,11 +4,11 @@ import { Sidebar } from './sidebar.js'
 
 export default hopeTheme(
   {
-    hostname: 'https://dribble-njr.github.io/blog',
+    hostname: 'https://zeevenn.github.io/notes',
 
     author: {
       name: 'njr',
-      url: 'https://github.com/dribble-njr/blog',
+      url: 'https://github.com/zeevenn',
       email: 'wzw15292257101@163.com'
     },
 
@@ -31,7 +31,7 @@ export default hopeTheme(
     iconAssets: '//at.alicdn.com/t/c/font_3926422_vp9y7mmyjy9.css',
     iconPrefix: 'iconfont icon-',
 
-    repo: 'https://github.com/dribble-njr/blog',
+    repo: 'https://github.com/zeevenn/notes',
     docsBranch: 'master',
     docsDir: 'docs',
 
@@ -88,7 +88,7 @@ export default hopeTheme(
       comment: {
         // You should generate and use your own comment service
         provider: 'Giscus',
-        repo: 'dribble-njr/blog',
+        repo: 'zeevenn/notes',
         repoId: 'R_kgDOGc6nbw',
         category: 'Announcements',
         categoryId: 'DIC_kwDOGc6nb84CcXd-',
