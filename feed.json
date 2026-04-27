@@ -7,6 +7,19 @@
   "favicon": "https://zeevenn.github.io/notes/notes/favicon.ico",
   "items": [
     {
+      "title": "defer、async 与 type=\"module\"",
+      "url": "https://zeevenn.github.io/notes/notes/frontend/html/defer-async-module.html",
+      "id": "https://zeevenn.github.io/notes/notes/frontend/html/defer-async-module.html",
+      "summary": "普通 <script src> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。defer 和 async 都允许脚本异步下载，区别在于何时执行。 对比 时序 使用场景 defer — 依赖 DOM 或需要保证执行顺序的脚本（绝大多数业务脚本）： async — 完全独立、不依赖 DOM 和其他脚本的脚本（统计、广告）： ...",
+      "content_html": "<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>\n<h2>对比</h2>\n<p>|          | 普通 <code>&lt;script&gt;</code>    | <code>async</code>                    | <code>defer</code>                                |<br>\n|</p>\n",
+      "date_published": "2022-07-25T00:00:00.000Z",
+      "date_modified": "2026-04-27T11:38:34.000Z",
+      "authors": [],
+      "tags": [
+        "HTML"
+      ]
+    },
+    {
       "title": "选择器",
       "url": "https://zeevenn.github.io/notes/notes/frontend/css/01-selectors.html",
       "id": "https://zeevenn.github.io/notes/notes/frontend/css/01-selectors.html",
@@ -339,19 +352,6 @@
       ]
     },
     {
-      "title": "defer 和 async 的区别",
-      "url": "https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html",
-      "id": "https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html",
-      "summary": "普通 <script src> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。defer 和 async 都允许脚本异步下载，区别在于何时执行。 对比 时序 使用场景 defer — 依赖 DOM 或需要保证执行顺序的脚本（绝大多数业务脚本）： async — 完全独立、不依赖 DOM 和其他脚本的脚本（统计、广告）： ...",
-      "content_html": "<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>\n<h2>对比</h2>\n<p>| | 普通 <code>&lt;script&gt;</code> | <code>async</code> | <code>defer</code> |<br>\n|</p>\n",
-      "date_published": "2022-07-25T00:00:00.000Z",
-      "date_modified": "2026-04-24T11:33:12.000Z",
-      "authors": [],
-      "tags": [
-        "HTML"
-      ]
-    },
-    {
       "title": "iframe",
       "url": "https://zeevenn.github.io/notes/notes/frontend/html/iframe.html",
       "id": "https://zeevenn.github.io/notes/notes/frontend/html/iframe.html",
@@ -671,28 +671,6 @@
       "tags": []
     },
     {
-      "title": "编译原理",
-      "url": "https://zeevenn.github.io/notes/notes/computer-science/compilation/",
-      "id": "https://zeevenn.github.io/notes/notes/computer-science/compilation/",
-      "summary": "编译原理 ",
-      "content_html": "\n",
-      "date_published": "2026-04-21T11:31:25.000Z",
-      "date_modified": "2026-04-21T11:31:25.000Z",
-      "authors": [],
-      "tags": []
-    },
-    {
-      "title": "并发编程",
-      "url": "https://zeevenn.github.io/notes/notes/computer-science/concurrency/",
-      "id": "https://zeevenn.github.io/notes/notes/computer-science/concurrency/",
-      "summary": "并发编程 ",
-      "content_html": "\n",
-      "date_published": "2026-04-21T11:31:25.000Z",
-      "date_modified": "2026-04-21T11:31:25.000Z",
-      "authors": [],
-      "tags": []
-    },
-    {
       "title": "AWS",
       "url": "https://zeevenn.github.io/notes/notes/cloud/aws/",
       "id": "https://zeevenn.github.io/notes/notes/cloud/aws/",
@@ -719,6 +697,28 @@
       "url": "https://zeevenn.github.io/notes/notes/cloud/concepts/",
       "id": "https://zeevenn.github.io/notes/notes/cloud/concepts/",
       "summary": "云计算概念 ",
+      "content_html": "\n",
+      "date_published": "2026-04-21T11:31:25.000Z",
+      "date_modified": "2026-04-21T11:31:25.000Z",
+      "authors": [],
+      "tags": []
+    },
+    {
+      "title": "编译原理",
+      "url": "https://zeevenn.github.io/notes/notes/computer-science/compilation/",
+      "id": "https://zeevenn.github.io/notes/notes/computer-science/compilation/",
+      "summary": "编译原理 ",
+      "content_html": "\n",
+      "date_published": "2026-04-21T11:31:25.000Z",
+      "date_modified": "2026-04-21T11:31:25.000Z",
+      "authors": [],
+      "tags": []
+    },
+    {
+      "title": "并发编程",
+      "url": "https://zeevenn.github.io/notes/notes/computer-science/concurrency/",
+      "id": "https://zeevenn.github.io/notes/notes/computer-science/concurrency/",
+      "summary": "并发编程 ",
       "content_html": "\n",
       "date_published": "2026-04-21T11:31:25.000Z",
       "date_modified": "2026-04-21T11:31:25.000Z",

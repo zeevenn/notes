@@ -6,18 +6,32 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Sat, 25 Apr 2026 09:44:51 GMT</pubDate>
-    <lastBuildDate>Sat, 25 Apr 2026 09:44:51 GMT</lastBuildDate>
+    <pubDate>Mon, 27 Apr 2026 11:40:23 GMT</pubDate>
+    <lastBuildDate>Mon, 27 Apr 2026 11:40:23 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+    <category>HTML</category>
     <category>CSS</category>
     <category>Frontend</category>
-    <category>HTML</category>
     <category>工程化</category>
     <category>algorithm</category>
     <category>LeetCode</category>
     <category>node</category>
     <category>linux</category>
+    <item>
+      <title>defer、async 与 type=&amp;quot;module&amp;quot;</title>
+      <link>https://zeevenn.github.io/notes/notes/frontend/html/defer-async-module.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/html/defer-async-module.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">defer、async 与 type=&amp;quot;module&amp;quot;</source>
+      <description>普通 &amp;lt;script src&amp;gt; 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。defer 和 async 都允许脚本异步下载，区别在于何时执行。 对比 时序 使用场景 defer — 依赖 DOM 或需要保证执行顺序的脚本（绝大多数业务脚本）： async — 完全独立、不依赖 DOM 和其他脚本的脚本（统计、广告）： ...</description>
+      <category>HTML</category>
+      <pubDate>Mon, 25 Jul 2022 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>
+<h2>对比</h2>
+<p>|          | 普通 <code>&lt;script&gt;</code>    | <code>async</code>                    | <code>defer</code>                                |<br>
+|</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>选择器</title>
       <link>https://zeevenn.github.io/notes/notes/frontend/css/01-selectors.html</link>
@@ -2177,20 +2191,6 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
 ]]></content:encoded>
     </item>
     <item>
-      <title>defer 和 async 的区别</title>
-      <link>https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">defer 和 async 的区别</source>
-      <description>普通 &amp;lt;script src&amp;gt; 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。defer 和 async 都允许脚本异步下载，区别在于何时执行。 对比 时序 使用场景 defer — 依赖 DOM 或需要保证执行顺序的脚本（绝大多数业务脚本）： async — 完全独立、不依赖 DOM 和其他脚本的脚本（统计、广告）： ...</description>
-      <category>HTML</category>
-      <pubDate>Mon, 25 Jul 2022 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>
-<h2>对比</h2>
-<p>| | 普通 <code>&lt;script&gt;</code> | <code>async</code> | <code>defer</code> |<br>
-|</p>
-]]></content:encoded>
-    </item>
-    <item>
       <title>iframe</title>
       <link>https://zeevenn.github.io/notes/notes/frontend/html/iframe.html</link>
       <guid>https://zeevenn.github.io/notes/notes/frontend/html/iframe.html</guid>
@@ -2566,26 +2566,6 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
 ]]></content:encoded>
     </item>
     <item>
-      <title>编译原理</title>
-      <link>https://zeevenn.github.io/notes/notes/computer-science/compilation/</link>
-      <guid>https://zeevenn.github.io/notes/notes/computer-science/compilation/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">编译原理</source>
-      <description>编译原理 </description>
-      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    <item>
-      <title>并发编程</title>
-      <link>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</link>
-      <guid>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">并发编程</source>
-      <description>并发编程 </description>
-      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    <item>
       <title>AWS</title>
       <link>https://zeevenn.github.io/notes/notes/cloud/aws/</link>
       <guid>https://zeevenn.github.io/notes/notes/cloud/aws/</guid>
@@ -2611,6 +2591,26 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
       <guid>https://zeevenn.github.io/notes/notes/cloud/concepts/</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">云计算概念</source>
       <description>云计算概念 </description>
+      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
+      <content:encoded><![CDATA[
+]]></content:encoded>
+    </item>
+    <item>
+      <title>编译原理</title>
+      <link>https://zeevenn.github.io/notes/notes/computer-science/compilation/</link>
+      <guid>https://zeevenn.github.io/notes/notes/computer-science/compilation/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">编译原理</source>
+      <description>编译原理 </description>
+      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
+      <content:encoded><![CDATA[
+]]></content:encoded>
+    </item>
+    <item>
+      <title>并发编程</title>
+      <link>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</link>
+      <guid>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">并发编程</source>
+      <description>并发编程 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
 ]]></content:encoded>

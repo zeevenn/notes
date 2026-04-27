@@ -4,18 +4,69 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-04-25T09:44:51.874Z</updated>
+  <updated>2026-04-27T11:40:23.264Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
+  <category term="HTML"/>
   <category term="CSS"/>
   <category term="Frontend"/>
-  <category term="HTML"/>
   <category term="工程化"/>
   <category term="algorithm"/>
   <category term="LeetCode"/>
   <category term="node"/>
   <category term="linux"/>
+  <entry>
+    <title type="text">defer、async 与 type=&amp;quot;module&amp;quot;</title>
+    <id>https://zeevenn.github.io/notes/notes/frontend/html/defer-async-module.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/html/defer-async-module.html"/>
+    <updated>2026-04-27T11:38:34.000Z</updated>
+    <summary type="html"><![CDATA[<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>
+<h2>对比</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>普通 <code>&lt;script&gt;</code></th>
+<th><code>async</code></th>
+<th><code>defer</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>下载时机</td>
+<td>阻塞解析，立即下载</td>
+<td>并行下载</td>
+<td>并行下载</td>
+</tr>
+<tr>
+<td>执行时机</td>
+<td>下载完立即执行</td>
+<td>下载完立即执行</td>
+<td>HTML 解析完成后，<code>DOMContentLoaded</code> 前</td>
+</tr>
+<tr>
+<td>执行顺序</td>
+<td>文档顺序</td>
+<td>不保证（谁先下完谁先执行）</td>
+<td>保证文档顺序</td>
+</tr>
+<tr>
+<td>阻塞解析</td>
+<td>是</td>
+<td>是（执行时阻塞）</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>]]></summary>
+    <content type="html"><![CDATA[<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>
+<h2>对比</h2>
+<p>|          | 普通 <code>&lt;script&gt;</code>    | <code>async</code>                    | <code>defer</code>                                |<br>
+|</p>
+]]></content>
+    <category term="HTML"/>
+    <published>2022-07-25T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">选择器</title>
     <id>https://zeevenn.github.io/notes/notes/frontend/css/01-selectors.html</id>
@@ -2466,57 +2517,6 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     <published>2026-04-21T00:00:00.000Z</published>
   </entry>
   <entry>
-    <title type="text">defer 和 async 的区别</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/html/defer-vs-async.html"/>
-    <updated>2026-04-24T11:33:12.000Z</updated>
-    <summary type="html"><![CDATA[<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>
-<h2>对比</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>普通 <code>&lt;script&gt;</code></th>
-<th><code>async</code></th>
-<th><code>defer</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>下载时机</td>
-<td>阻塞解析，立即下载</td>
-<td>并行下载</td>
-<td>并行下载</td>
-</tr>
-<tr>
-<td>执行时机</td>
-<td>下载完立即执行</td>
-<td>下载完立即执行</td>
-<td>HTML 解析完成后，<code>DOMContentLoaded</code> 前</td>
-</tr>
-<tr>
-<td>执行顺序</td>
-<td>文档顺序</td>
-<td>不保证（谁先下完谁先执行）</td>
-<td>保证文档顺序</td>
-</tr>
-<tr>
-<td>阻塞解析</td>
-<td>是</td>
-<td>是（执行时阻塞）</td>
-<td>否</td>
-</tr>
-</tbody>
-</table>]]></summary>
-    <content type="html"><![CDATA[<p>普通 <code>&lt;script src&gt;</code> 会阻塞 HTML 解析器：浏览器遇到标签后暂停解析，等脚本下载并执行完才继续。<code>defer</code> 和 <code>async</code> 都允许脚本异步下载，区别在于<strong>何时执行</strong>。</p>
-<h2>对比</h2>
-<p>| | 普通 <code>&lt;script&gt;</code> | <code>async</code> | <code>defer</code> |<br>
-|</p>
-]]></content>
-    <category term="HTML"/>
-    <published>2022-07-25T00:00:00.000Z</published>
-  </entry>
-  <entry>
     <title type="text">iframe</title>
     <id>https://zeevenn.github.io/notes/notes/frontend/html/iframe.html</id>
     <link href="https://zeevenn.github.io/notes/notes/frontend/html/iframe.html"/>
@@ -2996,28 +2996,6 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
-    <title type="text">编译原理</title>
-    <id>https://zeevenn.github.io/notes/notes/computer-science/compilation/</id>
-    <link href="https://zeevenn.github.io/notes/notes/computer-science/compilation/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">并发编程</title>
-    <id>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</id>
-    <link href="https://zeevenn.github.io/notes/notes/computer-science/concurrency/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
     <title type="text">AWS</title>
     <id>https://zeevenn.github.io/notes/notes/cloud/aws/</id>
     <link href="https://zeevenn.github.io/notes/notes/cloud/aws/"/>
@@ -3043,6 +3021,28 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     <title type="text">云计算概念</title>
     <id>https://zeevenn.github.io/notes/notes/cloud/concepts/</id>
     <link href="https://zeevenn.github.io/notes/notes/cloud/concepts/"/>
+    <updated>2026-04-21T11:31:25.000Z</updated>
+    <summary type="html"><![CDATA[
+]]></summary>
+    <content type="html"><![CDATA[
+]]></content>
+    <published>2026-04-21T11:31:25.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">编译原理</title>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/compilation/</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/compilation/"/>
+    <updated>2026-04-21T11:31:25.000Z</updated>
+    <summary type="html"><![CDATA[
+]]></summary>
+    <content type="html"><![CDATA[
+]]></content>
+    <published>2026-04-21T11:31:25.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">并发编程</title>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/concurrency/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
