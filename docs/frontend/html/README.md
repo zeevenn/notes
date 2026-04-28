@@ -8,7 +8,7 @@ star: true
 ## 资源加载
 
 - [src 与 href 的区别](src-vs-href.md)
-- [defer 与 async 的区别](defer-vs-async.md)
+- [defer 与 async 的区别](defer-async-module.md)
 - [preload / prefetch / preconnect](preload-prefetch-preconnect.md)
 - [img srcset 响应式图片](img-srcset.md)
 - [字体加载与 Font Loading API](font-loading.md)

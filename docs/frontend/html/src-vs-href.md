@@ -28,7 +28,7 @@ tag:
 浏览器解析到上面的标签后，会暂停 HTML 的继续解析，待 `script.js` 下载并执行完成后才恢复。其行为等价于将脚本内容内联到 `<script>` 标签中。
 
 > [!TIP]
-> 这就是为什么通常建议将 `<script>` 标签放在 `<body>` 末尾，或使用 [`defer` / `async`](./defer-vs-async.md) 属性来避免阻塞。
+> 这就是为什么通常建议将 `<script>` 标签放在 `<body>` 末尾，或使用 [`defer` / `async` / `module`](./defer-async-module.md) 属性来避免阻塞。
 
 同样使用 `src` 的标签还有：
 
