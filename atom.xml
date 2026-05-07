@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-04-27T11:40:23.264Z</updated>
+  <updated>2026-05-07T11:23:49.583Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -2657,7 +2657,7 @@ sessionStorage<span class="token punctuation">.</span><span class="token functio
     <title type="text">src 和 href 的区别</title>
     <id>https://zeevenn.github.io/notes/notes/frontend/html/src-vs-href.html</id>
     <link href="https://zeevenn.github.io/notes/notes/frontend/html/src-vs-href.html"/>
-    <updated>2026-04-22T15:56:40.000Z</updated>
+    <updated>2026-04-28T02:33:56.000Z</updated>
     <summary type="html"><![CDATA[<p><code>src</code> 和 <code>href</code> 是 HTML 中两个常见属性，含义不同，不可互换：</p>
 <table>
 <thead>

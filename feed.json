@@ -400,7 +400,7 @@
       "summary": "src 和 href 是 HTML 中两个常见属性，含义不同，不可互换： src src 属性指向的资源会被嵌入到当前元素所在位置，浏览器遇到它时会 暂停页面解析，直到资源获取、解析并执行完毕。 浏览器解析到上面的标签后，会暂停 HTML 的继续解析，待 script.js 下载并执行完成后才恢复。其行为等价于将脚本内容内联到 <script> 标签中...",
       "content_html": "<p><code>src</code> 和 <code>href</code> 是 HTML 中两个常见属性，含义不同，不可互换：</p>\n<p>| 属性   | 全称                | 用途                       | 对页面解析的影响             |<br>\n|</p>\n",
       "date_published": "2022-04-28T00:00:00.000Z",
-      "date_modified": "2026-04-22T15:56:40.000Z",
+      "date_modified": "2026-04-28T02:33:56.000Z",
       "authors": [],
       "tags": [
         "HTML"
