@@ -35,11 +35,21 @@ star: true
 - [过渡](16-transitions.md)
 - [变换](17-transforms.md)
 - [动画](18-animations.md)
+- [层叠上下文](19-stacking-context.md)
 
 ### 响应式布局
 
 - [响应式介绍](13-responsive-intro.md)
 - [响应式设计](14-responsive-techniques.md)
+
+### 现代 CSS
+
+- [现代 CSS 新特性](20-modern-css.md)
+
+### 性能
+
+- [will-change 与合成层](21-will-change-and-compositing.md)
+- [CSS Containment 与 content-visibility](22-containment.md)
 
 ## 学习资料
 

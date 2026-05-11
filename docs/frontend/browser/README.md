@@ -38,3 +38,6 @@ date: 2024-04-15
 - [内存管理](./03-memory-management.md)
 - [跨域](./04-cross-domain.md)
 - [输入 URL 发生了什么](./05-what-happens-after-entering-the-URL.md)
+- [浏览器存储](./web-storage.md)
+- [Web Worker](./web-worker.md)
+- [WebAssembly](./webassembly.md)
