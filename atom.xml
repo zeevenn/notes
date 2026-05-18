@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-05-11T11:34:45.650Z</updated>
+  <updated>2026-05-18T12:35:04.731Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -3152,10 +3152,46 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <title type="text">提示词工程</title>
     <id>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</id>
     <link href="https://zeevenn.github.io/notes/notes/ai/prompt-engineering/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
+    <updated>2026-05-18T12:33:17.000Z</updated>
     <summary type="html"><![CDATA[
-]]></summary>
+<h2>学习资源</h2>
+<h3>官方文档</h3>
+<table>
+<thead>
+<tr>
+<th>来源</th>
+<th>链接</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anthropic</td>
+<td><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/claude-prompting-best-practices" target="_blank" rel="noopener noreferrer">Prompting Best Practices</a></td>
+<td>业界公认最系统的单篇指南，覆盖基础到 Agent 设计</td>
+</tr>
+<tr>
+<td>Anthropic</td>
+<td><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener noreferrer">Building Effective Agents</a></td>
+<td>Agent 设计模式：prompt chaining、routing、parallelization</td>
+</tr>
+<tr>
+<td>OpenAI</td>
+<td><a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" rel="noopener noreferrer">Prompt Engineering Guide</a></td>
+<td>实用技巧导向，配合 Cookbook 有大量代码示例</td>
+</tr>
+<tr>
+<td>Google</td>
+<td><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener noreferrer">Gemini Prompting Strategies</a></td>
+<td>覆盖多模态、参数调优</td>
+</tr>
+</tbody>
+</table>]]></summary>
     <content type="html"><![CDATA[
+<h2>学习资源</h2>
+<h3>官方文档</h3>
+<p>| 来源      | 链接                                                                                                                                | 特点                                                      |<br>
+|</p>
 ]]></content>
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>

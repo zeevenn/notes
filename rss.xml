@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Mon, 11 May 2026 11:34:45 GMT</pubDate>
-    <lastBuildDate>Mon, 11 May 2026 11:34:45 GMT</lastBuildDate>
+    <pubDate>Mon, 18 May 2026 12:35:04 GMT</pubDate>
+    <lastBuildDate>Mon, 18 May 2026 12:35:04 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>浏览器</category>
@@ -2626,9 +2626,13 @@ worker<span class="token punctuation">.</span><span class="token function">postM
       <link>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">提示词工程</source>
-      <description>提示词工程 </description>
+      <description>提示词工程 学习资源 官方文档 社区资源 课程 ChatGPT Prompt Engineering for Developers — DeepLearning.AI + OpenAI，开山课 Prompt Engineering — Vanderbilt 大学，Coursera 4.8/5 Prompting Essentials — Google，...</description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
+<h2>学习资源</h2>
+<h3>官方文档</h3>
+<p>| 来源      | 链接                                                                                                                                | 特点                                                      |<br>
+|</p>
 ]]></content:encoded>
     </item>
     <item>
