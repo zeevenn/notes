@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Mon, 18 May 2026 12:35:04 GMT</pubDate>
-    <lastBuildDate>Mon, 18 May 2026 12:35:04 GMT</lastBuildDate>
+    <pubDate>Fri, 05 Jun 2026 06:32:16 GMT</pubDate>
+    <lastBuildDate>Fri, 05 Jun 2026 06:32:16 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>浏览器</category>
@@ -17,6 +17,20 @@
     <category>工程化</category>
     <category>algorithm</category>
     <category>LeetCode</category>
+    <item>
+      <title>Context Engineering for Agents</title>
+      <link>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/context-engineering-for-agents.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/context-engineering-for-agents.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Context Engineering for Agents</source>
+      <description> 原文：https://rlancemartin.github.io/2025/06/23/context_engineering/ 作者：Lance Martin | 2025-06-23 TL;DR Agent 需要上下文来执行任务。上下文工程，就是在 Agent 每一步执行中精准填充上下文窗口的艺术与科学。这篇文章梳理了当今主流 Agent 共同...</description>
+      <pubDate>Sat, 23 May 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<blockquote>
+<p>原文：<a href="https://rlancemartin.github.io/2025/06/23/context_engineering/" target="_blank" rel="noopener noreferrer">https://rlancemartin.github.io/2025/06/23/context_engineering/</a></p>
+<p>作者：<a href="https://x.com/RLanceMartin" target="_blank" rel="noopener noreferrer">Lance Martin</a> | 2025-06-23</p>
+</blockquote>
+]]></content:encoded>
+      <enclosure url="https://rlancemartin.github.io/assets/context_eng_overview.png" type="image/png"/>
+    </item>
     <item>
       <title>WebAssembly</title>
       <link>https://zeevenn.github.io/notes/notes/frontend/browser/webassembly.html</link>
@@ -4627,66 +4641,6 @@ worker<span class="token punctuation">.</span><span class="token function">postM
 
   <span class="token keyword">return</span> <span class="token function">build</span><span class="token punctuation">(</span>head<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div>]]></content:encoded>
-    </item>
-    <item>
-      <title>链表</title>
-      <link>https://zeevenn.github.io/notes/notes/algorithms/data-structures/04-linked-list.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/algorithms/data-structures/04-linked-list.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">链表</source>
-      <description>反转链表 反转链表 II </description>
-      <category>LeetCode</category>
-      <pubDate>Tue, 02 Aug 2022 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2><a class="header-anchor" href="#反转链表"><span></span></a><a href="https://leetcode.cn/problems/reverse-linked-list/" target="_blank" rel="noopener noreferrer">反转链表</a></h2>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">function</span> <span class="token function">reverseList</span><span class="token punctuation">(</span>head<span class="token operator">:</span> ListNode <span class="token operator">|</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token operator">:</span> ListNode <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token punctuation">{</span>
-  <span class="token keyword">let</span> pre <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">,</span> cur <span class="token operator">=</span> head
-
-  <span class="token keyword">while</span> <span class="token punctuation">(</span>cur<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> temp <span class="token operator">=</span> cur<span class="token punctuation">.</span>next
-    cur<span class="token punctuation">.</span>next <span class="token operator">=</span> pre
-    pre <span class="token operator">=</span> cur
-    cur <span class="token operator">=</span> temp
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">return</span> pre
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div><h2><a class="header-anchor" href="#反转链表-ii"><span></span></a><a href="https://leetcode.cn/problems/reverse-linked-list-ii/" target="_blank" rel="noopener noreferrer">反转链表 II</a></h2>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">function</span> <span class="token function">reverseBetween</span><span class="token punctuation">(</span>head<span class="token operator">:</span> ListNode <span class="token operator">|</span> <span class="token keyword">null</span><span class="token punctuation">,</span> left<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> right<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">)</span><span class="token operator">:</span> ListNode <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> dummyNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> head<span class="token punctuation">)</span>
-
-  <span class="token keyword">let</span> pre <span class="token operator">=</span> dummyNode
-  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> left <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    pre <span class="token operator">=</span> pre<span class="token punctuation">.</span>next
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">let</span> rightNode <span class="token operator">=</span> pre
-  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> right <span class="token operator">-</span> left <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    rightNode <span class="token operator">=</span> rightNode<span class="token punctuation">.</span>next
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">const</span> leftNode <span class="token operator">=</span> pre<span class="token punctuation">.</span>next
-  <span class="token keyword">let</span> last <span class="token operator">=</span> rightNode<span class="token punctuation">.</span>next
-
-  pre<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-  rightNode<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-  <span class="token function">reverse</span><span class="token punctuation">(</span>leftNode<span class="token punctuation">)</span>
-
-  pre<span class="token punctuation">.</span>next <span class="token operator">=</span> rightNode
-  leftNode<span class="token punctuation">.</span>next <span class="token operator">=</span> last
-
-  <span class="token keyword">return</span> dummyNode<span class="token punctuation">.</span>next
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token keyword">function</span> <span class="token function">reverse</span><span class="token punctuation">(</span>head<span class="token operator">:</span> ListNode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">let</span> pre <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">,</span> cur <span class="token operator">=</span> head
-
-  <span class="token keyword">while</span> <span class="token punctuation">(</span>cur<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> next <span class="token operator">=</span> cur<span class="token punctuation">.</span>next
-    cur<span class="token punctuation">.</span>next <span class="token operator">=</span> pre
-    pre <span class="token operator">=</span> cur
-    cur <span class="token operator">=</span> next
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
 </code></pre></div>]]></content:encoded>
     </item>
   </channel>
