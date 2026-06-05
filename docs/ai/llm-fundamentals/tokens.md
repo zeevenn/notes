@@ -1,4 +1,13 @@
-# Tokens
+---
+title: Tokens
+date: 2026-06-05
+category:
+  - AI
+tag:
+  - LLM 基础
+  - Tokenization
+  - 计费
+---
 
 ## 什么是 Token
 

@@ -1,4 +1,12 @@
-# Context Window
+---
+title: Context Window
+date: 2026-06-05
+category:
+  - AI
+tag:
+  - LLM 基础
+  - Context Window
+---
 
 ## 概念
 
