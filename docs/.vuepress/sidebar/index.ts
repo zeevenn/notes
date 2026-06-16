@@ -1,3 +1,4 @@
+export { default as ai } from './ai'
 export { default as algorithms } from './algorithms'
 export { default as backend } from './backend'
 export { default as computerScience } from './computer-science'
