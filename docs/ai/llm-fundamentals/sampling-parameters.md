@@ -10,11 +10,11 @@ tag:
   - Top-K
 ---
 
-LLM 生成文本时，每一步都在词表上产生一个概率分布，然后从中采样出下一个 token。Sampling parameters 控制的就是「如何从这个分布中选 token」。
+LLM 生成文本时，每一步都会在词表上产生一个概率分布。Sampling parameters 决定如何从这个分布中选择下一个 token。
 
 ## Temperature
 
-控制概率分布的「尖锐程度」。
+Temperature 调整概率分布的尖锐程度。
 
 ```
 adjusted_logit = logit / temperature
@@ -27,7 +27,7 @@ adjusted_logit = logit / temperature
 | 0.7 - 1.0   | 中等随机性                                     | 通用对话、写作       |
 | 1.0 - 1.5   | 高随机性，更有创造力但可能不连贯               | 头脑风暴、创意写作   |
 
-**直觉理解：** Temperature → 0 时，分布变成 one-hot（只有一个 token 概率为 1）；Temperature → ∞ 时，分布变成均匀分布（所有 token 等概率）。
+Temperature 越低，模型越倾向于选择最高概率 token；temperature 越高，低概率 token 被采样到的机会越大。
 
 ## Top-P (Nucleus Sampling)
 
@@ -50,7 +50,7 @@ token_E: 0.05  ← 被排除
 | 0.9   | 常用默认值，排除长尾低概率 token   |
 | 1.0   | 不过滤，等于不使用 top-p           |
 
-**与 Temperature 的区别：** Temperature 改变分布形状，Top-P 在分布上截断。两者可以组合使用，但通常调一个就够了。
+Temperature 改变分布形状，Top-P 在分布上截断候选集合。两者可以组合使用，但排查输出问题时通常先固定一个，只调整另一个。
 
 ## Top-K
 
@@ -67,7 +67,7 @@ top_k = 50 → 只从概率最高的 50 个 token 中选
 | 10-50   | 较保守       |
 | 100-500 | 宽松         |
 
-**Top-K vs Top-P：** Top-K 是固定数量截断，不考虑分布形状。当模型非常确定时（一个 token 概率 0.95），Top-K=50 仍保留 50 个候选，而 Top-P=0.9 只保留 1 个。Top-P 更自适应，因此实践中更常用。
+Top-K 是固定数量截断，不考虑分布形状。当模型非常确定时（例如一个 token 概率为 0.95），Top-K=50 仍会保留 50 个候选，而 Top-P=0.9 可能只保留 1 个。Top-P 更自适应，因此实践中更常用。
 
 ## Repetition Penalty
 
@@ -89,7 +89,7 @@ if token in generated_tokens:
 OpenAI API 使用 `frequency_penalty` 和 `presence_penalty`（范围 -2.0 到 2.0）。
 Anthropic Claude 不直接暴露 repetition penalty 参数，通过内部优化处理。
 
-## 实际推荐配置
+## 常用配置
 
 | 场景          | temperature | top_p | 说明                     |
 | ------------- | ----------- | ----- | ------------------------ |
@@ -123,4 +123,4 @@ Softmax → 概率分布
 采样 → 输出 token
 ```
 
-注意：不同框架的应用顺序可能略有差异，但整体逻辑一致。
+不同框架的处理顺序可能略有差异，调参时应以具体服务或推理框架的文档为准。

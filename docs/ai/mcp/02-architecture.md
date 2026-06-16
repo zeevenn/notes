@@ -4,7 +4,7 @@ date: 2026-01-19
 category: mcp
 ---
 
-## 一、MCP 包含的项目
+## MCP 生态组成
 
 ### 1. MCP Specification
 
@@ -15,9 +15,7 @@ category: mcp
 - 上下文（context）如何描述、传输、更新
 - 必须遵守的接口、数据结构、行为约束
 
-可以理解为「RFC / 标准文档」。
-
----
+可以理解为协议层面的标准文档。
 
 ### 2. MCP SDKs
 
@@ -27,15 +25,13 @@ category: mcp
 - 把规范落地成可直接使用的代码
 - 降低实现 MCP 客户端/服务端的成本
 
-例如（假设）：
+常见 SDK 方向包括：
 
 - TypeScript SDK
 - Python SDK
 - Rust SDK
 
-本质：**规范的工程化实现**。
-
----
+SDK 是规范的工程化实现，负责把协议细节封装成可调用接口。
 
 ### 3. MCP Development Tools
 
@@ -45,12 +41,7 @@ category: mcp
 - 本地调试工具
 - 验证协议是否符合规范的工具
 
-用途类似：
-
-- HTTP 的 Postman
-- GraphQL 的 Playground
-
----
+这类工具在 MCP 开发中的位置，类似 HTTP 生态中的 Postman 或 GraphQL 生态中的 Playground。
 
 ### 4. MCP Reference Server Implementations
 
@@ -60,24 +51,19 @@ category: mcp
 - 不是“唯一正确”的实现
 - 主要用于学习、对照、验证理解是否正确
 
-相当于：
+参考实现更接近最小示例项目，用于学习协议边界和验证实现是否符合规范。
 
-- 示例项目
-- Best Practice 的最小实现
-
----
-
-## 二、MCP 不做什么（非常关键）
+## MCP 不负责什么
 
 > **MCP focuses solely on the protocol for context exchange**
 
 MCP **只关心「上下文如何交换」**，不关心：
 
-- ❌ 用的是 GPT、Claude 还是本地 LLM
-- ❌ Prompt 怎么写
-- ❌ 多轮对话怎么组织
-- ❌ Agent 如何决策
-- ❌ RAG / Memory / Tool calling 的策略
+- 使用 GPT、Claude 还是本地 LLM
+- Prompt 如何编写
+- 多轮对话如何组织
+- Agent 如何决策
+- RAG、Memory、Tool calling 的具体策略
 
 也就是说：
 
@@ -85,9 +71,7 @@ MCP **只关心「上下文如何交换」**，不关心：
 >
 > 它定义“怎么传”，而不是“传了之后你怎么用”。
 
----
-
-## 三、一句话总结
+## 协议边界
 
 - MCP 是 **“上下文交换层协议”**
 - 提供：

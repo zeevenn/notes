@@ -31,4 +31,4 @@
 1. 精读 Anthropic 官方文档 — 建立体系框架
 2. 用 promptingguide.ai 补全技术点 — CoT、ReAct、Tree of Thoughts 等逐一实践
 3. 读 Building Effective Agents — 进入 Agent 设计层面
-4. 持续关注 Context Engineering — 从"写好一句话"进化到"组装整个上下文窗口"
+4. 持续关注 Context Engineering — 从单条 prompt 设计扩展到完整上下文组织

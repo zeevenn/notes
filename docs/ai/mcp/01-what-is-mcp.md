@@ -4,19 +4,19 @@ date: 2026-01-19
 category: mcp
 ---
 
-MCP (Model Context Protocol) 是 AI 应用和外部系统如何连接的一个开源标准。
+MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。
 
 ![20260119143759889](https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png)
 
-## What can MCP enable?
+## MCP 能连接什么
 
 ![nvim_clipboard_20260119150550](https://raw.githubusercontent.com/zeevenn/image-bed/main/img/nvim_clipboard_20260119150550.png)
 
-- Agents 可以通过 MCP 连接到各种外部工具和数据源，如谷歌日历、notion 等。
-- 不同的 AI 模型和服务可以通过 MCP 互操作，形成复杂的多模型系统。
+- Agent 可以通过 MCP 连接外部工具和数据源，例如日历、文档、代码仓库和内部系统。
+- 不同 AI 应用可以围绕同一套协议集成上下文、工具和资源，降低重复适配成本。
 
-## Why dose MCP matter?
+## MCP 的价值
 
-- 开发者：减少开发时间和复杂度
-- AI 应用或 agents：MCP 提供了一种标准化的方式访问数据源、工具和应用，提高互操作性。
-- 终端用户：通过 MCP 支持的应用，可以无缝访问和集成多种服务和数据源，提升用户体验。
+- 对开发者：把外部系统接入抽象成协议适配，而不是为每个模型应用单独写集成。
+- 对 Agent：用标准方式访问工具、资源和提示模板，提升互操作性。
+- 对用户：让支持 MCP 的应用更容易接入已有工作流和数据源。

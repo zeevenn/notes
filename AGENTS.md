@@ -24,6 +24,12 @@ Follow existing Markdown frontmatter where present: `title`, `date`, `icon`, `ca
 
 A good note states the concept, explains why it matters, gives examples, and links to related notes. Prefer short sections and concrete comparisons over long unstructured summaries.
 
+## Writing Style
+
+Write notes as durable technical knowledge, not AI-generated explainers. Keep the tone calm, specific, and maintainable. Avoid formulaic phrases such as "一句话", "这就是为什么", "核心是", "本质上", "总结一下", and avoid excessive "优点/缺点/适用场景" scaffolding when a short paragraph is clearer.
+
+Use examples to clarify ideas, but do not over-explain obvious transitions. Prefer precise technical wording over motivational or tutorial-style language. When editing existing AI-related notes, remove signs of AI-generated prose: repetitive sentence patterns, exaggerated certainty, generic recommendations, emoji checklists, and broad claims without context.
+
 ## Linking & Knowledge Graph
 
 Internal links should use relative Markdown links that VuePress can resolve. When adding or moving content, check nearby pages for references that should point to the new note. Do not leave orphan pages: every important page should be reachable from a README, sidebar entry, or related note.

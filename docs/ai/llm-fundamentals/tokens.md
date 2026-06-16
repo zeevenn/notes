@@ -9,7 +9,7 @@ tag:
   - 计费
 ---
 
-## 什么是 Token
+## Token
 
 Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是将输入文本切分为 token 序列，每个 token 映射到一个整数 ID，再通过 embedding 转换为向量进行计算。
 
@@ -26,7 +26,7 @@ Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是
 
 粗略估算：英文约 1 token ≈ 4 字符 ≈ 0.75 个单词（因模型而异）。
 
-实测工具：[OpenAI Tokenizer](https://platform.openai.com/tokenizer) — 支持切换 GPT-5.x/O1/O3、GPT-4、GPT-3 等不同 tokenizer
+可以用 [OpenAI Tokenizer](https://platform.openai.com/tokenizer) 观察不同 tokenizer 的切分结果。
 
 ## Tokenization 算法
 
@@ -55,7 +55,7 @@ Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是
 | Claude  | 自有 BPE           | 未公开   | Anthropic 未公开 tokenizer                                                 |
 | LLaMA 3 | tiktoken-based BPE | 128K     | [Model Card](https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md) |
 
-重要：不同模型的 tokenizer 不通用，同一段文本在不同模型中 token 数可能不同。
+不同模型的 tokenizer 不通用，同一段文本在不同模型中 token 数可能不同。
 
 ## Token 与计费
 
@@ -89,7 +89,7 @@ Output 通常比 input 贵 3-5 倍，因为生成（逐 token 解码）比编码
 第 2+ 次调用：命中缓存，按 cache read 计费（$0.30/MTok）
 ```
 
-如果同一段 prompt 反复使用（如 agent 的 system prompt 每轮都带着），第 2 次就已经回本。
+如果同一段 prompt 会被反复使用，例如 agent 每轮都携带相同 system prompt，prompt caching 通常很快就能抵消首次写入成本。
 
 ### 降低 token 成本的方法
 

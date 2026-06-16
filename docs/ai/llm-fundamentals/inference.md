@@ -9,9 +9,9 @@ tag:
   - KV Cache
 ---
 
-## 什么是推理
+## Inference
 
-Inference（推理）是指用训练好的模型来生成输出的过程。与训练不同，推理不更新模型权重，只做前向传播。
+Inference（推理）是使用训练完成的模型生成输出的过程。它只执行前向计算，不更新模型权重。
 
 ```
 训练: 学习能力（离线，耗时数月）
@@ -30,11 +30,11 @@ Step 4: [prompt, "The", " capital", " is"] → " Paris"
 Step 5: [prompt, ..., " Paris"] → <EOS>  (结束)
 ```
 
-这意味着：
+自回归生成带来几个直接影响：
 
-- 生成速度与输出长度线性相关
-- 无法并行生成（每个 token 依赖前一个）
-- 输出是流式的（可以边生成边展示）
+- 输出越长，生成耗时越长
+- 单个序列的 token 生成难以完全并行
+- 服务端可以把已生成 token 流式返回
 
 ## 推理的两个阶段
 
@@ -46,30 +46,30 @@ Step 5: [prompt, ..., " Paris"] → <EOS>  (结束)
 Input: 1000 tokens → 一次 forward pass → KV Cache 就绪
 ```
 
-衡量指标：**TTFT (Time to First Token)** — 从发送请求到收到第一个 output token 的时间。
+常用指标是 **TTFT (Time to First Token)**，即从发送请求到收到第一个 output token 的时间。
 
 ### Decode（解码）
 
 逐个生成 output token，每步只计算新 token 与所有之前 token 的 attention。
 
-衡量指标：**TPS (Tokens Per Second)** — 每秒生成的 token 数。
+常用指标是 **TPS (Tokens Per Second)**，即每秒生成的 token 数。
 
 ## KV Cache
 
-为了避免每生成一个新 token 就重新计算所有 token 的 Key 和 Value，将之前的 K、V 缓存起来：
+KV Cache 会保存已处理 token 的 Key 和 Value，避免每生成一个新 token 时重复计算完整历史：
 
 ```
 无 KV Cache: 每步计算量 O(n²)，n 为已生成长度
 有 KV Cache: 每步只算新 token 的 Q 与已缓存 KV 的 attention，计算量 O(n)
 ```
 
-代价：KV Cache 占用大量 GPU 显存，是推理时显存瓶颈的主要来源。
+代价是显存占用。长上下文、高并发和大 batch 都会放大 KV Cache 的压力。
 
 ## 推理优化技术
 
 ### 量化 (Quantization)
 
-将模型权重从高精度（FP16/BF16）压缩到低精度（INT8/INT4）：
+量化会把模型权重从 FP16/BF16 等高精度格式压缩到 INT8/INT4 等低精度格式：
 
 | 精度 | 显存占用 (7B 模型) | 速度 | 质量损失 |
 | ---- | ------------------ | ---- | -------- |
@@ -77,7 +77,7 @@ Input: 1000 tokens → 一次 forward pass → KV Cache 就绪
 | INT8 | ~7 GB              | 更快 | 极小     |
 | INT4 | ~3.5 GB            | 最快 | 轻微     |
 
-常用工具：GPTQ、AWQ、GGUF (llama.cpp)
+常见格式和工具包括 GPTQ、AWQ、GGUF 和 llama.cpp。
 
 ### Speculative Decoding（推测解码）
 
@@ -92,7 +92,7 @@ Input: 1000 tokens → 一次 forward pass → KV Cache 就绪
 
 ### 批处理 (Batching)
 
-将多个请求合并为一个 batch 处理，提高 GPU 利用率：
+批处理把多个请求合并执行，提高 GPU 利用率，但会影响排队延迟和调度策略：
 
 - **Static batching**：等 batch 凑满再处理
 - **Continuous batching**：动态插入新请求、移除已完成的请求
@@ -125,4 +125,4 @@ Input: 1000 tokens → 一次 forward pass → KV Cache 就绪
 | 延迟     | 取决于本地硬件           | 受网络影响       |
 | 维护     | 自行管理                 | 提供方负责       |
 
-常用本地推理工具：llama.cpp、Ollama、vLLM、TGI (Text Generation Inference)
+常用本地或自托管推理工具包括 llama.cpp、Ollama、vLLM、TGI (Text Generation Inference)。
