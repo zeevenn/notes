@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Tue, 16 Jun 2026 06:05:50 GMT</pubDate>
-    <lastBuildDate>Tue, 16 Jun 2026 06:05:50 GMT</lastBuildDate>
+    <pubDate>Tue, 16 Jun 2026 07:33:13 GMT</pubDate>
+    <lastBuildDate>Tue, 16 Jun 2026 07:33:13 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>AI</category>
@@ -21,20 +21,20 @@
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/embeddings.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/embeddings.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Embeddings</source>
-      <description>什么是 Embedding Embedding 是将离散的对象（文本、图片、token）映射为连续的高维向量。在这个向量空间中，语义相似的内容距离更近。 两种 Embedding 的用途 1. Token Embedding（模型内部） LLM 内部的第一步：将每个 token ID 映射为向量，作为 Transformer 的输入。这是模型训练的一部...</description>
+      <description>Embedding Embedding 会把离散对象映射为连续高维向量。对象可以是 token、文本片段、图片或其他可编码数据。向量空间的目标是让语义或用法相近的对象距离更近。 两种 Embedding 的用途 1. Token Embedding（模型内部） LLM 内部会把每个 token ID 映射为向量，作为 Transformer 的输入。这...</description>
       <category>AI</category>
       <pubDate>Tue, 09 Jun 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>什么是 Embedding</h2>
-<p>Embedding 是将离散的对象（文本、图片、token）映射为连续的高维向量。在这个向量空间中，语义相似的内容距离更近。</p>
+      <content:encoded><![CDATA[<h2>Embedding</h2>
+<p>Embedding 会把离散对象映射为连续高维向量。对象可以是 token、文本片段、图片或其他可编码数据。向量空间的目标是让语义或用法相近的对象距离更近。</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"猫" → [0.12, -0.34, 0.78, ..., 0.56]  (1536维)
 "狗" → [0.15, -0.31, 0.72, ..., 0.61]  ← 与"猫"距离近
 "汽车" → [-0.45, 0.67, -0.12, ..., 0.23] ← 与"猫"距离远
 </code></pre></div><h2>两种 Embedding 的用途</h2>
 <h3>1. Token Embedding（模型内部）</h3>
-<p>LLM 内部的第一步：将每个 token ID 映射为向量，作为 Transformer 的输入。这是模型训练的一部分，用户不直接接触。</p>
+<p>LLM 内部会把每个 token ID 映射为向量，作为 Transformer 的输入。这是模型参数的一部分，用户通常不会直接操作。</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>token_id: 15234 → embedding_matrix[15234] → [0.02, -0.15, ...]
 </code></pre></div><h3>2. Text Embedding（用户使用）</h3>
-<p>通过 Embedding API 将一段文本编码为一个固定维度的向量，用于下游任务：</p>
+<p>Embedding API 会把文本编码为固定维度向量，供搜索、聚类、分类等下游任务使用：</p>
 <div class="language-python" data-ext="py" data-title="py"><pre class="language-python"><code><span class="token keyword">from</span> openai <span class="token keyword">import</span> OpenAI
 client <span class="token operator">=</span> OpenAI<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
@@ -53,12 +53,12 @@ vector <span class="token operator">=</span> response<span class="token punctuat
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/evaluation.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/evaluation.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Evaluation</source>
-      <description>为什么需要评估 LLM 的输出是概率生成结果，不是确定性程序返回值。只看一次 demo 很容易高估模型能力；真正上线前，需要用稳定的评估集判断模型在目标任务上的准确性、稳定性、成本和延迟。 评估回答的问题是： 这个模型能不能完成当前任务？ 换模型、改 prompt、接入 RAG 后是否真的变好了？ 哪些输入会失败，失败是否可接受？ 成本和延迟是否满足产...</description>
+      <description>Evaluation LLM 输出是概率生成结果，不是确定性程序返回值。单次 demo 只能说明模型在某个输入上表现不错，不能说明它在真实任务中可靠。上线前需要用固定评估集观察准确性、稳定性、成本和延迟。 评估主要回答这些问题： 这个模型能不能完成当前任务？ 换模型、改 prompt、接入 RAG 后是否真的变好了？ 哪些输入会失败，失败是否可接受？ ...</description>
       <category>AI</category>
       <pubDate>Tue, 16 Jun 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>为什么需要评估</h2>
-<p>LLM 的输出是概率生成结果，不是确定性程序返回值。只看一次 demo 很容易高估模型能力；真正上线前，需要用稳定的评估集判断模型在目标任务上的准确性、稳定性、成本和延迟。</p>
-<p>评估回答的问题是：</p>
+      <content:encoded><![CDATA[<h2>Evaluation</h2>
+<p>LLM 输出是概率生成结果，不是确定性程序返回值。单次 demo 只能说明模型在某个输入上表现不错，不能说明它在真实任务中可靠。上线前需要用固定评估集观察准确性、稳定性、成本和延迟。</p>
+<p>评估主要回答这些问题：</p>
 <ul>
 <li>这个模型能不能完成当前任务？</li>
 <li>换模型、改 prompt、接入 RAG 后是否真的变好了？</li>
@@ -66,7 +66,7 @@ vector <span class="token operator">=</span> response<span class="token punctuat
 <li>成本和延迟是否满足产品要求？</li>
 </ul>
 <h2>评估集</h2>
-<p>评估集是一组代表真实场景的输入与期望结果。它应该覆盖常见情况、边界情况和高风险情况。</p>
+<p>评估集是一组代表真实场景的输入和期望结果。它需要覆盖常见输入、边界输入和高风险输入。</p>
 <p>| 类型       | 示例                         | 作用                 |<br>
 |</p>
 ]]></content:encoded>
@@ -76,11 +76,11 @@ vector <span class="token operator">=</span> response<span class="token punctuat
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/inference.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/inference.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Inference（推理）</source>
-      <description>什么是推理 Inference（推理）是指用训练好的模型来生成输出的过程。与训练不同，推理不更新模型权重，只做前向传播。 自回归生成 LLM 逐 token 生成输出，每一步将之前所有 token 作为输入，预测下一个 token： 这意味着： 生成速度与输出长度线性相关 无法并行生成（每个 token 依赖前一个） 输出是流式的（可以边生成边展示） ...</description>
+      <description>Inference Inference（推理）是使用训练完成的模型生成输出的过程。它只执行前向计算，不更新模型权重。 自回归生成 LLM 逐 token 生成输出，每一步将之前所有 token 作为输入，预测下一个 token： 自回归生成带来几个直接影响： 输出越长，生成耗时越长 单个序列的 token 生成难以完全并行 服务端可以把已生成 toke...</description>
       <category>AI</category>
       <pubDate>Fri, 05 Jun 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>什么是推理</h2>
-<p>Inference（推理）是指用训练好的模型来生成输出的过程。与训练不同，推理不更新模型权重，只做前向传播。</p>
+      <content:encoded><![CDATA[<h2>Inference</h2>
+<p>Inference（推理）是使用训练完成的模型生成输出的过程。它只执行前向计算，不更新模型权重。</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>训练: 学习能力（离线，耗时数月）
 推理: 使用能力（在线，实时响应用户）
 </code></pre></div><h2>自回归生成</h2>
@@ -90,28 +90,28 @@ Step 2: [prompt, "The"] → " capital"
 Step 3: [prompt, "The", " capital"] → " is"
 Step 4: [prompt, "The", " capital", " is"] → " Paris"
 Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
-</code></pre></div><p>这意味着：</p>
+</code></pre></div><p>自回归生成带来几个直接影响：</p>
 <ul>
-<li>生成速度与输出长度线性相关</li>
-<li>无法并行生成（每个 token 依赖前一个）</li>
-<li>输出是流式的（可以边生成边展示）</li>
+<li>输出越长，生成耗时越长</li>
+<li>单个序列的 token 生成难以完全并行</li>
+<li>服务端可以把已生成 token 流式返回</li>
 </ul>
 <h2>推理的两个阶段</h2>
 <h3>Prefill（预填充）</h3>
 <p>处理整个 input prompt，一次性计算所有 input token 的 attention。这个阶段可以并行化。</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Input: 1000 tokens → 一次 forward pass → KV Cache 就绪
-</code></pre></div><p>衡量指标：<strong>TTFT (Time to First Token)</strong> — 从发送请求到收到第一个 output token 的时间。</p>
+</code></pre></div><p>常用指标是 <strong>TTFT (Time to First Token)</strong>，即从发送请求到收到第一个 output token 的时间。</p>
 <h3>Decode（解码）</h3>
 <p>逐个生成 output token，每步只计算新 token 与所有之前 token 的 attention。</p>
-<p>衡量指标：<strong>TPS (Tokens Per Second)</strong> — 每秒生成的 token 数。</p>
+<p>常用指标是 <strong>TPS (Tokens Per Second)</strong>，即每秒生成的 token 数。</p>
 <h2>KV Cache</h2>
-<p>为了避免每生成一个新 token 就重新计算所有 token 的 Key 和 Value，将之前的 K、V 缓存起来：</p>
+<p>KV Cache 会保存已处理 token 的 Key 和 Value，避免每生成一个新 token 时重复计算完整历史：</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>无 KV Cache: 每步计算量 O(n²)，n 为已生成长度
 有 KV Cache: 每步只算新 token 的 Q 与已缓存 KV 的 attention，计算量 O(n)
-</code></pre></div><p>代价：KV Cache 占用大量 GPU 显存，是推理时显存瓶颈的主要来源。</p>
+</code></pre></div><p>代价是显存占用。长上下文、高并发和大 batch 都会放大 KV Cache 的压力。</p>
 <h2>推理优化技术</h2>
 <h3>量化 (Quantization)</h3>
-<p>将模型权重从高精度（FP16/BF16）压缩到低精度（INT8/INT4）：</p>
+<p>量化会把模型权重从 FP16/BF16 等高精度格式压缩到 INT8/INT4 等低精度格式：</p>
 <p>| 精度 | 显存占用 (7B 模型) | 速度 | 质量损失 |<br>
 |</p>
 ]]></content:encoded>
@@ -121,10 +121,11 @@ Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/training.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/training.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Training</source>
-      <description>LLM 训练的三个阶段 阶段一：Pre-training（预训练） 目标 在海量文本上学习 next token prediction： 训练数据 总训练数据通常在 1-15 万亿 token。 计算成本 训练一个前沿模型需要数千到数万张 GPU（H100/A100），训练数周到数月，成本数千万到上亿美元。 产出 Pre-training 完成后得到 ...</description>
+      <description>LLM 训练的三个阶段 现代对话模型通常不是一次训练完成，而是经历预训练、指令微调和偏好对齐等阶段。不同阶段解决的问题不同：预训练学习语言和知识分布，SFT 学习指令格式，对齐阶段让输出更符合人类偏好和安全要求。 阶段一：Pre-training（预训练） 目标 在海量文本上学习 next token prediction： 训练数据 总训练数据通常在...</description>
       <category>AI</category>
       <pubDate>Fri, 05 Jun 2026 00:00:00 GMT</pubDate>
       <content:encoded><![CDATA[<h2>LLM 训练的三个阶段</h2>
+<p>现代对话模型通常不是一次训练完成，而是经历预训练、指令微调和偏好对齐等阶段。不同阶段解决的问题不同：预训练学习语言和知识分布，SFT 学习指令格式，对齐阶段让输出更符合人类偏好和安全要求。</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Pre-training → Supervised Fine-tuning (SFT) → Alignment (RLHF/DPO)
    基座模型          指令跟随能力              安全对齐 &amp; 偏好优化
 </code></pre></div><h2>阶段一：Pre-training（预训练）</h2>
@@ -143,14 +144,14 @@ Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/vector-databases.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/vector-databases.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Vector Databases</source>
-      <description>什么是向量数据库 向量数据库是专门用于存储、索引和检索高维向量的数据库。核心操作是近似最近邻搜索 (ANN)：给定一个查询向量，快速找到数据库中最相似的 K 个向量。 为什么需要专门的向量数据库 暴力搜索（逐一计算距离）的复杂度是 O(n)，当数据量达到百万/亿级时不可接受。向量数据库通过索引结构将搜索复杂度降到 O(log n) 或亚线性，代价是少量...</description>
+      <description>向量数据库 向量数据库用于存储、索引和检索高维向量。典型查询是近似最近邻搜索（ANN）：给定一个查询向量，返回数据库中最相似的 K 个向量及其元数据。 检索成本 逐一计算距离的暴力搜索复杂度是 O(n)。当数据量达到百万或亿级时，延迟和成本都会失控。向量数据库通过索引结构降低查询开销，代价是引入近似搜索和少量召回损失。 主流向量数据库 索引算法 HNS...</description>
       <category>AI</category>
       <pubDate>Fri, 05 Jun 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>什么是向量数据库</h2>
-<p>向量数据库是专门用于存储、索引和检索高维向量的数据库。核心操作是<strong>近似最近邻搜索 (ANN)</strong>：给定一个查询向量，快速找到数据库中最相似的 K 个向量。</p>
+      <content:encoded><![CDATA[<h2>向量数据库</h2>
+<p>向量数据库用于存储、索引和检索高维向量。典型查询是近似最近邻搜索（ANN）：给定一个查询向量，返回数据库中最相似的 K 个向量及其元数据。</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>查询向量 → 向量数据库 → Top-K 最相似的结果（含原始数据）
-</code></pre></div><h2>为什么需要专门的向量数据库</h2>
-<p>暴力搜索（逐一计算距离）的复杂度是 O(n)，当数据量达到百万/亿级时不可接受。向量数据库通过索引结构将搜索复杂度降到 O(log n) 或亚线性，代价是少量精度损失（近似搜索）。</p>
+</code></pre></div><h2>检索成本</h2>
+<p>逐一计算距离的暴力搜索复杂度是 O(n)。当数据量达到百万或亿级时，延迟和成本都会失控。向量数据库通过索引结构降低查询开销，代价是引入近似搜索和少量召回损失。</p>
 <h2>主流向量数据库</h2>
 <p>| 数据库   | 类型            | 特点                      |<br>
 |</p>
@@ -161,33 +162,33 @@ Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/what-is-llm.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/what-is-llm.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Large Language Model (LLM)</source>
-      <description>什么是 LLM 一句话：给它一段文字，它预测接下来最可能出现的文字。不断重复，就生成了完整的回答。 训练目标就这么简单——预测下一个 token。但当模型足够大、训练数据足够多时，它就涌现出了写代码、做推理、翻译等复杂能力。 处理流程 Tokenization：把文字变成数字 模型不认字，只认数字。Tokenizer 把文字切成小块（token），每块...</description>
+      <description>什么是 LLM Large Language Model（LLM，大语言模型）是一类基于大规模文本训练的生成式模型。它接收一段 token 序列，估计下一个 token 的概率分布，再把选出的 token 接回序列中继续生成。 从训练目标看，LLM 做的是 next token prediction。这个目标本身并不复杂，但在足够大的模型规模、数据规模...</description>
       <category>AI</category>
       <pubDate>Tue, 09 Jun 2026 00:00:00 GMT</pubDate>
       <content:encoded><![CDATA[<h2>什么是 LLM</h2>
-<p>一句话：给它一段文字，它预测接下来最可能出现的文字。不断重复，就生成了完整的回答。</p>
+<p>Large Language Model（LLM，大语言模型）是一类基于大规模文本训练的生成式模型。它接收一段 token 序列，估计下一个 token 的概率分布，再把选出的 token 接回序列中继续生成。</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>输入: "The capital of France is"
 输出: " Paris"
-</code></pre></div><p>训练目标就这么简单——预测下一个 token。但当模型足够大、训练数据足够多时，它就涌现出了写代码、做推理、翻译等复杂能力。</p>
-<h2>处理流程</h2>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>你的文字 → 切词(Tokenization) → 转向量(Embedding) → Transformer 处理 → 输出概率 → 选一个词 → 拼回去继续
-</code></pre></div><h3>Tokenization：把文字变成数字</h3>
-<p>模型不认字，只认数字。Tokenizer 把文字切成小块（token），每块对应一个 ID：</p>
+</code></pre></div><p>从训练目标看，LLM 做的是 next token prediction。这个目标本身并不复杂，但在足够大的模型规模、数据规模和计算量下，模型会学到语言结构、世界知识、代码模式以及一部分推理模式。</p>
+<h2>从文本到输出</h2>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>文本 → Tokenization → Embedding → Transformer → 概率分布 → 采样 → 下一个 token
+</code></pre></div><h3>Tokenization：文本离散化</h3>
+<p>模型不能直接处理原始字符，需要先由 tokenizer 把文本切成 token，并映射为整数 ID：</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"我喜欢吃苹果" → ["我", "喜欢", "吃", "苹果"] → [3421, 8921, 1245, 9823]
-</code></pre></div><p>对应用开发的意义：API 按 token 计费，prompt 有 token 上限。详见 。</p>
-<h3>Embedding：数字变成含义</h3>
-<p>每个 token ID 变成一个高维向量（比如 4096 个数字组成的数组）。语义相近的词，向量也相近：</p>
+</code></pre></div><p>Token 是模型计算、上下文长度和 API 计费的基本单位。不同模型的 tokenizer 不完全相同，同一段文本在不同模型下可能对应不同 token 数。详见 。</p>
+<h3>Embedding：从 ID 到向量</h3>
+<p>Token ID 会被查表转换为高维向量。向量本身不是“含义”的直接表示，但在训练过程中，语义和用法相近的 token 往往会形成相近的向量表示：</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"猫" 和 "狗" 的向量很接近
 "猫" 和 "汽车" 的向量差很远
-</code></pre></div><p>这就是为什么 RAG 能用向量搜索找到语义相关的内容。详见 。</p>
-<h3>Transformer：理解上下文</h3>
-<p>Transformer（2017, "Attention is All You Need"）是所有主流 LLM 的基础架构。它做的核心事情是让每个词「看到」并「关注」上下文中的其他词。</p>
-<h4>Self-Attention：该看谁</h4>
+</code></pre></div><p>这种表示方式也是语义搜索和 RAG 的基础。详见 。</p>
+<h3>Transformer：建模上下文</h3>
+<p>Transformer 是现代 LLM 的核心架构。它的关键能力是让序列中的每个 token 根据上下文重新计算自己的表示，而不是孤立地处理每个词。</p>
+<h4>Self-Attention：建立 token 之间的依赖</h4>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"小明把书放到桌子上，因为它很重"
                               ↑
                 "它" 应该关注 "书" 而非 "桌子"
-</code></pre></div><p>每个 token 会生成三个向量来参与这个过程：</p>
-<p>| 向量      | 角色 | 直觉                 |<br>
+</code></pre></div><p>Self-attention 会为每个 token 生成三类向量：</p>
+<p>| 向量      | 作用                      |<br>
 |</p>
 ]]></content:encoded>
     </item>
@@ -196,12 +197,12 @@ Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/sampling-parameters.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/sampling-parameters.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Sampling Parameters</source>
-      <description>LLM 生成文本时，每一步都在词表上产生一个概率分布，然后从中采样出下一个 token。Sampling parameters 控制的就是「如何从这个分布中选 token」。 Temperature 控制概率分布的「尖锐程度」。 直觉理解： Temperature → 0 时，分布变成 one-hot（只有一个 token 概率为 1）；Tempera...</description>
+      <description>LLM 生成文本时，每一步都会在词表上产生一个概率分布。Sampling parameters 决定如何从这个分布中选择下一个 token。 Temperature Temperature 调整概率分布的尖锐程度。 Temperature 越低，模型越倾向于选择最高概率 token；temperature 越高，低概率 token 被采样到的机会越大。...</description>
       <category>AI</category>
       <pubDate>Fri, 05 Jun 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p>LLM 生成文本时，每一步都在词表上产生一个概率分布，然后从中采样出下一个 token。Sampling parameters 控制的就是「如何从这个分布中选 token」。</p>
+      <content:encoded><![CDATA[<p>LLM 生成文本时，每一步都会在词表上产生一个概率分布。Sampling parameters 决定如何从这个分布中选择下一个 token。</p>
 <h2>Temperature</h2>
-<p>控制概率分布的「尖锐程度」。</p>
+<p>Temperature 调整概率分布的尖锐程度。</p>
 <div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>adjusted_logit = logit / temperature
 </code></pre></div><p>| Temperature | 效果                                           | 适用场景             |<br>
 |</p>
@@ -212,11 +213,11 @@ Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/context.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/context.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Context Window</source>
-      <description>概念 Context window 是模型单次调用能处理的 token 总量上限（input + output）。它决定了模型一次能「看到」多少信息。 主流模型的 Context Window 1M tokens ≈ 约 4-5 本 500 页的书，或约 75 万字中文。 Context Window vs. 有效利用率 Context window ...</description>
+      <description>Context Window Context window 是模型单次调用可处理的 token 总量上限，包含 input 和 output。它限定了模型在一次请求中可访问的信息范围，但不等同于长期记忆。 主流模型的 Context Window 1M tokens 可以容纳很长的文档集合，但容量不代表模型能稳定利用窗口内的每一处信息。 Context...</description>
       <category>AI</category>
       <pubDate>Fri, 05 Jun 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>概念</h2>
-<p>Context window 是模型单次调用能处理的 token 总量上限（input + output）。它决定了模型一次能「看到」多少信息。</p>
+      <content:encoded><![CDATA[<h2>Context Window</h2>
+<p>Context window 是模型单次调用可处理的 token 总量上限，包含 input 和 output。它限定了模型在一次请求中可访问的信息范围，但不等同于长期记忆。</p>
 <h2>主流模型的 Context Window</h2>
 <p>| 模型              | Context Window | Max Output  |<br>
 |</p>
@@ -227,10 +228,10 @@ Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
       <link>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/tokens.html</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/tokens.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Tokens</source>
-      <description>什么是 Token Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是将输入文本切分为 token 序列，每个 token 映射到一个整数 ID，再通过 embedding 转换为向量进行计算。 一个 token 不等于一个字符，也不等于一个单词： 同样的文本在不同 tokenizer 下切分结果差异很大。新一代 tokenizer（...</description>
+      <description>Token Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是将输入文本切分为 token 序列，每个 token 映射到一个整数 ID，再通过 embedding 转换为向量进行计算。 一个 token 不等于一个字符，也不等于一个单词： 同样的文本在不同 tokenizer 下切分结果差异很大。新一代 tokenizer（如 o2...</description>
       <category>AI</category>
       <pubDate>Fri, 05 Jun 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>什么是 Token</h2>
+      <content:encoded><![CDATA[<h2>Token</h2>
 <p>Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是将输入文本切分为 token 序列，每个 token 映射到一个整数 ID，再通过 embedding 转换为向量进行计算。</p>
 <p>一个 token 不等于一个字符，也不等于一个单词：</p>
 <p>| 语言 | 示例                | GPT-4 (cl100k) | GPT-4o/5.x/O1/O3 (o200k) |<br>
