@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-06-05T10:22:16.653Z</updated>
+  <updated>2026-06-16T06:05:50.158Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -14,6 +14,216 @@
   <category term="HTML"/>
   <category term="Frontend"/>
   <category term="工程化"/>
+  <entry>
+    <title type="text">Embeddings</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/embeddings.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/embeddings.html"/>
+    <updated>2026-06-16T05:23:04.000Z</updated>
+    <summary type="html"><![CDATA[<h2>什么是 Embedding</h2>
+<p>Embedding 是将离散的对象（文本、图片、token）映射为连续的高维向量。在这个向量空间中，语义相似的内容距离更近。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"猫" → [0.12, -0.34, 0.78, ..., 0.56]  (1536维)
+"狗" → [0.15, -0.31, 0.72, ..., 0.61]  ← 与"猫"距离近
+"汽车" → [-0.45, 0.67, -0.12, ..., 0.23] ← 与"猫"距离远
+</code></pre></div>]]></summary>
+    <content type="html"><![CDATA[<h2>什么是 Embedding</h2>
+<p>Embedding 是将离散的对象（文本、图片、token）映射为连续的高维向量。在这个向量空间中，语义相似的内容距离更近。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"猫" → [0.12, -0.34, 0.78, ..., 0.56]  (1536维)
+"狗" → [0.15, -0.31, 0.72, ..., 0.61]  ← 与"猫"距离近
+"汽车" → [-0.45, 0.67, -0.12, ..., 0.23] ← 与"猫"距离远
+</code></pre></div><h2>两种 Embedding 的用途</h2>
+<h3>1. Token Embedding（模型内部）</h3>
+<p>LLM 内部的第一步：将每个 token ID 映射为向量，作为 Transformer 的输入。这是模型训练的一部分，用户不直接接触。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>token_id: 15234 → embedding_matrix[15234] → [0.02, -0.15, ...]
+</code></pre></div><h3>2. Text Embedding（用户使用）</h3>
+<p>通过 Embedding API 将一段文本编码为一个固定维度的向量，用于下游任务：</p>
+<div class="language-python" data-ext="py" data-title="py"><pre class="language-python"><code><span class="token keyword">from</span> openai <span class="token keyword">import</span> OpenAI
+client <span class="token operator">=</span> OpenAI<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+response <span class="token operator">=</span> client<span class="token punctuation">.</span>embeddings<span class="token punctuation">.</span>create<span class="token punctuation">(</span>
+    model<span class="token operator">=</span><span class="token string">"text-embedding-3-small"</span><span class="token punctuation">,</span>
+    <span class="token builtin">input</span><span class="token operator">=</span><span class="token string">"如何重置密码？"</span>
+<span class="token punctuation">)</span>
+vector <span class="token operator">=</span> response<span class="token punctuation">.</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>embedding  <span class="token comment"># 1536维向量</span>
+</code></pre></div><h2>主流 Embedding 模型</h2>
+<p>| 模型                   | 提供方    | 维度     | 特点           |<br>
+|</p>
+]]></content>
+    <category term="AI"/>
+    <published>2026-06-09T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Evaluation</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/evaluation.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/evaluation.html"/>
+    <updated>2026-06-16T05:23:04.000Z</updated>
+    <summary type="html"><![CDATA[<h2>为什么需要评估</h2>
+<p>LLM 的输出是概率生成结果，不是确定性程序返回值。只看一次 demo 很容易高估模型能力；真正上线前，需要用稳定的评估集判断模型在目标任务上的准确性、稳定性、成本和延迟。</p>
+<p>评估回答的问题是：</p>
+<ul>
+<li>这个模型能不能完成当前任务？</li>
+<li>换模型、改 prompt、接入 RAG 后是否真的变好了？</li>
+<li>哪些输入会失败，失败是否可接受？</li>
+<li>成本和延迟是否满足产品要求？</li>
+</ul>
+<h2>评估集</h2>
+<p>评估集是一组代表真实场景的输入与期望结果。它应该覆盖常见情况、边界情况和高风险情况。</p>]]></summary>
+    <content type="html"><![CDATA[<h2>为什么需要评估</h2>
+<p>LLM 的输出是概率生成结果，不是确定性程序返回值。只看一次 demo 很容易高估模型能力；真正上线前，需要用稳定的评估集判断模型在目标任务上的准确性、稳定性、成本和延迟。</p>
+<p>评估回答的问题是：</p>
+<ul>
+<li>这个模型能不能完成当前任务？</li>
+<li>换模型、改 prompt、接入 RAG 后是否真的变好了？</li>
+<li>哪些输入会失败，失败是否可接受？</li>
+<li>成本和延迟是否满足产品要求？</li>
+</ul>
+<h2>评估集</h2>
+<p>评估集是一组代表真实场景的输入与期望结果。它应该覆盖常见情况、边界情况和高风险情况。</p>
+<p>| 类型       | 示例                         | 作用                 |<br>
+|</p>
+]]></content>
+    <category term="AI"/>
+    <published>2026-06-16T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Inference（推理）</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/inference.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/inference.html"/>
+    <updated>2026-06-16T05:23:04.000Z</updated>
+    <summary type="html"><![CDATA[<h2>什么是推理</h2>
+<p>Inference（推理）是指用训练好的模型来生成输出的过程。与训练不同，推理不更新模型权重，只做前向传播。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>训练: 学习能力（离线，耗时数月）
+推理: 使用能力（在线，实时响应用户）
+</code></pre></div><h2>自回归生成</h2>
+<p>LLM 逐 token 生成输出，每一步将之前所有 token 作为输入，预测下一个 token：</p>
+]]></summary>
+    <content type="html"><![CDATA[<h2>什么是推理</h2>
+<p>Inference（推理）是指用训练好的模型来生成输出的过程。与训练不同，推理不更新模型权重，只做前向传播。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>训练: 学习能力（离线，耗时数月）
+推理: 使用能力（在线，实时响应用户）
+</code></pre></div><h2>自回归生成</h2>
+<p>LLM 逐 token 生成输出，每一步将之前所有 token 作为输入，预测下一个 token：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Step 1: [prompt] → "The"
+Step 2: [prompt, "The"] → " capital"
+Step 3: [prompt, "The", " capital"] → " is"
+Step 4: [prompt, "The", " capital", " is"] → " Paris"
+Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
+</code></pre></div><p>这意味着：</p>
+<ul>
+<li>生成速度与输出长度线性相关</li>
+<li>无法并行生成（每个 token 依赖前一个）</li>
+<li>输出是流式的（可以边生成边展示）</li>
+</ul>
+<h2>推理的两个阶段</h2>
+<h3>Prefill（预填充）</h3>
+<p>处理整个 input prompt，一次性计算所有 input token 的 attention。这个阶段可以并行化。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Input: 1000 tokens → 一次 forward pass → KV Cache 就绪
+</code></pre></div><p>衡量指标：<strong>TTFT (Time to First Token)</strong> — 从发送请求到收到第一个 output token 的时间。</p>
+<h3>Decode（解码）</h3>
+<p>逐个生成 output token，每步只计算新 token 与所有之前 token 的 attention。</p>
+<p>衡量指标：<strong>TPS (Tokens Per Second)</strong> — 每秒生成的 token 数。</p>
+<h2>KV Cache</h2>
+<p>为了避免每生成一个新 token 就重新计算所有 token 的 Key 和 Value，将之前的 K、V 缓存起来：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>无 KV Cache: 每步计算量 O(n²)，n 为已生成长度
+有 KV Cache: 每步只算新 token 的 Q 与已缓存 KV 的 attention，计算量 O(n)
+</code></pre></div><p>代价：KV Cache 占用大量 GPU 显存，是推理时显存瓶颈的主要来源。</p>
+<h2>推理优化技术</h2>
+<h3>量化 (Quantization)</h3>
+<p>将模型权重从高精度（FP16/BF16）压缩到低精度（INT8/INT4）：</p>
+<p>| 精度 | 显存占用 (7B 模型) | 速度 | 质量损失 |<br>
+|</p>
+]]></content>
+    <category term="AI"/>
+    <published>2026-06-05T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Training</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/training.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/training.html"/>
+    <updated>2026-06-16T05:23:04.000Z</updated>
+    <summary type="html"><![CDATA[<h2>LLM 训练的三个阶段</h2>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Pre-training → Supervised Fine-tuning (SFT) → Alignment (RLHF/DPO)
+   基座模型          指令跟随能力              安全对齐 &amp; 偏好优化
+</code></pre></div><h2>阶段一：Pre-training（预训练）</h2>
+<h3>目标</h3>
+<p>在海量文本上学习 next token prediction：</p>]]></summary>
+    <content type="html"><![CDATA[<h2>LLM 训练的三个阶段</h2>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Pre-training → Supervised Fine-tuning (SFT) → Alignment (RLHF/DPO)
+   基座模型          指令跟随能力              安全对齐 &amp; 偏好优化
+</code></pre></div><h2>阶段一：Pre-training（预训练）</h2>
+<h3>目标</h3>
+<p>在海量文本上学习 next token prediction：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>输入: "The cat sat on the"
+标签: "mat"
+损失: cross-entropy(predicted_distribution, "mat")
+</code></pre></div><h3>训练数据</h3>
+<p>| 来源                      | 规模            |<br>
+|</p>
+]]></content>
+    <category term="AI"/>
+    <published>2026-06-05T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Vector Databases</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/vector-databases.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/vector-databases.html"/>
+    <updated>2026-06-16T05:23:04.000Z</updated>
+    <summary type="html"><![CDATA[<h2>什么是向量数据库</h2>
+<p>向量数据库是专门用于存储、索引和检索高维向量的数据库。核心操作是<strong>近似最近邻搜索 (ANN)</strong>：给定一个查询向量，快速找到数据库中最相似的 K 个向量。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>查询向量 → 向量数据库 → Top-K 最相似的结果（含原始数据）
+</code></pre></div><h2>为什么需要专门的向量数据库</h2>
+<p>暴力搜索（逐一计算距离）的复杂度是 O(n)，当数据量达到百万/亿级时不可接受。向量数据库通过索引结构将搜索复杂度降到 O(log n) 或亚线性，代价是少量精度损失（近似搜索）。</p>]]></summary>
+    <content type="html"><![CDATA[<h2>什么是向量数据库</h2>
+<p>向量数据库是专门用于存储、索引和检索高维向量的数据库。核心操作是<strong>近似最近邻搜索 (ANN)</strong>：给定一个查询向量，快速找到数据库中最相似的 K 个向量。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>查询向量 → 向量数据库 → Top-K 最相似的结果（含原始数据）
+</code></pre></div><h2>为什么需要专门的向量数据库</h2>
+<p>暴力搜索（逐一计算距离）的复杂度是 O(n)，当数据量达到百万/亿级时不可接受。向量数据库通过索引结构将搜索复杂度降到 O(log n) 或亚线性，代价是少量精度损失（近似搜索）。</p>
+<h2>主流向量数据库</h2>
+<p>| 数据库   | 类型            | 特点                      |<br>
+|</p>
+]]></content>
+    <category term="AI"/>
+    <published>2026-06-05T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Large Language Model (LLM)</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/what-is-llm.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/what-is-llm.html"/>
+    <updated>2026-06-16T05:23:04.000Z</updated>
+    <summary type="html"><![CDATA[<h2>什么是 LLM</h2>
+<p>一句话：给它一段文字，它预测接下来最可能出现的文字。不断重复，就生成了完整的回答。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>输入: "The capital of France is"
+输出: " Paris"
+</code></pre></div><p>训练目标就这么简单——预测下一个 token。但当模型足够大、训练数据足够多时，它就涌现出了写代码、做推理、翻译等复杂能力。</p>
+<h2>处理流程</h2>]]></summary>
+    <content type="html"><![CDATA[<h2>什么是 LLM</h2>
+<p>一句话：给它一段文字，它预测接下来最可能出现的文字。不断重复，就生成了完整的回答。</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>输入: "The capital of France is"
+输出: " Paris"
+</code></pre></div><p>训练目标就这么简单——预测下一个 token。但当模型足够大、训练数据足够多时，它就涌现出了写代码、做推理、翻译等复杂能力。</p>
+<h2>处理流程</h2>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>你的文字 → 切词(Tokenization) → 转向量(Embedding) → Transformer 处理 → 输出概率 → 选一个词 → 拼回去继续
+</code></pre></div><h3>Tokenization：把文字变成数字</h3>
+<p>模型不认字，只认数字。Tokenizer 把文字切成小块（token），每块对应一个 ID：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"我喜欢吃苹果" → ["我", "喜欢", "吃", "苹果"] → [3421, 8921, 1245, 9823]
+</code></pre></div><p>对应用开发的意义：API 按 token 计费，prompt 有 token 上限。详见 。</p>
+<h3>Embedding：数字变成含义</h3>
+<p>每个 token ID 变成一个高维向量（比如 4096 个数字组成的数组）。语义相近的词，向量也相近：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"猫" 和 "狗" 的向量很接近
+"猫" 和 "汽车" 的向量差很远
+</code></pre></div><p>这就是为什么 RAG 能用向量搜索找到语义相关的内容。详见 。</p>
+<h3>Transformer：理解上下文</h3>
+<p>Transformer（2017, "Attention is All You Need"）是所有主流 LLM 的基础架构。它做的核心事情是让每个词「看到」并「关注」上下文中的其他词。</p>
+<h4>Self-Attention：该看谁</h4>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>"小明把书放到桌子上，因为它很重"
+                              ↑
+                "它" 应该关注 "书" 而非 "桌子"
+</code></pre></div><p>每个 token 会生成三个向量来参与这个过程：</p>
+<p>| 向量      | 角色 | 直觉                 |<br>
+|</p>
+]]></content>
+    <category term="AI"/>
+    <published>2026-06-09T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">Sampling Parameters</title>
     <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/sampling-parameters.html</id>
@@ -3220,17 +3430,6 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
-    <title type="text">AI</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
     <title type="text">架构设计</title>
     <id>https://zeevenn.github.io/notes/notes/architecture/</id>
     <link href="https://zeevenn.github.io/notes/notes/architecture/"/>
@@ -3322,10 +3521,46 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <title type="text">LLM 基础</title>
     <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/</id>
     <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
+    <updated>2026-06-16T05:23:04.000Z</updated>
     <summary type="html"><![CDATA[
-]]></summary>
+<h2>核心原理</h2>
+<ul>
+<li> — LLM 底层原理：Transformer、Attention、FFN、参数与涌现</li>
+<li> — Tokenization、BPE 算法、token 计数与计费</li>
+<li> — 向量表示、相似度计算、应用场景</li>
+<li> — Pre-training → SFT → RLHF/DPO 训练流程</li>
+<li> — 自回归生成、KV Cache、推理优化技术</li>
+</ul>
+<h2>工程应用</h2>
+<ul>
+<li> — Context window、长文本处理策略</li>
+<li> — Temperature、Top-K、Top-P、Repetition Penalties</li>
+<li> — 向量数据库、索引算法、选型</li>
+<li> — 评估集、自动评测、人工评审、可靠性风险</li>
+</ul>]]></summary>
     <content type="html"><![CDATA[
+<h2>核心原理</h2>
+<ul>
+<li> — LLM 底层原理：Transformer、Attention、FFN、参数与涌现</li>
+<li> — Tokenization、BPE 算法、token 计数与计费</li>
+<li> — 向量表示、相似度计算、应用场景</li>
+<li> — Pre-training → SFT → RLHF/DPO 训练流程</li>
+<li> — 自回归生成、KV Cache、推理优化技术</li>
+</ul>
+<h2>工程应用</h2>
+<ul>
+<li> — Context window、长文本处理策略</li>
+<li> — Temperature、Top-K、Top-P、Repetition Penalties</li>
+<li> — 向量数据库、索引算法、选型</li>
+<li> — 评估集、自动评测、人工评审、可靠性风险</li>
+</ul>
+<h2>相关章节</h2>
+<ul>
+<li> — 检索增强生成</li>
+<li> — AI Agent</li>
+<li> — 微调</li>
+<li> — 提示词工程</li>
+</ul>
 ]]></content>
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
@@ -4016,82 +4251,5 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <content type="html"><![CDATA[
 ]]></content>
     <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">最佳实践</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/typescript/best-practices/</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/typescript/best-practices/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">声明文件</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/typescript/declaration-files/</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/typescript/declaration-files/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">类型系统</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/typescript/type-system/</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/typescript/type-system/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Algorithm</title>
-    <id>https://zeevenn.github.io/notes/notes/algorithms/</id>
-    <link href="https://zeevenn.github.io/notes/notes/algorithms/"/>
-    <updated>2026-04-20T16:21:10.000Z</updated>
-    <summary type="html"><![CDATA[<p>使用 <code>TypeScript</code>，按照数据结构和算法的分类，整理了一些常见的算法题。</p>
-<ul>
-<li></li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[<p>使用 <code>TypeScript</code>，按照数据结构和算法的分类，整理了一些常见的算法题。</p>
-<ul>
-<li></li>
-</ul>
-]]></content>
-    <published>2026-04-20T16:21:10.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Project</title>
-    <id>https://zeevenn.github.io/notes/notes/projects/</id>
-    <link href="https://zeevenn.github.io/notes/notes/projects/"/>
-    <updated>2026-04-20T16:21:10.000Z</updated>
-    <summary type="html"><![CDATA[<h2>个人开发</h2>
-<ul>
-<li></li>
-<li></li>
-</ul>
-<h2>开源项目</h2>
-<ul>
-<li></li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[<h2>个人开发</h2>
-<ul>
-<li></li>
-<li></li>
-</ul>
-<h2>开源项目</h2>
-<ul>
-<li></li>
-</ul>
-]]></content>
-    <published>2026-04-20T16:21:10.000Z</published>
   </entry>
 </feed>
