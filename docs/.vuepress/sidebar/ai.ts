@@ -1,20 +1,23 @@
 export default [
   {
-    text: 'LLM Fundamentals',
+    text: 'LLM 基础',
     collapsible: true,
     icon: 'basic',
     prefix: '/ai/llm-fundamentals/',
     children: [
       '',
-      'what-is-llm',
-      'tokens',
-      'training',
-      'inference',
-      'context',
-      'sampling-parameters',
-      'embeddings',
-      'vector-databases',
-      'evaluation'
+      {
+        text: '核心原理',
+        collapsible: true,
+        icon: 'basic',
+        children: ['what-is-llm', 'tokens', 'embeddings', 'training', 'inference']
+      },
+      {
+        text: '工程应用',
+        collapsible: true,
+        icon: 'practice',
+        children: ['context', 'sampling-parameters', 'vector-databases', 'evaluation']
+      }
     ]
   },
   {
