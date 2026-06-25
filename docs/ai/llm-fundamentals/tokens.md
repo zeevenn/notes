@@ -67,36 +67,50 @@ API 调用按 token 数计费，分为 input tokens 和 output tokens：
 
 Output 通常比 input 贵 3-5 倍，因为生成（逐 token 解码）比编码计算量大得多。
 
-### 以 Claude 为例
+### 价格示例
 
-| 模型            | Input        | Output     | Cache Write   | Cache Read   |
-| --------------- | ------------ | ---------- | ------------- | ------------ |
-| Claude Opus 4   | $15 / MTok   | $75 / MTok | $18.75 / MTok | $1.50 / MTok |
-| Claude Sonnet 4 | $3 / MTok    | $15 / MTok | $3.75 / MTok  | $0.30 / MTok |
-| Claude Haiku 4  | $0.80 / MTok | $4 / MTok  | $1 / MTok     | $0.08 / MTok |
+价格会随模型、区域、Batch API、cache、长上下文和工具调用变化。记录价格时应同时说明成本构成，并以官方 pricing 或 models 页面为准。
 
-> MTok = 1M tokens
+以下价格按 2026-06-25 官方文档记录，单位是每 1M tokens：
+
+| 提供方 | 模型              | Input | Cached / Cache Read | Cache Write          | Output |
+| ------ | ----------------- | ----- | ------------------- | -------------------- | ------ |
+| OpenAI | GPT-5.5           | $5    | $0.50               | -                    | $30    |
+| OpenAI | GPT-5             | $1.25 | $0.125              | -                    | $10    |
+| OpenAI | GPT-5 mini        | $0.25 | $0.025              | -                    | $2     |
+| Claude | Claude Opus 4.8   | $5    | $0.50               | $6.25 / $10          | $25    |
+| Claude | Claude Sonnet 4.6 | $3    | $0.30               | $3.75 / $6           | $15    |
+| Claude | Claude Haiku 4.5  | $1    | $0.10               | $1.25 / $2           | $5     |
+
+Claude 的 cache write 分为 5 分钟和 1 小时两档，因此表中写成两个价格。OpenAI 的 cached input 是命中缓存后的 input 价格。
+
+官方入口：
+
+- [OpenAI Models](https://developers.openai.com/api/docs/models)
+- [Claude Pricing](https://docs.anthropic.com/en/docs/about-claude/pricing)
 
 ### Prompt Caching
 
 将重复使用的内容（system prompt、few-shot examples）标记为可缓存：
 
-- **Cache Write**：首次写入缓存，比正常 input 贵 25%
-- **Cache Read**：命中缓存时，只需正常 input 价格的 10%
+- **Cache Write**：首次写入缓存，通常比正常 input 贵
+- **Cache Read / Cached Input**：命中缓存时，通常只按正常 input 价格的一小部分计费
 
 ```
-第 1 次调用：input 部分按 cache write 计费（$3.75/MTok）
-第 2+ 次调用：命中缓存，按 cache read 计费（$0.30/MTok）
+以 Claude Sonnet 4.6 为例：
+
+第 1 次调用：5m cache write 为 $3.75/MTok，1h cache write 为 $6/MTok
+第 2+ 次调用：命中缓存，cache read 为 $0.30/MTok
 ```
 
 如果同一段 prompt 会被反复使用，例如 agent 每轮都携带相同 system prompt，prompt caching 通常很快就能抵消首次写入成本。
 
 ### 降低 token 成本的方法
 
-- **Prompt caching**：缓存重复的 system prompt，命中价格降为 10%
+- **Prompt caching**：缓存重复的 system prompt，命中后按 cached input / cache read 价格计费
 - **精简 prompt**：去除冗余说明、用结构化格式替代自然语言描述
 - **控制 output 长度**：设置 `max_tokens`，prompt 中要求简洁回复
-- **Batch API**：非实时场景使用批量接口，通常 50% 折扣
+- **Batch API**：非实时场景使用批量接口，按供应商批处理折扣计费
 
 ## Token 限制
 
