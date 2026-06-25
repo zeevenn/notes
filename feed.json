@@ -117,7 +117,7 @@
       "summary": "Token Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是将输入文本切分为 token 序列，每个 token 映射到一个整数 ID，再通过 embedding 转换为向量进行计算。 一个 token 不等于一个字符，也不等于一个单词： 同样的文本在不同 tokenizer 下切分结果差异很大。新一代 tokenizer（如 o2...",
       "content_html": "<h2>Token</h2>\n<p>Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是将输入文本切分为 token 序列，每个 token 映射到一个整数 ID，再通过 embedding 转换为向量进行计算。</p>\n<p>一个 token 不等于一个字符，也不等于一个单词：</p>\n<p>| 语言 | 示例                | GPT-4 (cl100k) | GPT-4o/5.x/O1/O3 (o200k) |<br>\n|</p>\n",
       "date_published": "2026-06-05T00:00:00.000Z",
-      "date_modified": "2026-06-16T07:31:19.000Z",
+      "date_modified": "2026-06-25T01:39:53.000Z",
       "authors": [],
       "tags": [
         "AI"

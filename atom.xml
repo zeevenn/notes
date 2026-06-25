@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-06-16T07:33:13.534Z</updated>
+  <updated>2026-06-25T01:41:42.695Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -345,7 +345,7 @@ Step 5: [prompt, ..., " Paris"] → &lt;EOS&gt;  (结束)
     <title type="text">Tokens</title>
     <id>https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/tokens.html</id>
     <link href="https://zeevenn.github.io/notes/notes/ai/llm-fundamentals/tokens.html"/>
-    <updated>2026-06-16T07:31:19.000Z</updated>
+    <updated>2026-06-25T01:39:53.000Z</updated>
     <summary type="html"><![CDATA[<h2>Token</h2>
 <p>Token 是 LLM 处理文本的最小单位。模型不直接理解文字，而是将输入文本切分为 token 序列，每个 token 映射到一个整数 ID，再通过 embedding 转换为向量进行计算。</p>
 <p>一个 token 不等于一个字符，也不等于一个单词：</p>
