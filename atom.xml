@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-06-25T04:36:02.077Z</updated>
+  <updated>2026-07-01T01:43:07.567Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -4001,9 +4001,9 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
-    <title type="text">Web 安全</title>
-    <id>https://zeevenn.github.io/notes/notes/security/web-security/</id>
-    <link href="https://zeevenn.github.io/notes/notes/security/web-security/"/>
+    <title type="text">网络安全</title>
+    <id>https://zeevenn.github.io/notes/notes/security/network-security/</id>
+    <link href="https://zeevenn.github.io/notes/notes/security/network-security/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -4012,9 +4012,9 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
-    <title type="text">网络安全</title>
-    <id>https://zeevenn.github.io/notes/notes/security/network-security/</id>
-    <link href="https://zeevenn.github.io/notes/notes/security/network-security/"/>
+    <title type="text">Web 安全</title>
+    <id>https://zeevenn.github.io/notes/notes/security/web-security/</id>
+    <link href="https://zeevenn.github.io/notes/notes/security/web-security/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
