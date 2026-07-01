@@ -28,20 +28,10 @@ projects:
     desc: Detailed description of the article
     link: https://link.to.your.article
 
-  - icon: https://yangxiaobai.top/gallery/photo/fixImg/avatar.webp
-    name: 杨小白
-    desc: The best way to predict the future is to invent it.
-    link: https://yangxiaobai.top/
-
   - icon: https://yzjnnff.github.io/blog/avatar.jpg
     name: YanZJNNFF
     desc: No tomato sauce, please.
     link: https://yzjnnff.github.io/blog/
-
-  - icon: http://zxxlovewtt.top/themes/theme-earth/assets/images/default-avatar.svg
-    name: ZXX
-    desc: 后台技术分享
-    link: http://zxxlovewtt.top/
 
 footer: No means Next Opportunity.
 ---
