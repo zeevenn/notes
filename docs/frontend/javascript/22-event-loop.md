@@ -303,6 +303,102 @@ function runCallbacksForPhase(phase) {
 
 这段伪代码只表达 Node 的阶段队列模型：回调来自不同阶段，而不是来自浏览器的 task source。`idle, prepare` 是 Node/libuv 内部阶段，通常不作为业务回调阶段分析。`process.nextTick()` 和 V8 微任务队列也不属于 libuv 阶段，它们在 JavaScript 回调边界被处理。
 
+用日常代码来对照，大致可以这样分：
+
+| 回调来源 | 常见 API | 所在位置 | 判断重点 |
+| --- | --- | --- | --- |
+| timer | `setTimeout()`、`setInterval()` | `timers` phase | delay 是阈值，不是精确时间 |
+| I/O | 文件、网络、连接等 I/O 回调 | 主要在 `poll` phase | poll 负责取 I/O 事件并执行 I/O 回调 |
+| immediate | `setImmediate()` | `check` phase | 在 poll 阶段完成后执行 |
+| close | socket 等资源的部分 `'close'` 回调 | `close callbacks` phase | 不是所有 close 都走这个 phase |
+| next tick | `process.nextTick()` | Node next tick queue | 不是 libuv phase，也不是 V8 microtask queue |
+| V8 microtask | Promise reaction、`queueMicrotask()`、`await` 后续代码 | V8 microtask queue | 不属于 libuv phase，在 JS 回调边界被清空 |
+
+### `poll` 阶段不是浏览器 task source
+
+`poll` 阶段容易被误解成“像浏览器一样，从多个事件源里选一个任务出来执行”。这不是 Node 的模型。浏览器事件循环讨论 task source、task queue 和 microtask checkpoint；Node 事件循环讨论 libuv phase。`poll` 只是其中一个 phase，主要负责等待 I/O、取回 I/O 事件，并执行 I/O 相关回调。
+
+更接近实际的模型是：
+
+```js
+function runPollPhase() {
+  if (pollQueue.hasCallback()) {
+    while (pollQueue.hasCallback() && !pollLimitReached()) {
+      const callback = pollQueue.shift()
+
+      callback()
+      drainProcessNextTickQueue()
+      drainV8MicrotaskQueue()
+    }
+
+    return
+  }
+
+  if (checkQueue.hasSetImmediateCallback()) {
+    return enterCheckPhase()
+  }
+
+  waitForIOOrTimerThreshold()
+}
+```
+
+所以，`poll` 阶段不是“一次只取一个 I/O 回调，然后立刻进入下一阶段”。当 poll queue 不为空时，Node 会同步执行里面的回调，直到队列清空或达到实现限制。每个 JavaScript 回调执行完后，才会先清空 `process.nextTick()` 队列，再清空 V8 microtask queue，然后继续处理下一个 poll 回调或进入后续 phase。
+
+如果 poll 阶段里有两个 I/O 回调，它们之间可能穿插各自创建的 next tick 和微任务：
+
+```txt
+poll callback 1
+nextTick from callback 1
+Promise microtask from callback 1
+poll callback 2
+nextTick from callback 2
+Promise microtask from callback 2
+```
+
+不是下面这种“先跑完所有 poll 回调，最后统一清空微任务”的顺序：
+
+```txt
+poll callback 1
+poll callback 2
+nextTick / Promise microtasks
+```
+
+### phase 队列很多会怎样
+
+一个 phase 里的回调很多时，后续 phase 会被延迟，但这不等于事件循环一定卡死。Node/libuv 通常会尽量处理当前 phase 的回调队列，直到队列清空或达到实现限制。真正危险的是下面几类代码：
+
+| 情况 | 结果 |
+| --- | --- |
+| 单个 JS 回调长时间不返回 | 整个事件循环被阻塞 |
+| 递归注册 `process.nextTick()` | 事件循环无法继续推进，I/O、timer、`setImmediate()` 都可能被饿死 |
+| 递归注册 Promise/`queueMicrotask()` | V8 microtask queue 持续不空，后续 phase 很难得到执行机会 |
+| poll 队列持续有大量 I/O 回调 | 后续 phase 被明显延迟，但 libuv 有实现相关的防饥饿限制 |
+
+<details>
+<summary>poll 阶段的上限不是固定时间片</summary>
+
+Node 文档只说 libuv 有一个 system-dependent hard limit，用来避免 poll 阶段饿死事件循环。这个上限不是公开 API，也不是稳定的“最多执行多少毫秒”。
+
+当前 libuv 的 Unix 实现能看到类似批次数、事件数的限制，例如固定大小的事件数组，以及连续满批时再做有限次数非阻塞 poll 的计数逻辑。它不能简单换算成“最多执行多少个 JavaScript 回调”，因为一个底层 I/O 事件不一定对应一个 JS 回调，每个回调里还可能继续创建 `nextTick` 和 V8 microtask。这个实现细节会随平台和 libuv 版本变化，不能当作业务调度保证。
+
+如果需要明确让出事件循环，应该主动切片，而不是依赖 libuv 的内部上限：
+
+```js
+function workInChunks(items) {
+  const batch = items.splice(0, 100)
+
+  for (const item of batch) {
+    doWork(item)
+  }
+
+  if (items.length > 0) {
+    setImmediate(() => workInChunks(items))
+  }
+}
+```
+
+</details>
+
 Node 20 起使用 libuv 1.45.0 之后的行为发生了变化：timer 只在 poll 阶段之后运行，而不是像旧版本那样在 poll 前后都可能运行。这个变化会影响某些场景下 `setTimeout()` 与 `setImmediate()` 的相对时机。跨版本判断题必须标注 Node 版本。
 
 ### timer 不是精确时间
@@ -563,9 +659,9 @@ microtask
 
 1. 先执行所有同步代码，记录同步输出。
 2. 同步执行过程中，标出哪些回调进入任务队列，哪些进入微任务队列。
-3. 当前调用栈清空后，清空微任务队列。微任务里新创建的微任务追加到队尾，并在同一次 checkpoint 内继续执行。
+3. 浏览器里，当前 task 执行结束后清空微任务队列。微任务里新创建的微任务追加到队尾，并在同一次 checkpoint 内继续执行。
 4. 浏览器环境中，微任务结束后才可能进入渲染；是否真的渲染由浏览器决定。
-5. Node CommonJS 或普通回调中，先处理 `process.nextTick()`，再处理 V8 微任务；然后再看当前所处 libuv 阶段。ESM 顶层要单独判断。
+5. Node CommonJS 或普通回调中，每个 JS 回调返回到 Node 边界后，先处理 `process.nextTick()`，再处理 V8 微任务；然后再看当前所处 libuv 阶段。ESM 顶层要单独判断。
 6. 遇到 `setTimeout()` 与 `setImmediate()`，先判断是否在 I/O 回调内，再判断 Node 版本；主模块顶层顺序不写死。
 
 ## 实践判断
