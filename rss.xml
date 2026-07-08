@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Wed, 08 Jul 2026 01:51:36 GMT</pubDate>
-    <lastBuildDate>Wed, 08 Jul 2026 01:51:36 GMT</lastBuildDate>
+    <pubDate>Wed, 08 Jul 2026 02:02:36 GMT</pubDate>
+    <lastBuildDate>Wed, 08 Jul 2026 02:02:36 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>AI</category>
@@ -2869,16 +2869,6 @@ worker<span class="token punctuation">.</span><span class="token function">postM
 ]]></content:encoded>
     </item>
     <item>
-      <title>RAG 检索增强生成</title>
-      <link>https://zeevenn.github.io/notes/notes/ai/rag/</link>
-      <guid>https://zeevenn.github.io/notes/notes/ai/rag/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">RAG 检索增强生成</source>
-      <description>RAG 检索增强生成 </description>
-      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    <item>
       <title>提示词工程</title>
       <link>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</link>
       <guid>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</guid>
@@ -2890,6 +2880,16 @@ worker<span class="token punctuation">.</span><span class="token function">postM
 <h3>官方文档</h3>
 <p>| 来源      | 链接                                                                                                                                | 特点                                                      |<br>
 |</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>RAG 检索增强生成</title>
+      <link>https://zeevenn.github.io/notes/notes/ai/rag/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/rag/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">RAG 检索增强生成</source>
+      <description>RAG 检索增强生成 </description>
+      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
+      <content:encoded><![CDATA[
 ]]></content:encoded>
     </item>
     <item>
@@ -3003,26 +3003,6 @@ worker<span class="token punctuation">.</span><span class="token function">postM
 ]]></content:encoded>
     </item>
     <item>
-      <title>编译原理</title>
-      <link>https://zeevenn.github.io/notes/notes/computer-science/compilation/</link>
-      <guid>https://zeevenn.github.io/notes/notes/computer-science/compilation/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">编译原理</source>
-      <description>编译原理 </description>
-      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    <item>
-      <title>并发编程</title>
-      <link>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</link>
-      <guid>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">并发编程</source>
-      <description>并发编程 </description>
-      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    <item>
       <title>AWS</title>
       <link>https://zeevenn.github.io/notes/notes/cloud/aws/</link>
       <guid>https://zeevenn.github.io/notes/notes/cloud/aws/</guid>
@@ -3048,6 +3028,26 @@ worker<span class="token punctuation">.</span><span class="token function">postM
       <guid>https://zeevenn.github.io/notes/notes/cloud/concepts/</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">云计算概念</source>
       <description>云计算概念 </description>
+      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
+      <content:encoded><![CDATA[
+]]></content:encoded>
+    </item>
+    <item>
+      <title>编译原理</title>
+      <link>https://zeevenn.github.io/notes/notes/computer-science/compilation/</link>
+      <guid>https://zeevenn.github.io/notes/notes/computer-science/compilation/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">编译原理</source>
+      <description>编译原理 </description>
+      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
+      <content:encoded><![CDATA[
+]]></content:encoded>
+    </item>
+    <item>
+      <title>并发编程</title>
+      <link>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</link>
+      <guid>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">并发编程</source>
+      <description>并发编程 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
 ]]></content:encoded>
@@ -3143,21 +3143,21 @@ worker<span class="token punctuation">.</span><span class="token function">postM
 ]]></content:encoded>
     </item>
     <item>
-      <title>前端测试</title>
-      <link>https://zeevenn.github.io/notes/notes/frontend/testing/</link>
-      <guid>https://zeevenn.github.io/notes/notes/frontend/testing/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">前端测试</source>
-      <description>前端测试 </description>
-      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    <item>
       <title>状态管理</title>
       <link>https://zeevenn.github.io/notes/notes/frontend/state-management/</link>
       <guid>https://zeevenn.github.io/notes/notes/frontend/state-management/</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">状态管理</source>
       <description>状态管理 </description>
+      <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
+      <content:encoded><![CDATA[
+]]></content:encoded>
+    </item>
+    <item>
+      <title>前端测试</title>
+      <link>https://zeevenn.github.io/notes/notes/frontend/testing/</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/testing/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">前端测试</source>
+      <description>前端测试 </description>
       <pubDate>Tue, 21 Apr 2026 11:31:25 GMT</pubDate>
       <content:encoded><![CDATA[
 ]]></content:encoded>

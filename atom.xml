@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-07-08T01:51:36.396Z</updated>
+  <updated>2026-07-08T02:02:36.863Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -3569,17 +3569,6 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
-    <title type="text">RAG 检索增强生成</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/rag/</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/rag/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
     <title type="text">提示词工程</title>
     <id>https://zeevenn.github.io/notes/notes/ai/prompt-engineering/</id>
     <link href="https://zeevenn.github.io/notes/notes/ai/prompt-engineering/"/>
@@ -3623,6 +3612,17 @@ worker<span class="token punctuation">.</span><span class="token function">postM
 <h3>官方文档</h3>
 <p>| 来源      | 链接                                                                                                                                | 特点                                                      |<br>
 |</p>
+]]></content>
+    <published>2026-04-21T11:31:25.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">RAG 检索增强生成</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/rag/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/rag/"/>
+    <updated>2026-04-21T11:31:25.000Z</updated>
+    <summary type="html"><![CDATA[
+]]></summary>
+    <content type="html"><![CDATA[
 ]]></content>
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
@@ -3748,28 +3748,6 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
-    <title type="text">编译原理</title>
-    <id>https://zeevenn.github.io/notes/notes/computer-science/compilation/</id>
-    <link href="https://zeevenn.github.io/notes/notes/computer-science/compilation/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">并发编程</title>
-    <id>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</id>
-    <link href="https://zeevenn.github.io/notes/notes/computer-science/concurrency/"/>
-    <updated>2026-04-21T11:31:25.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-04-21T11:31:25.000Z</published>
-  </entry>
-  <entry>
     <title type="text">AWS</title>
     <id>https://zeevenn.github.io/notes/notes/cloud/aws/</id>
     <link href="https://zeevenn.github.io/notes/notes/cloud/aws/"/>
@@ -3795,6 +3773,28 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <title type="text">云计算概念</title>
     <id>https://zeevenn.github.io/notes/notes/cloud/concepts/</id>
     <link href="https://zeevenn.github.io/notes/notes/cloud/concepts/"/>
+    <updated>2026-04-21T11:31:25.000Z</updated>
+    <summary type="html"><![CDATA[
+]]></summary>
+    <content type="html"><![CDATA[
+]]></content>
+    <published>2026-04-21T11:31:25.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">编译原理</title>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/compilation/</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/compilation/"/>
+    <updated>2026-04-21T11:31:25.000Z</updated>
+    <summary type="html"><![CDATA[
+]]></summary>
+    <content type="html"><![CDATA[
+]]></content>
+    <published>2026-04-21T11:31:25.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">并发编程</title>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/concurrency/</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/concurrency/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3902,9 +3902,9 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
-    <title type="text">前端测试</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/testing/</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/testing/"/>
+    <title type="text">状态管理</title>
+    <id>https://zeevenn.github.io/notes/notes/frontend/state-management/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/state-management/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
@@ -3913,9 +3913,9 @@ worker<span class="token punctuation">.</span><span class="token function">postM
     <published>2026-04-21T11:31:25.000Z</published>
   </entry>
   <entry>
-    <title type="text">状态管理</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/state-management/</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/state-management/"/>
+    <title type="text">前端测试</title>
+    <id>https://zeevenn.github.io/notes/notes/frontend/testing/</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/testing/"/>
     <updated>2026-04-21T11:31:25.000Z</updated>
     <summary type="html"><![CDATA[
 ]]></summary>
