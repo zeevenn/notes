@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">浏览器事件循环手绘图</title>
+  <desc id="desc">浏览器从 task queues 选择 task，执行 JavaScript，清空 microtask queue，并在合适时机更新渲染。</desc>
+  <defs>
+    <filter id="paperNoise" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise" />
+      <feColorMatrix in="noise" type="saturate" values="0" result="mono" />
+      <feComponentTransfer in="mono">
+        <feFuncA type="table" tableValues="0 0.08" />
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="mono" mode="multiply" />
+    </filter>
+    <filter id="roughLine" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.15" />
+    </filter>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#253550" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="arrowDashed" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#6b5a8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <style>
+      .page { fill: #fffaf0; filter: url(#paperNoise); }
+      .ink { stroke: #253550; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; filter: url(#roughLine); }
+      .thin { stroke-width: 2; opacity: 0.78; }
+      .dash { stroke-dasharray: 9 8; }
+      .arrow { marker-end: url(#arrow); }
+      .arrow-dashed { marker-end: url(#arrowDashed); stroke: #6b5a8f; }
+      .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #253550; }
+      .label { font: 600 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #253550; }
+      .small { font: 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #42506a; }
+      .tiny { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #536179; }
+      .note { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #6b4c2b; }
+      .paper-label { font: 700 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #253550; }
+      .tag { fill: #fffaf0; opacity: 0.94; }
+    </style>
+  </defs>
+
+  <rect class="page" x="0" y="0" width="1400" height="760" rx="24" />
+
+  <text class="title" x="48" y="54">浏览器事件循环</text>
+  <text class="small" x="50" y="83">HTML event loop：task source、microtask checkpoint、rendering opportunity</text>
+
+  <g id="taskQueues" transform="translate(56 128)">
+    <rect x="0" y="0" width="320" height="360" rx="20" fill="#f8f4ea" opacity="0.7" />
+    <path class="ink" d="M8 8 C85 0 250 2 313 8 C323 88 323 276 312 352 C231 363 84 361 8 352 C-2 276 -1 88 8 8 Z" />
+    <path class="ink thin" d="M17 18 C95 10 238 12 302 18 C310 96 308 262 301 341 C225 348 91 348 18 340 C9 266 10 95 17 18 Z" />
+    <text class="label" x="34" y="43">浏览器 task queues</text>
+    <text class="small" x="34" y="69">来自不同 task source</text>
+
+    <g transform="translate(32 96)">
+      <rect x="0" y="0" width="256" height="52" rx="13" fill="#bde0fe" opacity="0.94" />
+      <rect class="ink thin" x="0" y="0" width="256" height="52" rx="13" />
+      <text class="paper-label" x="19" y="23">timer task queue</text>
+      <text class="tiny" x="19" y="41">setTimeout / setInterval</text>
+    </g>
+
+    <g transform="translate(32 160)">
+      <rect x="0" y="0" width="256" height="58" rx="13" fill="#cdb4db" opacity="0.9" />
+      <rect class="ink thin" x="0" y="0" width="256" height="58" rx="13" />
+      <text class="paper-label" x="19" y="25">user interaction task queue</text>
+      <text class="tiny" x="19" y="45">click / input 事件派发</text>
+    </g>
+
+    <g transform="translate(32 232)">
+      <rect x="0" y="0" width="256" height="52" rx="13" fill="#ffd6a5" opacity="0.92" />
+      <rect class="ink thin" x="0" y="0" width="256" height="52" rx="13" />
+      <text class="paper-label" x="19" y="23">networking task queue</text>
+      <text class="tiny" x="19" y="41">fetch / XHR / resource events</text>
+    </g>
+
+    <g transform="translate(32 296)">
+      <rect x="0" y="0" width="256" height="52" rx="13" fill="#caffbf" opacity="0.92" />
+      <rect class="ink thin" x="0" y="0" width="256" height="52" rx="13" />
+      <text class="paper-label" x="19" y="23">posted message task queue</text>
+      <text class="tiny" x="19" y="41">postMessage / MessageChannel</text>
+    </g>
+  </g>
+
+  <g id="selectTask" transform="translate(456 263)">
+    <rect x="0" y="0" width="146" height="72" rx="18" fill="#f7e7a6" opacity="0.94" />
+    <path class="ink" d="M6 8 C45 1 101 2 140 8 C149 30 147 54 140 66 C98 74 46 73 7 66 C-1 50 -1 29 6 8 Z" />
+    <text class="paper-label" x="33" y="30">选择 task</text>
+    <text class="tiny" x="23" y="52">从某个 queue 取出</text>
+  </g>
+
+  <g id="callStack" transform="translate(684 126)">
+    <rect x="0" y="0" width="270" height="150" rx="20" fill="#f8edeb" opacity="0.96" />
+    <path class="ink" d="M7 8 C82 1 199 2 263 8 C273 45 271 113 263 142 C194 153 77 150 8 142 C-2 104 -1 45 7 8 Z" />
+    <path class="ink thin" d="M16 17 C91 10 188 11 253 17 C260 51 259 104 253 132 C187 139 85 139 17 132 C10 100 10 50 16 17 Z" />
+    <text class="label" x="35" y="42">Call Stack</text>
+    <text class="small" x="35" y="70">执行 task 中的 JavaScript</text>
+    <g transform="translate(35 94)">
+      <rect x="0" y="0" width="198" height="42" rx="9" fill="#ffcad4" opacity="0.82" />
+      <rect class="ink thin" x="0" y="0" width="198" height="42" rx="9" />
+      <text class="tiny" x="16" y="18">script / event dispatch</text>
+      <text class="tiny" x="16" y="34">timer callback</text>
+    </g>
+  </g>
+
+  <g id="checkpoint" transform="translate(594 355)">
+    <rect x="0" y="0" width="364" height="124" rx="20" fill="#fdffb6" opacity="0.9" />
+    <path class="ink" d="M8 10 C106 1 267 2 356 9 C368 42 366 92 356 116 C259 127 104 126 8 116 C-2 85 -1 43 8 10 Z" />
+    <path class="ink thin" d="M18 19 C119 11 253 12 346 19 C355 48 353 83 346 106 C252 114 119 114 19 106 C11 79 11 49 18 19 Z" />
+    <text class="label" x="34" y="44">microtask checkpoint</text>
+    <text class="small" x="34" y="73">清空 microtask queue</text>
+    <text class="tiny" x="34" y="97">新增 microtask 继续排到队尾</text>
+  </g>
+
+  <g id="microtasks" transform="translate(1036 214)">
+    <rect x="0" y="0" width="302" height="150" rx="20" fill="#e9edc9" opacity="0.94" />
+    <path class="ink" d="M7 9 C92 1 216 2 294 9 C305 45 303 114 294 142 C210 152 90 151 8 142 C-2 104 -1 43 7 9 Z" />
+    <path class="ink thin" d="M17 18 C101 10 205 11 284 18 C292 51 291 104 284 132 C204 139 99 139 18 132 C10 99 11 49 17 18 Z" />
+    <text class="label" x="30" y="42">microtask queue</text>
+    <text class="small" x="30" y="72">Promise Job</text>
+    <text class="small" x="30" y="98">queueMicrotask</text>
+    <text class="small" x="30" y="124">MutationObserver</text>
+  </g>
+
+  <g id="renderDecision" transform="translate(1012 492)">
+    <path d="M94 0 C130 21 168 50 188 88 C155 114 118 135 94 148 C58 127 23 104 0 87 C22 48 58 18 94 0 Z" fill="#d8e2dc" opacity="0.93" />
+    <path class="ink" d="M94 0 C130 21 168 50 188 88 C155 114 118 135 94 148 C58 127 23 104 0 87 C22 48 58 18 94 0 Z" />
+    <path class="ink thin" d="M94 10 C124 27 157 52 178 87 C149 109 116 127 94 139 C62 120 32 101 11 86 C32 51 63 27 94 10 Z" />
+    <text class="paper-label" x="45" y="69">到了渲染</text>
+    <text class="paper-label" x="57" y="94">时机?</text>
+  </g>
+
+  <g id="rendering" transform="translate(1144 654)">
+    <rect x="0" y="0" width="218" height="70" rx="18" fill="#b8e0d2" opacity="0.94" />
+    <path class="ink" d="M6 8 C68 1 158 2 212 8 C220 29 218 53 212 64 C151 72 68 72 7 64 C-2 49 -1 29 6 8 Z" />
+    <text class="paper-label" x="27" y="29">更新渲染</text>
+    <text class="small" x="27" y="53">rAF / style / layout / paint</text>
+  </g>
+
+  <g id="nextTurn" transform="translate(618 638)">
+    <rect x="0" y="0" width="182" height="64" rx="18" fill="#f7e7a6" opacity="0.92" />
+    <path class="ink" d="M6 8 C61 1 127 2 176 8 C184 29 182 50 176 58 C127 67 62 66 7 58 C-2 43 -1 28 6 8 Z" />
+    <text class="paper-label" x="51" y="29">下一轮</text>
+    <text class="small" x="30" y="50">重新选择 task</text>
+  </g>
+
+  <g id="note" transform="translate(980 104)">
+    <rect x="0" y="0" width="348" height="88" rx="20" fill="#f4e1d2" opacity="0.95" />
+    <path class="ink" d="M8 9 C108 1 248 2 340 8 C351 36 349 65 340 81 C242 92 107 91 8 81 C-2 58 -1 35 8 9 Z" />
+    <text class="paper-label" x="27" y="34">注意</text>
+    <text class="note" x="27" y="59">microtask queue 不是 task queue；</text>
+    <text class="note" x="27" y="77">渲染只在合适时机发生。</text>
+  </g>
+
+  <path class="ink arrow" d="M383 300 C405 300 426 300 440 300" />
+  <path class="ink arrow" d="M608 286 C636 250 656 222 670 206" />
+  <path class="ink arrow" d="M814 285 C810 309 792 329 768 344" />
+  <path class="ink arrow-dashed dash" d="M960 199 C987 198 1008 212 1023 239" />
+  <rect class="tag" x="965" y="183" width="132" height="28" rx="8" />
+  <text class="small" x="977" y="203">queue microtask</text>
+  <path class="ink arrow-dashed dash" d="M1030 370 C998 388 978 412 964 434" />
+  <rect class="tag" x="983" y="393" width="50" height="28" rx="8" />
+  <text class="small" x="993" y="413">drain</text>
+  <path class="ink arrow" d="M964 454 C984 486 999 509 1011 528" />
+  <path class="ink arrow" d="M1119 636 C1143 644 1158 648 1169 651" />
+  <text class="small" x="1142" y="621">是</text>
+  <path class="ink arrow" d="M1000 584 C926 624 858 648 816 661" />
+  <text class="small" x="930" y="623">否</text>
+  <path class="ink arrow" d="M1140 690 C1014 704 888 697 816 674" />
+  <path class="ink arrow" d="M618 670 C510 667 476 612 505 537 C522 494 560 467 580 454" />
+</svg>
