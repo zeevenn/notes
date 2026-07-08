@@ -78,7 +78,38 @@ console.log('D')
 4. 如果到了渲染时机，执行 `requestAnimationFrame` 回调、样式计算、布局、绘制等渲染相关步骤。
 5. 进入下一轮循环。
 
-![事件循环](./img/0017/event-loop.png)
+```mermaid
+graph TD
+    subgraph TaskQueues[浏览器 task queues]
+        Timer[timer task queue]
+        Input[user interaction task queue]
+        Network[networking task queue]
+        Message[posted message task queue]
+    end
+
+    Timer --> Pick[选择一个 task queue 中的可运行 task]
+    Input --> Pick
+    Network --> Pick
+    Message --> Pick
+
+    Pick --> RunTask[在调用栈执行 task 中的 JavaScript]
+    RunTask --> Checkpoint[perform microtask checkpoint]
+
+    RunTask -. queue microtask .-> Microtasks[microtask queue<br/>Promise Job / queueMicrotask / MutationObserver]
+    Microtasks -. drain .-> Checkpoint
+
+    Checkpoint --> HasMicrotask{microtask queue 非空?}
+    HasMicrotask -- 是 --> RunMicrotask[执行最早入队的 microtask]
+    RunMicrotask --> HasMicrotask
+    HasMicrotask -- 否 --> Render{到达渲染时机?}
+
+    Render -- 是 --> UpdateRendering[更新渲染<br/>rAF / style / layout / paint]
+    Render -- 否 --> NextTurn[进入下一轮]
+    UpdateRendering --> NextTurn
+    NextTurn --> Pick
+```
+
+这张图只描述浏览器事件循环：task queue 来自 HTML task source，微任务在 microtask checkpoint 中清空，渲染在合适的 rendering opportunity 发生。Node.js 使用 libuv 阶段模型，不按这张图取回调。
 
 ### 浏览器常见任务
 
@@ -86,11 +117,13 @@ console.log('D')
 
 - 初始 script 执行。
 - `setTimeout()`、`setInterval()`。
-- 用户交互事件，例如 `click`、`input`。
+- 用户交互事件，例如 `click`、`input`。task 对应的是一次事件派发，派发过程中同步调用已注册的事件监听器。
 - 网络、文件、消息等宿主 API 的回调。
 - `MessageChannel`、`postMessage` 相关回调。
 
 任务之间没有一个跨来源的全局 FIFO 保证。来自同一任务源的任务通常按入队顺序处理，但浏览器可以在不同任务源之间做选择。
+
+`addEventListener()` 只是注册监听器，不会立刻创建 task。用户点击、输入等事件发生后，浏览器在合适时机调度事件派发 task；这个 task 执行时，会按捕获、目标、冒泡等规则同步调用匹配的监听器。监听器内部创建的微任务，会在这次事件派发 task 结束后的 microtask checkpoint 中执行。
 
 `setTimeout(fn, 0)` 也不是“立刻执行”。它表示 timer 到达最小延迟阈值后，回调才有资格作为任务运行。主线程正在执行同步代码、微任务链很长、浏览器对后台页面限流，都会让它更晚执行。
 
