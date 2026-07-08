@@ -7,18 +7,18 @@ tag:
   - 事件循环
 ---
 
-事件循环描述的是宿主环境如何调度 JavaScript 代码、回调、微任务、I/O 和渲染。JavaScript 语言本身只定义执行上下文、调用栈、Promise Job 等机制；浏览器事件循环由 HTML Standard 描述，Node.js 事件循环由 Node 运行时和 libuv 共同实现。
+讨论事件循环时，最容易混在一起的是三套东西：ECMAScript 语言规范、浏览器的 HTML event loop，以及 Node.js 基于 libuv 的事件循环。JavaScript 语言本身只描述执行上下文、调用栈、Job、Promise Job 等机制；代码什么时候被浏览器拿出来跑、I/O 回调在哪个阶段执行、渲染何时发生，这些都属于宿主环境。
 
-这篇笔记按三层模型区分：
+理解这篇笔记时，可以先把边界分开：
 
 - ECMAScript 层：执行上下文栈、Job、Promise Job、agent。语言规范不定义浏览器任务队列，也不使用“同步任务 / 异步任务”这组分类。
-- 浏览器层：HTML Standard 定义 event loop、task、task queue、task source、microtask queue 和 rendering opportunity。浏览器里的“宏任务”通常是 task 的教学称呼。
-- Node.js 层：Node 事件循环围绕 libuv 阶段运行，包括 `timers`、`poll`、`check` 等阶段，同时还有 `process.nextTick()` 队列和 V8 微任务队列。Node 不使用浏览器的 task source 模型。
+- 浏览器层：HTML Standard 定义 event loop、task、task queue、task source、microtask queue 和 rendering opportunity。浏览器教程里说的“宏任务”，通常是在讲 HTML task。
+- Node.js 层：Node 事件循环围绕 libuv 阶段运行，包括 `timers`、`poll`、`check` 等阶段；除此之外还有 `process.nextTick()` 队列和 V8 微任务队列。Node 不使用浏览器的 task source 模型。
 
-“一个宏任务队列 + 一个微任务队列”只适合作为入门简化图。更精确的边界：
+所以，“一个宏任务队列 + 一个微任务队列”只能当成入门草图。写输出题或排查异步问题时，需要记住几个更接近真实运行时的边界：
 
 - 浏览器可以有多个任务队列，队列来自不同 task source。浏览器可以按策略选择队列，例如提高用户输入事件的优先级。
-- 微任务队列不是任务队列。每次执行完一个任务后，浏览器会执行一次 microtask checkpoint，把当前可执行的微任务清空。
+- 微任务队列不是任务队列。任务结束后通常会进入 microtask checkpoint，把当前可执行的微任务清空；规范中也会在其他清理脚本执行的边界触发 checkpoint。
 - Node 的“取任务”不是从 HTML task queue 中选择，而是按 libuv 阶段推进，在不同阶段执行对应回调。
 - 渲染是浏览器事件循环的一部分，不属于 Node 事件循环。
 
@@ -68,9 +68,9 @@ console.log('D')
 
 ## 浏览器事件循环
 
-浏览器主线程同一时间只能执行一段 JavaScript。同步代码进入调用栈执行；异步 API 由浏览器宿主环境处理，完成后把回调调度回事件循环。
+浏览器主线程同一时间只能执行一段 JavaScript。同步代码会沿着调用栈一直跑到栈清空；异步 API 由浏览器宿主环境继续跟进，等条件满足后，再把对应回调交还给事件循环。
 
-一次简化的浏览器循环：
+可以先把一轮浏览器事件循环看成下面这个过程：
 
 1. 从某个任务队列中选择一个可执行任务。
 2. 执行这个任务中的 JavaScript，直到调用栈清空。
@@ -80,11 +80,11 @@ console.log('D')
 
 ![浏览器事件循环手绘图](./img/0017/browser-event-loop-sketch.svg)
 
-这张图只描述浏览器事件循环：task queue 来自 HTML task source，微任务在 microtask checkpoint 中清空，渲染在合适的 rendering opportunity 发生。
+这张图只描述浏览器事件循环：task queue 来自 HTML task source，微任务在 microtask checkpoint 中清空，渲染只会在合适的 rendering opportunity 发生。
 
 ### 浏览器常见任务
 
-这些回调通常作为任务调度：
+日常代码里，常见的 task 来源包括：
 
 - 初始 script 执行。
 - `setTimeout()`、`setInterval()`。
@@ -92,11 +92,11 @@ console.log('D')
 - 网络、文件、消息等宿主 API 的回调。
 - `MessageChannel`、`postMessage` 相关回调。
 
-任务之间没有一个跨来源的全局 FIFO 保证。来自同一任务源的任务通常按入队顺序处理，但浏览器可以在不同任务源之间做选择。
+不同来源的任务之间没有全局 FIFO 保证。来自同一任务源的任务通常按入队顺序处理，但浏览器可以在不同任务源之间做选择。
 
 `addEventListener()` 只是注册监听器，不会立刻创建 task。用户点击、输入等事件发生后，浏览器在合适时机调度事件派发 task；这个 task 执行时，会按捕获、目标、冒泡等规则同步调用匹配的监听器。监听器内部创建的微任务，会在这次事件派发 task 结束后的 microtask checkpoint 中执行。
 
-`setTimeout(fn, 0)` 也不是“立刻执行”。它表示 timer 到达最小延迟阈值后，回调才有资格作为任务运行。主线程正在执行同步代码、微任务链很长、浏览器对后台页面限流，都会让它更晚执行。
+`setTimeout(fn, 0)` 也不是“立刻执行”。它只表示 timer 达到最小延迟阈值后，回调才有资格作为任务运行。主线程正在执行同步代码、微任务链很长、浏览器对后台页面限流，都会让它更晚执行。
 
 ### 浏览器如何选择任务队列
 
@@ -152,7 +152,7 @@ function browserSchedulingPolicy(queues) {
 }
 ```
 
-微任务不参与 `chooseOneTaskQueue()`。普通任务执行完后，事件循环进入 microtask checkpoint，把微任务队列清空：
+微任务不参与 `chooseOneTaskQueue()`。一个普通任务跑完后，事件循环通常会进入 microtask checkpoint，把微任务队列清空：
 
 ```js
 function performMicrotaskCheckpoint() {
@@ -176,16 +176,16 @@ maybe render
 
 ### 常见微任务
 
-这些回调通常作为微任务调度：
+下面这些 API 会在满足条件时入队微任务：
 
-- `Promise.prototype.then()`、`catch()`、`finally()`。
+- `Promise.prototype.then()`、`catch()`、`finally()` 的 reaction job。
 - `queueMicrotask()`。
 - `MutationObserver`。
 - `async/await` 中 `await` 之后的继续执行。
 
-微任务有两个重要特征：
+微任务有两个需要特别留意的特征：
 
-- 当前任务结束后、浏览器尝试渲染前，会清空微任务队列。
+- 当前任务结束后、浏览器尝试渲染前，通常会清空微任务队列。
 - 微任务执行过程中继续入队的微任务，会在同一次 checkpoint 内继续执行。
 
 这意味着递归创建微任务可能让页面长时间无法处理输入、timer 和渲染：
@@ -198,7 +198,7 @@ function loop() {
 loop()
 ```
 
-上面的代码不会让出主线程。长任务拆片要回到任务队列，例如 `setTimeout()`、`MessageChannel`，或框架/平台提供的调度器。
+上面的代码不会让出主线程。长任务拆片要回到任务队列，例如 `setTimeout()`、`MessageChannel`，或框架、平台提供的调度器。
 
 ### 渲染与微任务
 
@@ -214,9 +214,9 @@ button.onclick = () => {
 }
 ```
 
-如果 `heavyWork()` 很慢，用户可能看不到 `loading`，因为微任务会在渲染机会之前执行。让浏览器先绘制的做法，是把耗时工作放到后续任务，或使用更适合动画帧/空闲期的调度方式。
+如果 `heavyWork()` 很慢，用户可能看不到 `loading`，因为微任务会在渲染机会之前执行。想先把 `loading` 画出来，通常要把耗时工作放到后续 task，或者把工作拆给空闲期、专门的调度器处理。
 
-`requestAnimationFrame()` 不是微任务，也不是普通 timer。它的回调在一次渲染更新中执行，适合读取/写入下一帧相关的动画状态。`requestIdleCallback()` 则依赖浏览器判断是否有空闲时间，不适合承载必须立即执行的业务逻辑。
+`requestAnimationFrame()` 不是微任务，也不是普通 timer。它的回调在一次渲染更新中执行，适合读取或写入下一帧相关的动画状态；如果在 rAF 回调里执行很重的同步工作，仍然可能卡住这一帧。`requestIdleCallback()` 则依赖浏览器判断是否有空闲时间，不适合承载必须立即执行的业务逻辑。
 
 ## `async/await` 的调度
 
@@ -247,9 +247,14 @@ B
 
 ## Node.js 事件循环
 
-Node.js 的事件循环服务于非阻塞 I/O。JavaScript 默认仍在单个主线程执行；文件 I/O、DNS、部分加密压缩任务可能使用 libuv 线程池，网络 I/O 通常由操作系统内核能力驱动。异步操作完成后，Node 把对应回调放入事件循环的某个阶段。
+Node.js 的事件循环服务于非阻塞 I/O。JavaScript 默认仍在单个主线程执行；文件 I/O、`dns.lookup()` 这类 DNS 解析、部分加密压缩任务可能使用 libuv 线程池，网络 I/O 通常由操作系统内核能力驱动。异步操作完成后，Node 把对应回调放入事件循环的某个阶段。
 
-Node 文档中常用的阶段模型是：
+按 Node 官方文档整理，Node 启动后的流程可以分成两层看：
+
+- 先初始化事件循环，并执行输入脚本。输入脚本本身可能注册 timer、发起异步 I/O、调用 `process.nextTick()` 等。
+- 输入脚本执行完后，Node 才开始推进事件循环。事件循环阶段图通常从 `timers` 开始展示，但这不是说业务代码“启动后第一件事一定是执行 timer 回调”。
+
+Node 文档中常用的阶段模型如下。这个列表适合读图，不要把第一项理解成“进程启动后第一件事一定是 timer”：
 
 1. `timers`：执行 `setTimeout()`、`setInterval()` 到期回调。
 2. `pending callbacks`：执行部分延迟到下一轮的系统 I/O 回调。
@@ -261,6 +266,8 @@ Node 文档中常用的阶段模型是：
 ![Node.js 事件循环手绘图](./img/0017/node-event-loop-sketch.svg)
 
 这张图只描述 Node.js 事件循环：回调按 libuv 阶段推进，不使用浏览器的 task source 模型。`process.nextTick()` 队列和 V8 microtask queue 不属于 libuv phase，它们在 JavaScript 回调边界被处理。
+
+`process.nextTick()` 在官方阶段图里没有单独画成一个 phase。它的执行点是当前 JS 操作完成后、事件循环继续推进前；无论当前回调来自 `timers`、`poll`、`check` 还是其他阶段，Node 都会先清空 `nextTick` 队列，再处理 V8 微任务队列，然后让事件循环继续。递归注册 `process.nextTick()` 会阻止事件循环回到 poll 阶段，从而饿死 I/O。
 
 ### Node 阶段如何取回调
 
@@ -296,11 +303,11 @@ function runCallbacksForPhase(phase) {
 
 这段伪代码只表达 Node 的阶段队列模型：回调来自不同阶段，而不是来自浏览器的 task source。`idle, prepare` 是 Node/libuv 内部阶段，通常不作为业务回调阶段分析。`process.nextTick()` 和 V8 微任务队列也不属于 libuv 阶段，它们在 JavaScript 回调边界被处理。
 
-Node 20 起使用 libuv 1.45.0 之后的行为：timer 只在 poll 阶段之后运行，而不是像旧版本那样在 poll 前后都可能运行。这个变化会影响某些场景下 `setTimeout()` 与 `setImmediate()` 的相对时机。跨版本判断题必须标注 Node 版本。
+Node 20 起使用 libuv 1.45.0 之后的行为发生了变化：timer 只在 poll 阶段之后运行，而不是像旧版本那样在 poll 前后都可能运行。这个变化会影响某些场景下 `setTimeout()` 与 `setImmediate()` 的相对时机。跨版本判断题必须标注 Node 版本。
 
 ### timer 不是精确时间
 
-`setTimeout(callback, delay)` 的 `delay` 是阈值，不是精确执行时间。到达阈值后，回调还要等当前阶段、当前回调、`process.nextTick()` 队列和微任务处理完成。
+`setTimeout(callback, delay)` 的 `delay` 是阈值，不是精确执行时间。Node 里小于 `1` 或无效的 delay 会按 `1ms` 处理；到达阈值后，回调还要等当前阶段、当前回调、`process.nextTick()` 队列和微任务处理完成。
 
 ```js
 const started = Date.now()
@@ -318,7 +325,7 @@ while (Date.now() - started < 100) {
 
 ### `setTimeout()` 与 `setImmediate()`
 
-`setImmediate()` 在 `check` 阶段执行，设计目标是在当前 poll 阶段完成后运行。`setTimeout(fn, 0)` 在 timer 阈值到达后进入 timers 阶段。
+`setImmediate()` 在 `check` 阶段执行，设计目标是在当前 poll 阶段完成后运行。`setTimeout(fn, 0)` 达到 timer 阈值后，才有机会进入 timers 阶段。
 
 在主模块顶层同时调度二者，顺序不应作为稳定行为依赖：
 
@@ -398,7 +405,7 @@ loop()
 
 普通业务代码优先使用 `queueMicrotask()` 或 Promise。`process.nextTick()` 更适合 Node 内部风格的 API 一致性：让回调在当前调用栈展开后、事件循环继续前执行。
 
-ESM 里有一个额外差异：模块顶层执行本身已经处在微任务上下文中。因此在 ESM 顶层，`Promise.then()` 和 `queueMicrotask()` 可能先于 `process.nextTick()` 执行。
+ESM 里有一个额外差异：模块顶层执行本身已经处在微任务上下文中。因此在 ESM 顶层同时调度时，`Promise.then()` 和 `queueMicrotask()` 会先于 `process.nextTick()` 执行。
 
 ```js
 // node example.mjs
@@ -446,7 +453,7 @@ promise2
 setTimeout
 ```
 
-同步代码先执行。第一个 `then` 和 `queueMicrotask` 都进入微任务队列，按入队顺序执行。`promise2` 是第一个 `then` 执行完成后才入队，所以排在 `queueMicrotask` 后面。
+同步代码先执行。第一个 `then` 和 `queueMicrotask` 都进入微任务队列，按入队顺序执行。第二个 `then` 对应的 reaction job 要等第一个 `then` 执行完成后才入队，所以排在 `queueMicrotask` 后面。
 
 ### `async/await` 与 Promise
 
@@ -488,7 +495,7 @@ promise2
 timeout
 ```
 
-`async1()` 在 `await` 前同步执行，`async2()` 也同步打印。`await async2()` 的后续代码先入微任务队列，随后才创建 `promise2` 对应的微任务，所以 `async1 end` 先于 `promise2`。
+`async1()` 在 `await` 前同步执行，`async2()` 也同步打印。`await async2()` 的后续代码先入微任务队列，随后 `.then()` 才注册 `promise2` 对应的 reaction job，所以 `async1 end` 先于 `promise2`。
 
 ### 微任务嵌套
 
@@ -552,7 +559,7 @@ microtask
 
 ## 顺序推导
 
-事件循环输出题的拆解顺序：
+做事件循环输出题时，不要先背“宏任务、微任务”的口诀。更稳的做法是按运行时把队列边界画出来：
 
 1. 先执行所有同步代码，记录同步输出。
 2. 同步执行过程中，标出哪些回调进入任务队列，哪些进入微任务队列。
@@ -563,11 +570,11 @@ microtask
 
 ## 实践判断
 
-- “当前同步代码之后、渲染之前”的少量逻辑，可以用 `queueMicrotask()`。
-- 让出主线程、允许输入/timer/渲染推进，使用后续任务或专门调度器，避免微任务递归。
-- 浏览器动画优先使用 `requestAnimationFrame()`，不使用 `setTimeout()` 模拟帧循环。
-- Node 业务代码里谨慎使用 `process.nextTick()`；除非明确要求在事件循环继续前执行，否则优先使用 `queueMicrotask()`、Promise 或 `setImmediate()`。
-- 事件循环无法解决 CPU 密集型同步阻塞。浏览器用 Web Worker，Node 用 Worker Threads、子进程或把任务拆片。
+如果只是想在当前同步代码之后、渲染之前做一点收尾逻辑，可以用 `queueMicrotask()`。这类逻辑必须很短，因为微任务不会主动让出主线程。
+
+如果目标是让输入、timer 或渲染继续推进，就不要递归塞微任务。把工作放到后续 task，或者交给框架、平台调度器拆片。动画状态优先放到 `requestAnimationFrame()`，不要用 `setTimeout()` 模拟帧循环。
+
+Node 业务代码里要谨慎使用 `process.nextTick()`。需要保持微任务语义时，用 `queueMicrotask()` 或 Promise；需要让事件循环进入后续阶段时，再考虑 `setImmediate()`。CPU 密集型同步阻塞不会因为事件循环存在就消失：浏览器用 Web Worker，Node 用 Worker Threads、子进程，或者把任务拆成更小的片段。
 
 ## 参考
 
