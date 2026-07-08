@@ -12,11 +12,8 @@ tag:
 
 `useEffect` 可以将组件与外部系统同步。
 
-::: info
-
-外部系统，包括网络、浏览器 API (`setTimeout`...）、第三方库或浏览器 DOM。
-
-:::
+> [!NOTE]
+> 外部系统包括网络、浏览器 API (`setTimeout`...)、第三方库或浏览器 DOM。
 
 ## 使用边界
 
@@ -62,27 +59,18 @@ useEffect(() => {
 
 ![hook flow](https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/20250616153336.png)
 
-::: warning Strict Mode
-
-开发环境启用 Strict Mode 时，React 会在第一次真实设置前额外执行一次 setup -> cleanup。这个检查只发生在开发环境，用来确认清理逻辑能撤销 setup 做过的事情。
-
-请求、订阅、计时器在开发环境看起来“执行两次”时，优先检查清理函数是否完整，而不是移除 Strict Mode。
-
-:::
-
-::: TIP
+> [!WARNING]
+> Strict Mode
+>
+> 开发环境启用 Strict Mode 时，React 会在第一次真实设置前额外执行一次 `setup -> cleanup`。这个检查只发生在开发环境，用来确认清理逻辑能撤销 setup 做过的事情。
+>
+> 请求、订阅、计时器在开发环境看起来“执行两次”时，优先检查清理函数是否完整，而不是移除 Strict Mode。
 
 `useLayoutEffect` 和 `useEffect` 的执行时机不同。通常情况下，`useEffect` 会在浏览器完成绘制之后执行；`useLayoutEffect` 会在浏览器重新绘制前执行。
 
 `useLayoutEffect` 的执行时机更早，所以它可以在浏览器绘制前测量布局或操作 DOM，从而避免可见闪烁。除此之外，优先使用 `useEffect`，避免阻塞绘制。
 
-:::
-
-::: TIP
-
-所以，当存在一些副作用（定时器等），你需要确保有清理函数，否则可能会导致内存泄漏。
-
-:::
+当存在定时器、订阅等副作用时，需要确保有清理函数，否则可能会导致内存泄漏。
 
 ### `dependencies`
 
@@ -90,11 +78,8 @@ useEffect(() => {
 
 响应式值包括 `props`、`state` 以及直接在组件主体中声明的所有变量和函数。
 
-::: tip
-
-如果为 React 配置了 [linter](https://react.dev/learn/editor-setup#linting)，它就会验证是否将每个反应值都正确指定为依赖项。
-
-:::
+> [!TIP]
+> 配置 [linter](https://react.dev/learn/editor-setup#linting) 后，它会验证是否将每个响应式值都正确指定为依赖项。
 
 依赖项列表必须具有恒定的项数，并以 `[dep1、dep2、dep3]` 这样的内联方式书写。
 
@@ -104,9 +89,7 @@ React 会使用 [`Object.is`](https://developer.mozilla.org/zh-CN/docs/Web/JavaS
 
 依赖数组描述 Effect 读取了哪些响应式值，而不是手动选择执行次数的开关。为了让 Effect 和最新 `props` / `state` 保持同步，应让 linter 指导依赖项；如果加入某个依赖后导致循环，通常说明这段逻辑需要拆分、移动到事件处理函数，或改成渲染期间的计算。
 
-:::tabs
-
-@tab 传入一个依赖数组
+#### 传入一个依赖数组
 
 如果指定了依赖关系，「Effect」就会在初始渲染后运行，并在更改依赖关系后重新渲染。
 
@@ -121,8 +104,6 @@ useEffect(() => {
 因此，在下拉菜单中选择不同的房间或编辑服务器 URL 输入会导致聊天重新连接。
 
 但是，由于「Effect」中没有使用 `message`（因此它不是依赖项），所以编辑 `message` 不会重新连接到聊天。
-
-:::react-demo 传入一个依赖数组
 
 ```js
 const { useState, useEffect } = React
@@ -185,7 +166,7 @@ export default function App() {
 }
 ```
 
-@tab 传入一个空数组
+#### 传入一个空数组
 
 如果没有传入任何依赖值，那么它只会在初始渲染后运行。
 
@@ -200,8 +181,6 @@ useEffect(() => {
 在本例中，`serverUrl` 和 `roomId` 都是硬编码。由于它们是在组件外部声明的，因此不是反应值，也就不是依赖项。
 
 依赖列表是空的，因此 Effect 不会在重新呈现时重新运行。
-
-:::react-demo 传入一个空数组
 
 ```js
 const { useState, useEffect } = React
@@ -252,7 +231,7 @@ export default function App() {
 }
 ```
 
-@tab 完全不传递依赖关系数组
+#### 完全不传递依赖关系数组
 
 如果完全不传递依赖关系数组，那么在组件的每次渲染（和重新渲染）后都会运行 Effect。
 
@@ -265,8 +244,6 @@ useEffect(() => {
 在本例中，当更改 `serverUrl` 和 `roomId` 时，Effect 会重新运行，这是合理的。
 
 然而，当您更改信息时，它也会重新运行，这可能是不可取的。这就是通常要指定依赖关系数组的原因。
-
-::: react-demo 完全不传递依赖关系数组
 
 ```js
 const { useState, useEffect } = React
@@ -328,8 +305,6 @@ export default function App() {
   )
 }
 ```
-
-:::
 
 ## 异步请求的清理
 
