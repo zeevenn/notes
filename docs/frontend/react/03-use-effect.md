@@ -18,6 +18,18 @@ tag:
 
 :::
 
+## 使用边界
+
+`useEffect` 不是通用的数据流工具。它适合把 React 渲染出的状态同步到外部系统；如果只是根据已有 `props` 或 `state` 计算显示内容，直接在渲染期间计算即可。
+
+常见不需要 Effect 的情况：
+
+- 根据 `props` 或 `state` 派生另一个值；
+- 在用户点击、输入、提交时执行动作；
+- 因为某个 state 变化而重置另一个 state，但这个关系可以通过 `key`、受控状态或计算值表达。
+
+这些逻辑放进 Effect 往往会多一次渲染，也更容易产生陈旧闭包和依赖项问题。
+
 ## useEffect(setup, dependencies?)
 
 `useEffect` 是一个内置的钩子，允许你在 React 将组件渲染（和重新渲染）到 DOM 后运行一些自定义代码。它接受一个回调函数，React 将在 DOM 更新后调用该函数：
@@ -50,11 +62,19 @@ useEffect(() => {
 
 ![hook flow](https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/20250616153336.png)
 
+::: warning Strict Mode
+
+开发环境启用 Strict Mode 时，React 会在第一次真实设置前额外执行一次 setup -> cleanup。这个检查只发生在开发环境，用来确认清理逻辑能撤销 setup 做过的事情。
+
+请求、订阅、计时器在开发环境看起来“执行两次”时，优先检查清理函数是否完整，而不是移除 Strict Mode。
+
+:::
+
 ::: TIP
 
-`useLayoutEffect` 和 `useEffect` 的执行时机不同，`useLayoutEffect` 会在浏览器渲染前执行，而 `useEffect` 会在浏览器渲染后执行。
+`useLayoutEffect` 和 `useEffect` 的执行时机不同。通常情况下，`useEffect` 会在浏览器完成绘制之后执行；`useLayoutEffect` 会在浏览器重新绘制前执行。
 
-`useLayoutEffect` 的执行时机更早，所以它可以在浏览器渲染前执行，操作 DOM从而避免闪烁。
+`useLayoutEffect` 的执行时机更早，所以它可以在浏览器绘制前测量布局或操作 DOM，从而避免可见闪烁。除此之外，优先使用 `useEffect`，避免阻塞绘制。
 
 :::
 
@@ -66,9 +86,9 @@ useEffect(() => {
 
 ### `dependencies`
 
-`setup` 代码中依赖的所有响应值的列表。
+`setup` 代码中依赖的所有响应式值的列表。
 
-响应值包括 `props`、`state` 以及直接在组件主体中声明的所有变量和函数。
+响应式值包括 `props`、`state` 以及直接在组件主体中声明的所有变量和函数。
 
 ::: tip
 
@@ -81,6 +101,8 @@ useEffect(() => {
 React 会使用 [`Object.is`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is) 比较法将每个依赖项与其前一个值进行比较。
 
 如果省略此参数，每次重新渲染组件后，Effect 都会重新运行。
+
+依赖数组描述 Effect 读取了哪些响应式值，而不是手动选择执行次数的开关。为了让 Effect 和最新 `props` / `state` 保持同步，应让 linter 指导依赖项；如果加入某个依赖后导致循环，通常说明这段逻辑需要拆分、移动到事件处理函数，或改成渲染期间的计算。
 
 :::tabs
 
@@ -328,6 +350,42 @@ export default function App() {
 
 :::
 
+## 异步请求的清理
+
+Effect 中发起请求时，依赖变化或组件卸载后，旧请求可能晚于新请求返回。清理函数需要让旧请求失效，避免旧结果回写 state。
+
+```tsx
+useEffect(() => {
+  const controller = new AbortController()
+
+  async function loadUser() {
+    try {
+      const response = await fetch(`/api/users/${userId}`, {
+        signal: controller.signal,
+      })
+      const data = await response.json()
+      setUser(data)
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        return
+      }
+      setError(error)
+    }
+  }
+
+  loadUser()
+
+  return () => {
+    controller.abort()
+  }
+}, [userId])
+```
+
+如果使用的 API 不支持取消，也可以在清理函数里将 `ignore` 标记为 `true`，在写入 state 前检查它。关键是让每次 Effect 的 setup 和 cleanup 成对出现。
+
 ## 参考
 
+- [useEffect](https://react.dev/reference/react/useEffect)
+- [You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect)
+- [Removing Effect Dependencies](https://react.dev/learn/removing-effect-dependencies)
 - [useEffect 完整指南](https://overreacted.io/a-complete-guide-to-useeffect/)
