@@ -38,8 +38,8 @@
 
   <rect class="page" x="0" y="0" width="1400" height="760" rx="24" />
 
-  <text class="title" x="48" y="54">浏览器事件循环：task → microtask → render</text>
-  <text class="small" x="50" y="83">这张图只描述浏览器 HTML event loop，不描述 Node.js/libuv 阶段模型。</text>
+  <text class="title" x="48" y="54">浏览器事件循环</text>
+  <text class="small" x="50" y="83">HTML event loop：task source、microtask checkpoint、rendering opportunity</text>
 
   <g transform="translate(38 116)">
     <path class="ink" d="M6 7 C73 0 243 2 318 8 C326 90 326 281 316 366 C225 374 86 374 8 366 C-1 287 -1 87 6 7 Z" />
@@ -81,7 +81,8 @@
   </g>
 
   <path class="ink arrow" d="M365 303 C420 296 450 279 494 254" />
-  <text class="small" x="383" y="282">选择一个可运行 task</text>
+  <rect x="379" y="249" width="86" height="31" rx="9" fill="#fffaf0" opacity="0.88" />
+  <text class="small" x="391" y="270">选择 task</text>
 
   <g transform="translate(508 142)">
     <rect x="0" y="0" width="258" height="144" rx="18" fill="#f8edeb" opacity="0.96" />
@@ -135,6 +136,7 @@
   </g>
 
   <path class="ink arrow" d="M1130 560 C1172 575 1197 600 1198 641" />
+  <text class="small" x="1174" y="591">是</text>
   <g transform="translate(1002 630)">
     <rect x="0" y="0" width="214" height="72" rx="17" fill="#b8e0d2" opacity="0.94" />
     <path class="ink" d="M5 8 C67 0 156 2 207 8 C216 28 214 54 207 67 C149 75 66 74 7 67 C-2 50 -1 28 5 8 Z" />
@@ -142,15 +144,22 @@
     <text class="small" x="26" y="54">rAF / style / layout / paint</text>
   </g>
 
-  <path class="ink arrow" d="M944 560 C824 642 597 660 368 574 C307 551 247 509 210 470" />
-  <text class="small" x="505" y="681">否：进入下一轮，重新选择 task</text>
-  <path class="ink arrow" d="M1008 667 C787 724 427 705 229 493" />
+  <path class="ink arrow" d="M961 584 C898 630 830 649 810 656" />
+  <text class="small" x="875" y="621">否</text>
+  <path class="ink arrow" d="M1002 667 C930 682 856 677 813 664" />
+  <g transform="translate(640 628)">
+    <rect x="0" y="0" width="174" height="62" rx="17" fill="#f7e7a6" opacity="0.92" />
+    <path class="ink" d="M5 8 C59 1 122 2 168 8 C176 28 174 48 168 57 C122 65 60 64 7 57 C-2 42 -1 27 5 8 Z" />
+    <text class="paper-label" x="47" y="28">下一轮</text>
+    <text class="small" x="26" y="49">重新选择 task</text>
+  </g>
+  <path class="ink arrow" d="M640 660 C486 653 317 596 212 477" />
 
   <g transform="translate(880 102)">
-    <rect x="0" y="0" width="332" height="98" rx="18" fill="#f4e1d2" opacity="0.95" />
-    <path class="ink" d="M7 8 C101 0 231 2 325 8 C336 37 334 72 326 91 C237 101 101 101 8 91 C-2 65 -1 37 7 8 Z" />
+    <rect x="0" y="0" width="332" height="88" rx="18" fill="#f4e1d2" opacity="0.95" />
+    <path class="ink" d="M7 8 C101 0 231 2 325 8 C336 35 334 64 326 81 C237 91 101 91 8 81 C-2 58 -1 35 7 8 Z" />
     <text class="paper-label" x="25" y="33">注意</text>
     <text class="note" x="25" y="59">microtask queue 不是 task queue；</text>
-    <text class="note" x="25" y="80">Node.js 使用 libuv phases，不按此图取回调。</text>
+    <text class="note" x="25" y="80">渲染只在合适时机发生。</text>
   </g>
 </svg>

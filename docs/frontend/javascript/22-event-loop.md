@@ -80,7 +80,7 @@ console.log('D')
 
 ![浏览器事件循环手绘图](./img/0017/browser-event-loop-sketch.svg)
 
-这张图只描述浏览器事件循环：task queue 来自 HTML task source，微任务在 microtask checkpoint 中清空，渲染在合适的 rendering opportunity 发生。Node.js 使用 libuv 阶段模型，不按这张图取回调。
+这张图只描述浏览器事件循环：task queue 来自 HTML task source，微任务在 microtask checkpoint 中清空，渲染在合适的 rendering opportunity 发生。
 
 ### 浏览器常见任务
 
@@ -257,6 +257,10 @@ Node 文档中常用的阶段模型是：
 4. `poll`：获取新的 I/O 事件，执行 I/O 回调；必要时在这里阻塞等待。
 5. `check`：执行 `setImmediate()` 回调。
 6. `close callbacks`：执行部分 close 回调，例如 socket 的 `'close'`。
+
+![Node.js 事件循环手绘图](./img/0017/node-event-loop-sketch.svg)
+
+这张图只描述 Node.js 事件循环：回调按 libuv 阶段推进，不使用浏览器的 task source 模型。`process.nextTick()` 队列和 V8 microtask queue 不属于 libuv phase，它们在 JavaScript 回调边界被处理。
 
 ### Node 阶段如何取回调
 
