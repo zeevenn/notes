@@ -36,17 +36,17 @@ tag:
 
 ```tsx
 useEffect(() => {
-	// 在这里编写你的副作用代码。
-	// 这里可以与浏览器 API 交互，例如
-	doSomeThing()
-	return function cleanup() {
-		// 如果需要清理副作用（如取消订阅事件），可以在这里进行
-		doSomeCleanup()
-	}
+  // 在这里编写你的副作用代码。
+  // 这里可以与浏览器 API 交互，例如
+  doSomeThing()
+  return function cleanup() {
+    // 如果需要清理副作用（如取消订阅事件），可以在这里进行
+    doSomeCleanup()
+  }
 }, [
-	// 这里放置你的 useEffect 回调函数的依赖项
-	dep1,
-	dep2,
+  // 这里放置你的 useEffect 回调函数的依赖项
+  dep1,
+  dep2
 ])
 ```
 
@@ -131,9 +131,7 @@ function createConnection(serverUrl, roomId) {
   // A real implementation would actually connect to the server
   return {
     connect() {
-      console.log(
-        '✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...'
-      )
+      console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...')
     },
     disconnect() {
       console.log('❌ Disconnected from "' + roomId + '" room at ' + serverUrl)
@@ -156,16 +154,11 @@ function ChatRoom({ roomId }) {
   return (
     <>
       <label>
-        Server URL:{' '}
-        <input
-          value={serverUrl}
-          onChange={(e) => setServerUrl(e.target.value)}
-        />
+        Server URL: <input value={serverUrl} onChange={(e) => setServerUrl(e.target.value)} />
       </label>
       <h1>Welcome to the {roomId} room!</h1>
       <label>
-        Your message:{' '}
-        <input value={message} onChange={(e) => setMessage(e.target.value)} />
+        Your message: <input value={message} onChange={(e) => setMessage(e.target.value)} />
       </label>
     </>
   )
@@ -220,9 +213,7 @@ function createConnection(serverUrl, roomId) {
   // A real implementation would actually connect to the server
   return {
     connect() {
-      console.log(
-        '✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...'
-      )
+      console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...')
     },
     disconnect() {
       console.log('❌ Disconnected from "' + roomId + '" room at ' + serverUrl)
@@ -243,8 +234,7 @@ function ChatRoom() {
     <>
       <h1>Welcome to the {roomId} room!</h1>
       <label>
-        Your message:{' '}
-        <input value={message} onChange={(e) => setMessage(e.target.value)} />
+        Your message: <input value={message} onChange={(e) => setMessage(e.target.value)} />
       </label>
     </>
   )
@@ -254,9 +244,7 @@ export default function App() {
   const [show, setShow] = useState(false)
   return (
     <>
-      <button onClick={() => setShow(!show)}>
-        {show ? 'Close chat' : 'Open chat'}
-      </button>
+      <button onClick={() => setShow(!show)}>{show ? 'Close chat' : 'Open chat'}</button>
       {show && <hr />}
       {show && <ChatRoom />}
     </>
@@ -287,9 +275,7 @@ function createConnection(serverUrl, roomId) {
   // A real implementation would actually connect to the server
   return {
     connect() {
-      console.log(
-        '✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...'
-      )
+      console.log('✅ Connecting to "' + roomId + '" room at ' + serverUrl + '...')
     },
     disconnect() {
       console.log('❌ Disconnected from "' + roomId + '" room at ' + serverUrl)
@@ -312,16 +298,11 @@ function ChatRoom({ roomId }) {
   return (
     <>
       <label>
-        Server URL:{' '}
-        <input
-          value={serverUrl}
-          onChange={(e) => setServerUrl(e.target.value)}
-        />
+        Server URL: <input value={serverUrl} onChange={(e) => setServerUrl(e.target.value)} />
       </label>
       <h1>Welcome to the {roomId} room!</h1>
       <label>
-        Your message:{' '}
-        <input value={message} onChange={(e) => setMessage(e.target.value)} />
+        Your message: <input value={message} onChange={(e) => setMessage(e.target.value)} />
       </label>
     </>
   )
@@ -361,7 +342,7 @@ useEffect(() => {
   async function loadUser() {
     try {
       const response = await fetch(`/api/users/${userId}`, {
-        signal: controller.signal,
+        signal: controller.signal
       })
       const data = await response.json()
       setUser(data)
