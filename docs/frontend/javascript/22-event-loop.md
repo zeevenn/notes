@@ -78,36 +78,7 @@ console.log('D')
 4. 如果到了渲染时机，执行 `requestAnimationFrame` 回调、样式计算、布局、绘制等渲染相关步骤。
 5. 进入下一轮循环。
 
-```mermaid
-graph TD
-    subgraph TaskQueues[浏览器 task queues]
-        Timer[timer task queue]
-        Input[user interaction task queue]
-        Network[networking task queue]
-        Message[posted message task queue]
-    end
-
-    Timer --> Pick[选择一个 task queue 中的可运行 task]
-    Input --> Pick
-    Network --> Pick
-    Message --> Pick
-
-    Pick --> RunTask[在调用栈执行 task 中的 JavaScript]
-    RunTask --> Checkpoint[perform microtask checkpoint]
-
-    RunTask -. queue microtask .-> Microtasks[microtask queue<br/>Promise Job / queueMicrotask / MutationObserver]
-    Microtasks -. drain .-> Checkpoint
-
-    Checkpoint --> HasMicrotask{microtask queue 非空?}
-    HasMicrotask -- 是 --> RunMicrotask[执行最早入队的 microtask]
-    RunMicrotask --> HasMicrotask
-    HasMicrotask -- 否 --> Render{到达渲染时机?}
-
-    Render -- 是 --> UpdateRendering[更新渲染<br/>rAF / style / layout / paint]
-    Render -- 否 --> NextTurn[进入下一轮]
-    UpdateRendering --> NextTurn
-    NextTurn --> Pick
-```
+![浏览器事件循环手绘图](./img/0017/browser-event-loop-sketch.svg)
 
 这张图只描述浏览器事件循环：task queue 来自 HTML task source，微任务在 microtask checkpoint 中清空，渲染在合适的 rendering opportunity 发生。Node.js 使用 libuv 阶段模型，不按这张图取回调。
 
