@@ -291,20 +291,24 @@ Node 文档中常用的阶段模型是：
 
 Node 不是在多个 HTML task queue 之间选择一个队列。libuv 的模型是阶段推进，每个阶段有自己的回调队列。进入某个阶段后，执行该阶段队列中的回调，直到队列耗尽或达到实现限制。
 
-简化模型：
+简化模型只列业务代码能观察到的回调阶段；`idle`、`prepare` 已在阶段列表中保留，但不放进下面的 `userVisiblePhases`：
 
 ```js
-while (nodeIsAlive) {
-  const phase = advanceToNextLibuvPhase()
+const userVisiblePhases = [
+  'timers',
+  'pending callbacks',
+  'poll',
+  'check',
+  'close callbacks'
+]
 
-  if (phase.isInternal) {
-    runInternalPhase(phase)
-  } else {
-    runPhase(phase)
-  }
+while (nodeIsAlive) {
+  const phase = advanceToNextPhase(userVisiblePhases)
+
+  runCallbacksForPhase(phase)
 }
 
-function runPhase(phase) {
+function runCallbacksForPhase(phase) {
   while (phase.queue.hasCallback() && !phaseLimitReached(phase)) {
     const callback = phase.queue.shift()
 
@@ -315,7 +319,7 @@ function runPhase(phase) {
 }
 ```
 
-这段伪代码只表达 Node 的阶段队列模型：回调来自不同阶段，而不是来自浏览器的 task source。`process.nextTick()` 和 V8 微任务队列也不属于 libuv 阶段，它们在 JavaScript 回调边界被处理。
+这段伪代码只表达 Node 的阶段队列模型：回调来自不同阶段，而不是来自浏览器的 task source。`idle, prepare` 是 Node/libuv 内部阶段，通常不作为业务回调阶段分析。`process.nextTick()` 和 V8 微任务队列也不属于 libuv 阶段，它们在 JavaScript 回调边界被处理。
 
 Node 20 起使用 libuv 1.45.0 之后的行为：timer 只在 poll 阶段之后运行，而不是像旧版本那样在 poll 前后都可能运行。这个变化会影响某些场景下 `setTimeout()` 与 `setImmediate()` 的相对时机。跨版本判断题必须标注 Node 版本。
 
