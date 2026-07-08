@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
   <title id="title">Node.js 事件循环手绘图</title>
-  <desc id="desc">Node.js 事件循环按 libuv 阶段推进，回调执行边界会处理 process.nextTick 队列和 V8 微任务队列。</desc>
+  <desc id="desc">Node.js 事件循环按 libuv 阶段推进，任意阶段取出的 JavaScript 回调返回后会处理 process.nextTick 队列和 V8 微任务队列。</desc>
   <defs>
     <filter id="nodePaperNoise" x="-10%" y="-10%" width="120%" height="120%">
       <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="noise" />
@@ -12,19 +12,19 @@
     </filter>
     <filter id="nodeRoughLine" x="-8%" y="-8%" width="116%" height="116%">
       <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="19" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.15" />
     </filter>
-    <marker id="nodeArrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
-      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#253550" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
+    <marker id="nodeArrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#253550" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
     </marker>
-    <marker id="nodeArrowPurple" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
-      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#6b5a8f" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+    <marker id="nodeArrowPurple" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#6b5a8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </marker>
     <style>
       .page { fill: #fffaf0; filter: url(#nodePaperNoise); }
       .ink { stroke: #253550; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; filter: url(#nodeRoughLine); }
       .thin { stroke-width: 2; opacity: 0.78; }
-      .dash { stroke-dasharray: 10 9; }
+      .dash { stroke-dasharray: 9 8; }
       .arrow { marker-end: url(#nodeArrow); }
       .arrow-purple { marker-end: url(#nodeArrowPurple); stroke: #6b5a8f; }
       .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #253550; }
@@ -33,6 +33,7 @@
       .tiny { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #536179; }
       .note { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #6b4c2b; }
       .paper-label { font: 700 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #253550; }
+      .tag { fill: #fffaf0; opacity: 0.94; }
     </style>
   </defs>
 
@@ -41,100 +42,102 @@
   <text class="title" x="48" y="54">Node.js 事件循环</text>
   <text class="small" x="50" y="83">libuv phases 推进；nextTick 和 V8 microtasks 在 JavaScript 回调边界处理</text>
 
-  <g transform="translate(42 108)">
-    <path class="ink" d="M7 8 C186 0 699 2 858 8 C873 139 871 477 858 602 C635 616 216 614 8 602 C-4 451 -2 155 7 8 Z" />
-    <path class="ink thin" d="M17 18 C209 10 677 12 846 18 C859 151 856 457 846 590 C620 602 226 601 18 589 C7 444 8 163 17 18 Z" />
-    <text class="label" x="34" y="45">libuv phases</text>
-    <text class="small" x="34" y="70">阶段推进，不是 HTML task source 选择</text>
+  <g id="libuvPhases" transform="translate(48 112)">
+    <rect x="0" y="0" width="806" height="580" rx="22" fill="#f8f4ea" opacity="0.68" />
+    <path class="ink" d="M8 8 C190 1 646 2 798 8 C811 131 809 459 798 572 C594 586 206 585 8 572 C-4 431 -2 144 8 8 Z" />
+    <path class="ink thin" d="M18 18 C209 10 624 12 786 18 C797 145 795 442 786 560 C585 572 217 572 18 560 C7 423 9 154 18 18 Z" />
+    <text class="label" x="35" y="45">libuv phases</text>
+    <text class="small" x="35" y="70">阶段顺序示意，不表示 Node 启动后固定先执行 timers</text>
 
-    <g transform="translate(54 104)">
-      <rect x="0" y="0" width="214" height="76" rx="15" fill="#bde0fe" opacity="0.92" />
-      <rect class="ink thin" x="0" y="0" width="214" height="76" rx="15" />
+    <g id="timers" transform="translate(56 118)">
+      <rect x="0" y="0" width="206" height="76" rx="15" fill="#bde0fe" opacity="0.94" />
+      <rect class="ink thin" x="0" y="0" width="206" height="76" rx="15" />
       <text class="paper-label" x="18" y="29">timers</text>
       <text class="tiny" x="18" y="53">setTimeout / setInterval</text>
     </g>
 
-    <g transform="translate(320 104)">
-      <rect x="0" y="0" width="214" height="76" rx="15" fill="#ffd6a5" opacity="0.92" />
-      <rect class="ink thin" x="0" y="0" width="214" height="76" rx="15" />
+    <g id="pending" transform="translate(302 118)">
+      <rect x="0" y="0" width="218" height="76" rx="15" fill="#ffd6a5" opacity="0.92" />
+      <rect class="ink thin" x="0" y="0" width="218" height="76" rx="15" />
       <text class="paper-label" x="18" y="29">pending callbacks</text>
       <text class="tiny" x="18" y="53">部分系统 I/O 回调</text>
     </g>
 
-    <g transform="translate(586 104)">
-      <rect x="0" y="0" width="214" height="76" rx="15" fill="#eee4e1" opacity="0.92" />
-      <rect class="ink thin dash" x="0" y="0" width="214" height="76" rx="15" />
+    <g id="idlePrepare" transform="translate(560 118)">
+      <rect x="0" y="0" width="206" height="76" rx="15" fill="#eee4e1" opacity="0.92" />
+      <rect class="ink thin dash" x="0" y="0" width="206" height="76" rx="15" />
       <text class="paper-label" x="18" y="29">idle, prepare</text>
       <text class="tiny" x="18" y="53">Node / libuv 内部阶段</text>
     </g>
 
-    <g transform="translate(586 282)">
-      <rect x="0" y="0" width="238" height="94" rx="18" fill="#caffbf" opacity="0.92" />
-      <rect class="ink thin" x="0" y="0" width="238" height="94" rx="18" />
+    <g id="poll" transform="translate(560 292)">
+      <rect x="0" y="0" width="224" height="92" rx="18" fill="#caffbf" opacity="0.92" />
+      <rect class="ink thin" x="0" y="0" width="224" height="92" rx="18" />
       <text class="paper-label" x="18" y="31">poll</text>
       <text class="tiny" x="18" y="56">获取并执行 I/O 回调</text>
       <text class="tiny" x="18" y="76">必要时等待新的 I/O</text>
     </g>
 
-    <g transform="translate(320 460)">
-      <rect x="0" y="0" width="214" height="76" rx="15" fill="#cdb4db" opacity="0.9" />
-      <rect class="ink thin" x="0" y="0" width="214" height="76" rx="15" />
+    <g id="check" transform="translate(302 466)">
+      <rect x="0" y="0" width="218" height="76" rx="15" fill="#cdb4db" opacity="0.9" />
+      <rect class="ink thin" x="0" y="0" width="218" height="76" rx="15" />
       <text class="paper-label" x="18" y="29">check</text>
       <text class="tiny" x="18" y="53">setImmediate</text>
     </g>
 
-    <g transform="translate(54 460)">
-      <rect x="0" y="0" width="214" height="76" rx="15" fill="#ffcad4" opacity="0.9" />
-      <rect class="ink thin" x="0" y="0" width="214" height="76" rx="15" />
+    <g id="close" transform="translate(56 466)">
+      <rect x="0" y="0" width="206" height="76" rx="15" fill="#ffcad4" opacity="0.9" />
+      <rect class="ink thin" x="0" y="0" width="206" height="76" rx="15" />
       <text class="paper-label" x="18" y="29">close callbacks</text>
       <text class="tiny" x="18" y="53">socket 'close' 等</text>
     </g>
 
-    <path class="ink arrow" d="M268 142 C284 140 300 140 318 142" />
-    <path class="ink arrow" d="M534 142 C550 140 566 140 584 142" />
-    <path class="ink arrow" d="M694 182 C705 218 706 247 704 280" />
-    <path class="ink arrow" d="M586 366 C514 412 462 437 430 459" />
-    <path class="ink arrow" d="M320 498 C302 500 288 500 270 498" />
-    <path class="ink arrow" d="M94 460 C18 340 19 225 85 181" />
+    <path class="ink arrow" d="M264 156 C274 156 284 156 296 156" />
+    <path class="ink arrow" d="M522 156 C533 156 544 156 554 156" />
+    <path class="ink arrow" d="M664 198 C672 229 672 259 672 286" />
+    <path class="ink arrow" d="M556 357 C510 399 465 432 438 458" />
+    <path class="ink arrow" d="M296 504 C285 504 274 504 264 504" />
+    <path class="ink arrow" d="M96 462 C34 349 35 236 89 199" />
+
+    <g transform="translate(48 318)">
+      <rect x="0" y="0" width="286" height="72" rx="17" fill="#f4e1d2" opacity="0.95" />
+      <path class="ink" d="M6 8 C83 1 207 2 279 8 C289 31 287 52 279 65 C200 75 84 74 7 65 C-2 48 -1 29 6 8 Z" />
+      <text class="paper-label" x="22" y="30">Node 20+ timer 变化</text>
+      <text class="note" x="22" y="54">timers 在 poll 之后运行。</text>
+    </g>
   </g>
 
-  <path class="ink arrow-purple dash" d="M842 430 C914 424 963 386 1000 334" />
-  <rect x="866" y="389" width="148" height="31" rx="9" fill="#fffaf0" opacity="0.88" />
-  <text class="small" x="880" y="410">执行一个回调</text>
-
-  <g transform="translate(1000 148)">
-    <rect x="0" y="0" width="326" height="98" rx="18" fill="#f8edeb" opacity="0.96" />
-    <path class="ink" d="M7 8 C97 0 227 2 319 8 C330 39 328 72 320 91 C231 101 96 101 8 91 C-2 66 -1 38 7 8 Z" />
+  <g id="callbackBoundary" transform="translate(968 120)">
+    <rect x="0" y="0" width="364" height="96" rx="18" fill="#f8edeb" opacity="0.96" />
+    <path class="ink" d="M7 8 C109 1 253 2 357 8 C368 39 366 71 357 89 C256 100 108 99 8 89 C-2 65 -1 37 7 8 Z" />
     <text class="label" x="29" y="37">JavaScript callback</text>
-    <text class="small" x="29" y="65">执行当前阶段取出的回调</text>
-    <text class="tiny" x="29" y="86">同步代码跑完，回调返回</text>
+    <text class="small" x="29" y="63">来自任意 libuv phase 的业务回调</text>
+    <text class="tiny" x="29" y="84">同步代码执行完，回调返回</text>
   </g>
 
-  <path class="ink arrow" d="M1160 247 C1165 272 1165 293 1160 315" />
-  <g transform="translate(986 318)">
-    <rect x="0" y="0" width="348" height="84" rx="18" fill="#fdffb6" opacity="0.92" />
-    <path class="ink" d="M7 8 C106 0 250 1 341 8 C352 35 350 62 341 77 C244 86 106 86 8 77 C-2 55 -1 34 7 8 Z" />
-    <text class="label" x="28" y="35">process.nextTick queue</text>
-    <text class="small" x="28" y="62">Node 管理，不属于 libuv phase</text>
+  <g id="nextTick" transform="translate(968 296)">
+    <rect x="0" y="0" width="364" height="92" rx="18" fill="#fdffb6" opacity="0.92" />
+    <path class="ink" d="M7 8 C109 1 253 2 357 8 C368 37 366 68 357 85 C256 96 108 95 8 85 C-2 61 -1 35 7 8 Z" />
+    <text class="label" x="29" y="36">process.nextTick queue</text>
+    <text class="small" x="29" y="63">不属于任何 libuv phase</text>
+    <text class="tiny" x="29" y="82">当前 JS 操作完成后、事件循环继续前处理</text>
   </g>
 
-  <path class="ink arrow" d="M1160 403 C1165 429 1165 450 1160 472" />
-  <g transform="translate(986 474)">
-    <rect x="0" y="0" width="348" height="92" rx="18" fill="#e9edc9" opacity="0.94" />
-    <path class="ink" d="M7 8 C106 0 250 1 341 8 C352 37 350 69 341 85 C244 95 106 94 8 85 C-2 61 -1 35 7 8 Z" />
-    <text class="label" x="28" y="35">V8 microtask queue</text>
-    <text class="small" x="28" y="62">Promise reaction / queueMicrotask</text>
-    <text class="tiny" x="28" y="82">CommonJS 普通回调中通常在 nextTick 之后</text>
+  <g id="v8Microtask" transform="translate(968 474)">
+    <rect x="0" y="0" width="364" height="94" rx="18" fill="#e9edc9" opacity="0.94" />
+    <path class="ink" d="M7 8 C109 1 253 2 357 8 C368 38 366 70 357 87 C256 98 108 97 8 87 C-2 62 -1 35 7 8 Z" />
+    <text class="label" x="29" y="36">V8 microtask queue</text>
+    <text class="small" x="29" y="63">Promise reaction / queueMicrotask</text>
+    <text class="tiny" x="29" y="82">CommonJS 普通回调中通常在 nextTick 之后</text>
   </g>
 
-  <path class="ink arrow-purple dash" d="M986 532 C918 533 866 510 816 470" />
-  <rect x="844" y="502" width="132" height="31" rx="9" fill="#fffaf0" opacity="0.88" />
-  <text class="small" x="858" y="523">回到 libuv</text>
-
-  <g transform="translate(982 610)">
-    <rect x="0" y="0" width="350" height="76" rx="18" fill="#f4e1d2" opacity="0.95" />
-    <path class="ink" d="M7 8 C106 0 251 2 343 8 C353 33 351 55 343 69 C246 79 106 78 8 69 C-2 50 -1 31 7 8 Z" />
-    <text class="paper-label" x="25" y="31">Node 20+ 注意</text>
-    <text class="note" x="25" y="56">libuv 1.45.0 起，timers 只在 poll 之后运行。</text>
-  </g>
+  <path class="ink arrow-purple dash" d="M858 292 C895 263 925 230 953 190" />
+  <rect class="tag" x="888" y="232" width="152" height="30" rx="8" />
+  <text class="small" x="901" y="253">任意 phase callback</text>
+  <path class="ink arrow" d="M1150 220 C1151 246 1151 269 1150 283" />
+  <text class="small" x="1168" y="256">callback 返回</text>
+  <path class="ink arrow" d="M1150 391 C1151 420 1151 446 1150 461" />
+  <path class="ink arrow-purple dash" d="M968 524 C925 526 887 501 856 463" />
+  <rect class="tag" x="870" y="492" width="100" height="30" rx="8" />
+  <text class="small" x="884" y="513">回到 libuv</text>
 </svg>
