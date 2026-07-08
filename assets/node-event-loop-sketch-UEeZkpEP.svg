@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js 事件循环手绘图</title>
+  <desc id="desc">Node.js 事件循环按 libuv 阶段推进，回调执行边界会处理 process.nextTick 队列和 V8 微任务队列。</desc>
+  <defs>
+    <filter id="nodePaperNoise" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="noise" />
+      <feColorMatrix in="noise" type="saturate" values="0" result="mono" />
+      <feComponentTransfer in="mono">
+        <feFuncA type="table" tableValues="0 0.08" />
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="mono" mode="multiply" />
+    </filter>
+    <filter id="nodeRoughLine" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="19" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" />
+    </filter>
+    <marker id="nodeArrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#253550" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <marker id="nodeArrowPurple" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 2 L10 6 L2 10" fill="none" stroke="#6b5a8f" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+    <style>
+      .page { fill: #fffaf0; filter: url(#nodePaperNoise); }
+      .ink { stroke: #253550; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; filter: url(#nodeRoughLine); }
+      .thin { stroke-width: 2; opacity: 0.78; }
+      .dash { stroke-dasharray: 10 9; }
+      .arrow { marker-end: url(#nodeArrow); }
+      .arrow-purple { marker-end: url(#nodeArrowPurple); stroke: #6b5a8f; }
+      .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #253550; }
+      .label { font: 600 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #253550; }
+      .small { font: 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #42506a; }
+      .tiny { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #536179; }
+      .note { font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #6b4c2b; }
+      .paper-label { font: 700 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #253550; }
+    </style>
+  </defs>
+
+  <rect class="page" x="0" y="0" width="1400" height="760" rx="24" />
+
+  <text class="title" x="48" y="54">Node.js 事件循环</text>
+  <text class="small" x="50" y="83">libuv phases 推进；nextTick 和 V8 microtasks 在 JavaScript 回调边界处理</text>
+
+  <g transform="translate(42 108)">
+    <path class="ink" d="M7 8 C186 0 699 2 858 8 C873 139 871 477 858 602 C635 616 216 614 8 602 C-4 451 -2 155 7 8 Z" />
+    <path class="ink thin" d="M17 18 C209 10 677 12 846 18 C859 151 856 457 846 590 C620 602 226 601 18 589 C7 444 8 163 17 18 Z" />
+    <text class="label" x="34" y="45">libuv phases</text>
+    <text class="small" x="34" y="70">阶段推进，不是 HTML task source 选择</text>
+
+    <g transform="translate(54 104)">
+      <rect x="0" y="0" width="214" height="76" rx="15" fill="#bde0fe" opacity="0.92" />
+      <rect class="ink thin" x="0" y="0" width="214" height="76" rx="15" />
+      <text class="paper-label" x="18" y="29">timers</text>
+      <text class="tiny" x="18" y="53">setTimeout / setInterval</text>
+    </g>
+
+    <g transform="translate(320 104)">
+      <rect x="0" y="0" width="214" height="76" rx="15" fill="#ffd6a5" opacity="0.92" />
+      <rect class="ink thin" x="0" y="0" width="214" height="76" rx="15" />
+      <text class="paper-label" x="18" y="29">pending callbacks</text>
+      <text class="tiny" x="18" y="53">部分系统 I/O 回调</text>
+    </g>
+
+    <g transform="translate(586 104)">
+      <rect x="0" y="0" width="214" height="76" rx="15" fill="#eee4e1" opacity="0.92" />
+      <rect class="ink thin dash" x="0" y="0" width="214" height="76" rx="15" />
+      <text class="paper-label" x="18" y="29">idle, prepare</text>
+      <text class="tiny" x="18" y="53">Node / libuv 内部阶段</text>
+    </g>
+
+    <g transform="translate(586 282)">
+      <rect x="0" y="0" width="238" height="94" rx="18" fill="#caffbf" opacity="0.92" />
+      <rect class="ink thin" x="0" y="0" width="238" height="94" rx="18" />
+      <text class="paper-label" x="18" y="31">poll</text>
+      <text class="tiny" x="18" y="56">获取并执行 I/O 回调</text>
+      <text class="tiny" x="18" y="76">必要时等待新的 I/O</text>
+    </g>
+
+    <g transform="translate(320 460)">
+      <rect x="0" y="0" width="214" height="76" rx="15" fill="#cdb4db" opacity="0.9" />
+      <rect class="ink thin" x="0" y="0" width="214" height="76" rx="15" />
+      <text class="paper-label" x="18" y="29">check</text>
+      <text class="tiny" x="18" y="53">setImmediate</text>
+    </g>
+
+    <g transform="translate(54 460)">
+      <rect x="0" y="0" width="214" height="76" rx="15" fill="#ffcad4" opacity="0.9" />
+      <rect class="ink thin" x="0" y="0" width="214" height="76" rx="15" />
+      <text class="paper-label" x="18" y="29">close callbacks</text>
+      <text class="tiny" x="18" y="53">socket 'close' 等</text>
+    </g>
+
+    <path class="ink arrow" d="M268 142 C284 140 300 140 318 142" />
+    <path class="ink arrow" d="M534 142 C550 140 566 140 584 142" />
+    <path class="ink arrow" d="M694 182 C705 218 706 247 704 280" />
+    <path class="ink arrow" d="M586 366 C514 412 462 437 430 459" />
+    <path class="ink arrow" d="M320 498 C302 500 288 500 270 498" />
+    <path class="ink arrow" d="M94 460 C18 340 19 225 85 181" />
+  </g>
+
+  <path class="ink arrow-purple dash" d="M842 430 C914 424 963 386 1000 334" />
+  <rect x="866" y="389" width="148" height="31" rx="9" fill="#fffaf0" opacity="0.88" />
+  <text class="small" x="880" y="410">执行一个回调</text>
+
+  <g transform="translate(1000 148)">
+    <rect x="0" y="0" width="326" height="98" rx="18" fill="#f8edeb" opacity="0.96" />
+    <path class="ink" d="M7 8 C97 0 227 2 319 8 C330 39 328 72 320 91 C231 101 96 101 8 91 C-2 66 -1 38 7 8 Z" />
+    <text class="label" x="29" y="37">JavaScript callback</text>
+    <text class="small" x="29" y="65">执行当前阶段取出的回调</text>
+    <text class="tiny" x="29" y="86">同步代码跑完，回调返回</text>
+  </g>
+
+  <path class="ink arrow" d="M1160 247 C1165 272 1165 293 1160 315" />
+  <g transform="translate(986 318)">
+    <rect x="0" y="0" width="348" height="84" rx="18" fill="#fdffb6" opacity="0.92" />
+    <path class="ink" d="M7 8 C106 0 250 1 341 8 C352 35 350 62 341 77 C244 86 106 86 8 77 C-2 55 -1 34 7 8 Z" />
+    <text class="label" x="28" y="35">process.nextTick queue</text>
+    <text class="small" x="28" y="62">Node 管理，不属于 libuv phase</text>
+  </g>
+
+  <path class="ink arrow" d="M1160 403 C1165 429 1165 450 1160 472" />
+  <g transform="translate(986 474)">
+    <rect x="0" y="0" width="348" height="92" rx="18" fill="#e9edc9" opacity="0.94" />
+    <path class="ink" d="M7 8 C106 0 250 1 341 8 C352 37 350 69 341 85 C244 95 106 94 8 85 C-2 61 -1 35 7 8 Z" />
+    <text class="label" x="28" y="35">V8 microtask queue</text>
+    <text class="small" x="28" y="62">Promise reaction / queueMicrotask</text>
+    <text class="tiny" x="28" y="82">CommonJS 普通回调中通常在 nextTick 之后</text>
+  </g>
+
+  <path class="ink arrow-purple dash" d="M986 532 C918 533 866 510 816 470" />
+  <rect x="844" y="502" width="132" height="31" rx="9" fill="#fffaf0" opacity="0.88" />
+  <text class="small" x="858" y="523">回到 libuv</text>
+
+  <g transform="translate(982 610)">
+    <rect x="0" y="0" width="350" height="76" rx="18" fill="#f4e1d2" opacity="0.95" />
+    <path class="ink" d="M7 8 C106 0 251 2 343 8 C353 33 351 55 343 69 C246 79 106 78 8 69 C-2 50 -1 31 7 8 Z" />
+    <text class="paper-label" x="25" y="31">Node 20+ 注意</text>
+    <text class="note" x="25" y="56">libuv 1.45.0 起，timers 只在 poll 之后运行。</text>
+  </g>
+</svg>
