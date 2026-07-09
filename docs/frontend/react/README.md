@@ -13,7 +13,7 @@ publish: false
 
 状态可以让组件「记住」用户输入等信息，以下钩子可以为组件添加状态：
 
-- [useState](./01-useState.md)：声明一个可以直接更新的状态变量。
+- [useState](./02-use-state.md)：声明一个可以直接更新的状态变量。
 - `useReducer`：声明一个状态变量，其更新逻辑在一个 `reducer` 函数中。
 
 #### Effect Hooks

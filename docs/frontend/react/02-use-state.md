@@ -10,7 +10,7 @@ tag:
   - state hooks
 ---
 
-React 组件生命周期：
+React 组件的状态更新会请求重新渲染；如果新旧状态相同，React 可以跳过这次渲染：
 
 ```mermaid
 graph LR
@@ -24,10 +24,10 @@ graph LR
 
 ## 基本用法
 
-一般在组件 **最顶层** 调用 `useState` 给组件添加状态变量，返回一个数组，使用数组解构接收，如 `[something, setSomething]`。
+在组件最顶层调用 `useState` 可以给组件添加状态变量。它返回一个包含两个元素的数组，通常用数组解构接收，例如 `[something, setSomething]`。
 
-- 当前状态。在第一次渲染时，它将与传递的初始状态 `initialState` 相匹配。
-- `set` 函数，用于 **状态更新** 并 **触发重新渲染**。
+- 当前状态。第一次渲染时，它等于传入的初始状态 `initialState`。
+- `set` 函数。它为下一次渲染安排状态更新，并请求 React 重新渲染组件。
 
 ```js
 import { useState } from 'react'
@@ -41,22 +41,16 @@ function MyComponent() {
 
 ## useState(initialState)
 
-**参数：**
+`initialState` 是初始状态，可以是任意类型的值。初始渲染之后，React 会忽略这个参数。
 
-`initialState`：初始状态，可以是任何类型的值，初始渲染后，该参数将被忽略。
+如果传递一个函数作为 `initialState`，它会被视为初始化函数。React 只会在初始化组件时调用它，并将返回值保存为初始状态。
 
-如果传递一个函数作为 `initialState`，它将被视为「初始化函数」。React 将在初始化组件时调用初始化函数，并将其返回值存储为初始状态。
+### 直接传入值
 
-:::tabs
-
-@tab 直接传入值
-
-:::react-demo 直接传入值
-
-这个例子 **没有** 传递初始化函数，因此 `createInitialTodos` 函数会在每次渲染时运行，比如当你在输入框中输入时，此时打开控制台，可以看到每次输入都会调用该函数。
+下面的例子没有传递初始化函数，因此 `createInitialTodos()` 会在每次渲染时运行。比如在输入框中输入内容时，组件重新渲染，控制台会反复打印 `render`。
 
 ```js
-const { useState, useRef, useEffect } = React
+const { useState } = React
 
 function createInitialTodos() {
   const initialTodos = []
@@ -84,7 +78,7 @@ export default function TodoList() {
           setTodos([
             {
               id: todos.length,
-              text: text
+              text
             },
             ...todos
           ])
@@ -102,14 +96,12 @@ export default function TodoList() {
 }
 ```
 
-@tab 传入初始化函数
+### 传入初始化函数
 
-:::react-demo 传入初始化函数
-
-这个例子传递了初始化函数，因此 `createInitialTodos` 函数仅在初始化期间运行。当组件重新渲染，例如你在输入框中键入内容时，它不会再次运行。
+传入初始化函数时，`createInitialTodos` 只会在初始化期间运行。组件因为输入框变化而重新渲染时，它不会再次运行。
 
 ```js
-const { useState, useRef, useEffect } = React
+const { useState } = React
 
 function createInitialTodos() {
   const initialTodos = []
@@ -137,7 +129,7 @@ export default function TodoList() {
           setTodos([
             {
               id: todos.length,
-              text: text
+              text
             },
             ...todos
           ])
@@ -155,23 +147,19 @@ export default function TodoList() {
 }
 ```
 
-:::
-
-::: warning
-
-- 尽管 `createInitialTodos()` 的结果仅用于初始渲染，但你仍然在每次渲染时调用此函数。如果它创建大数组或执行昂贵的计算，这可能会浪费资源,所以应该保证传入初始化函数。
-- `useState` 是一个钩子，所以 **只能** 在组件的顶层或者你自己的钩子中调用它，**不能** 在循环或条件中调用它。
-- 在严格模式下，React 会 **调用两次初始化函数**，其中一次调用的结果将被忽略，以帮助你找到意外的杂质。这是开发专用行为，不会影响生产环境。如果初始化函数是纯函数，就不会影响应用实际行为（因此初始化函数必须是纯函数）。
+> [!WARNING]
+> - 即使 `createInitialTodos()` 的结果只用于初始渲染，函数调用本身仍会在每次渲染时发生。如果它会创建大数组或执行昂贵计算，应传入初始化函数，而不是传入函数调用结果。
+> - `useState` 是 Hook，只能在组件顶层或自定义 Hook 中调用，不能在循环或条件分支中调用。
+> - 在 Strict Mode 下，React 会调用两次初始化函数，其中一次结果会被忽略。这个检查只发生在开发环境，用来帮助发现不纯的初始化逻辑。
 
 ## setSomething(nextState)
 
-`set` 函数会 **更新状态并触发重新渲染**，可以直接传入 `next state`，或者传入一个纯函数。`set` 函数没有返回值。
+`set` 函数会为下一次渲染安排状态更新。它可以直接接收下一个状态，也可以接收一个更新函数。`set` 函数没有返回值。
 
-`setSomething()` 是一个异步函数，如下所示，`handleClick1` 点击一次后，年龄将变为 `43` 岁，而不是 `45` 岁。
+> [!NOTE]
+> 不要把 `set` 函数理解为 Promise 意义上的异步函数。它不会返回 Promise，也不能通过 `await` 等待状态变量变更；所谓“异步”通常指它不会同步修改当前这次渲染中的状态变量，而是把更新加入 React 的队列。这个设计和 props、state、refs 的一致性以及并发调度有关，参见 React 讨论：[RFClarification: why is `setState` asynchronous?](https://github.com/react/react/issues/11527)
 
-这是因为调用 `set` 函数 **不会同步** 更新已运行代码中的年龄状态变量。
-
-因此，每次调用 `setAge(age + 1)` 都会变成 `setAge(43)`。
+调用 `set` 函数不会同步改变当前这次渲染中的状态变量。下面的 `handleClick1` 点击一次后，年龄会变为 `43`，而不是 `45`：
 
 ```js
 function handleClick1() {
@@ -181,17 +169,11 @@ function handleClick1() {
 }
 ```
 
-::: tip
+每次调用 `setAge(age + 1)` 读取到的都是当前渲染中的 `age`，所以这三次调用都等价于 `setAge(43)`。
 
-[RFClarification: why is setState asynchronous?](https://github.com/facebook/react/issues/11527)
+如果传递一个函数作为 `nextState`，它会被视为更新函数。更新函数必须是纯函数，接收待处理状态作为唯一参数，并返回下一个状态。
 
-:::
-
-如果传递一个函数作为 `nextState`，它将被视为一个更新函数。它必须是「纯函数」，应将待处理状态作为唯一参数，并返回下一个状态。
-
-React 会将更新函数 **放入队列**，然后重新渲染组件。
-
-在下一次渲染中，React 将通过将所有队列中的更新器 **应用上一个状态来计算下一个状态(`previous state` to `next state`)**。
+React 会将更新函数放入队列，然后重新渲染组件。在下一次渲染中，React 会按顺序把队列中的更新函数应用到上一个状态，计算出最终状态。
 
 ```js
 function handleClick2() {
@@ -201,31 +183,56 @@ function handleClick2() {
 }
 ```
 
-上述代码的处理过程如下：
+处理过程如下：
 
-1. `a => a + 1` 将接收 `42` 作为待处理状态，并返回 `43` 作为下一状态。
-2. `a => a + 1` 将接收 `43` 作为待处理状态，并返回 `44` 作为下一个状态。
-3. `a => a + 1` 将接收 `44` 作为待处理状态，并返回 `45` 作为下一个状态。
+1. `a => a + 1` 接收 `42` 作为待处理状态，并返回 `43`。
+2. `a => a + 1` 接收 `43` 作为待处理状态，并返回 `44`。
+3. `a => a + 1` 接收 `44` 作为待处理状态，并返回 `45`。
 
 没有其他队列更新，所以 React 会将 `45` 作为当前状态保存。
 
-::: tip
+> [!TIP]
+> 按照惯例，通常以状态变量名称的首字母命名待处理状态参数，如年龄的 `a`；也可以使用更清晰的名称，例如 `prevAge`。
 
-按照惯例，通常以状态变量名称的首字母来命名待处理状态参数，如年龄的 `a`，也可以使用更加清晰的名称 `prevAge`。
+## 对象和数组状态
 
-:::
+状态可以保存对象和数组，但更新时需要创建新值，而不是直接修改原对象。React 使用 [`Object.is`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is) 比较新旧状态；如果原地修改后再传回同一个引用，React 可能会跳过渲染。
 
-## 总结
+```js
+// 更新对象
+setForm({
+  ...form,
+  firstName: nextFirstName
+})
 
-- `set` 函数只更新 **下一次渲染** 的状态变量。如果在调用 `set` 函数后读取状态变量，您仍然会得到调用前屏幕上的旧值。
-- 如果提供的新值与当前状态相同（由 `Object.is` 比较确定），React 将 **跳过重新渲染组件及其子代**。
-- React 会批量更新状态。它会 **在所有事件处理程序运行并调用其设置函数后更新屏幕**。这可以防止在单个事件中多次重新渲染。在极少数情况下，需要强制 React 提前更新屏幕，例如访问 DOM，可以使用 `flushSync`。
-- 与初始化函数类似，在严格模式下，React 会调用更新器函数 **两次**，以验证它们是否纯粹。
+// 追加数组项
+setTodos([
+  ...todos,
+  {
+    id: nextId,
+    text: nextText
+  }
+])
 
-:::
+// 替换数组项
+setTodos(
+  todos.map((todo) =>
+    todo.id === changedTodo.id ? changedTodo : todo
+  )
+)
+```
+
+## 注意点
+
+- `set` 函数只更新下一次渲染中的状态变量。如果在调用 `set` 后立即读取状态变量，仍然会得到当前渲染中的旧值。
+- 如果新状态与当前状态相同，React 会跳过组件及其子组件的重新渲染，比较方式是 `Object.is`。
+- React 会批量处理状态更新。它通常会等到事件处理函数执行完，再统一更新屏幕，避免一次事件触发多次渲染。
+- 在少数需要提前访问更新后的 DOM 的场景，可以使用 `flushSync` 强制同步刷新。
+- 与初始化函数类似，在 Strict Mode 下，React 会调用更新函数两次，用来验证它是否为纯函数。这个行为只发生在开发环境。
 
 ## 参考
 
+- [useState](https://react.dev/reference/react/useState)
 - [Adding state to a component](https://react.dev/reference/react/useState#adding-state-to-a-component)
 - [Updating state based on the previous state](https://react.dev/reference/react/useState#updating-state-based-on-the-previous-state)
 - [Updating objects and arrays in state](https://react.dev/reference/react/useState#updating-objects-and-arrays-in-state)
