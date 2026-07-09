@@ -9,6 +9,8 @@ tag:
   - ORM
 ---
 
+# Prisma
+
 Prisma ORM 是一套用于与数据库进行交互的下一代 ORM（对象关系映射，Object-Relational Mapping）工具，包括以下组件：
 
 - Prisma Client: 自动生成且类型安全的查询构建器，用于 Node.js 和 TypeScript
@@ -263,3 +265,7 @@ const post = await prisma.post.update({
 5. 在应用程序代码中使用 Prisma Client 访问数据库
 
 ![SQL migrations and introspection](https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/20241220174256.png)
+
+## 目录
+
+- [Prisma 入门](./quick-start.md)

@@ -6,16 +6,16 @@ export default [
     prefix: '/computer-science/networking/',
     children: [
       '',
-      '01-network-model',
-      '02-http-overview',
-      '03-get-vs-post',
-      '04-http-evolution',
-      '05-http-caching',
-      '06-https-overview',
-      '07-tcp-handshake-teardown',
-      '08-tcp-vs-udp',
-      '09-auth-status-codes',
-      '10-401-vs-403'
+      'network-model',
+      'http-overview',
+      'get-vs-post',
+      'http-evolution',
+      'http-caching',
+      'https-overview',
+      'tcp-handshake-teardown',
+      'tcp-vs-udp',
+      'auth-status-codes',
+      '401-vs-403'
     ]
   },
   {
@@ -23,6 +23,6 @@ export default [
     collapsible: true,
     icon: 'caozuoxitong',
     prefix: '/computer-science/operating-system/',
-    children: ['', '01-character-encoding', '02-terminal-setup']
+    children: ['', 'character-encoding', 'terminal-setup']
   }
 ]

@@ -9,6 +9,8 @@ tag:
   - 御膳房
 ---
 
+# Imperial Kitchen 御膳房
+
 欢迎来到 Imperial Kitchen 御膳房项目！项目地址：https://github.com/dribble-njr/imperial-kitchen.git。
 
 ## 项目简介
@@ -107,3 +109,10 @@ yarn workspace server start
 ## 贡献
 
 欢迎贡献代码！如果您有任何建议或发现了问题，请在 GitHub 上提出问题或提交拉取请求。
+
+## 目录
+
+- [初始化项目](./init.md)
+- [服务器架构设计](./server.md)
+- [数据库结构设计](./database.md)
+- [国际化](./i18n.md)

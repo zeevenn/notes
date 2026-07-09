@@ -5,4 +5,10 @@ icon: creative
 star: true
 ---
 
+# Pages Router
+
 页面路由器（Pages Router）是基于页面概念的文件系统路由器。当一个文件被添加到页面目录时，它就会自动成为一个路由。
+
+## 目录
+
+- [页面和布局](./pages-and-layouts.md)

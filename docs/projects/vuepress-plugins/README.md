@@ -3,4 +3,8 @@ title: Plugin
 publish: false
 ---
 
-- [vuepress-plugin-ordered-header](./01.vuepress-plugin-ordered-header.md)
+# Plugin
+
+## 目录
+
+- [Vuepress Plugin Ordered Header](./vuepress-plugin-ordered-header.md)

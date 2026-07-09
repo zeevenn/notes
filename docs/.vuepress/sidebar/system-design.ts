@@ -6,11 +6,11 @@ export default [
     prefix: '/system-design/fundamentals/',
     children: [
       '',
-      '01-scalability',
-      '02-availability-vs-consistency',
-      '03-load-balancing',
-      '04-caching-strategies',
-      '05-database-sharding'
+      'scalability',
+      'availability-vs-consistency',
+      'load-balancing',
+      'caching-strategies',
+      'database-sharding'
     ]
   },
   {
@@ -18,6 +18,15 @@ export default [
     collapsible: true,
     icon: 'practice',
     prefix: '/system-design/cases/',
-    children: ['']
+    children: [
+      '',
+      'design-url-shortener',
+      'design-rate-limiter',
+      'design-message-queue',
+      'design-cache-system',
+      'design-distributed-id',
+      'design-search-system',
+      'design-feed-system'
+    ]
   }
 ]

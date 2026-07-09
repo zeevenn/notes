@@ -7,17 +7,13 @@ export default [
     children: [
       '',
       'src-vs-href',
-      'defer-vs-async',
+      'defer-async-module',
       'meta-tags',
       'img-srcset',
       'iframe',
-      'form-validation',
       'canvas-vs-svg',
-      'web-components',
-      'aria-accessibility',
       'preload-prefetch-preconnect',
-      'font-loading',
-      'seo-basics'
+      'font-loading'
     ]
   },
   {
@@ -27,24 +23,28 @@ export default [
     prefix: '/frontend/css/',
     children: [
       '',
-      '01-selectors',
-      '02-box-model',
-      '03-text-and-font',
-      '04-cascade-and-inheritance',
-      '05-background-and-border',
-      '06-position',
-      '07-float',
-      '08-flexbox',
-      '09-units',
-      '10-centering',
-      '11-grid',
-      '12-bfc',
-      '13-responsive-intro',
-      '14-responsive-techniques',
-      '15-variables',
-      '16-transitions',
-      '17-transforms',
-      '18-animations'
+      'selectors',
+      'box-model',
+      'text-and-font',
+      'cascade-and-inheritance',
+      'background-and-border',
+      'position',
+      'float',
+      'flexbox',
+      'units',
+      'centering',
+      'grid',
+      'bfc',
+      'responsive-intro',
+      'responsive-techniques',
+      'variables',
+      'transitions',
+      'transforms',
+      'animations',
+      'stacking-context',
+      'modern-css',
+      'will-change-and-compositing',
+      'containment'
     ]
   },
   {
@@ -54,28 +54,28 @@ export default [
     prefix: '/frontend/javascript/',
     children: [
       '',
-      '01-var-let-const',
-      '02-data-types',
-      '03-type-checking',
-      '04-primitive-vs-reference',
-      '05-execution-context',
-      '06-type-conversion-methods',
-      '07-basic-reference-types',
-      '08-collection-types',
-      '09-array-like-objects',
-      '10-object-properties',
-      '11-creating-objects',
-      '12-inheritance',
-      '13-class',
-      '14-implement-new',
-      '15-functions',
-      '16-this-binding',
-      '17-implement-call-apply-bind',
-      '18-event-listeners',
-      '19-object-equality',
-      '20-ajax',
-      '21-shallow-deep-copy',
-      '22-event-loop'
+      'var-let-const',
+      'data-types',
+      'type-checking',
+      'primitive-vs-reference',
+      'execution-context',
+      'type-conversion-methods',
+      'basic-reference-types',
+      'collection-types',
+      'array-like-objects',
+      'object-properties',
+      'creating-objects',
+      'inheritance',
+      'class',
+      'implement-new',
+      'functions',
+      'this-binding',
+      'implement-call-apply-bind',
+      'event-listeners',
+      'object-equality',
+      'ajax',
+      'shallow-deep-copy',
+      'event-loop'
     ]
   },
   {
@@ -85,11 +85,11 @@ export default [
     prefix: '/frontend/browser/',
     children: [
       '',
-      '01-rendering-pipeline',
-      '02-v8-engine',
-      '03-memory-management',
-      '04-cross-origin',
-      '05-url-to-page',
+      'rendering-pipeline',
+      'v8-engine',
+      'memory-management',
+      'cross-origin',
+      'url-to-page',
       'web-storage',
       'web-worker',
       'service-worker'
@@ -102,21 +102,21 @@ export default [
     icon: 'react',
     children: [
       '',
-      '01-fundamentals',
-      '02-use-state',
-      '03-use-effect',
-      '04-use-ref',
-      '05-use-id',
-      '06-use-reducer',
-      '07-create-portal',
-      '08-use-imperative-handle',
-      '09-flush-sync',
-      '10-use-sync-external-store',
-      '11-suspense',
-      '12-use-transition',
-      '13-use-optimistic',
-      '14-use-deferred-value',
-      '15-use-memo-callback-memo'
+      'fundamentals',
+      'use-state',
+      'use-effect',
+      'use-ref',
+      'use-id',
+      'use-reducer',
+      'create-portal',
+      'use-imperative-handle',
+      'flush-sync',
+      'use-sync-external-store',
+      'suspense',
+      'use-transition',
+      'use-optimistic',
+      'use-deferred-value',
+      'use-memo-callback-memo'
     ]
   },
   {
@@ -126,17 +126,17 @@ export default [
     icon: 'vue',
     children: [
       '',
-      '01-parent-child-communication',
-      '02-provide-inject',
-      '03-vuex-internals',
-      '04-slots',
-      '05-dynamic-async-components',
-      '06-v-model-on-components',
-      '07-mixins',
-      '08-composition-api',
-      '09-composables',
-      '10-custom-directives',
-      '11-plugins'
+      'parent-child-communication',
+      'provide-inject',
+      'vuex-internals',
+      'slots',
+      'dynamic-async-components',
+      'v-model-on-components',
+      'mixins',
+      'composition-api',
+      'composables',
+      'custom-directives',
+      'plugins'
     ]
   },
   {
@@ -145,12 +145,13 @@ export default [
     prefix: '/frontend/next/',
     icon: 'next-js',
     children: [
+      '',
       {
         text: 'Pages Router',
         collapsible: true,
         prefix: 'pages-router/',
         icon: 'page-dir',
-        children: ['01-pages-and-layouts']
+        children: ['', 'pages-and-layouts']
       }
     ]
   },
@@ -159,21 +160,14 @@ export default [
     collapsible: true,
     prefix: '/frontend/pixi/',
     icon: 'pixi',
-    children: ['', '01-quick-start', '02-architecture-overview', '03-render-loop', '04-scene-graph']
-  },
-  {
-    text: 'Chakra UI',
-    collapsible: true,
-    prefix: '/frontend/chakra/',
-    icon: 'chakra',
-    children: ['', '01-getting-started', '02-style-props']
+    children: ['', 'quick-start', 'architecture-overview', 'render-loop', 'scene-graph']
   },
   {
     text: 'Rendering',
     collapsible: true,
     icon: '7',
     prefix: '/frontend/rendering/',
-    children: ['', '01-qwik', '02-react-server-components', '03-resumability-vs-hydration']
+    children: ['', 'qwik', 'react-server-components', 'resumability-vs-hydration']
   },
   {
     text: 'Engineering',
@@ -182,18 +176,28 @@ export default [
     prefix: '/frontend/engineering/',
     children: [
       {
+        text: 'Basic',
+        collapsible: true,
+        icon: 'config',
+        prefix: 'basic/',
+        children: ['', 'tsconfig']
+      },
+      {
         text: 'Concepts',
         collapsible: true,
         icon: 'basic',
         prefix: 'concepts/',
         children: [
-          '01-modularization',
-          '02-package-managers',
-          '03-toolchain-overview',
-          '04-project-standards',
-          '05-scaffolding-yeoman',
-          '06-fnm-nvm',
-          '07-fnm-global-modules'
+          '',
+          'modularization',
+          'package-managers',
+          'toolchain-overview',
+          'project-standards',
+          'scaffolding-yeoman',
+          'fnm-nvm',
+          'fnm-global-modules',
+          'env',
+          'node-config-vs-dotenv'
         ]
       },
       {
@@ -202,15 +206,16 @@ export default [
         prefix: 'webpack/',
         icon: 'webpack',
         children: [
-          '01-basics',
-          '02-css-handling',
-          '03-asset-handling',
-          '04-plugins',
-          '05-babel-integration',
-          '06-vue-integration',
-          '07-dev-server',
-          '08-resolve-config',
-          '09-env-splitting'
+          '',
+          'basics',
+          'css-handling',
+          'asset-handling',
+          'plugins',
+          'babel-integration',
+          'vue-integration',
+          'dev-server',
+          'resolve-config',
+          'env-splitting'
         ]
       },
       {
@@ -218,14 +223,14 @@ export default [
         collapsible: true,
         prefix: 'vite/',
         icon: 'vite',
-        children: ['01-getting-started']
+        children: ['', 'getting-started']
       },
       {
         text: 'Rspack',
         collapsible: true,
         prefix: 'rspack/',
         icon: 'r-mark',
-        children: ['01-getting-started']
+        children: ['', 'getting-started']
       }
     ]
   },
@@ -235,22 +240,22 @@ export default [
     icon: 'practice',
     prefix: '/frontend/snippets/',
     children: [
-      '01-dnd-kit',
-      '02-canvas-annotation',
-      '03-file-upload',
-      '04-global-upload',
-      '05-mobile-viewport-adaptation',
-      '06-svg-signature-animation',
-      '07-highcharts-client-export',
-      '08-antd-textarea-multiline-placeholder',
-      '09-auto-switch-node-version',
-      '10-rest-client-localhost-debug',
-      '11-whistle-mobile-debug',
-      '12-monaco-editor-react',
-      '13-ios-touch-prevention',
-      '14-ios-image-compat',
-      '15-videojs-component-guide',
-      '16-wechat-video-preload'
+      'dnd-kit',
+      'canvas-annotation',
+      'file-upload',
+      'global-upload',
+      'mobile-viewport-adaptation',
+      'svg-signature-animation',
+      'highcharts-client-export',
+      'antd-textarea-multiline-placeholder',
+      'auto-switch-node-version',
+      'rest-client-localhost-debug',
+      'whistle-mobile-debug',
+      'monaco-editor-react',
+      'ios-touch-prevention',
+      'ios-image-compat',
+      'videojs-component-guide',
+      'wechat-video-preload'
     ]
   }
 ]

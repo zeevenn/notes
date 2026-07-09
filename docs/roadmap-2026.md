@@ -420,8 +420,8 @@
 
 **系统设计**
 
-- [ ] 复习 `system-design/cases/001-design-url-shortener.md`
-- [ ] 复习 `system-design/cases/002-design-rate-limiter.md`
+- [ ] 复习 `system-design/cases/design-url-shortener.md`
+- [ ] 复习 `system-design/cases/design-rate-limiter.md`
 - [ ] 笔记：`docs/backend/redis/` — 缓存穿透、雪崩、击穿解决方案
 
 **主动学习**（P1 · 数据库）
@@ -459,8 +459,8 @@
 
 **系统设计**
 
-- [ ] 复习 `system-design/cases/004-design-cache-system.md`
-- [ ] 复习 `system-design/cases/005-design-distributed-id.md`
+- [ ] 复习 `system-design/cases/design-cache-system.md`
+- [ ] 复习 `system-design/cases/design-distributed-id.md`
 - [ ] 笔记：`docs/system-design/fundamentals/` — 数据库分片策略
 
 **主动学习**（P1 · Redis）
@@ -494,7 +494,7 @@
 **算法**（每天 2 题）
 
 - [ ] 动态规划入门：Climbing Stairs、Coin Change、House Robber
-- [ ] 笔记：`docs/algorithms/patterns/01-dynamic-programming.md` 补充案例
+- [ ] 笔记：`docs/algorithms/patterns/dynamic-programming.md` 补充案例
 
 **面试知识**
 

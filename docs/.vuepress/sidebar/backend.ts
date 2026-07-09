@@ -5,12 +5,13 @@ export default [
     icon: 'linux',
     prefix: '/backend/linux/',
     children: [
-      '01-set-the-ssh',
-      '02-build-git-server',
-      '03-configure-bt',
-      '04-automated-deployment',
-      '05-install-docker',
-      '06-server-proxy'
+      '',
+      'set-the-ssh',
+      'build-git-server',
+      'configure-bt',
+      'automated-deployment',
+      'install-docker',
+      'server-proxy'
     ]
   },
   {
@@ -19,26 +20,27 @@ export default [
     icon: 'database',
     prefix: '/backend/database/',
     children: [
+      '',
       {
         text: 'Fundamentals',
         collapsible: true,
         icon: 'basic',
         prefix: 'fundamentals/',
-        children: ['01-hello-database', '02-relation-model', '03-db-design', '04-advanced-db-model']
+        children: ['', 'hello-database', 'relation-model', 'db-design', 'advanced-db-model']
       },
       {
         text: 'MySQL',
         collapsible: true,
         icon: 'mysql',
         prefix: 'mysql/',
-        children: ['01-install-mysql']
+        children: ['', 'install-mysql']
       },
       {
         text: 'SQL',
         collapsible: true,
         icon: 'sql',
         prefix: 'sql/',
-        children: ['01-quick-start']
+        children: ['', 'quick-start']
       }
     ]
   },
@@ -48,35 +50,36 @@ export default [
     icon: 'nodejs',
     prefix: '/backend/node/',
     children: [
+      '',
       {
         text: 'Express',
         collapsible: true,
         icon: 'express',
         prefix: 'express/',
-        children: ['01-overview-architecture', '02-express.js']
+        children: ['', 'overview-architecture', 'express.js']
       },
       {
         text: 'Prisma',
         collapsible: true,
         icon: 'prisma',
         prefix: 'prisma/',
-        children: ['', '01-quick-start']
+        children: ['', 'quick-start']
       },
       {
         text: 'Modules',
         collapsible: true,
         icon: 'npm',
         prefix: 'modules/',
-        children: ['01-module-system']
+        children: ['', 'module-system']
       },
       {
         text: 'Module',
         collapsible: true,
         icon: 'npm',
         prefix: 'module/',
-        children: ['01-finalhandler']
+        children: ['', 'finalhandler']
       },
-      '01-turso-prisma-integration'
+      'turso-prisma-integration'
     ]
   },
   {
@@ -84,20 +87,41 @@ export default [
     collapsible: true,
     icon: 'microservices',
     prefix: '/backend/microservices/',
-    children: ['01-fundamental-ideas', '02-mini-microservice-app']
+    children: ['', 'fundamental-ideas', 'mini-microservice-app']
   },
   {
     text: 'Java',
     collapsible: true,
     icon: 'java',
     prefix: '/backend/java/',
-    children: ['01-maven']
+    children: [
+      '',
+      'maven',
+      {
+        text: 'Language',
+        collapsible: true,
+        icon: 'code',
+        prefix: 'language/',
+        children: [
+          '',
+          'program-structure',
+          'primitive-types',
+          'string-array',
+          'control-flow',
+          'classes-and-encapsulation',
+          'static-and-final',
+          'inheritance-and-polymorphism',
+          'composition',
+          'abstract-and-interface'
+        ]
+      }
+    ]
   },
   {
     text: 'Engineering',
     collapsible: true,
     icon: 'practice',
     prefix: '/backend/engineering/',
-    children: ['', '01-testing', '02-ci-cd', '03-code-quality']
+    children: ['', 'testing', 'ci-cd', 'code-quality']
   }
 ]

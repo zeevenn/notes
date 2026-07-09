@@ -46,7 +46,7 @@ export default [
     collapsible: true,
     icon: 'plugin',
     prefix: '/ai/mcp/',
-    children: ['01-what-is-mcp', '02-architecture']
+    children: ['', 'what-is-mcp', 'architecture']
   },
   {
     text: 'Fine-tuning',
@@ -60,6 +60,6 @@ export default [
     collapsible: true,
     icon: 'skill',
     prefix: '/ai/skills/',
-    children: ['01-agent-skills-overview']
+    children: ['', 'agent-skills-overview']
   }
 ]

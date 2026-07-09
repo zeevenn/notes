@@ -11,45 +11,28 @@ star: true
 
 ## 目录
 
-### 基础
-
-- [选择器](01-selectors.md)
-- [盒模型](02-box-model.md)
-- [文本与字体](03-text-and-font.md)
-- [层叠与继承](04-cascade-and-inheritance.md)
-- [背景与边框](05-background-and-border.md)
-- [样式单位](09-units.md)
-- [BFC 块级格式化上下文](12-bfc.md)
-
-### 布局
-
-- [定位](06-position.md)
-- [浮动](07-float.md)
-- [弹性盒](08-flexbox.md)
-- [居中](10-centering.md)
-- [网格布局](11-grid.md)
-
-### 视觉与效果
-
-- [自定义属性](15-variables.md)
-- [过渡](16-transitions.md)
-- [变换](17-transforms.md)
-- [动画](18-animations.md)
-- [层叠上下文](19-stacking-context.md)
-
-### 响应式布局
-
-- [响应式介绍](13-responsive-intro.md)
-- [响应式设计](14-responsive-techniques.md)
-
-### 现代 CSS
-
-- [现代 CSS 新特性](20-modern-css.md)
-
-### 性能
-
-- [will-change 与合成层](21-will-change-and-compositing.md)
-- [CSS Containment 与 content-visibility](22-containment.md)
+- [选择器](./selectors.md)
+- [盒模型](./box-model.md)
+- [文本和字体](./text-and-font.md)
+- [层叠和继承](./cascade-and-inheritance.md)
+- [背景和边框](./background-and-border.md)
+- [定位](./position.md)
+- [浮动](./float.md)
+- [Flex 布局](./flexbox.md)
+- [样式单位](./units.md)
+- [居中](./centering.md)
+- [Grid 布局](./grid.md)
+- [BFC 块级格式化上下文](./bfc.md)
+- [响应式设计介绍](./responsive-intro.md)
+- [响应式设计](./responsive-techniques.md)
+- [CSS 自定义属性](./variables.md)
+- [CSS 过渡](./transitions.md)
+- [CSS 变换](./transforms.md)
+- [CSS 动画](./animations.md)
+- [层叠上下文](./stacking-context.md)
+- [现代 CSS 新特性](./modern-css.md)
+- [will-change 与合成层](./will-change-and-compositing.md)
+- [CSS Containment 与 content-visibility](./containment.md)
 
 ## 学习资料
 

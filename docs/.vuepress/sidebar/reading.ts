@@ -6,11 +6,11 @@ export default [
     prefix: '/reading/books/pro-git/',
     children: [
       '',
-      '01-getting-started',
-      '02-git-basics',
-      '03-branching',
-      '04-git-server',
-      '05-rewriting-history'
+      'getting-started',
+      'git-basics',
+      'branching',
+      'git-server',
+      'rewriting-history'
     ]
   },
   {
@@ -20,15 +20,15 @@ export default [
     prefix: '/reading/books/pragmatic-programmer/',
     children: [
       '',
-      '01-a-pragmatic-philosophy',
-      '02-a-pragmatic-approach',
-      '03-basic-tool',
-      '04-pragmatic-paranoid',
-      '05-work-around',
-      '06-concurrent',
-      '07-when-coding',
-      '08-before-start-project',
-      '09-pragmatic-project'
+      'a-pragmatic-philosophy',
+      'a-pragmatic-approach',
+      'basic-tool',
+      'pragmatic-paranoid',
+      'work-around',
+      'concurrent',
+      'when-coding',
+      'before-start-project',
+      'pragmatic-project'
     ]
   },
   {
@@ -44,25 +44,25 @@ export default [
         icon: 'js',
         children: [
           '',
-          '01-command-pattern',
-          '02-factory-pattern',
-          '03-flyweight-pattern',
-          '04-mediator-pattern',
-          '05-middleware-pattern',
-          '06-mixin-pattern',
-          '07-module-pattern',
-          '08-observer-pattern',
-          '09-prototype-pattern',
-          '10-singleton-pattern'
+          'command-pattern',
+          'factory-pattern',
+          'flyweight-pattern',
+          'mediator-pattern',
+          'middleware-pattern',
+          'mixin-pattern',
+          'module-pattern',
+          'observer-pattern',
+          'prototype-pattern',
+          'singleton-pattern'
         ]
       },
       {
         text: 'React',
-        collapsible: true,
-        prefix: 'react/',
-        icon: 'react',
-        children: ['01-provider-pattern']
-      }
+    collapsible: true,
+    prefix: 'react/',
+    icon: 'react',
+    children: ['', 'provider-pattern']
+  }
     ]
   }
 ]

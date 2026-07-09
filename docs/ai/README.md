@@ -16,6 +16,6 @@ star: true
 ## 工程实践
 
 - [Agents](./agents/)：Agent 架构、工具调用和长任务执行模式。
-- [MCP](./mcp/01-what-is-mcp.md)：Model Context Protocol 的概念与架构。
+- [MCP](./mcp/what-is-mcp.md)：Model Context Protocol 的概念与架构。
 - [Fine-tuning](./fine-tuning/)：微调、领域适配和模型定制。
-- [Skills](./skills/01-agent-skills-overview.md)：Agent skills 的组织方式与使用思路。
+- [Skills](./skills/agent-skills-overview.md)：Agent skills 的组织方式与使用思路。

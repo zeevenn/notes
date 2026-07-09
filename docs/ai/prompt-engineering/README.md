@@ -32,3 +32,7 @@
 2. 用 promptingguide.ai 补全技术点 — CoT、ReAct、Tree of Thoughts 等逐一实践
 3. 读 Building Effective Agents — 进入 Agent 设计层面
 4. 持续关注 Context Engineering — 从单条 prompt 设计扩展到完整上下文组织
+
+## 目录
+
+- [Context Engineering for Agents](./context-engineering-for-agents.md)
