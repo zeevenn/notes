@@ -20,7 +20,6 @@ star: true
 - [Java](./java/)
 - [Engineering](./engineering/)
 - [API 设计](./api-design/)
-- [认证与鉴权](./authentication/)
 - [消息队列](./message-queue/)
 - [Redis](./redis/)
 - [Python](./python/)

@@ -23,6 +23,8 @@ Cookie 的特点：
 
 Cookie 的大小受限，单条一般为 4 KB；同一个域名下存放 Cookie 的个数有限制，不同浏览器不同，通常在数百条；Cookie 支持设置过期时间，当过期时自动销毁；每次发起同域下的 HTTP 请求时，都会携带当前域名下的 Cookie（Cookie 越多，请求开销越大）；支持设置为 HttpOnly，防止 Cookie 被客户端的 JavaScript 访问。
 
+登录态设计还需要同时考虑 XSS、CSRF、跨域和服务端撤销能力，详见 [认证与授权](../../security/auth/) 和 [JWT](../../security/auth/jwt.md)。
+
 ```js
 document.cookie = 'msg1=hello'
 document.cookie = 'msg2=cookie'
