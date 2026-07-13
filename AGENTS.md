@@ -30,7 +30,7 @@ Write for future technical reference. Start with the concept, problem, constrain
 
 Use neutral, literal language for factual material. Prefer concrete subjects and verbs over promotional adjectives, rhetorical questions, motivational transitions, or claims such as "优秀", "强大", "显著提升", and "最佳实践" without supporting context. State relevant versions, prerequisites, scope, and exceptions where they affect correctness.
 
-Do not manufacture a personal voice. First-person wording is appropriate only when recording an actual project decision, observation, unresolved question, or reading note. Otherwise describe the fact or trade-off directly.
+Default technical notes to neutral, third-person documentation. A personal knowledge base describes how knowledge is selected and organized; it does not imply first-person narration. Use first-person wording only for an actual project decision, observation, unresolved question, or reading note. Otherwise describe the fact or trade-off directly.
 
 Let headings describe their content. Avoid repetitive "什么是 X", "为什么需要 X", "优点", "缺点", "适用场景", and "总结" sections when the same information fits more naturally into a definition, comparison, constraint, or example.
 
