@@ -22,13 +22,21 @@ Use the nearest `README.md` as the section hub. If a new page should be discover
 
 Follow existing Markdown frontmatter where present: `title`, `date`, `icon`, `category`, and `tag`. Keep titles concise and searchable. Use lowercase kebab-case filenames, with numeric prefixes for ordered lessons, for example `11-dns-basics.md`.
 
-A good note states the concept, explains why it matters, gives examples, and links to related notes. Prefer short sections and concrete comparisons over long unstructured summaries.
+Let the subject determine the page structure. Concept notes may define and compare; how-to notes should record prerequisites, commands, expected results, and relevant failure cases; project notes should preserve context, decisions, and constraints. Do not force every page to contain an introduction, benefits, use cases, or a concluding summary.
 
 ## Writing Style
 
-Write notes as durable technical knowledge, not AI-generated explainers. Keep the tone calm, specific, and maintainable. Avoid formulaic phrases such as "一句话", "这就是为什么", "核心是", "本质上", "总结一下", and avoid excessive "优点/缺点/适用场景" scaffolding when a short paragraph is clearer.
+Write for future technical reference. Start with the concept, problem, constraint, or operation itself. Omit generic scene-setting and meta narration such as "在现代开发中", "本文将介绍", "接下来看看", and "首先，我们需要" unless they carry necessary information.
 
-Use examples to clarify ideas, but do not over-explain obvious transitions. Prefer precise technical wording over motivational or tutorial-style language. When editing existing AI-related notes, remove signs of AI-generated prose: repetitive sentence patterns, exaggerated certainty, generic recommendations, emoji checklists, and broad claims without context.
+Use neutral, literal language for factual material. Prefer concrete subjects and verbs over promotional adjectives, rhetorical questions, motivational transitions, or claims such as "优秀", "强大", "显著提升", and "最佳实践" without supporting context. State relevant versions, prerequisites, scope, and exceptions where they affect correctness.
+
+Do not manufacture a personal voice. First-person wording is appropriate only when recording an actual project decision, observation, unresolved question, or reading note. Otherwise describe the fact or trade-off directly.
+
+Let headings describe their content. Avoid repetitive "什么是 X", "为什么需要 X", "优点", "缺点", "适用场景", and "总结" sections when the same information fits more naturally into a definition, comparison, constraint, or example.
+
+Examples should clarify a specific claim. Explain non-obvious behavior, assumptions, and expected output, but do not restate code line by line or repeat the same conclusion before and after an example.
+
+When editing existing notes, remove repetitive sentence patterns, exaggerated certainty, generic recommendations, emoji checklists, broad claims without context, and conclusions that only repeat earlier sections. Preserve quotations, intentional personal notes, and the surrounding author's style; do not rewrite unrelated passages merely for uniformity.
 
 ## Linking & Knowledge Graph
 
