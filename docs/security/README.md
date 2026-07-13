@@ -1,3 +1,10 @@
+---
+title: 安全
+article: false
+icon: lock
+star: true
+---
+
 # 安全
 
 ## 目录

@@ -9,6 +9,7 @@ export const Navbar = navbar([
   { text: 'System Design', link: '/system-design/', icon: 'network' },
   { text: 'Computer Science', link: '/computer-science/', icon: 'computer' },
   { text: 'Backend', link: '/backend/', icon: 'server' },
+  { text: 'Security', link: '/security/', icon: 'lock' },
   { text: 'AI', link: '/ai/', icon: 'ai' },
   { text: 'Projects', link: '/projects/', icon: 'project' },
   { text: 'Reading', link: '/reading/', icon: 'biji' },
