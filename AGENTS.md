@@ -32,6 +32,14 @@ Use neutral, literal language for factual material. Prefer concrete subjects and
 
 Default technical notes to neutral, third-person documentation. A personal knowledge base describes how knowledge is selected and organized; it does not imply first-person narration. Use first-person wording only for an actual project decision, observation, unresolved question, or reading note. Otherwise describe the fact or trade-off directly.
 
+For introductory and foundational notes, assume the reader understands the surrounding domain but does not yet know the topic's jargon. Establish the concrete problem and the smallest complete flow before introducing internal formats, implementation variants, edge cases, or security hardening. Prefer this progression when it fits the topic: problem and context, minimal example or end-to-end flow, vocabulary and mechanism, practical implementation, then advanced and reference material. Do not open with a dense taxonomy, a standards quotation, or an exhaustive list of adjacent concepts.
+
+Define every acronym and specialized term in plain Chinese at its first meaningful use, including the role it plays in the current example or flow. Do not introduce a term merely for completeness. If several advanced terms are only needed later, move them into a clearly named advanced or reference section, or link to a separate note. Tables and checklists may summarize concepts after they have been explained; they must not replace the explanation or introduce many unknown terms at once.
+
+Keep the main learning path distinct from implementation details and reference material. A note does not become complete by collecting every related concept on one page. When a topic spans frontend and backend, organize the explanation around an end-to-end request or state transition, then describe each side at the point where it participates. Use a Mermaid sequence diagram when interactions across components are easier to understand as a timeline, and explain the participants and outcome in the surrounding text.
+
+Before drafting or substantially rewriting a foundational concept note, review at least two reputable introductory explanations for teaching order and examples, and verify technical claims against primary standards, official documentation, or current security guidance. Borrow the progression, not unsupported claims or outdated recommendations. When tutorial advice conflicts with primary or current security sources, keep the clearer explanation but follow the primary source for the technical conclusion.
+
 Let headings describe their content. Avoid repetitive "什么是 X", "为什么需要 X", "优点", "缺点", "适用场景", and "总结" sections when the same information fits more naturally into a definition, comparison, constraint, or example.
 
 Examples should clarify a specific claim. Explain non-obvious behavior, assumptions, and expected output, but do not restate code line by line or repeat the same conclusion before and after an example.
