@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-07-13T12:09:56.244Z</updated>
+  <updated>2026-07-14T01:48:52.730Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -30,122 +30,44 @@
     <title type="text">JWT</title>
     <id>https://zeevenn.github.io/notes/notes/security/auth/jwt.html</id>
     <link href="https://zeevenn.github.io/notes/notes/security/auth/jwt.html"/>
-    <updated>2026-07-12T06:59:59.000Z</updated>
-    <summary type="html"><![CDATA[<p>JWT（JSON Web Token）是一种 token 格式，不是一套完整登录系统。它适合表达一组可验签的 claims，例如用户 ID、签发方、受众、过期时间和权限 scope。</p>
-<p>在登录体系里，JWT 常用于 Access Token。它能让资源服务本地验签，减少对认证服务的同步依赖；代价是撤销、权限变更和会话治理会更复杂。</p>
-<h2>结构</h2>
-<p>JWT 常见形态是 JWS，由三段 Base64URL 字符串组成：</p>
-<div class="language-txt" data-ext="txt" data-title="txt"><pre class="language-txt"><code>base64url(header).base64url(payload).base64url(signature)
-</code></pre></div>]]></summary>
-    <content type="html"><![CDATA[<p>JWT（JSON Web Token）是一种 token 格式，不是一套完整登录系统。它适合表达一组可验签的 claims，例如用户 ID、签发方、受众、过期时间和权限 scope。</p>
-<p>在登录体系里，JWT 常用于 Access Token。它能让资源服务本地验签，减少对认证服务的同步依赖；代价是撤销、权限变更和会话治理会更复杂。</p>
-<h2>结构</h2>
-<p>JWT 常见形态是 JWS，由三段 Base64URL 字符串组成：</p>
-<div class="language-txt" data-ext="txt" data-title="txt"><pre class="language-txt"><code>base64url(header).base64url(payload).base64url(signature)
-</code></pre></div><ul>
-<li><code>header</code>：声明类型、签名算法、密钥 ID 等信息，例如 <code>alg</code>、<code>typ</code>、<code>kid</code>。</li>
-<li><code>payload</code>：保存 claims，例如 <code>sub</code>、<code>iss</code>、<code>aud</code>、<code>exp</code>、<code>nbf</code>、<code>iat</code>、<code>jti</code>、<code>scope</code>。</li>
-<li><code>signature</code>：对 header 和 payload 做签名或 MAC，用于防篡改。</li>
-</ul>
-<p>签名不提供保密性。普通 JWS 的 payload 只是编码，任何拿到 token 的人都能读取内容。不要把密码、手机号、身份证号、内部成本、细粒度权限明细等敏感信息放进 JWT。</p>
-<h2>登录与访问流程</h2>
-<p>JWT 的关键点不是“登录时生成一个字符串”，而是资源服务每次收到请求时都要验证签名和 claims。只 decode payload 不算验证。</p>
-<h2>刷新流程</h2>
-<p>Access Token 通常设置较短过期时间。Refresh Token 用来换新的 Access Token，并且更适合保存在服务端可撤销状态中。</p>
-<p>Refresh Token 泄漏后可以换取新的 Access Token，因此它比 Access Token 更敏感。常见做法是保存 refresh token 的哈希、设备 ID、会话 ID、过期时间和最近使用时间，刷新时执行 rotation。</p>
-<h2>前端刷新与拦截器</h2>
-<p>如果 Access Token 放在内存，前端需要处理两个动作：请求前附带 Access Token，请求返回 401 后尝试刷新并重放原请求。Refresh Token 如果放在 HttpOnly Cookie，刷新请求必须允许携带 Cookie。</p>
-<p>拦截器要避免并发刷新和死循环：</p>
+    <updated>2026-07-14T01:47:06.000Z</updated>
+    <summary type="html"><![CDATA[<p>用户通常只在登录时提交一次密码，但服务端需要在之后的每个请求中继续确认用户身份。常见做法有两种：</p>
 <ul>
-<li>请求拦截器只负责附加当前内存里的 Access Token。</li>
-<li>响应拦截器只处理受保护 API 的 401，不处理登录接口和刷新接口自身的 401。</li>
-<li>原请求需要标记 <code>retry</code>，刷新后只重放一次，避免无限循环。</li>
-<li>多个请求同时收到 401 时，只发起一次 refresh，其他请求等待同一个 Promise。</li>
-<li>refresh 失败后清理内存 token，跳转登录页或进入未登录状态。</li>
-<li>403 表示认证有效但权限不足，不应该触发 refresh。</li>
+<li>Session：服务端保存登录数据，客户端只保存一个 Session ID。请求到达后，服务端使用这个 ID 查询登录数据。</li>
+<li>JWT：服务端把用户 ID、有效期等数据写进 Token 并签名。客户端每次带回 Token，接口通过签名检查内容是否可信。</li>
 </ul>
-<p>一个简化的 Axios 形态：</p>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">let</span> accessToken<span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-<span class="token keyword">let</span> refreshPromise<span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token operator">&gt;</span> <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-
-api<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>request<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>accessToken<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    config<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>Authorization <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Bearer </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>accessToken<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">return</span> config
-<span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-api<span class="token punctuation">.</span>interceptors<span class="token punctuation">.</span>response<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>
-  <span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> response<span class="token punctuation">,</span>
-  <span class="token keyword">async</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> originalRequest <span class="token operator">=</span> error<span class="token punctuation">.</span>config
-    <span class="token keyword">const</span> status <span class="token operator">=</span> error<span class="token punctuation">.</span>response<span class="token operator">?.</span>status
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>status <span class="token operator">!==</span> <span class="token number">401</span> <span class="token operator">||</span> originalRequest<span class="token punctuation">.</span>__retry <span class="token operator">||</span> originalRequest<span class="token punctuation">.</span>url <span class="token operator">===</span> <span class="token string">'/auth/refresh'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">throw</span> error
-    <span class="token punctuation">}</span>
-
-    originalRequest<span class="token punctuation">.</span>__retry <span class="token operator">=</span> <span class="token boolean">true</span>
-
-    refreshPromise <span class="token operator">=</span>
-      refreshPromise <span class="token operator">??</span>
-      authApi
-        <span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/auth/refresh'</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> withCredentials<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> response<span class="token punctuation">.</span>data<span class="token punctuation">.</span>accessToken<span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">finally</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-          refreshPromise <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      accessToken <span class="token operator">=</span> <span class="token keyword">await</span> refreshPromise
-      originalRequest<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>Authorization <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Bearer </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>accessToken<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span>
-      <span class="token keyword">return</span> <span class="token function">api</span><span class="token punctuation">(</span>originalRequest<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>refreshError<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      accessToken <span class="token operator">=</span> <span class="token keyword">null</span>
-      <span class="token function">redirectToLogin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-      <span class="token keyword">throw</span> refreshError
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">)</span>
-</code></pre></div><p>多标签页场景还要考虑同步问题。Access Token 如果只存在内存，每个标签页都有自己的副本；一个标签页刷新成功后，可以用 <code>BroadcastChannel</code> 通知其他标签页更新或重新拉取登录态。退出登录也要广播，避免某个标签页继续拿旧 token 调接口。</p>
-<h2>后端验证 JWT</h2>
-<p>后端不能只做“能 decode 出 payload”这种检查。JWT 验证至少包括：</p>
+<p>两种方式的差别不在于能否登录，而在于后续请求如何恢复身份：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>客户端保存</th>
+<th>接口如何确认身份</th>
+<th>立即失效</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Session</td>
+<td>随机的 Session ID</td>
+<td>根据 ID 查询服务端 Session</td>
+<td>删除 Session 即可失效</td>
+</tr>
+<tr>
+<td>JWT</td>
+<td>带签名的用户和有效期等数据</td>
+<td>验证签名并读取 Token</td>
+<td>通常要等待过期，或增加服务端撤销状态</td>
+</tr>
+</tbody>
+</table>]]></summary>
+    <content type="html"><![CDATA[<p>用户通常只在登录时提交一次密码，但服务端需要在之后的每个请求中继续确认用户身份。常见做法有两种：</p>
 <ul>
-<li>只允许预期算法，例如只接受 <code>RS256</code> / <code>ES256</code>，拒绝 <code>alg=none</code>，不要让 token 自己决定算法。</li>
-<li>验证签名或 MAC。微服务里优先使用非对称签名，资源服务只拿公钥，避免所有服务共享可签发 token 的密钥。</li>
-<li>校验 <code>iss</code>，确认 token 来自可信签发方。</li>
-<li>校验 <code>aud</code>，确认 token 是发给当前 API 或服务的。</li>
-<li>校验 <code>exp</code>、<code>nbf</code>、<code>iat</code>，允许很小的 clock skew，但不要无限放宽。</li>
-<li>区分 token 类型，避免把 ID Token 当 Access Token，把 Refresh Token 当 Access Token。</li>
-<li>校验 <code>jti</code>、<code>sid</code>、<code>tokenVersion</code> 等撤销状态，如果业务需要即时失效。</li>
-<li>对 <code>kid</code> 只做受控密钥查找，不把 <code>jku</code>、<code>x5u</code> 这类 header 当成可任意访问的 URL。</li>
-<li>失败时默认拒绝，返回 401；认证有效但权限不足时返回 403。</li>
+<li>Session：服务端保存登录数据，客户端只保存一个 Session ID。请求到达后，服务端使用这个 ID 查询登录数据。</li>
+<li>JWT：服务端把用户 ID、有效期等数据写进 Token 并签名。客户端每次带回 Token，接口通过签名检查内容是否可信。</li>
 </ul>
-<p>伪代码：</p>
-<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">function</span> <span class="token function">verifyAccessToken</span><span class="token punctuation">(</span>token<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> <span class="token punctuation">{</span> header<span class="token punctuation">,</span> payload <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">verifyJwtSignature</span><span class="token punctuation">(</span>token<span class="token punctuation">,</span> <span class="token punctuation">{</span>
-    algorithms<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'RS256'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    issuer<span class="token operator">:</span> <span class="token string">'https://auth.example.com'</span><span class="token punctuation">,</span>
-    audience<span class="token operator">:</span> <span class="token string">'api.example.com'</span><span class="token punctuation">,</span>
-    jwks<span class="token operator">:</span> trustedJwks
-  <span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-  <span class="token function">assert</span><span class="token punctuation">(</span>header<span class="token punctuation">.</span>typ <span class="token operator">===</span> <span class="token string">'at+jwt'</span> <span class="token operator">||</span> payload<span class="token punctuation">.</span>token_use <span class="token operator">===</span> <span class="token string">'access'</span><span class="token punctuation">)</span>
-  <span class="token function">assert</span><span class="token punctuation">(</span>payload<span class="token punctuation">.</span>exp <span class="token operator">&gt;</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token function">assert</span><span class="token punctuation">(</span>payload<span class="token punctuation">.</span>nbf <span class="token operator">===</span> <span class="token keyword">undefined</span> <span class="token operator">||</span> payload<span class="token punctuation">.</span>nbf <span class="token operator">&lt;=</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-  <span class="token function">assert</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isRevoked</span><span class="token punctuation">(</span>payload<span class="token punctuation">.</span>jti<span class="token punctuation">,</span> payload<span class="token punctuation">.</span>sid<span class="token punctuation">,</span> payload<span class="token punctuation">.</span>sub<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-  <span class="token keyword">return</span> <span class="token punctuation">{</span>
-    userId<span class="token operator">:</span> payload<span class="token punctuation">.</span>sub<span class="token punctuation">,</span>
-    tenantId<span class="token operator">:</span> payload<span class="token punctuation">.</span>tid<span class="token punctuation">,</span>
-    scopes<span class="token operator">:</span> <span class="token function">parseScopes</span><span class="token punctuation">(</span>payload<span class="token punctuation">.</span>scope<span class="token punctuation">)</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2>Claim 设计</h2>
-<p>JWT 适合携带稳定、粗粒度、短期可接受的声明，例如用户 ID、租户 ID、客户端 ID、基础 scope。它不适合承载频繁变化的权限矩阵，也不适合保存隐私数据。</p>
-<p>常见 claims：</p>
-<p>| Claim | 含义 |<br>
+<p>两种方式的差别不在于能否登录，而在于后续请求如何恢复身份：</p>
+<p>| 方式 | 客户端保存 | 接口如何确认身份 | 立即失效 |<br>
 |</p>
 ]]></content>
     <category term="安全"/>
