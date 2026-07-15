@@ -33,11 +33,10 @@ date: 2024-04-15
 
 ## 目录
 
-- [浏览器渲染原理](./rendering-pipeline.md)
+- [从输入 URL 到页面显示](./url-to-page.md)
 - [V8 引擎](./v8-engine.md)
 - [内存管理](./memory-management.md)
 - [跨域](./cross-origin.md)
-- [输入 URL 后发生了什么](./url-to-page.md)
 - [浏览器存储](./web-storage.md)
 - [Service Worker](./service-worker.md)
 - [Web Worker](./web-worker.md)

@@ -85,11 +85,10 @@ export default [
     prefix: '/frontend/browser/',
     children: [
       '',
-      'rendering-pipeline',
+      'url-to-page',
       'v8-engine',
       'memory-management',
       'cross-origin',
-      'url-to-page',
       'web-storage',
       'web-worker',
       'service-worker'
