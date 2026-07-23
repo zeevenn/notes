@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-07-17T05:15:15.291Z</updated>
+  <updated>2026-07-23T01:48:57.988Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -3685,11 +3685,11 @@ datasource db {
     <title type="text">HTTP 缓存</title>
     <id>https://zeevenn.github.io/notes/notes/computer-science/networking/http-caching.html</id>
     <link href="https://zeevenn.github.io/notes/notes/computer-science/networking/http-caching.html"/>
-    <updated>2026-07-17T05:13:22.000Z</updated>
-    <summary type="html"><![CDATA[<p>HTTP 缓存保存已经取得的响应，并在后续请求中复用它。复用新鲜响应可以省去网络请求；验证过期响应仍需访问服务器，但在内容未变化时只传输响应头，从而减少延迟、流量和服务器工作量。</p>
-<p>浏览器既是 HTTP 的客户端，也维护一种 <strong>private cache（私有缓存）</strong>。内容分发网络（Content Delivery Network，CDN）和代理还可能维护供多个用户使用的 <strong>shared cache（共享缓存）</strong>。两者遵循相同的 HTTP 缓存语义，但 <code>private</code>、<code>public</code> 和 <code>s-maxage</code> 等指令会区分它们。</p>]]></summary>
-    <content type="html"><![CDATA[<p>HTTP 缓存保存已经取得的响应，并在后续请求中复用它。复用新鲜响应可以省去网络请求；验证过期响应仍需访问服务器，但在内容未变化时只传输响应头，从而减少延迟、流量和服务器工作量。</p>
-<p>浏览器既是 HTTP 的客户端，也维护一种 <strong>private cache（私有缓存）</strong>。内容分发网络（Content Delivery Network，CDN）和代理还可能维护供多个用户使用的 <strong>shared cache（共享缓存）</strong>。两者遵循相同的 HTTP 缓存语义，但 <code>private</code>、<code>public</code> 和 <code>s-maxage</code> 等指令会区分它们。</p>
+    <updated>2026-07-23T01:46:58.000Z</updated>
+    <summary type="html"><![CDATA[<p>HTTP 缓存保存已经取得的响应，并在后续请求中复用它。复用未过期的缓存响应可以省去网络请求；验证过期响应仍需访问服务器，但在内容未变化时只传输响应头，从而减少延迟、流量和服务器工作量。</p>
+<p>浏览器既是 HTTP 的客户端，也维护一种 private cache（私有缓存）。内容分发网络（Content Delivery Network，CDN）和代理还可能维护供多个用户使用的 shared cache（共享缓存）。两者遵循相同的 HTTP 缓存语义，但 <code>private</code>、<code>public</code> 和 <code>s-maxage</code> 等指令会区分它们。</p>]]></summary>
+    <content type="html"><![CDATA[<p>HTTP 缓存保存已经取得的响应，并在后续请求中复用它。复用未过期的缓存响应可以省去网络请求；验证过期响应仍需访问服务器，但在内容未变化时只传输响应头，从而减少延迟、流量和服务器工作量。</p>
+<p>浏览器既是 HTTP 的客户端，也维护一种 private cache（私有缓存）。内容分发网络（Content Delivery Network，CDN）和代理还可能维护供多个用户使用的 shared cache（共享缓存）。两者遵循相同的 HTTP 缓存语义，但 <code>private</code>、<code>public</code> 和 <code>s-maxage</code> 等指令会区分它们。</p>
 <p>本文讨论 HTTP 缓存。它与浏览器中的其他缓存机制并不相同：</p>
 <ul>
 <li>memory cache 和 disk cache 是浏览器保存 HTTP 响应的实现位置，不是两套独立的协议规则；</li>
@@ -3707,15 +3707,15 @@ datasource db {
 
 console.log('v3')
 </code></pre></div><p>浏览器保存的是整个响应，包括状态、响应头和响应体。随后对相同缓存键发起请求时，主要有三条路径：</p>
-<p>国内资料常把第一条复用路径称为“强缓存”，把第二条验证路径称为“协商缓存”。这两个术语有助于记忆，但 HTTP 规范实际描述的是 **freshness（新鲜度）**和 <strong>validation（验证）</strong>：过期响应不会立即被删除，而是通常需要验证后才能复用。</p>
+<p>第一条复用路径一般称为“强缓存”，第二条验证路径一般称为“协商缓存”。过期响应不会立即被删除，通常需要向源站验证后才能复用。</p>
 <h2>缓存键决定能否找到响应</h2>
-<p>缓存必须先找到与当前请求匹配的已存响应，才能判断新鲜度。缓存键至少受请求方法和目标 URI 影响；响应中的 <code>Vary</code> 还可以把指定请求头加入匹配条件。</p>
+<p>缓存必须先找到与当前请求匹配的已存响应，才能判断它是否过期。缓存键至少受请求方法和目标 URI 影响；响应中的 <code>Vary</code> 还可以把指定请求头加入匹配条件。</p>
 <p>例如服务器按语言返回不同内容时，需要声明：</p>
 <div class="language-http" data-ext="http" data-title="http"><pre class="language-http"><code><span class="token header"><span class="token header-name keyword">Vary</span><span class="token punctuation">:</span> <span class="token header-value">Accept-Language</span></span>
 </code></pre></div><p>缓存随后会分别保存中文和英文响应。遗漏 <code>Vary</code> 可能把一种响应错误地复用于另一种请求；在共享缓存中，这还可能造成跨用户数据泄漏。个性化响应通常应使用 <code>private</code> 或 <code>no-store</code>，不能只依赖默认缓存键。</p>
 <p>URL 不同也会产生不同的缓存项。构建工具利用这一点给静态资源添加内容指纹，例如 <code>/app.a81f3c.js</code>：内容改变时 URL 也改变，浏览器自然取得新文件。</p>
-<h2>新鲜度与过期</h2>
-<p>响应的 **freshness lifetime（新鲜度寿命）**表示它可以不经验证直接复用多久。缓存会计算响应的当前年龄；当年龄没有超过新鲜度寿命时，响应是新鲜的，否则是过期的。</p>
+<h2>缓存有效期与过期</h2>
+<p>响应的 <strong>freshness lifetime（新鲜度寿命，也就是缓存有效期）</strong> 表示它可以不经验证直接复用多久。缓存会计算响应的当前年龄；当年龄没有超过有效期时，规范称响应为 <code>fresh</code>（未过期），否则为 <code>stale</code>（过期）。</p>
 <h3>Cache-Control</h3>
 <p><code>Cache-Control</code> 是控制缓存行为的主要响应头，可以组合多个指令：</p>
 <div class="language-http" data-ext="http" data-title="http"><pre class="language-http"><code><span class="token header"><span class="token header-name keyword">Cache-Control</span><span class="token punctuation">:</span> <span class="token header-value">public, max-age=3600</span></span>
@@ -4444,7 +4444,7 @@ Access-Control-Max-Age: 1728000 本次预检的有效期，秒
     <title type="text">从输入 URL 到页面显示</title>
     <id>https://zeevenn.github.io/notes/notes/frontend/browser/url-to-page.html</id>
     <link href="https://zeevenn.github.io/notes/notes/frontend/browser/url-to-page.html"/>
-    <updated>2026-07-15T01:44:42.000Z</updated>
+    <updated>2026-07-23T01:46:58.000Z</updated>
     <summary type="html"><![CDATA[<p>以访问 <code>https://www.example.com/products?id=42#reviews</code> 为例，浏览器需要取得主文档及其依赖资源，再把 HTML、CSS 和 JavaScript 转换成屏幕上的像素。</p>
 <p>这不是一条固定的串行流水线。缓存命中、连接复用、Service Worker、HTTP/2 或 HTTP/3 都可能跳过步骤或让多个步骤并行。下面先给出首次访问时的主线，再说明常见分支。</p>
 <h2>端到端主线</h2>
