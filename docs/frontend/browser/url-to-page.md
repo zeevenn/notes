@@ -79,7 +79,7 @@ scheme、host 和 port 共同组成 **origin（源）**，例如 `https://www.ex
 解析 URL 不代表一定要访问网络。浏览器的获取流程可能从以下位置得到 `Response`：
 
 - **Service Worker**：页面受 Service Worker 控制时，`fetch` 事件可以返回缓存内容、合成响应，或继续访问网络；
-- **HTTP 缓存**：新鲜响应可以直接复用；过期响应可以携带 `If-None-Match` 或 `If-Modified-Since` 向服务器验证，收到 `304 Not Modified` 后复用已有响应体；
+- **HTTP 缓存**：未过期的响应可以直接复用；过期响应可以携带 `If-None-Match` 或 `If-Modified-Since` 向服务器验证，收到 `304 Not Modified` 后复用已有响应体；
 - **网络**：缓存不能满足请求时，访问代理、内容分发网络（Content Delivery Network，CDN）或源站。
 
 缓存、Service Worker 和网络不是三套彼此隔离的机制。例如 Service Worker 内部可以调用 `fetch()` 进入 HTTP 缓存/网络流程，也可以使用 Cache API 管理自己的缓存。HTTP 缓存的具体规则见[HTTP 缓存](../../computer-science/networking/http-caching.md)。
