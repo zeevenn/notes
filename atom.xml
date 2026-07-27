@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-07-23T01:48:57.988Z</updated>
+  <updated>2026-07-27T15:32:24.711Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -28,10 +28,249 @@
   <category term="Pixi"/>
   <category term="react"/>
   <entry>
+    <title type="text">Unit of Work 与事务边界</title>
+    <id>https://zeevenn.github.io/notes/notes/backend/engineering/unit-of-work.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/engineering/unit-of-work.html"/>
+    <updated>2026-07-27T15:30:35.000Z</updated>
+    <summary type="html"><![CDATA[<p>“创建订单并扣减库存”包含两个数据库写操作。如果 MySQL 保持默认的自动提交模式，每条语句会分别提交：库存扣减成功后，创建订单仍然可能失败，数据库由此留下没有订单对应的库存变更。</p>
+<p>Unit of Work（工作单元，简称 UoW）把一个业务用例需要的数据库操作放进同一事务。在 Node.js 手写 SQL 的场景中，最小实现需要完成三件事：</p>
+<ol>
+<li>从连接池取得一个连接并开启事务；</li>
+<li>让参与当前用例的 Repository 共用这个连接；</li>
+<li>用例成功时提交，出现异常时回滚，最后归还连接。</li>
+</ol>
+<p><code>PlaceOrderService</code> 决定“扣减库存和创建订单必须一起成功”，所以事务边界跟随这个用例。UoW 只实现事务的技术细节，不决定哪些业务操作应该组合。</p>]]></summary>
+    <content type="html"><![CDATA[<p>“创建订单并扣减库存”包含两个数据库写操作。如果 MySQL 保持默认的自动提交模式，每条语句会分别提交：库存扣减成功后，创建订单仍然可能失败，数据库由此留下没有订单对应的库存变更。</p>
+<p>Unit of Work（工作单元，简称 UoW）把一个业务用例需要的数据库操作放进同一事务。在 Node.js 手写 SQL 的场景中，最小实现需要完成三件事：</p>
+<ol>
+<li>从连接池取得一个连接并开启事务；</li>
+<li>让参与当前用例的 Repository 共用这个连接；</li>
+<li>用例成功时提交，出现异常时回滚，最后归还连接。</li>
+</ol>
+<p><code>PlaceOrderService</code> 决定“扣减库存和创建订单必须一起成功”，所以事务边界跟随这个用例。UoW 只实现事务的技术细节，不决定哪些业务操作应该组合。</p>
+<h2>最小调用形式</h2>
+<p>应用 Service 只在 <code>run()</code> 回调中使用当前事务提供的 Repository：</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">return</span> unitOfWork<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> products<span class="token punctuation">,</span> orders <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">await</span> products<span class="token punctuation">.</span><span class="token function">reserve</span><span class="token punctuation">(</span>productId<span class="token punctuation">,</span> quantity<span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> orderId <span class="token operator">=</span> <span class="token keyword">await</span> orders<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    productId<span class="token punctuation">,</span>
+    quantity
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span> orderId <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>回调正常返回后，UoW 提交事务；任意操作抛出异常时，UoW 回滚事务。</p>
+<p>下面使用 Node.js、TypeScript、MySQL 8.4、InnoDB 表和 <code>mysql2/promise</code> 展开这个调用。示例只保留事务边界所需的代码，不包含 HTTP Controller、依赖注入容器和日志框架。</p>
+<h2>准备数据表</h2>
+<div class="language-sql" data-ext="sql" data-title="sql"><pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> products <span class="token punctuation">(</span>
+  id <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+  name <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  stock <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span><span class="token punctuation">;</span>
+
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> orders <span class="token punctuation">(</span>
+  id <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span> <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+  product_id <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  quantity <span class="token keyword">INT</span> <span class="token keyword">UNSIGNED</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  created_at <span class="token keyword">TIMESTAMP</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CURRENT_TIMESTAMP</span><span class="token punctuation">,</span>
+  <span class="token keyword">CONSTRAINT</span> fk_orders_product
+    <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span>product_id<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> products<span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span> <span class="token operator">=</span> <span class="token keyword">InnoDB</span><span class="token punctuation">;</span>
+
+<span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> products <span class="token punctuation">(</span>name<span class="token punctuation">,</span> stock<span class="token punctuation">)</span>
+<span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token string">'Keyboard'</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>事务只能可靠地回滚支持事务的表。示例显式使用 InnoDB，不能换成不支持事务的存储引擎后仍期待相同结果。</p>
+<p>安装 MySQL 驱动：</p>
+<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token function">pnpm</span> <span class="token function">add</span> mysql2
+</code></pre></div><h2>创建连接池</h2>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// infrastructure/mysql/pool.ts</span>
+<span class="token keyword">import</span> mysql <span class="token keyword">from</span> <span class="token string">'mysql2/promise'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> pool <span class="token operator">=</span> mysql<span class="token punctuation">.</span><span class="token function">createPool</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  host<span class="token operator">:</span> <span class="token string">'127.0.0.1'</span><span class="token punctuation">,</span>
+  port<span class="token operator">:</span> <span class="token number">3306</span><span class="token punctuation">,</span>
+  user<span class="token operator">:</span> <span class="token string">'app'</span><span class="token punctuation">,</span>
+  password<span class="token operator">:</span> <span class="token string">'password'</span><span class="token punctuation">,</span>
+  database<span class="token operator">:</span> <span class="token string">'shop'</span><span class="token punctuation">,</span>
+  connectionLimit<span class="token operator">:</span> <span class="token number">10</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>连接池负责复用连接。执行一个跨多条语句的事务时，需要使用 <code>pool.getConnection()</code> 显式取得一个连接，并在结束后调用 <code>release()</code> 将它归还连接池。</p>
+<h2>Repository 使用事务连接</h2>
+<p>两个 Repository 都通过构造函数接收 <code>PoolConnection</code>：</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// infrastructure/mysql/product.repository.ts</span>
+<span class="token keyword">import</span> <span class="token keyword">type</span> <span class="token punctuation">{</span>
+  PoolConnection<span class="token punctuation">,</span>
+  ResultSetHeader
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'mysql2/promise'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">ProductRepository</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">readonly</span> connection<span class="token operator">:</span> PoolConnection<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">async</span> <span class="token function">reserve</span><span class="token punctuation">(</span>productId<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> quantity<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>result<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span>connection<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">execute</span><span class="token generic class-name"><span class="token operator">&lt;</span>ResultSetHeader<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span>
+      <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">UPDATE products
+       SET stock = stock - ?
+       WHERE id = ?
+         AND stock &gt;= ?</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+      <span class="token punctuation">[</span>quantity<span class="token punctuation">,</span> productId<span class="token punctuation">,</span> quantity<span class="token punctuation">]</span>
+    <span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span>affectedRows <span class="token operator">!==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'商品不存在或库存不足'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>库存检查和扣减位于同一条 <code>UPDATE</code> 中。并发事务竞争同一商品时，MySQL 会在满足 <code>stock &gt;= quantity</code> 的情况下完成扣减；<code>affectedRows</code> 为 <code>0</code> 表示商品不存在或剩余库存不足。先执行 <code>SELECT stock</code>，再根据查询结果执行无条件 <code>UPDATE</code>，会在两个语句之间留下并发竞争窗口。</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// infrastructure/mysql/order.repository.ts</span>
+<span class="token keyword">import</span> <span class="token keyword">type</span> <span class="token punctuation">{</span>
+  PoolConnection<span class="token punctuation">,</span>
+  ResultSetHeader
+<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'mysql2/promise'</span>
+
+<span class="token keyword">type</span> <span class="token class-name">CreateOrderInput</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  productId<span class="token operator">:</span> <span class="token builtin">number</span>
+  quantity<span class="token operator">:</span> <span class="token builtin">number</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">OrderRepository</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">readonly</span> connection<span class="token operator">:</span> PoolConnection<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">async</span> <span class="token function">create</span><span class="token punctuation">(</span>input<span class="token operator">:</span> CreateOrderInput<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token builtin">number</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token punctuation">[</span>result<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span>connection<span class="token punctuation">.</span><span class="token generic-function"><span class="token function">execute</span><span class="token generic class-name"><span class="token operator">&lt;</span>ResultSetHeader<span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span>
+      <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">INSERT INTO orders (product_id, quantity)
+       VALUES (?, ?)</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+      <span class="token punctuation">[</span>input<span class="token punctuation">.</span>productId<span class="token punctuation">,</span> input<span class="token punctuation">.</span>quantity<span class="token punctuation">]</span>
+    <span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> result<span class="token punctuation">.</span>insertId
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><code>execute()</code> 使用参数占位符传值，不把用户输入直接拼接进 SQL。</p>
+<h2>封装 MySqlUnitOfWork</h2>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// infrastructure/mysql/mysql-unit-of-work.ts</span>
+<span class="token keyword">import</span> <span class="token keyword">type</span> <span class="token punctuation">{</span> Pool <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'mysql2/promise'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> OrderRepository <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./order.repository'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ProductRepository <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./product.repository'</span>
+
+<span class="token keyword">type</span> <span class="token class-name">TransactionRepositories</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  products<span class="token operator">:</span> ProductRepository
+  orders<span class="token operator">:</span> OrderRepository
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">MySqlUnitOfWork</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">readonly</span> pool<span class="token operator">:</span> Pool<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">async</span> <span class="token generic-function"><span class="token function">run</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span>
+    <span class="token function-variable function">work</span><span class="token operator">:</span> <span class="token punctuation">(</span>repositories<span class="token operator">:</span> TransactionRepositories<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span>
+  <span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> connection <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span>pool<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      <span class="token keyword">await</span> connection<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+      <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> repositories<span class="token operator">:</span> TransactionRepositories <span class="token operator">=</span> <span class="token punctuation">{</span>
+          products<span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">ProductRepository</span><span class="token punctuation">(</span>connection<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          orders<span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">OrderRepository</span><span class="token punctuation">(</span>connection<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">work</span><span class="token punctuation">(</span>repositories<span class="token punctuation">)</span>
+
+        <span class="token keyword">await</span> connection<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> result
+      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">await</span> connection<span class="token punctuation">.</span><span class="token function">rollback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">throw</span> error
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+      connection<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>内层 <code>try/catch</code> 管理已经成功开启的事务，外层 <code>finally</code> 保证连接最终归还连接池。<code>beginTransaction()</code>、<code>commit()</code> 和 <code>rollback()</code> 分别对应 MySQL 的 <code>START TRANSACTION</code>、<code>COMMIT</code> 和 <code>ROLLBACK</code>。</p>
+<p>Repository 必须使用 UoW 传入的 <code>connection</code>。下面这种写法绕过了当前事务：</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// 错误：pool.execute() 可能选择另一个连接</span>
+<span class="token keyword">await</span> pool<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token string">'INSERT INTO orders ...'</span><span class="token punctuation">)</span>
+</code></pre></div><p>MySQL 事务属于一个数据库会话，也就是这里从连接池取出的单个连接。即使 SQL 在同一个回调或同一个 Node.js 进程中执行，换了连接也不再属于原事务。</p>
+<h2>Service 确定业务边界</h2>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token comment">// application/place-order.service.ts</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> MySqlUnitOfWork <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../infrastructure/mysql/mysql-unit-of-work'</span>
+
+<span class="token keyword">type</span> <span class="token class-name">PlaceOrderCommand</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  productId<span class="token operator">:</span> <span class="token builtin">number</span>
+  quantity<span class="token operator">:</span> <span class="token builtin">number</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">PlaceOrderService</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">readonly</span> unitOfWork<span class="token operator">:</span> MySqlUnitOfWork<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token keyword">async</span> <span class="token function">execute</span><span class="token punctuation">(</span>command<span class="token operator">:</span> PlaceOrderCommand<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token punctuation">{</span> orderId<span class="token operator">:</span> <span class="token builtin">number</span> <span class="token punctuation">}</span><span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>Number<span class="token punctuation">.</span><span class="token function">isInteger</span><span class="token punctuation">(</span>command<span class="token punctuation">.</span>quantity<span class="token punctuation">)</span> <span class="token operator">||</span> command<span class="token punctuation">.</span>quantity <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'购买数量必须是正整数'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>unitOfWork<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> products<span class="token punctuation">,</span> orders <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">await</span> products<span class="token punctuation">.</span><span class="token function">reserve</span><span class="token punctuation">(</span>command<span class="token punctuation">.</span>productId<span class="token punctuation">,</span> command<span class="token punctuation">.</span>quantity<span class="token punctuation">)</span>
+
+      <span class="token keyword">const</span> orderId <span class="token operator">=</span> <span class="token keyword">await</span> orders<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        productId<span class="token operator">:</span> command<span class="token punctuation">.</span>productId<span class="token punctuation">,</span>
+        quantity<span class="token operator">:</span> command<span class="token punctuation">.</span>quantity
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+      <span class="token keyword">return</span> <span class="token punctuation">{</span> orderId <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>组装并调用 Service：</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> PlaceOrderService <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./application/place-order.service'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> MySqlUnitOfWork <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./infrastructure/mysql/mysql-unit-of-work'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> pool <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./infrastructure/mysql/pool'</span>
+
+<span class="token keyword">const</span> unitOfWork <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MySqlUnitOfWork</span><span class="token punctuation">(</span>pool<span class="token punctuation">)</span>
+<span class="token keyword">const</span> placeOrder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PlaceOrderService</span><span class="token punctuation">(</span>unitOfWork<span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> placeOrder<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  productId<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  quantity<span class="token operator">:</span> <span class="token number">2</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+</code></pre></div><p>成功后，<code>products.stock</code> 减少 <code>2</code>，<code>orders</code> 增加一行。如果 <code>orders.create()</code> 抛出异常，调用会进入 <code>rollback()</code>，库存恢复到事务开始前的值。</p>
+<h2>验证回滚</h2>
+<p>可以在 <code>orders.create()</code> 的 <code>INSERT</code> 前临时抛出异常：</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'模拟创建订单失败'</span><span class="token punctuation">)</span>
+</code></pre></div><p>调用 Service 前后分别查询：</p>
+<div class="language-sql" data-ext="sql" data-title="sql"><pre class="language-sql"><code><span class="token keyword">SELECT</span> stock <span class="token keyword">FROM</span> products <span class="token keyword">WHERE</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> orders <span class="token keyword">WHERE</span> product_id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+</code></pre></div><p>预期结果是调用失败，并且库存和订单表都没有发生变化。测试事务代码时应使用真实 MySQL 实例做集成测试；用假的 Repository 只能验证 Service 是否选择了正确的用例边界，不能证明数据库确实完成了回滚。</p>
+<h2>这个实现的范围</h2>
+<p>Martin Fowler 对 Unit of Work 的经典定义还包括跟踪业务事务中新增、修改和删除的对象，并在结束时协调写入与并发处理。带变更跟踪的 ORM 通常已经实现了这一部分。</p>
+<p>本文的手写 SQL 示例没有维护对象变更列表，因此是更窄的实现：它使用 <code>UnitOfWork</code> 这个名称表达“共享事务连接、协调多个 Repository 并统一提交或回滚”。在只使用 MySQL 驱动的 Node.js 项目中，这种封装已经能隔离事务生命周期，避免把 <code>begin</code>、<code>commit</code> 和 <code>rollback</code> 散落到应用 Service。</p>
+<p>还需要注意以下边界：</p>
+<ul>
+<li>只有一条原子 SQL 时，通常不需要额外建立 UoW；</li>
+<li>事务应尽量短，不要在回调中等待用户输入或执行耗时的 HTTP 调用；</li>
+<li>数据库回滚不能撤销已经发送的邮件、HTTP 请求或消息，跨系统一致性需要 Outbox（事务发件箱）或补偿操作；</li>
+<li>示例不支持嵌套 <code>run()</code>；已有事务中再次开启 UoW，需要明确设计事务传播或保存点；</li>
+<li>不要在事务中混入会隐式提交的 DDL（Data Definition Language，数据定义语言）语句。</li>
+</ul>
+<h2>参考资料</h2>
+<ul>
+<li><a href="https://martinfowler.com/eaaCatalog/unitOfWork.html" target="_blank" rel="noopener noreferrer">Martin Fowler：Unit of Work</a></li>
+<li><a href="https://learn.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application" target="_blank" rel="noopener noreferrer">Microsoft Learn：Repository 与 Unit of Work 模式</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.4/en/commit.html" target="_blank" rel="noopener noreferrer">MySQL 8.4：START TRANSACTION、COMMIT 与 ROLLBACK</a></li>
+<li><a href="https://sidorares.github.io/node-mysql2/docs/examples/connections/create-pool" target="_blank" rel="noopener noreferrer">MySQL2：创建连接池</a></li>
+</ul>
+]]></content>
+    <category term="backend"/>
+    <published>2026-07-27T00:00:00.000Z</published>
+  </entry>
+  <entry>
     <title type="text">后端分层职责边界</title>
     <id>https://zeevenn.github.io/notes/notes/backend/engineering/layered-backend-boundaries.html</id>
     <link href="https://zeevenn.github.io/notes/notes/backend/engineering/layered-backend-boundaries.html"/>
-    <updated>2026-07-16T01:42:18.000Z</updated>
+    <updated>2026-07-27T15:30:35.000Z</updated>
     <summary type="html"><![CDATA[<p>Controller、Service 和 DAO 不是必须同时存在的目录模板，而是隔离变化的逻辑边界。对于同一个后端接口：</p>
 <ul>
 <li>HTTP（Hypertext Transfer Protocol，超文本传输协议）的参数或响应格式变化，主要影响 Controller；</li>
@@ -10823,98 +11062,5 @@ element <span class="token operator">=</span> <span class="token tag"><span clas
 <p>使用 <code>Suspense</code> 和 <code>use</code> 钩子，可以让我们更方便地管理异步状态，而不需要手动管理 <code>isLoading</code> 和 <code>error</code> 状态。</p>
 ]]></content>
     <published>2025-08-20T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">useDeferredValue</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/react/use-deferred-value.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/react/use-deferred-value.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<p><code>useTransition</code> 可以让你给你一个 <code>pending</code> 的布尔值，让你可以展示 <code>pending</code> 状态。但这个问题的难点在于，如果你想展示触发 transition 的值。例如，如果你使用 state 控制一个搜索框，你希望 <code>&lt;input /&gt;</code> 的 <code>value</code> 与用户输入的值保持一致，而不是与之前的值保持一致，因为 React 正在等待 transition 完成。</p>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Suspense<span class="token punctuation">,</span> useState<span class="token punctuation">,</span> useTransition <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> SearchResults <span class="token keyword">from</span> <span class="token string">'./SearchResults.js'</span><span class="token punctuation">;</span>
-
-<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>query<span class="token punctuation">,</span> setQuery<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>isPending<span class="token punctuation">,</span> startTransition<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useTransition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  
-  <span class="token keyword">return</span> <span class="token punctuation">(</span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        Search albums:
-        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>query<span class="token punctuation">}</span></span> <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>e <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-            <span class="token function">startTransition</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-              <span class="token function">setQuery</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span>
-          <span class="token punctuation">}</span><span class="token punctuation">}</span></span>
-        <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Suspense</span></span> <span class="token attr-name">fallback</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Loading...</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">SearchResults</span></span> <span class="token attr-name">query</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>query<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Suspense</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">&gt;</span></span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div>]]></summary>
-    <content type="html"><![CDATA[<p><code>useTransition</code> 可以让你给你一个 <code>pending</code> 的布尔值，让你可以展示 <code>pending</code> 状态。但这个问题的难点在于，如果你想展示触发 transition 的值。例如，如果你使用 state 控制一个搜索框，你希望 <code>&lt;input /&gt;</code> 的 <code>value</code> 与用户输入的值保持一致，而不是与之前的值保持一致，因为 React 正在等待 transition 完成。</p>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Suspense<span class="token punctuation">,</span> useState<span class="token punctuation">,</span> useTransition <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> SearchResults <span class="token keyword">from</span> <span class="token string">'./SearchResults.js'</span><span class="token punctuation">;</span>
-
-<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>query<span class="token punctuation">,</span> setQuery<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>isPending<span class="token punctuation">,</span> startTransition<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useTransition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  
-  <span class="token keyword">return</span> <span class="token punctuation">(</span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        Search albums:
-        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>query<span class="token punctuation">}</span></span> <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>e <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-            <span class="token function">startTransition</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-              <span class="token function">setQuery</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span>
-          <span class="token punctuation">}</span><span class="token punctuation">}</span></span>
-        <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Suspense</span></span> <span class="token attr-name">fallback</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Loading...</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">SearchResults</span></span> <span class="token attr-name">query</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>query<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Suspense</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">&gt;</span></span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>此时，input 的 value 不会实时更新，因为 React 正在等待 transition 完成。</p>
-<p><code>useDeferredValue</code> 可以让你把一个值「延迟处理」。</p>
-<ul>
-<li>组件里仍然会立刻拿到最新的输入值，所以 <code>&lt;input /&gt;</code> 不会卡顿。</li>
-<li>但你把这个值传给 <code>useDeferredValue</code>，得到一个「延迟版的值」，再用它去触发昂贵的渲染（比如搜索结果）。</li>
-</ul>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Suspense<span class="token punctuation">,</span> useState<span class="token punctuation">,</span> useDeferredValue <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> SearchResults <span class="token keyword">from</span> <span class="token string">'./SearchResults.js'</span><span class="token punctuation">;</span>
-
-<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>query<span class="token punctuation">,</span> setQuery<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> deferredQuery <span class="token operator">=</span> <span class="token function">useDeferredValue</span><span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">const</span> isStale <span class="token operator">=</span> query <span class="token operator">!==</span> deferredQuery<span class="token punctuation">;</span>
-  <span class="token keyword">return</span> <span class="token punctuation">(</span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        Search albums:
-        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>query<span class="token punctuation">}</span></span> <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>e <span class="token operator">=&gt;</span> <span class="token function">setQuery</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>value<span class="token punctuation">)</span><span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Suspense</span></span> <span class="token attr-name">fallback</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Loading...</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">style</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>
-          opacity<span class="token operator">:</span> isStale <span class="token operator">?</span> <span class="token number">0.5</span> <span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-          transition<span class="token operator">:</span> isStale <span class="token operator">?</span> <span class="token string">'opacity 0.2s 0.2s linear'</span> <span class="token operator">:</span> <span class="token string">'opacity 0s 0s linear'</span>
-        <span class="token punctuation">}</span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-          </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">SearchResults</span></span> <span class="token attr-name">query</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>deferredQuery<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Suspense</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">&gt;</span></span>
-  <span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p><code>useDeferredValue</code> 会让 React 渲染两次。第一次把 <code>deferredValue</code> 设置为之前的 <code>value</code>，第二次把 <code>deferredValue</code> 设置为当前的 <code>value</code>。这允许 React 处理挂起的组件，并且你可以根据 <code>deferredValue</code> 和 <code>value</code> 的差异来决定是否显示 stale UI。</p>
-<p>这可能感觉与 <code>useTransition</code> 非常相似。两者都允许你处理挂起的组件的 pending UI。<code>useDeferredValue</code> 通常用于典型的用户交互，而 <code>useTransition</code> 通常用于用户导航或刷新整个 UI。</p>
-<p>| 特性    | <code>useTransition</code>                                 | <code>useDeferredValue</code>                                    |<br>
-|</p>
-]]></content>
-    <published>2026-07-09T07:51:34.000Z</published>
   </entry>
 </feed>
