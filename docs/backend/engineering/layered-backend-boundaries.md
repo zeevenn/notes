@@ -251,6 +251,8 @@ await unitOfWork.run(async ({ orders, products }) => {
 
 Controller 不开启事务，单个 Repository 也不应擅自提交一个本应横跨多个写操作的用例。对于很小的项目，Service 直接使用 ORM 的事务 API 是可以接受的简化，但这会让业务层依赖具体数据库工具，应作为明确的取舍。
 
+Node.js 使用 MySQL 连接池协调多个 Repository 的完整实现见 [Unit of Work 与事务边界](./unit-of-work.md)。
+
 ## 目录按业务模块组织
 
 小型项目可以先使用少量文件，不需要提前建立空层。项目增长后，优先按业务能力划分顶层目录，再在模块内部体现职责：

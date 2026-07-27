@@ -122,6 +122,13 @@ export default [
     collapsible: true,
     icon: 'practice',
     prefix: '/backend/engineering/',
-    children: ['', 'layered-backend-boundaries', 'testing', 'ci-cd', 'code-quality']
+    children: [
+      '',
+      'layered-backend-boundaries',
+      'unit-of-work',
+      'testing',
+      'ci-cd',
+      'code-quality'
+    ]
   }
 ]
