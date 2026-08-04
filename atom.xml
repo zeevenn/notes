@@ -4,14 +4,14 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-07-27T15:32:24.711Z</updated>
+  <updated>2026-08-04T01:59:01.176Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
+  <category term="ai"/>
   <category term="backend"/>
   <category term="安全"/>
   <category term="mcp"/>
-  <category term="ai"/>
   <category term="algorithm"/>
   <category term="LeetCode"/>
   <category term="node"/>
@@ -27,6 +27,52 @@
   <category term="JavaScript"/>
   <category term="Pixi"/>
   <category term="react"/>
+  <entry>
+    <title type="text">Agent 工具调用与 Function Calling</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/agents/function-calling.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/agents/function-calling.html"/>
+    <updated>2026-08-04T01:57:01.000Z</updated>
+    <summary type="html"><![CDATA[<p>工具调用（Tool Calling）让大语言模型能够请求外部程序读取实时数据、执行计算或改变系统状态。Function Calling 通常指其中一种形式：应用向模型提供函数名称、用途和参数结构，模型返回一个结构化的调用请求。</p>
+<p>模型不会因为生成了调用请求就直接执行函数。真正拥有凭据、访问网络并执行代码的是宿主程序（承载模型调用和业务逻辑的应用）。这种边界使应用可以在执行前校验参数、检查权限或要求用户确认。</p>
+<h2>一个最小闭环</h2>
+<p>假设用户询问「上海现在多少度」，模型的训练数据无法提供实时天气。应用可以向模型声明一个 <code>get_current_weather</code> 工具：</p>]]></summary>
+    <content type="html"><![CDATA[<p>工具调用（Tool Calling）让大语言模型能够请求外部程序读取实时数据、执行计算或改变系统状态。Function Calling 通常指其中一种形式：应用向模型提供函数名称、用途和参数结构，模型返回一个结构化的调用请求。</p>
+<p>模型不会因为生成了调用请求就直接执行函数。真正拥有凭据、访问网络并执行代码的是宿主程序（承载模型调用和业务逻辑的应用）。这种边界使应用可以在执行前校验参数、检查权限或要求用户确认。</p>
+<h2>一个最小闭环</h2>
+<p>假设用户询问「上海现在多少度」，模型的训练数据无法提供实时天气。应用可以向模型声明一个 <code>get_current_weather</code> 工具：</p>
+<div class="language-json" data-ext="json" data-title="json"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"get_current_weather"</span><span class="token punctuation">,</span>
+  <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"查询指定城市的当前天气；仅用于实时天气，不用于历史天气或预报"</span><span class="token punctuation">,</span>
+  <span class="token property">"parameters"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"object"</span><span class="token punctuation">,</span>
+    <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"city"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
+        <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"城市名称，例如：上海"</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"required"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"city"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"additionalProperties"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>工具声明只是提供给模型的接口说明，不包含天气查询代码。一次完整的客户端工具调用通常需要两次模型交互：</p>
+<p>这里的关键步骤是：</p>
+<ol>
+<li>应用把用户消息和可用工具声明发送给模型。</li>
+<li>模型可以直接回答，也可以返回工具名称、参数和调用 ID。</li>
+<li>应用按调用 ID 找到请求，校验后执行对应代码。</li>
+<li>应用把执行结果与调用 ID 一起回传给模型。</li>
+<li>模型根据工具结果生成面向用户的回答；如果还需要其他数据，也可以继续请求工具。</li>
+</ol>
+<p>调用 ID 用于关联一次请求和它的结果。同一轮出现多个调用、请求被并行处理时，不能只依赖工具名称或数组位置匹配结果。</p>
+<h2>工具声明包含什么</h2>
+<p>不同模型 API 的字段名不完全相同，但自定义工具通常包含以下信息：</p>
+<p>| 字段 | 作用 |<br>
+|</p>
+]]></content>
+    <category term="ai"/>
+    <published>2026-07-28T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">Unit of Work 与事务边界</title>
     <id>https://zeevenn.github.io/notes/notes/backend/engineering/unit-of-work.html</id>
@@ -10956,111 +11002,5 @@ element <span class="token operator">=</span> <span class="token tag"><span clas
 ]]></content>
     <category term="react"/>
     <published>2025-06-10T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Suspense</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/react/suspense.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/react/suspense.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<p>大多数应用程序都需要从服务器获取一些数据。例如一个 <code>fetch</code> 请求：</p>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://api.example.com/data'</span><span class="token punctuation">)</span>
-<span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre></div>]]></summary>
-    <content type="html"><![CDATA[<p>大多数应用程序都需要从服务器获取一些数据。例如一个 <code>fetch</code> 请求：</p>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://api.example.com/data'</span><span class="token punctuation">)</span>
-<span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre></div><p>虽然代码很简单，但无论你的服务器有多快，你都需要考虑用户在等待时看到的内容。你无法控制用户的网络连接。同样，你还需要考虑如果请求失败会发生什么。你也无法控制用户的连接可靠性。</p>
-<h2>传统实现</h2>
-<p>下述代码是一个传统的实现方式，它通过 <code>useState</code> 和 <code>useEffect</code> 来管理异步状态，在数据加载完成之前，会展示 <code>Loading...</code> 状态，在数据加载失败时，会展示 <code>Error: {error.message}</code> 状态。</p>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">function</span> <span class="token function">DataLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>isLoading<span class="token punctuation">,</span> setIsLoading<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>error<span class="token punctuation">,</span> setError<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
-  <span class="token keyword">const</span> <span class="token punctuation">[</span>data<span class="token punctuation">,</span> setData<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
-
-  <span class="token keyword">const</span> <span class="token function-variable function">fetchData</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'https://api.example.com/data'</span><span class="token punctuation">)</span>
-      <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token keyword">await</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-      <span class="token function">setData</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token function">setError</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-      <span class="token function">setIsLoading</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-
-  <span class="token function">useEffect</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-    <span class="token function">fetchData</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>isLoading<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Loading...</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Error: </span><span class="token punctuation">{</span>error<span class="token punctuation">.</span>message<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-  <span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>data<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2>使用 Suspense</h2>
-<p>React 提供了一套优雅的解决方案来处理这些场景：<code>Suspense</code> 和 <code>ErrorBoundary</code> 组件。<code>Suspense</code> 组件可以让你在等待数据加载时展示一个 fallback UI，而 <code>ErrorBoundary</code> 组件可以让你在数据加载失败时展示一个错误 UI。</p>
-<p>关键问题在于：如何在渲染 UI 时恰当地处理异步状态？这时候 <code>use</code> 钩子就派上用场了：</p>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">function</span> <span class="token function">DataLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token function">use</span><span class="token punctuation">(</span>fetchDataPromise<span class="token punctuation">)</span>
-	<span class="token keyword">return</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>data<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>为了完成声明式循环，当 promise 被抛出时，React 会「暂停」组件，这意味着它会向上查找父组件的树，寻找 <code>Suspense</code> 组件并渲染其边界：</p>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Suspense <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span>
-
-<span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">return</span> <span class="token punctuation">(</span>
-		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Suspense</span></span> <span class="token attr-name">fallback</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">loading phone details</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-			</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">DataLoader</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-		</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Suspense</span></span><span class="token punctuation">&gt;</span></span>
-	<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>这类似于错误边界，因为 <code>Suspense</code> 边界可以处理其子组件或孙组件中抛出的任何 promise。它们也可以嵌套，因此你可以在应用程序的加载状态上拥有很大的控制权。</p>
-<p>如果 promise 被拒绝，那么你的 <code>ErrorBoundary</code> 将被触发，你可以渲染一个错误消息给用户：</p>
-<div class="language-tsx" data-ext="tsx" data-title="tsx"><pre class="language-tsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> Suspense <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span>
-<span class="token keyword">import</span> <span class="token punctuation">{</span> ErrorBoundary <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react-error-boundary'</span>
-
-<span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">return</span> <span class="token punctuation">(</span>
-		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">ErrorBoundary</span></span> <span class="token attr-name">fallback</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Oh no, something bad happened</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-			</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Suspense</span></span> <span class="token attr-name">fallback</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">loading phone details</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-				</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">DataLoader</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
-			</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Suspense</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
-		</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">ErrorBoundary</span></span><span class="token punctuation">&gt;</span></span>
-	<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>一个简单的 <code>use</code> 钩子实现如下：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>type UsePromise<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span> <span class="token operator">=</span> Promise<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span> <span class="token operator">&amp;</span> <span class="token punctuation">{</span>
-	<span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">'pending'</span> <span class="token operator">|</span> <span class="token string">'fulfilled'</span> <span class="token operator">|</span> <span class="token string">'rejected'</span>
-	<span class="token literal-property property">value</span><span class="token operator">:</span> Value
-	<span class="token literal-property property">reason</span><span class="token operator">:</span> unknown
-<span class="token punctuation">}</span>
-
-<span class="token keyword">function</span> use<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span><span class="token punctuation">(</span>promise<span class="token operator">:</span> Promise<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator">:</span> Value <span class="token punctuation">{</span>
-	<span class="token keyword">const</span> usePromise <span class="token operator">=</span> promise <span class="token keyword">as</span> UsePromise<span class="token operator">&lt;</span>Value<span class="token operator">&gt;</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span>usePromise<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token string">'fulfilled'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token keyword">return</span> usePromise<span class="token punctuation">.</span>value
-	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>usePromise<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token string">'rejected'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token keyword">throw</span> usePromise<span class="token punctuation">.</span>reason
-	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>usePromise<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token string">'pending'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token keyword">throw</span> usePromise
-	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-		usePromise<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'pending'</span>
-		usePromise<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>
-			<span class="token punctuation">(</span><span class="token parameter">result</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-				usePromise<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'fulfilled'</span>
-				usePromise<span class="token punctuation">.</span>value <span class="token operator">=</span> result
-			<span class="token punctuation">}</span><span class="token punctuation">,</span>
-			<span class="token punctuation">(</span><span class="token parameter">reason</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-				usePromise<span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token string">'rejected'</span>
-				usePromise<span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
-			<span class="token punctuation">}</span><span class="token punctuation">,</span>
-		<span class="token punctuation">)</span>
-		<span class="token keyword">throw</span> usePromise
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2>总结</h2>
-<p>使用 <code>Suspense</code> 和 <code>use</code> 钩子，可以让我们更方便地管理异步状态，而不需要手动管理 <code>isLoading</code> 和 <code>error</code> 状态。</p>
-]]></content>
-    <published>2025-08-20T00:00:00.000Z</published>
   </entry>
 </feed>
