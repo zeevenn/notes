@@ -39,7 +39,7 @@ export default [
     collapsible: true,
     icon: 'robot',
     prefix: '/ai/agents/',
-    children: ['']
+    children: ['', 'function-calling']
   },
   {
     text: 'MCP',
