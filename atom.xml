@@ -4,16 +4,16 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-08-04T01:59:01.176Z</updated>
+  <updated>2026-08-05T01:58:07.533Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
   <category term="ai"/>
   <category term="backend"/>
   <category term="安全"/>
-  <category term="mcp"/>
   <category term="algorithm"/>
   <category term="LeetCode"/>
+  <category term="mcp"/>
   <category term="node"/>
   <category term="linux"/>
   <category term="microservice"/>
@@ -31,7 +31,7 @@
     <title type="text">Agent 工具调用与 Function Calling</title>
     <id>https://zeevenn.github.io/notes/notes/ai/agents/function-calling.html</id>
     <link href="https://zeevenn.github.io/notes/notes/ai/agents/function-calling.html"/>
-    <updated>2026-08-04T01:57:01.000Z</updated>
+    <updated>2026-08-05T01:56:33.000Z</updated>
     <summary type="html"><![CDATA[<p>工具调用（Tool Calling）让大语言模型能够请求外部程序读取实时数据、执行计算或改变系统状态。Function Calling 通常指其中一种形式：应用向模型提供函数名称、用途和参数结构，模型返回一个结构化的调用请求。</p>
 <p>模型不会因为生成了调用请求就直接执行函数。真正拥有凭据、访问网络并执行代码的是宿主程序（承载模型调用和业务逻辑的应用）。这种边界使应用可以在执行前校验参数、检查权限或要求用户确认。</p>
 <h2>一个最小闭环</h2>
@@ -501,220 +501,6 @@
 </ul>
 ]]></content>
     <published>2026-07-09T07:51:34.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">MCP</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/mcp/</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-<li></li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-<li></li>
-</ul>
-]]></content>
-    <published>2026-07-09T07:51:34.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">MCP Architecture</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<h2>MCP 生态组成</h2>
-<h3>1. MCP Specification</h3>
-<p><strong>协议规范本身</strong>。<br>
-定义了：</p>
-<ul>
-<li>客户端和服务端如何通信</li>
-<li>上下文（context）如何描述、传输、更新</li>
-<li>必须遵守的接口、数据结构、行为约束</li>
-</ul>
-<p>可以理解为协议层面的标准文档。</p>
-<h3>2. MCP SDKs</h3>
-<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
-作用是：</p>
-<ul>
-<li>把规范落地成可直接使用的代码</li>
-<li>降低实现 MCP 客户端/服务端的成本</li>
-</ul>]]></summary>
-    <content type="html"><![CDATA[<h2>MCP 生态组成</h2>
-<h3>1. MCP Specification</h3>
-<p><strong>协议规范本身</strong>。<br>
-定义了：</p>
-<ul>
-<li>客户端和服务端如何通信</li>
-<li>上下文（context）如何描述、传输、更新</li>
-<li>必须遵守的接口、数据结构、行为约束</li>
-</ul>
-<p>可以理解为协议层面的标准文档。</p>
-<h3>2. MCP SDKs</h3>
-<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
-作用是：</p>
-<ul>
-<li>把规范落地成可直接使用的代码</li>
-<li>降低实现 MCP 客户端/服务端的成本</li>
-</ul>
-<p>常见 SDK 方向包括：</p>
-<ul>
-<li>TypeScript SDK</li>
-<li>Python SDK</li>
-<li>Rust SDK</li>
-</ul>
-<p>SDK 是规范的工程化实现，负责把协议细节封装成可调用接口。</p>
-<h3>3. MCP Development Tools</h3>
-<p><strong>开发和调试 MCP 的工具链</strong>，比如：</p>
-<ul>
-<li>MCP Inspector（用于查看、调试 context 交换）</li>
-<li>本地调试工具</li>
-<li>验证协议是否符合规范的工具</li>
-</ul>
-<p>这类工具在 MCP 开发中的位置，类似 HTTP 生态中的 Postman 或 GraphQL 生态中的 Playground。</p>
-<h3>4. MCP Reference Server Implementations</h3>
-<p><strong>参考服务端实现</strong>。<br>
-特点：</p>
-<ul>
-<li>不是“唯一正确”的实现</li>
-<li>主要用于学习、对照、验证理解是否正确</li>
-</ul>
-<p>参考实现更接近最小示例项目，用于学习协议边界和验证实现是否符合规范。</p>
-<h2>MCP 不负责什么</h2>
-<blockquote>
-<p><strong>MCP focuses solely on the protocol for context exchange</strong></p>
-</blockquote>
-<p>MCP <strong>只关心「上下文如何交换」</strong>，不关心：</p>
-<ul>
-<li>使用 GPT、Claude 还是本地 LLM</li>
-<li>Prompt 如何编写</li>
-<li>多轮对话如何组织</li>
-<li>Agent 如何决策</li>
-<li>RAG、Memory、Tool calling 的具体策略</li>
-</ul>
-<p>也就是说：</p>
-<blockquote>
-<p><strong>MCP ≈ HTTP</strong></p>
-<p>它定义“怎么传”，而不是“传了之后你怎么用”。</p>
-</blockquote>
-<h2>协议边界</h2>
-<ul>
-<li>
-<p>MCP 是 <strong>“上下文交换层协议”</strong></p>
-</li>
-<li>
-<p>提供：</p>
-<ul>
-<li>规范（Specification）</li>
-<li>SDK</li>
-<li>开发工具</li>
-<li>参考实现</li>
-</ul>
-</li>
-<li>
-<p>不干涉：</p>
-<ul>
-<li>LLM 选型</li>
-<li>AI 应用架构</li>
-<li>业务逻辑与智能策略</li>
-</ul>
-</li>
-</ul>
-]]></content>
-    <category term="mcp"/>
-    <published>2026-01-19T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">What is MCP?</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
-<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
-<h2>MCP 能连接什么</h2>]]></summary>
-    <content type="html"><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
-<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
-<h2>MCP 能连接什么</h2>
-<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/nvim_clipboard_20260119150550.png" alt="nvim_clipboard_20260119150550" tabindex="0" loading="lazy"><figcaption>nvim_clipboard_20260119150550</figcaption></figure>
-<ul>
-<li>Agent 可以通过 MCP 连接外部工具和数据源，例如日历、文档、代码仓库和内部系统。</li>
-<li>不同 AI 应用可以围绕同一套协议集成上下文、工具和资源，降低重复适配成本。</li>
-</ul>
-<h2>MCP 的价值</h2>
-<ul>
-<li>对开发者：把外部系统接入抽象成协议适配，而不是为每个模型应用单独写集成。</li>
-<li>对 Agent：用标准方式访问工具、资源和提示模板，提升互操作性。</li>
-<li>对用户：让支持 MCP 的应用更容易接入已有工作流和数据源。</li>
-</ul>
-]]></content>
-    <category term="mcp"/>
-    <published>2026-01-19T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Skills</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/skills/</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/skills/"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-</ul>
-]]></content>
-    <published>2026-07-09T07:51:34.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Agent Skills Overview</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<h2>Overview</h2>
-<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
-<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
-<p>通过 Skills，Agent 可以：</p>
-<ul>
-<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
-<li>访问外部工具和服务</li>
-<li>扩展自身能力而无需修改核心代码</li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[<h2>Overview</h2>
-<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
-<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
-<p>通过 Skills，Agent 可以：</p>
-<ul>
-<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
-<li>访问外部工具和服务</li>
-<li>扩展自身能力而无需修改核心代码</li>
-</ul>
-<h2>What are skills?</h2>
-<p>一个标准的 Skill 通常包含以下文件：</p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>my-skill/
-├── SKILL.md          # Required: instructions + metadata (name and description)
-├── scripts/          # Optional: executable code
-├── references/       # Optional: documentation
-└── assets/           # Optional: templates, resources
-</code></pre></div><p>Skills 使用渐进式披露来高效管理上下文：</p>
-<ol>
-<li>发现阶段：启动时，Agent 仅加载每个可用 skill 的名称和描述——刚好足够判断该 skill 何时可能相关。</li>
-<li>激活阶段：当任务与某个 skill 的描述匹配时，Agent 会将完整的 <code>SKILL.md</code> 指令读入上下文。</li>
-<li>执行阶段：Agent 按照指令执行操作，根据需要加载引用的文件或运行捆绑的代码。</li>
-</ol>
-<p>这种方式能减少默认上下文占用，同时保留按需展开复杂指令的能力。</p>
-<div class="language-markdown" data-ext="md" data-title="md"><pre class="language-markdown"><code></code></pre></div>]]></content>
-    <category term="ai"/>
-    <published>2026-02-06T00:00:00.000Z</published>
   </entry>
   <entry>
     <title type="text">数组</title>
@@ -2726,6 +2512,220 @@
 </code></pre></div>]]></content>
     <category term="LeetCode"/>
     <published>2022-08-01T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">MCP</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/mcp/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+<li></li>
+</ul>
+]]></summary>
+    <content type="html"><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+<li></li>
+</ul>
+]]></content>
+    <published>2026-07-09T07:51:34.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">MCP Architecture</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[<h2>MCP 生态组成</h2>
+<h3>1. MCP Specification</h3>
+<p><strong>协议规范本身</strong>。<br>
+定义了：</p>
+<ul>
+<li>客户端和服务端如何通信</li>
+<li>上下文（context）如何描述、传输、更新</li>
+<li>必须遵守的接口、数据结构、行为约束</li>
+</ul>
+<p>可以理解为协议层面的标准文档。</p>
+<h3>2. MCP SDKs</h3>
+<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
+作用是：</p>
+<ul>
+<li>把规范落地成可直接使用的代码</li>
+<li>降低实现 MCP 客户端/服务端的成本</li>
+</ul>]]></summary>
+    <content type="html"><![CDATA[<h2>MCP 生态组成</h2>
+<h3>1. MCP Specification</h3>
+<p><strong>协议规范本身</strong>。<br>
+定义了：</p>
+<ul>
+<li>客户端和服务端如何通信</li>
+<li>上下文（context）如何描述、传输、更新</li>
+<li>必须遵守的接口、数据结构、行为约束</li>
+</ul>
+<p>可以理解为协议层面的标准文档。</p>
+<h3>2. MCP SDKs</h3>
+<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
+作用是：</p>
+<ul>
+<li>把规范落地成可直接使用的代码</li>
+<li>降低实现 MCP 客户端/服务端的成本</li>
+</ul>
+<p>常见 SDK 方向包括：</p>
+<ul>
+<li>TypeScript SDK</li>
+<li>Python SDK</li>
+<li>Rust SDK</li>
+</ul>
+<p>SDK 是规范的工程化实现，负责把协议细节封装成可调用接口。</p>
+<h3>3. MCP Development Tools</h3>
+<p><strong>开发和调试 MCP 的工具链</strong>，比如：</p>
+<ul>
+<li>MCP Inspector（用于查看、调试 context 交换）</li>
+<li>本地调试工具</li>
+<li>验证协议是否符合规范的工具</li>
+</ul>
+<p>这类工具在 MCP 开发中的位置，类似 HTTP 生态中的 Postman 或 GraphQL 生态中的 Playground。</p>
+<h3>4. MCP Reference Server Implementations</h3>
+<p><strong>参考服务端实现</strong>。<br>
+特点：</p>
+<ul>
+<li>不是“唯一正确”的实现</li>
+<li>主要用于学习、对照、验证理解是否正确</li>
+</ul>
+<p>参考实现更接近最小示例项目，用于学习协议边界和验证实现是否符合规范。</p>
+<h2>MCP 不负责什么</h2>
+<blockquote>
+<p><strong>MCP focuses solely on the protocol for context exchange</strong></p>
+</blockquote>
+<p>MCP <strong>只关心「上下文如何交换」</strong>，不关心：</p>
+<ul>
+<li>使用 GPT、Claude 还是本地 LLM</li>
+<li>Prompt 如何编写</li>
+<li>多轮对话如何组织</li>
+<li>Agent 如何决策</li>
+<li>RAG、Memory、Tool calling 的具体策略</li>
+</ul>
+<p>也就是说：</p>
+<blockquote>
+<p><strong>MCP ≈ HTTP</strong></p>
+<p>它定义“怎么传”，而不是“传了之后你怎么用”。</p>
+</blockquote>
+<h2>协议边界</h2>
+<ul>
+<li>
+<p>MCP 是 <strong>“上下文交换层协议”</strong></p>
+</li>
+<li>
+<p>提供：</p>
+<ul>
+<li>规范（Specification）</li>
+<li>SDK</li>
+<li>开发工具</li>
+<li>参考实现</li>
+</ul>
+</li>
+<li>
+<p>不干涉：</p>
+<ul>
+<li>LLM 选型</li>
+<li>AI 应用架构</li>
+<li>业务逻辑与智能策略</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    <category term="mcp"/>
+    <published>2026-01-19T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">What is MCP?</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
+<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
+<h2>MCP 能连接什么</h2>]]></summary>
+    <content type="html"><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
+<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
+<h2>MCP 能连接什么</h2>
+<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/nvim_clipboard_20260119150550.png" alt="nvim_clipboard_20260119150550" tabindex="0" loading="lazy"><figcaption>nvim_clipboard_20260119150550</figcaption></figure>
+<ul>
+<li>Agent 可以通过 MCP 连接外部工具和数据源，例如日历、文档、代码仓库和内部系统。</li>
+<li>不同 AI 应用可以围绕同一套协议集成上下文、工具和资源，降低重复适配成本。</li>
+</ul>
+<h2>MCP 的价值</h2>
+<ul>
+<li>对开发者：把外部系统接入抽象成协议适配，而不是为每个模型应用单独写集成。</li>
+<li>对 Agent：用标准方式访问工具、资源和提示模板，提升互操作性。</li>
+<li>对用户：让支持 MCP 的应用更容易接入已有工作流和数据源。</li>
+</ul>
+]]></content>
+    <category term="mcp"/>
+    <published>2026-01-19T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Skills</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/skills/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/skills/"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+</ul>
+]]></summary>
+    <content type="html"><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+</ul>
+]]></content>
+    <published>2026-07-09T07:51:34.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Agent Skills Overview</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[<h2>Overview</h2>
+<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
+<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
+<p>通过 Skills，Agent 可以：</p>
+<ul>
+<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
+<li>访问外部工具和服务</li>
+<li>扩展自身能力而无需修改核心代码</li>
+</ul>
+]]></summary>
+    <content type="html"><![CDATA[<h2>Overview</h2>
+<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
+<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
+<p>通过 Skills，Agent 可以：</p>
+<ul>
+<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
+<li>访问外部工具和服务</li>
+<li>扩展自身能力而无需修改核心代码</li>
+</ul>
+<h2>What are skills?</h2>
+<p>一个标准的 Skill 通常包含以下文件：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>my-skill/
+├── SKILL.md          # Required: instructions + metadata (name and description)
+├── scripts/          # Optional: executable code
+├── references/       # Optional: documentation
+└── assets/           # Optional: templates, resources
+</code></pre></div><p>Skills 使用渐进式披露来高效管理上下文：</p>
+<ol>
+<li>发现阶段：启动时，Agent 仅加载每个可用 skill 的名称和描述——刚好足够判断该 skill 何时可能相关。</li>
+<li>激活阶段：当任务与某个 skill 的描述匹配时，Agent 会将完整的 <code>SKILL.md</code> 指令读入上下文。</li>
+<li>执行阶段：Agent 按照指令执行操作，根据需要加载引用的文件或运行捆绑的代码。</li>
+</ol>
+<p>这种方式能减少默认上下文占用，同时保留按需展开复杂指令的能力。</p>
+<div class="language-markdown" data-ext="md" data-title="md"><pre class="language-markdown"><code></code></pre></div>]]></content>
+    <category term="ai"/>
+    <published>2026-02-06T00:00:00.000Z</published>
   </entry>
   <entry>
     <title type="text">数据库</title>
