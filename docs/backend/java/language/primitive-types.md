@@ -11,16 +11,23 @@ Java 有八个基本数据类型（primitive data types）：
 - 字符类型：`char`
 - 布尔类型：`boolean`
 
-| Types     | Description              | Default Value |
-| --------- | ------------------------ | ------------- |
-| `byte`    | 8-bit signed integer     | `0`           |
-| `short`   | 16-bit signed integer    | `0`           |
-| `int`     | 32-bit signed integer    | `0`           |
-| `long`    | 64-bit signed integer    | `0L`          |
-| `float`   | 32-bit floating point    | `0.0f`        |
-| `double`  | 64-bit floating point    | `0.0d`        |
-| `char`    | 16-bit Unicode character | `'\u0000'`    |
-| `boolean` | true or false            | `false`       |
+| 类型      | 含义                     | 字段和数组元素的默认值 |
+| --------- | ------------------------ | ---------------------- |
+| `byte`    | 8-bit signed integer     | `0`                    |
+| `short`   | 16-bit signed integer    | `0`                    |
+| `int`     | 32-bit signed integer    | `0`                    |
+| `long`    | 64-bit signed integer    | `0L`                   |
+| `float`   | 32-bit floating point    | `0.0f`                 |
+| `double`  | 64-bit floating point    | `0.0d`                 |
+| `char`    | 16-bit Unicode character | `'\u0000'`             |
+| `boolean` | true or false            | `false`                |
+
+默认值只适用于字段和数组元素。局部变量没有默认值，必须在读取前明确赋值：
+
+```java
+int count;
+// System.out.println(count); // 编译错误：count 可能尚未初始化
+```
 
 > [!TIP]
 > `L`、`f` 和 `d` 后缀分别用于表示 `long`, `float` 和 `double` 类型的字面值。

@@ -50,6 +50,14 @@ When editing existing notes, remove repetitive sentence patterns, exaggerated ce
 
 Internal links should use relative Markdown links that VuePress can resolve. When adding or moving content, check nearby pages for references that should point to the new note. Do not leave orphan pages: every important page should be reachable from a README, sidebar entry, or related note.
 
+## Java Documentation Baseline
+
+Treat Java 17 as the default baseline for notes under `docs/backend/java/`. Java examples without an explicit version marker must compile against the Java 17 language and standard library API, preferably verified with `javac --release 17` when practical.
+
+Place features introduced after Java 17 in a clearly separated section whose heading includes the minimum version, for example `[Java 21+]` or `[Java 25+]`. Explain the Java 17-compatible flow before presenting the newer alternative. Do not make preview or incubator features prerequisites for the main learning path; state their exact status and JDK version when they are discussed.
+
+Use Java SE 17 specifications and API documentation for baseline claims. For later features, link to the matching versioned specification, official JEP, or API documentation. A newer JDK used to build or test examples does not change the documented target version.
+
 ## Maintenance Workflow
 
 For content updates, preserve the existing Chinese technical writing style unless the surrounding section is already English. For config or navigation changes, edit `docs/.vuepress/config.ts`, `theme.ts`, `navbar.ts`, or `sidebar/` deliberately and avoid generated folders such as `.cache`, `.temp`, and `dist`.

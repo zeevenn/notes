@@ -1,225 +1,226 @@
 ---
 title: 程序基本结构
-date: 2026-01-23
+date: 2026-08-05
 category: java
 ---
 
-> 本文从「程序的基本结构」出发，解释为什么 **Java 必须有明确入口**，以及它与 **TS / Node.js 的执行模型** 在设计哲学上的根本差异。
-
----
-
-## 什么是「程序结构」
-
-从最抽象的层面看，一个程序至少要回答三个问题：
-
-1. **从哪里开始执行？**（入口）
-2. **代码如何组织？**（结构单元）
-3. **依赖如何生效？**（加载 / 初始化 / 执行）
-
-不同语言，对这三个问题的回答完全不同。
-
----
-
-### TS / Node.js 的程序结构：文件即入口
-
-```text
-文件（可执行）
-↓
-import 递归加载
-↓
-模块初始化即执行
-```
-
-示例：
-
-```ts
-// index.ts
-import './app'
-```
-
-关键特征：
-
-- 文件是 **可执行单元**
-- 顶层代码天然可运行
-- `import` = 加载 + 执行
-- 应用是一个 **文件依赖图**
-
-> 执行一个文件，意味着执行整个依赖树。
-
----
-
-### Java 的程序结构：进程 + 唯一入口
-
-```text
-进程启动
-↓
-加载某个类
-↓
-调用 main 方法
-↓
-程序开始执行
-```
-
-示例：
+普通 Java 程序由源码文件中的类型声明组成。命令行应用启动时，`java` 启动器加载指定类并调用一个可启动的 `main` 方法。
 
 ```java
 public class App {
     public static void main(String[] args) {
-        // 程序从这里开始
+        System.out.println("Hello, Java");
     }
 }
 ```
 
-关键特征：
+这段代码建立了最小完整流程：
 
-- **类是类型单元，不是执行单元**
-- Java 文件不能有顶层可执行语句
-- `import` 只是命名空间引用，不触发执行
-- 整个应用只有一个明确入口
+```text
+App.java 源码
+    ↓ javac 编译
+App.class 字节码
+    ↓ java 启动
+JVM 加载 App 并调用 main
+```
 
-> Java 的应用不是「文件图」，而是「进程 + 入口」。
+## JDK、JVM 与 Java 命令
 
----
+- JDK（Java Development Kit，Java 开发工具包）：包含编译器、启动器、调试和文档工具，以及运行程序所需的组件；
+- JVM（Java Virtual Machine，Java 虚拟机）：执行 `.class` 字节码，负责类加载、运行时内存和垃圾收集等；
+- `javac`：把 `.java` 源码编译为 `.class` 字节码；
+- `java`：启动 JVM 并运行指定类、JAR 或源码文件。
 
-## Q1: 那 Java 11 为什么又支持「无 main 单文件执行」？
+查看当前工具版本：
+
+```bash
+java --version
+javac --version
+```
+
+编译器和运行时应使用兼容版本。用较新 JDK 编译出的 class 文件，较旧 JVM 可能无法读取。
+
+## 编译并运行第一个程序
+
+假设当前目录包含 `App.java`：
 
 ```java
-System.out.println("Hello");
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello, Java");
+    }
+}
 ```
+
+执行：
+
+```bash
+javac App.java
+java App
+```
+
+`javac` 生成 `App.class`。`java App` 接收的是类名，不是 `App.class` 文件名。
+
+源码文件名需要与其中的 `public` 顶级类型名称一致。一个源码文件可以声明多个顶级类型，但最多只能有一个 `public` 顶级类型。
+
+## `main` 方法
+
+长期以来最常见的入口形式是：
+
+```java
+public static void main(String[] args)
+```
+
+各部分含义：
+
+- `public`：启动器能够访问该方法；
+- `static`：传统入口不需要先创建 `App` 对象；
+- `void`：不返回退出状态；
+- `main`：启动器识别的方法名；
+- `String[] args`：命令行参数。
+
+```java
+public class App {
+    public static void main(String[] args) {
+        for (int index = 0; index < args.length; index++) {
+            System.out.println(index + ": " + args[index]);
+        }
+    }
+}
+```
+
+运行：
+
+```bash
+java App hello Java
+```
+
+输出：
+
+```text
+0: hello
+1: Java
+```
+
+一个项目可以有多个包含 `main` 的类。启动命令选择其中一个作为本次进程入口，并不存在“整个工程只能有一个 `main`”的限制。
+
+## 类、文件与执行
+
+普通 Java 源码的顶层结构是类型声明，例如类、接口、枚举、Record 和注解类型。普通类式源码不能直接把可执行语句写在类型外部：
+
+```java
+// System.out.println("Hello"); // 普通编译单元中不合法
+
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello");
+    }
+}
+```
+
+`import` 只影响源码中的名称解析，不表示“执行被导入文件”。类型首次主动使用时，JVM 才根据运行时规则加载并初始化相关类。
+
+应用入口通常只负责组装依赖和启动主流程，不应承载全部业务逻辑：
+
+```java
+public class App {
+    public static void main(String[] args) {
+        Application application = Application.create();
+        application.run(args);
+    }
+}
+```
+
+## 包中的程序
+
+真实项目通常使用具名包。源码 `src/com/example/App.java`：
+
+```java
+package com.example;
+
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello");
+    }
+}
+```
+
+编译和运行：
+
+```bash
+javac -d out src/com/example/App.java
+java -cp out com.example.App
+```
+
+启动器使用全限定类名 `com.example.App`。`-cp out` 告诉运行时从 `out` 类路径根目录查找 `com/example/App.class`。
+
+## Java 11 的单文件源码启动
+
+Java 11 增加了直接启动单个源码文件的能力：
+
+```bash
+java App.java
+```
+
+在 Java 11 中，源码仍然需要普通类声明和标准 `main` 方法：
+
+```java
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello");
+    }
+}
+```
+
+启动器在内存中编译源码并立即运行，省去了手动执行 `javac` 的步骤。它没有在 Java 11 中引入顶层语句或省略 `main` 的语法。
+
+这种模式适合单文件示例和小工具。多文件工程仍应使用正常编译流程及 Maven、Gradle 等构建工具管理依赖与产物。
+
+## 紧凑源文件与实例 main [Java 25+]
+
+Java 25 正式引入紧凑源文件（compact source file）和实例 `main` 方法。入门示例可以省略显式类声明以及传统入口修饰符：
+
+```java
+void main() {
+    System.out.println("Hello, Java");
+}
+```
+
+保存为 `Hello.java` 后可直接运行：
 
 ```bash
 java Hello.java
 ```
 
-这并不是 Java 执行模型的改变，而是一个**受控的语法糖**：
+编译器会把紧凑源文件视为隐式声明了一个类；文件中的字段和方法是这个隐式类的成员。紧凑源文件没有允许任意语句直接出现在文件顶层，语句仍然位于方法体中。
 
-- 只针对 **单一源文件**
-- JVM 在内部生成隐式类 + 隐式 `main`
-- 不进入 classpath / module-path
-- 不能作为工程入口
+这是一条降低入门样板代码的语法路径，不是独立脚本语言。学习变量、控制流和方法后，可以把同样的成员放入显式类，并逐步加入包、访问控制和模块边界。
 
-它的定位是：
+本知识库以 Java 17 为默认基线，因此主学习路径仍使用传统类和 `public static void main(String[] args)`。只有项目明确以 Java 25 或更高版本为最低要求时，才把紧凑源文件作为默认入口形式。
 
-- 教学
-- demo
-- 脚本式工具
+## 编译错误与运行时错误
 
-> 本质是 **REPL / script 模式**，不是应用模型。
+基础阶段需要区分错误发生在哪个阶段：
 
----
+| 阶段 | 示例 | 典型结果 |
+| --- | --- | --- |
+| 编译期 | 类型不匹配、局部变量未初始化、语法错误 | `javac` 失败，不生成可用字节码 |
+| 启动期 | 类路径中找不到入口类 | `ClassNotFoundException` 或启动器错误 |
+| 链接/加载期 | 依赖版本不一致、缺少方法 | `NoClassDefFoundError`、`NoSuchMethodError` |
+| 运行期 | 空引用解引用、数组越界 | 抛出相应异常 |
 
-## Q2: 为什么 Java 直到现在都没有「顶层代码」？
+先判断失败阶段，再检查源码、编译参数、类路径或运行数据，可以缩小排查范围。
 
-因为 Java 的核心目标不是「执行方便」，而是
+## 相关内容
 
-- 强类型
-- 可静态分析
-- 可预测启动
-- 可长期维护
+- [包与导入](./packages-and-imports.md)
+- [变量与运算符](./variables-and-operators.md)
+- [方法](./methods.md)
+- [类与封装](./classes-and-encapsulation.md)
+- [Maven](../maven.md)
 
-如果允许顶层代码：
+## 参考资料
 
-```java
-// 假设存在
-connectDB();
-initCache();
-```
-
-会直接导致：
-
-- 执行顺序依赖文件加载顺序
-- 副作用难以追踪
-- 类加载时机不可控
-- AOT / JIT / 安全分析复杂化
-
-Java 的选择是：
-
-> **所有执行，必须显式发生在方法里。**
-
----
-
-## Q3: Spring Boot 是如何「模拟」 Node 启动体验的？
-
-Spring Boot 的启动类：
-
-```java
-@SpringBootApplication
-public class App {
-    public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
-    }
-}
-```
-
-它做了什么：
-
-1. 用一个极薄的 `main` 作为 JVM 入口
-2. 在 `run` 内部接管控制权
-3. 扫描 classpath
-4. 构建依赖图（IoC 容器）
-5. 通过生命周期回调模拟「模块初始化」
-
-效果上：
-
-- 看起来像 Node 的 `import → 执行`
-- 实际仍严格遵守 Java 的入口模型
-
-> Spring Boot 是 **框架级模拟**，不是语言级能力。
-
----
-
-## Q4: 如果 Java 真的支持「模块级执行」，会发生什么？
-
-假设：
-
-```java
-import com.xxx.A; // 自动执行 A
-```
-
-会直接破坏：
-
-### 1. 启动确定性
-
-- 多入口
-- 顺序依赖隐式化
-
-### 2. 可维护性
-
-- 副作用分散在 import 中
-- 重构极其危险
-
-### 3. 工程能力
-
-- 静态分析困难
-- 编译期完整性丧失
-- 类加载语义混乱
-
-### 4. JVM 生态
-
-- 框架无法控制生命周期
-- AOT / GraalVM 成本暴涨
-
-> Java 的工程生态，会整体失效。
-
----
-
-## 总结：两种完全不同的心智模型
-
-一句话对比：
-
-- **TS / Node**：
-  - 文件是执行单元
-  - 应用是文件图
-  - import = 执行
-
-- **Java**：
-  - 类是类型单元
-  - 应用是进程 + 唯一入口
-  - 执行必须显式发生
-
-Java 11+ 的「无 main」：
-
-- 降低入门门槛
-- 没有改变程序结构哲学
-
-> 理解这一点，基本就理解了 Java 为什么是今天这个样子。
+- [JEP 330：Launch Single-File Source-Code Programs](https://openjdk.org/jeps/330)
+- [JEP 512：Compact Source Files and Instance Main Methods](https://openjdk.org/jeps/512)
+- [Java Virtual Machine Specification 17：Virtual Machine Start-Up](https://docs.oracle.com/javase/specs/jvms/se17/html/jvms-5.html#jvms-5.2)

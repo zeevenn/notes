@@ -105,14 +105,41 @@ export default [
         children: [
           '',
           'program-structure',
+          'packages-and-imports',
           'primitive-types',
+          'variables-and-operators',
           'string-array',
           'control-flow',
+          'methods',
           'classes-and-encapsulation',
+          'reference-types',
+          'object-contract',
           'static-and-final',
           'inheritance-and-polymorphism',
           'composition',
-          'abstract-and-interface'
+          'abstract-and-interface',
+          'enums-and-nested-classes',
+          'exceptions',
+          'generics',
+          'lambda-and-method-references',
+          'annotations',
+          'records-sealed-patterns'
+        ]
+      },
+      {
+        text: 'Standard Library',
+        collapsible: true,
+        icon: 'library',
+        prefix: 'standard-library/',
+        children: [
+          '',
+          'collections-overview',
+          'list',
+          'set',
+          'map',
+          'queue-and-deque',
+          'iteration-and-comparison',
+          'immutable-collections'
         ]
       }
     ]

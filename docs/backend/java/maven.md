@@ -3,9 +3,9 @@ title: Maven
 date: 2024-08-30
 icon: Maven
 category:
-  - node
+  - java
 tag:
-  - express
+  - maven
 ---
 
 ## 什么是 Maven
@@ -57,14 +57,25 @@ Maven 是一个项目管理和构建工具，主要用于 Java 项目。它通�
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-            <source>17</source>
-            <target>17</target>
+            <release>17</release>
         </configuration>
       </plugin>
     </plugins>
   </build>
 </project>
 ```
+
+`release` 同时限制 Java 语法、标准库 API 和生成的 class 文件版本。即使 Maven 运行在更高版本 JDK 上，构建仍以 Java 17 为目标。只设置 `source` 和 `target` 不能阻止代码调用较新 JDK 才提供的 API。
+
+也可以使用项目属性统一配置：
+
+```xml
+<properties>
+  <maven.compiler.release>17</maven.compiler.release>
+</properties>
+```
+
+该配置与本知识库的 Java 17 默认基线一致。
 
 ## 依赖原则
 

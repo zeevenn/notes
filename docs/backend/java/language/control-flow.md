@@ -71,7 +71,7 @@ switch (day) {
 > [!WARNING]
 > 传统 switch 语句容易忘记 `break`，导致 fall-through（继续执行下一个 case）。
 
-### Switch 表达式（Java 14+）
+### Switch 表达式 [Java 14+]
 
 Java 14 引入了 **switch 表达式**，使用 `->` 箭头语法，不需要 `break`，更加简洁和安全。
 
@@ -173,9 +173,9 @@ String type = switch (day) {
 };
 ```
 
-### 模式匹配（Java 17 预览，Java 21 正式）
+### 模式 switch [Java 21+]
 
-Java 17 的预览特性引入了 switch 的**模式匹配**，Java 21 正式发布。
+模式 `switch` 在 Java 21 正式发布，不属于 Java 17 默认基线。Java 17 中可以使用 `instanceof` 类型模式配合 `if-else` 完成同类判断；项目升级到 Java 21 后，可以改用下面的 `switch` 写法。
 
 ```java
 Object obj = "Hello";
@@ -280,17 +280,10 @@ public int add(int a, int b) {
 }
 ```
 
-## 总结
+## 选择 `switch` 形式
 
-**推荐使用：**
-
-- 优先使用 **switch 表达式**（箭头语法）而不是传统 switch 语句
-- 使用 `yield` 在代码块中返回值
-- switch 表达式更安全、简洁，避免了 fall-through 问题
-
-**Java 17 的 switch 新特性：**
-
-- ✅ Switch 表达式（正式）
-- ✅ 箭头语法 `->`（正式）
-- ✅ 多 case 标签（正式）
-- 🔄 模式匹配（预览，Java 21 正式）
+- 需要根据分支计算一个值时，使用 `switch` 表达式；
+- 箭头标签不会发生传统 `case` 的贯穿行为；
+- 表达式分支包含多条语句时，使用 `yield` 给出结果；
+- 维护旧代码或确实需要贯穿行为时，可以继续使用传统 `switch` 语句；
+- Java 21 的类型与 Record 模式见 [Record、密封类与模式匹配](./records-sealed-patterns.md)。

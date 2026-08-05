@@ -4,25 +4,39 @@ date: 2026-01-26
 category: java
 ---
 
-在 Java 中，新建文件夹就是新建一个软件包（package），它对应你在项目里用来组织类的目录。
-
-简单理解：
-
-- 包（package） = 文件夹
-- 类（class） = 文件
-
-在类文件开头写 package 包名来声明它属于这个包。
-
-> [!TIP]
-> 如果不声明一个包，那么类会隐式属于 default package，不推荐这么使用。
+类定义一类对象具有的状态和行为，对象是类在运行时创建的实例。字段保存状态，方法定义行为，构造方法建立对象的初始状态。
 
 ```java
-package org.example.utils;
+public class Account {
+    private String owner;
+    private long balance;
 
-public class Date {
-    // 类定义
+    public Account(String owner, long openingBalance) {
+        this.owner = owner;
+        this.balance = openingBalance;
+    }
+
+    public void deposit(long amount) {
+        balance += amount;
+    }
+
+    public long getBalance() {
+        return balance;
+    }
 }
 ```
+
+使用 `new` 调用构造方法并创建对象：
+
+```java
+Account account = new Account("Alice", 100);
+account.deposit(50);
+System.out.println(account.getBalance()); // 150
+```
+
+`account` 是引用变量，`new Account(...)` 创建对象。多个引用可能指向同一对象，具体语义见[引用类型与对象](./reference-types.md)。
+
+普通源码通常把类型放入具名包，并让源码目录对应包名。包是 Java 的命名空间和访问边界，不只是文件夹的别名，详见[包与导入](./packages-and-imports.md)。
 
 ## 访问修饰符（Access Modifiers）
 
@@ -71,6 +85,8 @@ class PackageClass {
 
 > [!TIP]
 > **封装原则**：字段应该设为 `private`，通过 `public` 的 getter/setter 方法访问。
+
+跨包子类对 `protected` 成员的访问还受到接收者类型限制；表格只概括常见情况。对外 API 应优先使用明确的 `public` 方法，而不是依赖复杂的 `protected` 共享规则。
 
 ## 构造方法（Constructor）
 
@@ -396,9 +412,9 @@ public class User {
 > [!TIP]
 > 很多框架（如 Spring MVC、Hibernate、Jackson）通过反射调用 getter/setter 方法来自动填充或序列化对象。
 
-### Record（Java 14+）
+### Record [Java 16+]
 
-**Java 14** 引入了 `record` 关键字，用于创建**不可变数据类**，自动生成构造方法、getter、`equals()`、`hashCode()` 和 `toString()` 方法。
+Record 在 Java 14 首次作为预览特性出现，并在 Java 16 正式发布。它用于声明以一组组件定义的数据值，自动生成构造方法、组件访问器、`equals()`、`hashCode()` 和 `toString()`。
 
 ```java
 // 传统写法：需要手写大量样板代码
@@ -445,7 +461,7 @@ public record Person(String name, int age) {
 - **自动生成构造方法**：`new Person("Alice", 25)`
 - **自动生成 getter**：`person.name()`（注意：不是 `getName()`）
 - **自动生成 `equals()`、`hashCode()`、`toString()`**
-- **所有字段都是 `final`**，对象不可变
+- **组件字段都是 `final`**，但组件引用指向的对象仍可能可变
 - **不能被继承**（隐式 `final`）
 
 ```java
@@ -487,7 +503,7 @@ System.out.println(person.isAdult());  // true
 
 | 特性           | Record                   | 传统类                     |
 | -------------- | ------------------------ | -------------------------- |
-| 不可变性       | ✅ 强制不可变            | ❌ 需要手动用 `final` 实现 |
+| 组件引用       | 不能重新赋值             | 由字段声明决定             |
 | Getter 方法名  | `fieldName()`            | `getFieldName()`           |
 | 样板代码       | ✅ 自动生成              | ❌ 需要手写或 IDE/Lombok   |
 | 继承           | ❌ 不能被继承            | ✅ 可以继承                |
@@ -495,11 +511,11 @@ System.out.println(person.isAdult());  // true
 | 适用场景       | 纯数据对象（DTO、VO 等） | 需要可变性或继承的业务对象 |
 
 > [!TIP]
-> Record 非常适合用作 DTO（Data Transfer Object）、API 响应对象、配置类等纯数据承载对象。
+> Record 适合所有组件共同定义值的数据模型。组件包含集合等可变对象时，需要使用防御性复制才能建立深层不可变边界。更完整的建模规则见 [Record、密封类与模式匹配](./records-sealed-patterns.md)。
 
 ### 最佳实践
 
 1. **JavaBean**：用于需要框架支持（Spring、Hibernate 等）或需要可变性的场景
 2. **Record**：用于不可变的数据对象，如 DTO、值对象、配置类
 3. **重写 `toString()`、`equals()`、`hashCode()`**：JavaBean 需要手动或用 IDE/Lombok 生成，Record 自动生成
-4. **无参构造方法**：JavaBean 必须提供，Record 不支持无参构造
+4. **无参构造方法**：传统 JavaBean 约定提供无参构造方法；Record 使用包含全部组件的规范构造方法
