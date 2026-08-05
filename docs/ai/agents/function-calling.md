@@ -146,17 +146,60 @@ get_current_weather("北京")
 
 工具产生副作用时还要考虑重复执行。网络超时可能发生在下游已经成功、应用却没有收到响应之后。支付、发信、创建订单等操作应使用幂等键（重复提交时仍只产生一次效果的请求标识）或下游系统提供的去重机制。
 
-## Function Calling、Structured Output 与 MCP
+## Function Calling、MCP 与 Structured Output
 
-三个概念解决的问题不同：
+Function Calling 和 MCP（Model Context Protocol，模型上下文协议）经常一起出现，但两者处于不同边界：
 
-| 概念 | 主要目的 | 谁执行 |
+- **Function Calling 是模型的动作决策接口**：模型根据对话返回「调用哪个工具、传什么参数」。
+- **MCP 是外部能力的标准接入协议**：AI 应用通过 MCP 客户端发现、连接并调用 MCP 服务端提供的能力。
+
+Function Calling 不规定工具位于本地函数、REST API、数据库还是 MCP 服务端；MCP 也不规定模型如何决定使用工具。普通程序或界面按钮可以直接调用 MCP 工具，不需要模型参与。
+
+| 维度 | Function Calling | MCP |
 | --- | --- | --- |
-| Function Calling | 让模型请求应用提供的函数或 API | 通常是宿主程序 |
-| Structured Output | 约束模型最终输出的数据结构，例如生成符合 schema 的表单数据 | 不一定涉及外部执行 |
-| MCP | 统一 AI 应用发现和访问外部工具、资源及提示模板的协议 | MCP 客户端、服务端或平台 |
+| 解决的问题 | 模型如何表达调用意图 | 应用如何接入外部能力 |
+| 主要参与方 | 模型与宿主程序 | MCP 宿主、客户端与服务端 |
+| 工具来源 | 通常由应用传给模型 | 由 MCP 服务端提供并支持动态发现 |
+| 发现机制 | 依赖应用或模型厂商 API | 定义能力发现和 `tools/list` 等方法 |
+| 调用方式 | 模型返回工具名和参数，由宿主程序处理 | 客户端使用 `tools/call` 请求服务端执行 |
+| 通信与传输 | 由模型厂商 API 决定 | 定义基于 JSON 的远程过程调用协议（JSON-RPC）数据层，以及标准输入输出（stdio）、可流式 HTTP 等传输 |
+| 是否依赖模型 | 是 | 否，非 AI 程序也能作为 MCP 客户端 |
+| 能力范围 | 主要是工具调用 | 还包括资源、提示模板、通知等协议能力 |
 
-如果目标只是让最终回答符合固定 JSON 结构，应优先考虑 Structured Output，而不是伪造一个无实际动作的工具。MCP（Model Context Protocol，模型上下文协议）可以把工具从独立服务暴露给 Agent，但模型提出调用、执行方返回结果的基本关系仍然存在。部分平台提供内置或服务端工具，会代替应用完成执行与结果回传，因此表面上可能只需要一次 API 请求。
+### 两者组合时的调用链
+
+接入 MCP 工具的 Agent 通常经过以下步骤：
+
+1. MCP 客户端连接服务端并获取它支持的协议版本和能力。
+2. 客户端通过 `tools/list` 获取工具名称、描述和输入结构。
+3. 宿主程序把这些信息转换成当前模型 API 的工具声明。
+4. 模型通过 Function Calling 返回工具名称和参数。
+5. 宿主程序把调用路由到对应的 MCP 客户端，由它发送 `tools/call`。
+6. MCP 服务端执行工具，结果经宿主程序回传给模型。
+
+```text
+用户
+  ↓
+模型 -- Function Calling --> 宿主程序 / MCP 客户端
+                              ↓
+                         MCP tools/call
+                              ↓
+                         MCP 服务端
+                              ↓
+                    工具结果返回模型和用户
+```
+
+因此，两者可以独立使用：
+
+- 没有 MCP：模型可以通过 Function Calling 调用应用内注册的本地函数。
+- 没有 Function Calling：确定性工作流或界面按钮可以直接通过 MCP 客户端调用 MCP 服务端。
+- 同时使用：MCP 负责把工具标准化地接入应用，Function Calling 负责让模型决定何时使用它们。
+
+### 与 Structured Output 的区别
+
+Structured Output 用于约束模型的最终输出结构，例如生成符合 schema 的表单数据；它不要求应用执行外部操作。如果目标只是获得固定结构的 JSON，应优先使用 Structured Output，而不是创建一个没有实际动作的工具。
+
+部分模型平台提供内置或服务端工具，会代替应用完成执行与结果回传，因此表面上可能只需要一次 API 请求。这是平台对调用闭环的封装，不会改变 Function Calling 与工具接入协议的职责边界。
 
 ## 执行边界与安全约束
 
@@ -189,5 +232,6 @@ get_current_weather("北京")
 - [OpenAI：Function calling](https://developers.openai.com/api/docs/guides/function-calling)
 - [Anthropic：Tool use with Claude](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
 - [Google：Function calling with the Gemini API](https://ai.google.dev/gemini-api/docs/function-calling)
+- [MCP：Architecture overview](https://modelcontextprotocol.io/docs/learn/architecture)
 - [JSON Schema：What is a schema?](https://json-schema.org/understanding-json-schema/about)
 - [OWASP：LLM06:2025 Excessive Agency](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/)
