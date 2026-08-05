@@ -51,7 +51,7 @@ public class Person {
 }
 ```
 
-常用方法：`toString()`、`equals()`、`hashCode()`、`getClass()` 等。
+常用方法包括 `toString()`、`equals()`、`hashCode()`、`getClass()` 等。`equals()` 和 `hashCode()` 必须保持一致的逻辑相等规则，具体见 [Object 的通用契约](./object-contract.md)。
 
 ## 方法重写（Override）
 
@@ -275,7 +275,7 @@ if (animal instanceof Cat) {
 }
 ```
 
-**Java 16+ 模式匹配：**
+**`instanceof` 类型模式（Java 16+，兼容 Java 17 基线）：**
 
 ```java
 // 自动转换，无需手动类型转换
