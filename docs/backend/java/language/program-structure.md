@@ -77,7 +77,48 @@ public static void main(String[] args)
 - `static`：传统入口不需要先创建 `App` 对象；
 - `void`：不返回退出状态；
 - `main`：启动器识别的方法名；
-- `String[] args`：命令行参数。
+- `String[] args`：接收命令行参数，也是传统入口签名的一部分。
+
+这不是 Java 17 特有的规则。Java 20 及更早版本都使用传统启动协议，入口需要声明为 `public static void main(String[] args)`。从 Java 5 开始，也可以使用等价的可变参数写法：
+
+```java
+public static void main(String... args)
+```
+
+简化入口经历了从预览到正式发布的过程：
+
+| Java 版本 | 无参数或实例 `main` 的状态 | 默认写法 |
+| --- | --- | --- |
+| Java 1.0～1.4 | 不支持 | `public static void main(String[] args)` |
+| Java 5～20 | 不支持；Java 5 起可用等价的 `String... args` | `public static void main(String[] args)` |
+| Java 21～24 | 预览功能，需要显式启用 `--enable-preview` | 未启用预览时仍使用传统入口 |
+| Java 25 起 | 正式支持 | 传统入口和简化入口都可以启动 |
+
+因此，在 Java 20 及更早版本中，缺少 `String[] args` 时，程序不能通过 IDE 的运行按钮或 `java App` 命令直接启动：
+
+```java
+public class App {
+    public static void main() {
+        System.out.println("Hello, Java");
+    }
+}
+```
+
+```bash
+javac --release 17 App.java # 单独编译成功
+java App                    # 执行失败：找不到符合要求的 main 方法
+```
+
+无参数的 `main()` 仍然是一个合法的普通静态方法，所以单独调用 `javac` 不会报错。IDE 的“运行”通常连续完成编译和启动两个步骤，用户看到的最终结果仍然是执行失败。
+
+还需要区分两种写法：
+
+- `public static void main()`：语法合法，可以编译，但 Java 20 及更早版本的启动器不把它识别为程序入口；
+- `public static void main {}`：缺少方法参数列表的圆括号，属于语法错误，不能编译。
+
+IDE 也可能在执行前检查入口签名并直接显示错误，但这属于运行配置或启动检查，不表示 `javac` 拒绝编译无参数方法。
+
+版本规则可参考 [Java 17 的 `java` 启动器文档](https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html)、[JEP 445：Java 21 预览功能](https://openjdk.org/jeps/445) 和 [JEP 512：Java 25 正式功能](https://openjdk.org/jeps/512)。
 
 ```java
 public class App {
@@ -205,7 +246,7 @@ java Hello.java
 | 阶段 | 示例 | 典型结果 |
 | --- | --- | --- |
 | 编译期 | 类型不匹配、局部变量未初始化、语法错误 | `javac` 失败，不生成可用字节码 |
-| 启动期 | 类路径中找不到入口类 | `ClassNotFoundException` 或启动器错误 |
+| 启动期 | 类路径中找不到入口类，或类中没有符合要求的 `main` 方法 | `ClassNotFoundException` 或启动器错误 |
 | 链接/加载期 | 依赖版本不一致、缺少方法 | `NoClassDefFoundError`、`NoSuchMethodError` |
 | 运行期 | 空引用解引用、数组越界 | 抛出相应异常 |
 
