@@ -32,7 +32,15 @@ export default [
     collapsible: true,
     icon: 'search',
     prefix: '/ai/rag/',
-    children: ['']
+    children: [
+      '',
+      'ingestion-and-chunking',
+      'retrieval-and-reranking',
+      'generation-and-citations',
+      'rag-evaluation',
+      'production-and-security',
+      'advanced-rag-patterns'
+    ]
   },
   {
     text: 'Agents',
