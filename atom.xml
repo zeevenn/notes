@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-08-06T12:34:58.217Z</updated>
+  <updated>2026-08-06T14:04:57.858Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -1331,14 +1331,17 @@ account<span class="token punctuation">.</span><span class="token function">setE
     <title type="text">包与导入</title>
     <id>https://zeevenn.github.io/notes/notes/backend/java/language/packages-and-imports.html</id>
     <link href="https://zeevenn.github.io/notes/notes/backend/java/language/packages-and-imports.html"/>
-    <updated>2026-08-05T10:18:00.000Z</updated>
-    <summary type="html"><![CDATA[<p>包（package）为类型提供命名空间，并参与访问控制。不同包可以声明同名类型，例如 <code>java.util.Date</code> 和 <code>java.sql.Date</code>，代码通过全限定名区分它们。</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>billing</span><span class="token punctuation">;</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Invoice</span> <span class="token punctuation">{</span>
-<span class="token punctuation">}</span>
+    <updated>2026-08-06T14:02:46.000Z</updated>
+    <summary type="html"><![CDATA[<p>前面的示例已经使用过标准库中的 <code>BigDecimal</code>、<code>Arrays</code> 和 <code>Objects</code>。这些类型分别属于 <code>java.math</code> 和 <code>java.util</code> 等包。以 <code>BigDecimal</code> 为例，它的完整名称是 <code>java.math.BigDecimal</code>：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>math<span class="token punctuation">.</span></span>BigDecimal</span> amount <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>math<span class="token punctuation">.</span></span>BigDecimal</span><span class="token punctuation">(</span><span class="token string">"10.50"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div>]]></summary>
-    <content type="html"><![CDATA[<p>包（package）为类型提供命名空间，并参与访问控制。不同包可以声明同名类型，例如 <code>java.util.Date</code> 和 <code>java.sql.Date</code>，代码通过全限定名区分它们。</p>
+    <content type="html"><![CDATA[<p>前面的示例已经使用过标准库中的 <code>BigDecimal</code>、<code>Arrays</code> 和 <code>Objects</code>。这些类型分别属于 <code>java.math</code> 和 <code>java.util</code> 等包。以 <code>BigDecimal</code> 为例，它的完整名称是 <code>java.math.BigDecimal</code>：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>math<span class="token punctuation">.</span></span>BigDecimal</span> amount <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>math<span class="token punctuation">.</span></span>BigDecimal</span><span class="token punctuation">(</span><span class="token string">"10.50"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>重复书写完整名称会降低可读性，<code>import</code> 允许在当前文件中使用简单名称：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>math<span class="token punctuation">.</span></span><span class="token class-name">BigDecimal</span></span><span class="token punctuation">;</span>
+
+<span class="token class-name">BigDecimal</span> amount <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BigDecimal</span><span class="token punctuation">(</span><span class="token string">"10.50"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>包（package）为类型提供命名空间，并参与访问控制。不同包可以声明同名类型，例如 <code>java.util.Date</code> 和 <code>java.sql.Date</code>，代码通过全限定名区分它们。</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>billing</span><span class="token punctuation">;</span>
 
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Invoice</span> <span class="token punctuation">{</span>
