@@ -4,6 +4,20 @@ date: 2026-08-05
 category: java
 ---
 
+前面的示例已经使用过标准库中的 `BigDecimal`、`Arrays` 和 `Objects`。这些类型分别属于 `java.math` 和 `java.util` 等包。以 `BigDecimal` 为例，它的完整名称是 `java.math.BigDecimal`：
+
+```java
+java.math.BigDecimal amount = new java.math.BigDecimal("10.50");
+```
+
+重复书写完整名称会降低可读性，`import` 允许在当前文件中使用简单名称：
+
+```java
+import java.math.BigDecimal;
+
+BigDecimal amount = new BigDecimal("10.50");
+```
+
 包（package）为类型提供命名空间，并参与访问控制。不同包可以声明同名类型，例如 `java.util.Date` 和 `java.sql.Date`，代码通过全限定名区分它们。
 
 ```java

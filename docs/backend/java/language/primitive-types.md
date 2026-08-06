@@ -203,6 +203,8 @@ System.out.println(0.1 + 0.2 == 0.3); // 输出：false
 
 1. **使用 `BigDecimal` 进行精确计算**（推荐用于金融、货币等场景）：
 
+`BigDecimal` 位于标准库的 `java.math` 包。下面的 `import` 让当前文件可以直接使用 `BigDecimal` 这个简单名称；此处先理解为“引入要使用的类型”，完整规则见[包与导入](./packages-and-imports.md)。
+
 ```java
 import java.math.BigDecimal;
 

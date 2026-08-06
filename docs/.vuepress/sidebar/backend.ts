@@ -105,7 +105,6 @@ export default [
         children: [
           '',
           'program-structure',
-          'packages-and-imports',
           'primitive-types',
           'variables-and-operators',
           'string-array',
@@ -116,6 +115,7 @@ export default [
           'object-contract',
           'static-and-final',
           'inheritance-and-polymorphism',
+          'packages-and-imports',
           'composition',
           'abstract-and-interface',
           'enums-and-nested-classes',

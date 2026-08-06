@@ -5,7 +5,6 @@
 ## 基础语法
 
 - [程序基本结构](./program-structure.md)
-- [包与导入](./packages-and-imports.md)
 - [基本数据类型](./primitive-types.md)
 - [变量与运算符](./variables-and-operators.md)
 - [String 与数组](./string-array.md)
@@ -19,6 +18,7 @@
 - [Object 的通用契约](./object-contract.md)
 - [static 与 final](./static-and-final.md)
 - [继承与多态](./inheritance-and-polymorphism.md)
+- [包与导入](./packages-and-imports.md)
 - [组合](./composition.md)
 - [抽象类与接口](./abstract-and-interface.md)
 - [枚举与嵌套类](./enums-and-nested-classes.md)
