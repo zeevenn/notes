@@ -52,6 +52,13 @@ export default [
     children: [
       '',
       {
+        text: 'HTTP Framework',
+        collapsible: true,
+        icon: 'server',
+        prefix: 'http-framework/',
+        children: ['', 'minimal-http-framework', 'express-vs-koa-middleware']
+      },
+      {
         text: 'Express',
         collapsible: true,
         icon: 'express',

@@ -14,13 +14,6 @@ export default [
     children: ['', 'vuepress-plugin-ordered-header']
   },
   {
-    text: '御膳房',
-    icon: 'kitchen',
-    collapsible: true,
-    prefix: '/projects/imperial-kitchen/',
-    children: ['', 'init', 'server', 'database', 'i18n']
-  },
-  {
     text: 'mini-vue-cli',
     icon: 'vue',
     collapsible: true,

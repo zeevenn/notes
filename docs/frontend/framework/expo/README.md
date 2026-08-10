@@ -131,7 +131,7 @@ expo 提供了 [expo-github-action](https://github.com/expo/expo-github-action) 
 
 ![expo token](https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/20250124170920.png)
 
-下面是个人项目 [imperial-kitchen](https://github.com/dribble-njr/imperial-kitchen) 中的部分配置，仅供参考。
+下面是一份创建 Pull Request 预览的配置示例：
 
 ```yaml
 name: PR Preview

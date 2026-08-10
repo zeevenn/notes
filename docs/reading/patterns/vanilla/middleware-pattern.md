@@ -52,6 +52,8 @@ app.listen(3000);
 
 ## 简单的中间件实现
 
+下面的实现展示了“数组 + 游标 + `next()`”的基本结构。涉及异步完成、错误传播以及 Express、Koa 两种 `next` 契约时，见[Express 与 Koa 的中间件模型](../../../backend/node/http-framework/express-vs-koa-middleware.md)。
+
 ```js
 export default class MiddlewareManager {
   private readonly middlewares: Middleware[];
