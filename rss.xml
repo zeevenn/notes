@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Tue, 11 Aug 2026 02:03:23 GMT</pubDate>
-    <lastBuildDate>Tue, 11 Aug 2026 02:03:23 GMT</lastBuildDate>
+    <pubDate>Tue, 11 Aug 2026 12:21:04 GMT</pubDate>
+    <lastBuildDate>Tue, 11 Aug 2026 12:21:04 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>Node.js</category>
@@ -16,9 +16,9 @@
     <category>ai</category>
     <category>backend</category>
     <category>安全</category>
+    <category>mcp</category>
     <category>algorithm</category>
     <category>LeetCode</category>
-    <category>mcp</category>
     <category>linux</category>
     <category>microservice</category>
     <category>practice</category>
@@ -34,13 +34,13 @@
       <link>https://zeevenn.github.io/notes/notes/backend/node/http-framework/</link>
       <guid>https://zeevenn.github.io/notes/notes/backend/node/http-framework/</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Node HTTP 框架原理</source>
-      <description>Node HTTP 框架原理 这一组笔记从 node:http 提供的请求监听器开始，逐步加入路由匹配、中间件调度、请求解析、响应封装和错误收口。目标不是复刻完整框架，而是识别 Express、Koa 等后端框架共同解决的问题，以及不同中间件模型对异步控制流的影响。 学习路径 ：沿一次请求的完整路径理解框架的组成，并复盘项目实现中的边界问题。 ：比较回...</description>
+      <description>Node HTTP 框架原理 这一组笔记从 node:http 提供的请求监听器开始，逐步加入路由匹配、中间件调度、请求解析、响应封装和错误收口。目标不是复刻完整框架，而是识别 Express、Koa 等后端框架共同解决的问题，以及不同中间件模型对异步控制流的影响。 学习路径 ：createServer()、路由匹配、路径参数与 Koa 风格中间件调度...</description>
       <pubDate>Mon, 10 Aug 2026 13:52:10 GMT</pubDate>
       <content:encoded><![CDATA[
 <p>这一组笔记从 <code>node:http</code> 提供的请求监听器开始，逐步加入路由匹配、中间件调度、请求解析、响应封装和错误收口。目标不是复刻完整框架，而是识别 Express、Koa 等后端框架共同解决的问题，以及不同中间件模型对异步控制流的影响。</p>
 <h2>学习路径</h2>
 <ol>
-<li>：沿一次请求的完整路径理解框架的组成，并复盘项目实现中的边界问题。</li>
+<li>：<code>createServer()</code>、路由匹配、路径参数与 Koa 风格中间件调度。</li>
 <li>：比较回调式传递与基于 Promise 的洋葱模型。</li>
 </ol>
 <h2>能力边界</h2>
@@ -169,85 +169,80 @@ app<span class="token punctuation">.</span><span class="token function">use</spa
 ]]></content:encoded>
     </item>
     <item>
-      <title>从 node:http 手写最小后端框架</title>
+      <title>从 HTTP 服务器到最小框架</title>
       <link>https://zeevenn.github.io/notes/notes/backend/node/http-framework/minimal-http-framework.html</link>
       <guid>https://zeevenn.github.io/notes/notes/backend/node/http-framework/minimal-http-framework.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">从 node:http 手写最小后端框架</source>
-      <description>这篇笔记围绕三个具体需求展开： 访问 GET /hello 时返回 Hello World； 访问 GET /users/:id 时先校验身份，再返回路径中的用户 ID； 每个请求都记录方法、URL 和处理时间，未匹配的请求返回 404。 先用一个函数完成最小响应，再让新增需求逐步推动路由、路径参数、中间件和错误处理出现。这里不会预先设计一套完整框架。...</description>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">从 HTTP 服务器到最小框架</source>
+      <description>最小 HTTP 服务器 新建 server.js，监听 3000 端口并返回 Hello World： 启动服务并请求根路径： 响应包含 200 OK 和正文 Hello World。 createServer() 接收一个请求监听器。该函数注册在服务器的 request 事件上，每次收到请求时执行，并接收两个参数： req 是 http.Incomi...</description>
       <category>Node.js</category>
       <pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p>这篇笔记围绕三个具体需求展开：</p>
-<ul>
-<li>访问 <code>GET /hello</code> 时返回 <code>Hello World</code>；</li>
-<li>访问 <code>GET /users/:id</code> 时先校验身份，再返回路径中的用户 ID；</li>
-<li>每个请求都记录方法、URL 和处理时间，未匹配的请求返回 <code>404</code>。</li>
-</ul>
-<p>先用一个函数完成最小响应，再让新增需求逐步推动路由、路径参数、中间件和错误处理出现。这里不会预先设计一套完整框架。</p>
-<h2>第一步：从请求入口开始</h2>
-<p>先创建一个只返回 <code>Hello World</code> 的服务器：</p>
+      <content:encoded><![CDATA[<h2>最小 HTTP 服务器</h2>
+<p>新建 <code>server.js</code>，监听 3000 端口并返回 <code>Hello World</code>：</p>
 <div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> createServer <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:http'</span>
 
-<span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  res<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-    <span class="token string-property property">'content-type'</span><span class="token operator">:</span> <span class="token string">'text/plain; charset=utf-8'</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> server <span class="token operator">=</span> <span class="token function">createServer</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">200</span>
+  res<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">'content-type'</span><span class="token punctuation">,</span> <span class="token string">'text/plain; charset=utf-8'</span><span class="token punctuation">)</span>
   res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Hello World'</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-<span class="token keyword">const</span> server <span class="token operator">=</span> <span class="token function">createServer</span><span class="token punctuation">(</span>handle<span class="token punctuation">)</span>
-server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span>
-</code></pre></div><p>这里的调用关系是：</p>
-<ol>
-<li>程序启动时，<code>createServer(handle)</code> 创建 HTTP 服务器，并把 <code>handle</code> 注册为 <code>request</code> 事件的监听器。</li>
-<li><code>server.listen(3000)</code> 开始监听端口。</li>
-<li>每当一个请求到达，Node 调用 <code>handle(req, res)</code>。</li>
-<li><code>res.end()</code> 写完响应，并结束这次请求。</li>
-</ol>
-<p><code>handle</code> 不是手动调用的。它由 Node 在请求到达时调用，等价写法是：</p>
+server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Server running at http://localhost:3000'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>启动服务并请求根路径：</p>
+<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token function">node</span> server.js
+<span class="token function">curl</span> <span class="token parameter variable">-i</span> http://localhost:3000/
+</code></pre></div><p>响应包含 <code>200 OK</code> 和正文 <code>Hello World</code>。</p>
+<p><code>createServer()</code> 接收一个请求监听器。该函数注册在服务器的 <code>request</code> 事件上，每次收到请求时执行，并接收两个参数：</p>
+<ul>
+<li><code>req</code> 是 <code>http.IncomingMessage</code>，用于读取请求方法、URL、请求头和请求体流；</li>
+<li><code>res</code> 是 <code>http.ServerResponse</code>，用于设置状态码、响应头并写回正文。</li>
+</ul>
+<p><code>createServer(listener)</code> 等价于创建服务器后监听 <code>request</code> 事件：</p>
 <div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> server <span class="token operator">=</span> <span class="token function">createServer</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-server<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'request'</span><span class="token punctuation">,</span> handle<span class="token punctuation">)</span>
-server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span>
-</code></pre></div><p>启动文件后可以直接验证：</p>
-<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token function">node</span> server.mjs
-<span class="token function">curl</span> <span class="token parameter variable">-i</span> http://localhost:3000
-</code></pre></div><p>此时还没有框架。全部请求都进入同一个 <code>handle</code>，它就是后续所有抽象的起点。</p>
-<h2>第二步：根据方法和路径选择处理函数</h2>
-<p>服务器通常需要处理多个接口。最直接的写法是在 <code>handle</code> 中判断请求方法和路径：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">http://</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>host<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
 
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>method <span class="token operator">===</span> <span class="token string">'GET'</span> <span class="token operator">&amp;&amp;</span> url<span class="token punctuation">.</span>pathname <span class="token operator">===</span> <span class="token string">'/hello'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+server<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'request'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Hello World'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span>
+</code></pre></div><p><code>res.end()</code> 结束响应。请求分支既不调用 <code>res.end()</code>，也不把响应流交给其他处理逻辑时，响应会保持未完成，直到连接关闭或客户端超时。</p>
+<h2>按方法和路径分派请求</h2>
+<p>当前监听器没有读取请求地址，因此 <code>/</code>、<code>/time</code> 和不存在的路径都会得到相同响应。加入 <code>/time</code> 后，可以直接使用条件分支区分请求：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> server <span class="token operator">=</span> <span class="token function">createServer</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">??</span> <span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token string">'http://localhost'</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>method <span class="token operator">===</span> <span class="token string">'GET'</span> <span class="token operator">&amp;&amp;</span> url<span class="token punctuation">.</span>pathname <span class="token operator">===</span> <span class="token string">'/'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Hello World'</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span>
   <span class="token punctuation">}</span>
 
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>method <span class="token operator">===</span> <span class="token string">'GET'</span> <span class="token operator">&amp;&amp;</span> url<span class="token punctuation">.</span>pathname <span class="token operator">===</span> <span class="token string">'/users'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'User list'</span><span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>method <span class="token operator">===</span> <span class="token string">'GET'</span> <span class="token operator">&amp;&amp;</span> url<span class="token punctuation">.</span>pathname <span class="token operator">===</span> <span class="token string">'/time'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span>
   <span class="token punctuation">}</span>
 
   res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">404</span>
   res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Not Found'</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>两个路由还容易阅读；路由增加后，<code>handle</code> 会变成很长的条件分支。先把“匹配规则”和“匹配后的处理函数”放进数组：</p>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>代码根据请求方法和 <code>pathname</code> 选择处理逻辑。查询字符串不参与路径匹配，因此需要先解析 <code>req.url</code>，再比较 <code>pathname</code>。</p>
+<p>路由增多后，请求监听器会包含大量路径判断。将方法、路径和处理函数记录在路由表中，可以把匹配逻辑与响应逻辑分开：</p>
 <div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> routes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 
 <span class="token keyword">function</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> handler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   routes<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span> path<span class="token punctuation">,</span> handler <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/hello'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+<span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Hello World'</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-<span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/users'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'User list'</span><span class="token punctuation">)</span>
+<span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/time'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><p><code>handle</code> 只负责解析 URL、查找路由和执行处理函数：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> host <span class="token operator">=</span> req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>host <span class="token operator">??</span> <span class="token string">'localhost'</span>
-  <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">??</span> <span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">http://</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>host<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
-
+</code></pre></div><p>请求监听器根据方法和路径查找路由，再调用对应的处理函数：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">??</span> <span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token string">'http://localhost'</span><span class="token punctuation">)</span>
   <span class="token keyword">const</span> route <span class="token operator">=</span> routes<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> item<span class="token punctuation">.</span>method <span class="token operator">===</span> req<span class="token punctuation">.</span>method <span class="token operator">&amp;&amp;</span> item<span class="token punctuation">.</span>path <span class="token operator">===</span> url<span class="token punctuation">.</span>pathname
   <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -258,11 +253,27 @@ server<span class="token punctuation">.</span><span class="token function">liste
     <span class="token keyword">return</span>
   <span class="token punctuation">}</span>
 
-  route<span class="token punctuation">.</span><span class="token function">handler</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+  <span class="token keyword">await</span> route<span class="token punctuation">.</span><span class="token function">handler</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
-</code></pre></div><p>路由器最初不需要是一个类。它的核心数据就是一组路由记录，核心操作就是注册和匹配。</p>
-<h2>第三步：支持路径参数</h2>
-<p>静态字符串无法让 <code>/users/42</code> 匹配 <code>/users/:id</code>。路径匹配器需要逐段比较，并返回从动态片段中提取的参数：</p>
+
+<span class="token keyword">const</span> server <span class="token operator">=</span> <span class="token function">createServer</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">handle</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>res<span class="token punctuation">.</span>headersSent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      res<span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+
+    res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">500</span>
+    res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Internal Server Error'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p><code>routes.find()</code> 负责匹配路由，<code>route.handler()</code> 负责生成响应。新增路由时，只需向 <code>routes</code> 添加记录，不再修改 <code>handle()</code> 中的条件分支。</p>
+<p><code>handle()</code> 是异步函数，调用后返回 Promise。HTTP 服务器不会等待这个 Promise，也不会处理它的拒绝状态，因此监听器需要显式调用 <code>catch()</code>。响应头尚未发送时可以返回 <code>500</code>；响应头已经发送时无法改写状态码，只能关闭连接。</p>
+<h2>匹配路径参数</h2>
+<p>字符串相等只能匹配固定路径。对于 <code>/users/42</code> 这类路径，可以用 <code>/users/:id</code> 声明动态片段，并将实际值保存为参数。</p>
+<p>以下匹配器逐段比较路由模式和请求路径：</p>
 <div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">matchPath</span><span class="token punctuation">(</span><span class="token parameter">pattern<span class="token punctuation">,</span> pathname</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">const</span> patternParts <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>Boolean<span class="token punctuation">)</span>
   <span class="token keyword">const</span> pathParts <span class="token operator">=</span> pathname<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>Boolean<span class="token punctuation">)</span>
@@ -272,21 +283,25 @@ server<span class="token punctuation">.</span><span class="token function">liste
   <span class="token keyword">const</span> params <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
   <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> index <span class="token operator">&lt;</span> patternParts<span class="token punctuation">.</span>length<span class="token punctuation">;</span> index <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> patternPart <span class="token operator">=</span> patternParts<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
-    <span class="token keyword">const</span> pathPart <span class="token operator">=</span> pathParts<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token keyword">const</span> expected <span class="token operator">=</span> patternParts<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token keyword">const</span> actual <span class="token operator">=</span> pathParts<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>patternPart<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">':'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      params<span class="token punctuation">[</span>patternPart<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">decodeURIComponent</span><span class="token punctuation">(</span>pathPart<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>expected<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">':'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        params<span class="token punctuation">[</span>expected<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">decodeURIComponent</span><span class="token punctuation">(</span>actual<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span>
+      <span class="token punctuation">}</span>
       <span class="token keyword">continue</span>
     <span class="token punctuation">}</span>
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>patternPart <span class="token operator">!==</span> pathPart<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>expected <span class="token operator">!==</span> actual<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
   <span class="token punctuation">}</span>
 
   <span class="token keyword">return</span> params
 <span class="token punctuation">}</span>
-</code></pre></div><p>路由查找现在需要同时返回路由和参数：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">matchRoute</span><span class="token punctuation">(</span><span class="token parameter">routes<span class="token punctuation">,</span> method<span class="token punctuation">,</span> pathname</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+</code></pre></div><p>固定片段必须相等；以 <code>:</code> 开头的片段记录到参数对象中。匹配失败返回 <code>null</code>，匹配成功则由 <code>findRoute()</code> 一并返回路由和参数：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">findRoute</span><span class="token punctuation">(</span><span class="token parameter">routes<span class="token punctuation">,</span> method<span class="token punctuation">,</span> pathname</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> route <span class="token keyword">of</span> routes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>route<span class="token punctuation">.</span>method <span class="token operator">!==</span> method<span class="token punctuation">)</span> <span class="token keyword">continue</span>
 
@@ -296,196 +311,72 @@ server<span class="token punctuation">.</span><span class="token function">liste
 
   <span class="token keyword">return</span> <span class="token keyword">null</span>
 <span class="token punctuation">}</span>
-</code></pre></div><p>在入口中把参数放到 <code>req.params</code>，路由处理函数就不需要再次解析 URL：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> host <span class="token operator">=</span> req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>host <span class="token operator">??</span> <span class="token string">'localhost'</span>
-  <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">??</span> <span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">http://</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>host<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
-  <span class="token keyword">const</span> matched <span class="token operator">=</span> <span class="token function">matchRoute</span><span class="token punctuation">(</span>routes<span class="token punctuation">,</span> req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> url<span class="token punctuation">.</span>pathname<span class="token punctuation">)</span>
-
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>matched<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">404</span>
-    res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Not Found'</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span>
-  <span class="token punctuation">}</span>
-
-  req<span class="token punctuation">.</span>params <span class="token operator">=</span> matched<span class="token punctuation">.</span>params
-  matched<span class="token punctuation">.</span>route<span class="token punctuation">.</span><span class="token function">handler</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>这里已经出现框架的第一个增强：Node 原生请求对象没有 <code>params</code>，是框架在完成路由匹配后添加的。Express 的 <code>req.params</code> 也来自路由层，而不是来自 HTTP 协议。</p>
-<h2>第四步：重复逻辑推动中间件出现</h2>
-<p>假设部分接口需要记录日志和校验身份。直接写进每个处理函数会产生重复：</p>
+</code></pre></div><p>请求监听器将参数写入 <code>req.params</code>，路由处理函数可以直接读取：</p>
 <div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/users/:id'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> req<span class="token punctuation">.</span>url<span class="token punctuation">)</span>
-
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>authorization <span class="token operator">!==</span> <span class="token string">'Bearer demo'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">401</span>
-    res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Unauthorized'</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span>
-  <span class="token punctuation">}</span>
-
-  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">User </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><p>把这些逻辑拆成独立函数时，需要一种方式表达两种结果：</p>
-<ul>
-<li>当前函数已经生成响应，请求到此结束；</li>
-<li>当前函数处理完成，继续执行下一个函数。</li>
-</ul>
-<p>Express 使用 <code>next()</code> 表示第二种结果：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">logger</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> startedAt <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-  res<span class="token punctuation">.</span><span class="token function">once</span><span class="token punctuation">(</span><span class="token string">'finish'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> req<span class="token punctuation">.</span>url<span class="token punctuation">,</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> startedAt<span class="token punctuation">)</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-  <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">function</span> <span class="token function">requireAuth</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>authorization <span class="token operator">!==</span> <span class="token string">'Bearer demo'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">401</span>
-    res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Unauthorized'</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>框架需要一个调度器按顺序执行这些函数：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token parameter">stack<span class="token punctuation">,</span> req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> done</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span>
-
-  <span class="token keyword">function</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>error <span class="token operator">!==</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token function">done</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
-      <span class="token keyword">return</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">const</span> current <span class="token operator">=</span> stack<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
-    index <span class="token operator">+=</span> <span class="token number">1</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>current<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-      <span class="token keyword">return</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">current</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span>
-      Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token function">next</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>执行 <code>dispatch([logger, requireAuth, getUser], ...)</code> 时：</p>
-<ol>
-<li>调度器先执行 <code>logger</code>。</li>
-<li><code>logger</code> 调用 <code>next()</code>，调度器执行 <code>requireAuth</code>。</li>
-<li>认证失败时，<code>requireAuth</code> 发送 <code>401</code>，不调用 <code>next()</code>，处理链停止。</li>
-<li>认证成功时，调度器继续执行 <code>getUser</code>。</li>
-<li><code>getUser</code> 发送响应，通常不再调用 <code>next()</code>。</li>
-</ol>
-<p>这就是 Express 风格中间件的最小核心：数组保存顺序，游标记录位置，<code>next()</code> 转移控制权。生产实现还需要防止重复调用 <code>next()</code>，并区分普通中间件和错误处理中间件。</p>
-<h2>第五步：把路由处理函数也放进栈</h2>
-<p>路由处理函数和中间件都接收 <code>req</code>、<code>res</code>。因此一个路由可以保存多个处理函数：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> globalMiddleware <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token keyword">const</span> routes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-
-<span class="token keyword">function</span> <span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">middleware</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  globalMiddleware<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>middleware<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">function</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> <span class="token operator">...</span>handlers</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  routes<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span> path<span class="token punctuation">,</span> handlers <span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>注册时可以同时声明路由级中间件和最终处理函数：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token function">use</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span>
-
-<span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/users/:id'</span><span class="token punctuation">,</span> requireAuth<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   res<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">'content-type'</span><span class="token punctuation">,</span> <span class="token string">'application/json; charset=utf-8'</span><span class="token punctuation">)</span>
   res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">id</span><span class="token operator">:</span> req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><p>入口按照“全局中间件 → 路由中间件 → 路由处理函数”的顺序组装栈：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> host <span class="token operator">=</span> req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>host <span class="token operator">??</span> <span class="token string">'localhost'</span>
-  <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">??</span> <span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">http://</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>host<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
-  <span class="token keyword">const</span> matched <span class="token operator">=</span> <span class="token function">matchRoute</span><span class="token punctuation">(</span>routes<span class="token punctuation">,</span> req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> url<span class="token punctuation">.</span>pathname<span class="token punctuation">)</span>
+</code></pre></div><p><code>req.params</code> 不是 <code>IncomingMessage</code> 的原生属性，而是当前路由代码写入请求对象的数据。</p>
+<p>该匹配器只支持固定片段和单段参数，不支持通配符与可选参数。<code>filter(Boolean)</code> 会删除空片段，因此 <code>/users/42/</code> 和 <code>/users//42</code> 都能匹配 <code>/users/:id</code>；固定片段仍区分字母大小写。</p>
+<h2>中间件</h2>
+<p>请求日志、身份认证等逻辑通常服务于多个路由。直接把计时代码写入 <code>/time</code> 处理函数，会使其他路由重复相同代码：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/time'</span><span class="token punctuation">,</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> startedAt <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> req<span class="token punctuation">.</span>url<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> startedAt<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">ms</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>计时代码与 <code>/time</code> 的响应内容无关，可以移到公共处理函数中。中间件接收 <code>req</code>、<code>res</code> 和 <code>next</code> 三个参数；调用 <code>next()</code> 会执行后续中间件或路由处理函数。不调用 <code>next()</code> 时，后续函数不会执行，当前中间件需要结束响应，否则 <code>handle()</code> 最终返回 <code>404</code>。</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">logger</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> startedAt <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-  req<span class="token punctuation">.</span>params <span class="token operator">=</span> matched<span class="token operator">?.</span>params <span class="token operator">??</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-
-  <span class="token keyword">const</span> routeHandlers <span class="token operator">=</span> matched<span class="token operator">?.</span>route<span class="token punctuation">.</span>handlers <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-  <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>globalMiddleware<span class="token punctuation">,</span> <span class="token operator">...</span>routeHandlers<span class="token punctuation">]</span>
-
-  <span class="token function">dispatch</span><span class="token punctuation">(</span>stack<span class="token punctuation">,</span> req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-    <span class="token function">finalHandler</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> error<span class="token punctuation">)</span>
+  res<span class="token punctuation">.</span><span class="token function">once</span><span class="token punctuation">(</span><span class="token string">'finish'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> req<span class="token punctuation">.</span>url<span class="token punctuation">,</span> res<span class="token punctuation">.</span>statusCode<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> startedAt<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">ms</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
   <span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>当路由没有匹配时，栈中仍可执行日志等全局中间件；栈正常走完后，<code>finalHandler</code> 返回 <code>404</code>。处理过程中发生错误时，同一个入口返回 <code>500</code>：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">finalHandler</span><span class="token punctuation">(</span><span class="token parameter">res<span class="token punctuation">,</span> error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>res<span class="token punctuation">.</span>writableEnded<span class="token punctuation">)</span> <span class="token keyword">return</span>
 
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>res<span class="token punctuation">.</span>headersSent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    res<span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span>error <span class="token keyword">instanceof</span> <span class="token class-name">Error</span> <span class="token operator">?</span> error <span class="token operator">:</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span>
+  <span class="token keyword">await</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>认证中间件在请求头有效时继续执行，认证失败时直接返回 <code>401</code>：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">requireAuth</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>authorization <span class="token operator">!==</span> <span class="token string">'Bearer demo'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> <span class="token number">401</span>
+    res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Unauthorized'</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span>
   <span class="token punctuation">}</span>
 
-  <span class="token keyword">const</span> status <span class="token operator">=</span> error <span class="token operator">?</span> <span class="token number">500</span> <span class="token operator">:</span> <span class="token number">404</span>
-
-  res<span class="token punctuation">.</span><span class="token function">writeHead</span><span class="token punctuation">(</span>status<span class="token punctuation">,</span> <span class="token punctuation">{</span>
-    <span class="token string-property property">'content-type'</span><span class="token operator">:</span> <span class="token string">'application/json; charset=utf-8'</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span>
-  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-    <span class="token literal-property property">code</span><span class="token operator">:</span> status<span class="token punctuation">,</span>
-    <span class="token literal-property property">message</span><span class="token operator">:</span> status <span class="token operator">===</span> <span class="token number">404</span> <span class="token operator">?</span> <span class="token string">'Not Found'</span> <span class="token operator">:</span> <span class="token string">'Internal Server Error'</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token keyword">await</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
-</code></pre></div><p>这里的 <code>404</code> 不是路由器直接返回的，而是“处理栈已经走完，仍然没有人生成响应”的结果。最终处理器因此也常被称为兜底处理器。</p>
-<h2>第六步：收拢成 Application</h2>
-<p>目前的函数依赖几个模块级数组。把状态和操作收进 <code>createApp()</code>，就得到一个最小 Application：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> createServer <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:http'</span>
+</code></pre></div><p>中间件按注册顺序存入数组，由调度器逐个执行：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token parameter">stack<span class="token punctuation">,</span> req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> lastIndex <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
 
-<span class="token keyword">function</span> <span class="token function">createApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> globalMiddleware <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-  <span class="token keyword">const</span> routes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token parameter">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;=</span> lastIndex<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'next() called multiple times'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
 
-  <span class="token keyword">function</span> <span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">middleware</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    globalMiddleware<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>middleware<span class="token punctuation">)</span>
+    lastIndex <span class="token operator">=</span> index
+    <span class="token keyword">const</span> current <span class="token operator">=</span> stack<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>current<span class="token punctuation">)</span> <span class="token keyword">return</span>
+
+    <span class="token keyword">await</span> <span class="token function">current</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">dispatch</span><span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
   <span class="token punctuation">}</span>
 
-  <span class="token keyword">function</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> <span class="token operator">...</span>handlers</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    routes<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span> path<span class="token punctuation">,</span> handlers <span class="token punctuation">}</span><span class="token punctuation">)</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> host <span class="token operator">=</span> req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>host <span class="token operator">??</span> <span class="token string">'localhost'</span>
-    <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">??</span> <span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">http://</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>host<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
-    <span class="token keyword">const</span> matched <span class="token operator">=</span> <span class="token function">matchRoute</span><span class="token punctuation">(</span>routes<span class="token punctuation">,</span> req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> url<span class="token punctuation">.</span>pathname<span class="token punctuation">)</span>
-
-    req<span class="token punctuation">.</span>params <span class="token operator">=</span> matched<span class="token operator">?.</span>params <span class="token operator">??</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-
-    <span class="token keyword">const</span> routeHandlers <span class="token operator">=</span> matched<span class="token operator">?.</span>route<span class="token punctuation">.</span>handlers <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>globalMiddleware<span class="token punctuation">,</span> <span class="token operator">...</span>routeHandlers<span class="token punctuation">]</span>
-
-    <span class="token function">dispatch</span><span class="token punctuation">(</span>stack<span class="token punctuation">,</span> req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-      <span class="token function">finalHandler</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> error<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">function</span> <span class="token function">listen</span><span class="token punctuation">(</span><span class="token parameter">port<span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> server <span class="token operator">=</span> <span class="token function">createServer</span><span class="token punctuation">(</span>handle<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span>port<span class="token punctuation">,</span> callback<span class="token punctuation">)</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">return</span> <span class="token punctuation">{</span> use<span class="token punctuation">,</span> get<span class="token punctuation">,</span> listen <span class="token punctuation">}</span>
+  <span class="token keyword">await</span> <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
-</code></pre></div><p>使用方式已经接近 Express：</p>
+</code></pre></div><p><code>dispatch(0)</code> 从数组中的第一个函数开始。<code>next()</code> 返回 <code>dispatch(index + 1)</code> 的 Promise，因此 <code>await next()</code> 会等待后续处理链完成。<code>lastIndex</code> 用于拒绝同一个中间件重复调用 <code>next()</code>，避免后续函数执行多次。</p>
+<p>该调度器要求 <code>next()</code> 返回 Promise，<code>await next()</code> 等待下游的方式与 Koa 中间件相近。Express 的 <code>next()</code> 只通知路由器继续调度，不能用 <code>await next()</code> 等待下游完成。详细差异见。</p>
+<h2><code>createApp()</code></h2>
+<p>路由表和中间件数组放在 <code>createApp()</code> 的闭包中，不再使用模块级变量。每个应用持有独立的注册状态，返回对象暴露 <code>use()</code>、<code>get()</code> 和 <code>listen()</code> 三个方法：</p>
 <div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">createApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span>
 
-app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/hello'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
   res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token string">'Hello World'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/time'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/users/:id'</span><span class="token punctuation">,</span> requireAuth<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
@@ -494,55 +385,193 @@ app<span class="token punctuation">.</span><span class="token function">get</spa
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
 app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'http://localhost:3000'</span><span class="token punctuation">)</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Server running at http://localhost:3000'</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre></div><p><code>handle</code> 的调用链现在非常明确：</p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>app.listen(3000)
-  -&gt; createServer(handle)
-  -&gt; 请求到达
-  -&gt; Node 调用 handle(req, res)
-  -&gt; matchRoute(...)
-  -&gt; dispatch(...)
-  -&gt; 路由处理函数调用 res.end()
-</code></pre></div><p><code>app.listen()</code> 只是把 <code>createServer(handle).listen()</code> 包装起来。框架的真正请求入口仍然是 <code>handle</code>。</p>
-<h2>第七步：把请求体解析做成中间件</h2>
-<p>Node 不会自动生成 <code>req.body</code>。<code>req</code> 同时是一个可读流，请求体可能分成多个数据块到达：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">readJson</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> limit <span class="token operator">=</span> <span class="token number">1_000_000</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> contentType <span class="token operator">=</span> req<span class="token punctuation">.</span>headers<span class="token punctuation">[</span><span class="token string">'content-type'</span><span class="token punctuation">]</span> <span class="token operator">??</span> <span class="token string">''</span>
+</code></pre></div><p><code>app.use()</code> 注册全局中间件，所有请求都会经过 <code>logger</code>。<code>app.get()</code> 接收多个处理函数，<code>requireAuth</code> 因此只作用于 <code>/users/:id</code>。</p>
+<p>完整的 <code>server.js</code> 如下：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> createServer <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:http'</span>
 
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>contentType<span class="token punctuation">.</span><span class="token function">toLowerCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">'application/json'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">undefined</span>
-  <span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">matchPath</span><span class="token punctuation">(</span><span class="token parameter">pattern<span class="token punctuation">,</span> pathname</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> patternParts <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>Boolean<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> pathParts <span class="token operator">=</span> pathname<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>Boolean<span class="token punctuation">)</span>
 
-  <span class="token keyword">const</span> chunks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-  <span class="token keyword">let</span> size <span class="token operator">=</span> <span class="token number">0</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>patternParts<span class="token punctuation">.</span>length <span class="token operator">!==</span> pathParts<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
 
-  <span class="token keyword">for</span> <span class="token keyword">await</span> <span class="token punctuation">(</span><span class="token keyword">const</span> chunk <span class="token keyword">of</span> req<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    size <span class="token operator">+=</span> chunk<span class="token punctuation">.</span>length
+  <span class="token keyword">const</span> params <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">&gt;</span> limit<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Request body too large'</span><span class="token punctuation">)</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> index <span class="token operator">&lt;</span> patternParts<span class="token punctuation">.</span>length<span class="token punctuation">;</span> index <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> expected <span class="token operator">=</span> patternParts<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token keyword">const</span> actual <span class="token operator">=</span> pathParts<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>expected<span class="token punctuation">.</span><span class="token function">startsWith</span><span class="token punctuation">(</span><span class="token string">':'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        params<span class="token punctuation">[</span>expected<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">decodeURIComponent</span><span class="token punctuation">(</span>actual<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">continue</span>
     <span class="token punctuation">}</span>
 
-    chunks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>expected <span class="token operator">!==</span> actual<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
   <span class="token punctuation">}</span>
 
-  <span class="token keyword">const</span> text <span class="token operator">=</span> Buffer<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>chunks<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token string">'utf8'</span><span class="token punctuation">)</span>
-  <span class="token keyword">return</span> text <span class="token operator">===</span> <span class="token string">''</span> <span class="token operator">?</span> <span class="token keyword">undefined</span> <span class="token operator">:</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>解析器可以包装成全局中间件：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">json</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  req<span class="token punctuation">.</span>body <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">readJson</span><span class="token punctuation">(</span>req<span class="token punctuation">)</span>
-  <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> params
 <span class="token punctuation">}</span>
 
-app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>json<span class="token punctuation">)</span>
-</code></pre></div><p><code>json</code> 返回 Promise。解析失败时 Promise 会被拒绝，前面的 <code>dispatch</code> 通过 <code>Promise.resolve(result).catch(next)</code> 把错误交给最终处理器。</p>
-<p>真实请求体解析器还必须区分错误类型：无效 JSON 通常返回 <code>400 Bad Request</code>，超过限制返回 <code>413 Content Too Large</code>，不支持的媒体类型返回 <code>415 Unsupported Media Type</code>。还要处理请求中止、流错误和字符集，不能只把所有错误都映射为 <code>500</code>。</p>
-<h2>最小框架解决了什么</h2>
-<p>沿着这次演进，可以看到各组件是被具体问题推动出来的：</p>
-<p>| 遇到的问题 | 引入的结构 |<br>
-|</p>
+<span class="token keyword">function</span> <span class="token function">findRoute</span><span class="token punctuation">(</span><span class="token parameter">routes<span class="token punctuation">,</span> method<span class="token punctuation">,</span> pathname</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> route <span class="token keyword">of</span> routes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>route<span class="token punctuation">.</span>method <span class="token operator">!==</span> method<span class="token punctuation">)</span> <span class="token keyword">continue</span>
+
+    <span class="token keyword">const</span> params <span class="token operator">=</span> <span class="token function">matchPath</span><span class="token punctuation">(</span>route<span class="token punctuation">.</span>path<span class="token punctuation">,</span> pathname<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>params <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">{</span> route<span class="token punctuation">,</span> params <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token keyword">null</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token parameter">stack<span class="token punctuation">,</span> req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> lastIndex <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+
+  <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token parameter">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;=</span> lastIndex<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'next() called multiple times'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    lastIndex <span class="token operator">=</span> index
+    <span class="token keyword">const</span> current <span class="token operator">=</span> stack<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>current<span class="token punctuation">)</span> <span class="token keyword">return</span>
+
+    <span class="token keyword">await</span> <span class="token function">current</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">dispatch</span><span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">await</span> <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">sendText</span><span class="token punctuation">(</span><span class="token parameter">res<span class="token punctuation">,</span> statusCode<span class="token punctuation">,</span> text</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>res<span class="token punctuation">.</span>writableEnded<span class="token punctuation">)</span> <span class="token keyword">return</span>
+
+  res<span class="token punctuation">.</span>statusCode <span class="token operator">=</span> statusCode
+  res<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">'content-type'</span><span class="token punctuation">,</span> <span class="token string">'text/plain; charset=utf-8'</span><span class="token punctuation">)</span>
+  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">createApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> middleware <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token keyword">const</span> routes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+  <span class="token keyword">function</span> <span class="token function">use</span><span class="token punctuation">(</span><span class="token parameter">handler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    middleware<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>handler<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> <span class="token operator">...</span>handlers</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    routes<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span> path<span class="token punctuation">,</span> handlers <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">URL</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>url <span class="token operator">??</span> <span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token string">'http://localhost'</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> matched <span class="token operator">=</span> <span class="token function">findRoute</span><span class="token punctuation">(</span>routes<span class="token punctuation">,</span> req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> url<span class="token punctuation">.</span>pathname<span class="token punctuation">)</span>
+
+    req<span class="token punctuation">.</span>params <span class="token operator">=</span> matched<span class="token operator">?.</span>params <span class="token operator">??</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> routeHandlers <span class="token operator">=</span> matched<span class="token operator">?.</span>route<span class="token punctuation">.</span>handlers <span class="token operator">??</span> <span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">sendText</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token number">404</span><span class="token punctuation">,</span> <span class="token string">'Not Found'</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">await</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token operator">...</span>middleware<span class="token punctuation">,</span> <span class="token operator">...</span>routeHandlers<span class="token punctuation">]</span><span class="token punctuation">,</span> req<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+
+    <span class="token comment">// 路由处理函数遗漏 res.end() 时返回 404，避免响应保持未完成。</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>res<span class="token punctuation">.</span>writableEnded<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">sendText</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token number">404</span><span class="token punctuation">,</span> <span class="token string">'Not Found'</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">function</span> <span class="token function">listen</span><span class="token punctuation">(</span><span class="token parameter">port<span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> server <span class="token operator">=</span> <span class="token function">createServer</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token function">handle</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">error</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>res<span class="token punctuation">.</span>headersSent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          res<span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+          <span class="token keyword">return</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token function">sendText</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token number">500</span><span class="token punctuation">,</span> <span class="token string">'Internal Server Error'</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> server<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span>port<span class="token punctuation">,</span> callback<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span> use<span class="token punctuation">,</span> get<span class="token punctuation">,</span> listen <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">logger</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> startedAt <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  res<span class="token punctuation">.</span><span class="token function">once</span><span class="token punctuation">(</span><span class="token string">'finish'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>method<span class="token punctuation">,</span> req<span class="token punctuation">.</span>url<span class="token punctuation">,</span> res<span class="token punctuation">.</span>statusCode<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> startedAt<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">ms</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">await</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">requireAuth</span><span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>headers<span class="token punctuation">.</span>authorization <span class="token operator">!==</span> <span class="token string">'Bearer demo'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">sendText</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token number">401</span><span class="token punctuation">,</span> <span class="token string">'Unauthorized'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">await</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">createApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">sendText</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token string">'Hello World'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/time'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token function">sendText</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'/users/:id'</span><span class="token punctuation">,</span> requireAuth<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  res<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">'content-type'</span><span class="token punctuation">,</span> <span class="token string">'application/json; charset=utf-8'</span><span class="token punctuation">)</span>
+  res<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">id</span><span class="token operator">:</span> req<span class="token punctuation">.</span>params<span class="token punctuation">.</span>id <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Server running at http://localhost:3000'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>启动服务后检查公开路由、认证路由和路径参数：</p>
+<div class="language-bash" data-ext="sh" data-title="sh"><pre class="language-bash"><code><span class="token function">curl</span> <span class="token parameter variable">-i</span> http://localhost:3000/time
+<span class="token function">curl</span> <span class="token parameter variable">-i</span> http://localhost:3000/users/42
+<span class="token function">curl</span> <span class="token parameter variable">-i</span> <span class="token parameter variable">-H</span> <span class="token string">'Authorization: Bearer demo'</span> http://localhost:3000/users/42
+</code></pre></div><p>三个请求依次返回 <code>200</code>、<code>401</code> 和 <code>200</code>。未注册的路径返回 <code>404</code>。</p>
+<h2>实现范围</h2>
+<p>一次请求的处理顺序如下：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>node:http 接收请求
+  -&gt; 全局中间件
+  -&gt; 按方法和路径查找路由
+  -&gt; 路由级中间件
+  -&gt; 最终处理函数
+  -&gt; 返回 404 或处理异常
+</code></pre></div><p>当前代码只实现 <code>GET</code> 路由、单段路径参数和 Koa 风格中间件。以下行为仍需单独处理：</p>
+<ul>
+<li><code>POST</code>、<code>PUT</code>、<code>HEAD</code> 和 <code>OPTIONS</code> 等方法；</li>
+<li>请求体大小限制、内容类型判断和 JSON 解析；</li>
+<li>请求中止、超时以及请求流、响应流产生的错误；</li>
+<li>通配符、可选参数和方法协商等路由行为。</li>
+</ul>
+<p><code>IncomingMessage</code> 是可读流，原生对象上不存在已经解析好的 <code>req.body</code>。请求体解析需要收集数据块、限制总大小、处理流错误，并根据内容类型转换数据。这部分逻辑可以实现为独立中间件，不属于当前路由与调度示例。</p>
+<h2>参考资料</h2>
+<ul>
+<li><a href="https://www.nodebeginner.org/index-zh-cn.html#a-basic-http-server" target="_blank" rel="noopener noreferrer">The Node Beginner Book：一个基础的 HTTP 服务器</a>（旧版 CommonJS 示例）</li>
+<li><a href="https://nodejs.org/en/learn/http/anatomy-of-an-http-transaction" target="_blank" rel="noopener noreferrer">Node.js Learn：Anatomy of an HTTP Transaction</a></li>
+<li><a href="https://nodejs.org/api/http.html" target="_blank" rel="noopener noreferrer">Node.js HTTP API</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction" target="_blank" rel="noopener noreferrer">MDN：Express/Node introduction</a></li>
+<li><a href="https://koajs.com/#application" target="_blank" rel="noopener noreferrer">Koa：Cascading middleware</a></li>
+<li><a href="https://expressjs.com/en/guide/using-middleware/" target="_blank" rel="noopener noreferrer">Express：Using middleware</a></li>
+</ul>
 ]]></content:encoded>
     </item>
     <item>
@@ -3175,6 +3204,183 @@ scores<span class="token punctuation">.</span><span class="token function">add</
 ]]></content:encoded>
     </item>
     <item>
+      <title>MCP</title>
+      <link>https://zeevenn.github.io/notes/notes/ai/mcp/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/mcp/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">MCP</source>
+      <description>MCP 目录 </description>
+      <pubDate>Thu, 09 Jul 2026 07:51:34 GMT</pubDate>
+      <content:encoded><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+<li></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>MCP Architecture</title>
+      <link>https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">MCP Architecture</source>
+      <description>MCP 生态组成 1. MCP Specification 协议规范本身。 定义了： 客户端和服务端如何通信 上下文（context）如何描述、传输、更新 必须遵守的接口、数据结构、行为约束 可以理解为协议层面的标准文档。 2. MCP SDKs 各语言的官方/半官方 SDK 实现。 作用是： 把规范落地成可直接使用的代码 降低实现 MCP 客户端/服...</description>
+      <category>mcp</category>
+      <pubDate>Mon, 19 Jan 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<h2>MCP 生态组成</h2>
+<h3>1. MCP Specification</h3>
+<p><strong>协议规范本身</strong>。<br>
+定义了：</p>
+<ul>
+<li>客户端和服务端如何通信</li>
+<li>上下文（context）如何描述、传输、更新</li>
+<li>必须遵守的接口、数据结构、行为约束</li>
+</ul>
+<p>可以理解为协议层面的标准文档。</p>
+<h3>2. MCP SDKs</h3>
+<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
+作用是：</p>
+<ul>
+<li>把规范落地成可直接使用的代码</li>
+<li>降低实现 MCP 客户端/服务端的成本</li>
+</ul>
+<p>常见 SDK 方向包括：</p>
+<ul>
+<li>TypeScript SDK</li>
+<li>Python SDK</li>
+<li>Rust SDK</li>
+</ul>
+<p>SDK 是规范的工程化实现，负责把协议细节封装成可调用接口。</p>
+<h3>3. MCP Development Tools</h3>
+<p><strong>开发和调试 MCP 的工具链</strong>，比如：</p>
+<ul>
+<li>MCP Inspector（用于查看、调试 context 交换）</li>
+<li>本地调试工具</li>
+<li>验证协议是否符合规范的工具</li>
+</ul>
+<p>这类工具在 MCP 开发中的位置，类似 HTTP 生态中的 Postman 或 GraphQL 生态中的 Playground。</p>
+<h3>4. MCP Reference Server Implementations</h3>
+<p><strong>参考服务端实现</strong>。<br>
+特点：</p>
+<ul>
+<li>不是“唯一正确”的实现</li>
+<li>主要用于学习、对照、验证理解是否正确</li>
+</ul>
+<p>参考实现更接近最小示例项目，用于学习协议边界和验证实现是否符合规范。</p>
+<h2>MCP 不负责什么</h2>
+<blockquote>
+<p><strong>MCP focuses solely on the protocol for context exchange</strong></p>
+</blockquote>
+<p>MCP <strong>只关心「上下文如何交换」</strong>，不关心：</p>
+<ul>
+<li>使用 GPT、Claude 还是本地 LLM</li>
+<li>Prompt 如何编写</li>
+<li>多轮对话如何组织</li>
+<li>Agent 如何决策</li>
+<li>RAG、Memory、Tool calling 的具体策略</li>
+</ul>
+<p>也就是说：</p>
+<blockquote>
+<p><strong>MCP ≈ HTTP</strong></p>
+<p>它定义“怎么传”，而不是“传了之后你怎么用”。</p>
+</blockquote>
+<h2>协议边界</h2>
+<ul>
+<li>
+<p>MCP 是 <strong>“上下文交换层协议”</strong></p>
+</li>
+<li>
+<p>提供：</p>
+<ul>
+<li>规范（Specification）</li>
+<li>SDK</li>
+<li>开发工具</li>
+<li>参考实现</li>
+</ul>
+</li>
+<li>
+<p>不干涉：</p>
+<ul>
+<li>LLM 选型</li>
+<li>AI 应用架构</li>
+<li>业务逻辑与智能策略</li>
+</ul>
+</li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>What is MCP?</title>
+      <link>https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">What is MCP?</source>
+      <description>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。 2026011914375988920260119143759889 MCP 能连接什么 nvim_clipboard_20260119150550nvim_clipboard_2026011915055...</description>
+      <category>mcp</category>
+      <pubDate>Mon, 19 Jan 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
+<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
+<h2>MCP 能连接什么</h2>
+<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/nvim_clipboard_20260119150550.png" alt="nvim_clipboard_20260119150550" tabindex="0" loading="lazy"><figcaption>nvim_clipboard_20260119150550</figcaption></figure>
+<ul>
+<li>Agent 可以通过 MCP 连接外部工具和数据源，例如日历、文档、代码仓库和内部系统。</li>
+<li>不同 AI 应用可以围绕同一套协议集成上下文、工具和资源，降低重复适配成本。</li>
+</ul>
+<h2>MCP 的价值</h2>
+<ul>
+<li>对开发者：把外部系统接入抽象成协议适配，而不是为每个模型应用单独写集成。</li>
+<li>对 Agent：用标准方式访问工具、资源和提示模板，提升互操作性。</li>
+<li>对用户：让支持 MCP 的应用更容易接入已有工作流和数据源。</li>
+</ul>
+]]></content:encoded>
+      <enclosure url="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" type="image/png"/>
+    </item>
+    <item>
+      <title>Skills</title>
+      <link>https://zeevenn.github.io/notes/notes/ai/skills/</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/skills/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Skills</source>
+      <description>Skills 目录 </description>
+      <pubDate>Thu, 09 Jul 2026 07:51:34 GMT</pubDate>
+      <content:encoded><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Agent Skills Overview</title>
+      <link>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Agent Skills Overview</source>
+      <description>Overview Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。 从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。 通过 Skills，Agent 可以： 执行特定任务...</description>
+      <category>ai</category>
+      <pubDate>Fri, 06 Feb 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<h2>Overview</h2>
+<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
+<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
+<p>通过 Skills，Agent 可以：</p>
+<ul>
+<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
+<li>访问外部工具和服务</li>
+<li>扩展自身能力而无需修改核心代码</li>
+</ul>
+<h2>What are skills?</h2>
+<p>一个标准的 Skill 通常包含以下文件：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>my-skill/
+├── SKILL.md          # Required: instructions + metadata (name and description)
+├── scripts/          # Optional: executable code
+├── references/       # Optional: documentation
+└── assets/           # Optional: templates, resources
+</code></pre></div><p>Skills 使用渐进式披露来高效管理上下文：</p>
+<ol>
+<li>发现阶段：启动时，Agent 仅加载每个可用 skill 的名称和描述——刚好足够判断该 skill 何时可能相关。</li>
+<li>激活阶段：当任务与某个 skill 的描述匹配时，Agent 会将完整的 <code>SKILL.md</code> 指令读入上下文。</li>
+<li>执行阶段：Agent 按照指令执行操作，根据需要加载引用的文件或运行捆绑的代码。</li>
+</ol>
+<p>这种方式能减少默认上下文占用，同时保留按需展开复杂指令的能力。</p>
+<div class="language-markdown" data-ext="md" data-title="md"><pre class="language-markdown"><code></code></pre></div>]]></content:encoded>
+    </item>
+    <item>
       <title>数组</title>
       <link>https://zeevenn.github.io/notes/notes/algorithms/data-structures/array.html</link>
       <guid>https://zeevenn.github.io/notes/notes/algorithms/data-structures/array.html</guid>
@@ -5151,183 +5357,6 @@ scores<span class="token punctuation">.</span><span class="token function">add</
   <span class="token keyword">return</span> sum <span class="token operator">-</span> <span class="token number">2</span> <span class="token operator">*</span> dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>target<span class="token punctuation">]</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre></div>]]></content:encoded>
-    </item>
-    <item>
-      <title>MCP</title>
-      <link>https://zeevenn.github.io/notes/notes/ai/mcp/</link>
-      <guid>https://zeevenn.github.io/notes/notes/ai/mcp/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">MCP</source>
-      <description>MCP 目录 </description>
-      <pubDate>Thu, 09 Jul 2026 07:51:34 GMT</pubDate>
-      <content:encoded><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-<li></li>
-</ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>MCP Architecture</title>
-      <link>https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">MCP Architecture</source>
-      <description>MCP 生态组成 1. MCP Specification 协议规范本身。 定义了： 客户端和服务端如何通信 上下文（context）如何描述、传输、更新 必须遵守的接口、数据结构、行为约束 可以理解为协议层面的标准文档。 2. MCP SDKs 各语言的官方/半官方 SDK 实现。 作用是： 把规范落地成可直接使用的代码 降低实现 MCP 客户端/服...</description>
-      <category>mcp</category>
-      <pubDate>Mon, 19 Jan 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>MCP 生态组成</h2>
-<h3>1. MCP Specification</h3>
-<p><strong>协议规范本身</strong>。<br>
-定义了：</p>
-<ul>
-<li>客户端和服务端如何通信</li>
-<li>上下文（context）如何描述、传输、更新</li>
-<li>必须遵守的接口、数据结构、行为约束</li>
-</ul>
-<p>可以理解为协议层面的标准文档。</p>
-<h3>2. MCP SDKs</h3>
-<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
-作用是：</p>
-<ul>
-<li>把规范落地成可直接使用的代码</li>
-<li>降低实现 MCP 客户端/服务端的成本</li>
-</ul>
-<p>常见 SDK 方向包括：</p>
-<ul>
-<li>TypeScript SDK</li>
-<li>Python SDK</li>
-<li>Rust SDK</li>
-</ul>
-<p>SDK 是规范的工程化实现，负责把协议细节封装成可调用接口。</p>
-<h3>3. MCP Development Tools</h3>
-<p><strong>开发和调试 MCP 的工具链</strong>，比如：</p>
-<ul>
-<li>MCP Inspector（用于查看、调试 context 交换）</li>
-<li>本地调试工具</li>
-<li>验证协议是否符合规范的工具</li>
-</ul>
-<p>这类工具在 MCP 开发中的位置，类似 HTTP 生态中的 Postman 或 GraphQL 生态中的 Playground。</p>
-<h3>4. MCP Reference Server Implementations</h3>
-<p><strong>参考服务端实现</strong>。<br>
-特点：</p>
-<ul>
-<li>不是“唯一正确”的实现</li>
-<li>主要用于学习、对照、验证理解是否正确</li>
-</ul>
-<p>参考实现更接近最小示例项目，用于学习协议边界和验证实现是否符合规范。</p>
-<h2>MCP 不负责什么</h2>
-<blockquote>
-<p><strong>MCP focuses solely on the protocol for context exchange</strong></p>
-</blockquote>
-<p>MCP <strong>只关心「上下文如何交换」</strong>，不关心：</p>
-<ul>
-<li>使用 GPT、Claude 还是本地 LLM</li>
-<li>Prompt 如何编写</li>
-<li>多轮对话如何组织</li>
-<li>Agent 如何决策</li>
-<li>RAG、Memory、Tool calling 的具体策略</li>
-</ul>
-<p>也就是说：</p>
-<blockquote>
-<p><strong>MCP ≈ HTTP</strong></p>
-<p>它定义“怎么传”，而不是“传了之后你怎么用”。</p>
-</blockquote>
-<h2>协议边界</h2>
-<ul>
-<li>
-<p>MCP 是 <strong>“上下文交换层协议”</strong></p>
-</li>
-<li>
-<p>提供：</p>
-<ul>
-<li>规范（Specification）</li>
-<li>SDK</li>
-<li>开发工具</li>
-<li>参考实现</li>
-</ul>
-</li>
-<li>
-<p>不干涉：</p>
-<ul>
-<li>LLM 选型</li>
-<li>AI 应用架构</li>
-<li>业务逻辑与智能策略</li>
-</ul>
-</li>
-</ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>What is MCP?</title>
-      <link>https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">What is MCP?</source>
-      <description>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。 2026011914375988920260119143759889 MCP 能连接什么 nvim_clipboard_20260119150550nvim_clipboard_2026011915055...</description>
-      <category>mcp</category>
-      <pubDate>Mon, 19 Jan 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
-<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
-<h2>MCP 能连接什么</h2>
-<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/nvim_clipboard_20260119150550.png" alt="nvim_clipboard_20260119150550" tabindex="0" loading="lazy"><figcaption>nvim_clipboard_20260119150550</figcaption></figure>
-<ul>
-<li>Agent 可以通过 MCP 连接外部工具和数据源，例如日历、文档、代码仓库和内部系统。</li>
-<li>不同 AI 应用可以围绕同一套协议集成上下文、工具和资源，降低重复适配成本。</li>
-</ul>
-<h2>MCP 的价值</h2>
-<ul>
-<li>对开发者：把外部系统接入抽象成协议适配，而不是为每个模型应用单独写集成。</li>
-<li>对 Agent：用标准方式访问工具、资源和提示模板，提升互操作性。</li>
-<li>对用户：让支持 MCP 的应用更容易接入已有工作流和数据源。</li>
-</ul>
-]]></content:encoded>
-      <enclosure url="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" type="image/png"/>
-    </item>
-    <item>
-      <title>Skills</title>
-      <link>https://zeevenn.github.io/notes/notes/ai/skills/</link>
-      <guid>https://zeevenn.github.io/notes/notes/ai/skills/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Skills</source>
-      <description>Skills 目录 </description>
-      <pubDate>Thu, 09 Jul 2026 07:51:34 GMT</pubDate>
-      <content:encoded><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-</ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Agent Skills Overview</title>
-      <link>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Agent Skills Overview</source>
-      <description>Overview Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。 从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。 通过 Skills，Agent 可以： 执行特定任务...</description>
-      <category>ai</category>
-      <pubDate>Fri, 06 Feb 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>Overview</h2>
-<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
-<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
-<p>通过 Skills，Agent 可以：</p>
-<ul>
-<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
-<li>访问外部工具和服务</li>
-<li>扩展自身能力而无需修改核心代码</li>
-</ul>
-<h2>What are skills?</h2>
-<p>一个标准的 Skill 通常包含以下文件：</p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>my-skill/
-├── SKILL.md          # Required: instructions + metadata (name and description)
-├── scripts/          # Optional: executable code
-├── references/       # Optional: documentation
-└── assets/           # Optional: templates, resources
-</code></pre></div><p>Skills 使用渐进式披露来高效管理上下文：</p>
-<ol>
-<li>发现阶段：启动时，Agent 仅加载每个可用 skill 的名称和描述——刚好足够判断该 skill 何时可能相关。</li>
-<li>激活阶段：当任务与某个 skill 的描述匹配时，Agent 会将完整的 <code>SKILL.md</code> 指令读入上下文。</li>
-<li>执行阶段：Agent 按照指令执行操作，根据需要加载引用的文件或运行捆绑的代码。</li>
-</ol>
-<p>这种方式能减少默认上下文占用，同时保留按需展开复杂指令的能力。</p>
-<div class="language-markdown" data-ext="md" data-title="md"><pre class="language-markdown"><code></code></pre></div>]]></content:encoded>
     </item>
     <item>
       <title>数据库</title>
