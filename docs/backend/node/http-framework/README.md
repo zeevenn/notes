@@ -4,7 +4,7 @@
 
 ## 学习路径
 
-1. [从 node:http 手写最小后端框架](./minimal-http-framework.md)：沿一次请求的完整路径理解框架的组成，并复盘项目实现中的边界问题。
+1. [从 HTTP 服务器到最小框架](./minimal-http-framework.md)：`createServer()`、路由匹配、路径参数与 Koa 风格中间件调度。
 2. [Express 与 Koa 的中间件模型](./express-vs-koa-middleware.md)：比较回调式传递与基于 Promise 的洋葱模型。
 
 ## 能力边界

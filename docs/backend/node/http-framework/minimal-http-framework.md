@@ -1,5 +1,5 @@
 ---
-title: 从 node:http 手写最小后端框架
+title: 从 HTTP 服务器到最小框架
 date: 2026-08-11
 icon: server
 category:
@@ -11,80 +11,78 @@ tag:
   - framework
 ---
 
-这篇笔记围绕三个具体需求展开：
+## 最小 HTTP 服务器
 
-- 访问 `GET /hello` 时返回 `Hello World`；
-- 访问 `GET /users/:id` 时先校验身份，再返回路径中的用户 ID；
-- 每个请求都记录方法、URL 和处理时间，未匹配的请求返回 `404`。
-
-先用一个函数完成最小响应，再让新增需求逐步推动路由、路径参数、中间件和错误处理出现。这里不会预先设计一套完整框架。
-
-## 第一步：从请求入口开始
-
-先创建一个只返回 `Hello World` 的服务器：
+新建 `server.js`，监听 3000 端口并返回 `Hello World`：
 
 ```js
 import { createServer } from 'node:http'
 
-function handle(req, res) {
-  res.writeHead(200, {
-    'content-type': 'text/plain; charset=utf-8'
-  })
+const server = createServer((req, res) => {
+  res.statusCode = 200
+  res.setHeader('content-type', 'text/plain; charset=utf-8')
   res.end('Hello World')
-}
+})
 
-const server = createServer(handle)
-server.listen(3000)
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000')
+})
 ```
 
-这里的调用关系是：
+启动服务并请求根路径：
 
-1. 程序启动时，`createServer(handle)` 创建 HTTP 服务器，并把 `handle` 注册为 `request` 事件的监听器。
-2. `server.listen(3000)` 开始监听端口。
-3. 每当一个请求到达，Node 调用 `handle(req, res)`。
-4. `res.end()` 写完响应，并结束这次请求。
+```sh
+node server.js
+curl -i http://localhost:3000/
+```
 
-`handle` 不是手动调用的。它由 Node 在请求到达时调用，等价写法是：
+响应包含 `200 OK` 和正文 `Hello World`。
+
+`createServer()` 接收一个请求监听器。该函数注册在服务器的 `request` 事件上，每次收到请求时执行，并接收两个参数：
+
+- `req` 是 `http.IncomingMessage`，用于读取请求方法、URL、请求头和请求体流；
+- `res` 是 `http.ServerResponse`，用于设置状态码、响应头并写回正文。
+
+`createServer(listener)` 等价于创建服务器后监听 `request` 事件：
 
 ```js
 const server = createServer()
-server.on('request', handle)
+
+server.on('request', (req, res) => {
+  res.end('Hello World')
+})
+
 server.listen(3000)
 ```
 
-启动文件后可以直接验证：
+`res.end()` 结束响应。请求分支既不调用 `res.end()`，也不把响应流交给其他处理逻辑时，响应会保持未完成，直到连接关闭或客户端超时。
 
-```sh
-node server.mjs
-curl -i http://localhost:3000
-```
+## 按方法和路径分派请求
 
-此时还没有框架。全部请求都进入同一个 `handle`，它就是后续所有抽象的起点。
-
-## 第二步：根据方法和路径选择处理函数
-
-服务器通常需要处理多个接口。最直接的写法是在 `handle` 中判断请求方法和路径：
+当前监听器没有读取请求地址，因此 `/`、`/time` 和不存在的路径都会得到相同响应。加入 `/time` 后，可以直接使用条件分支区分请求：
 
 ```js
-function handle(req, res) {
-  const url = new URL(req.url, `http://${req.headers.host}`)
+const server = createServer((req, res) => {
+  const url = new URL(req.url ?? '/', 'http://localhost')
 
-  if (req.method === 'GET' && url.pathname === '/hello') {
+  if (req.method === 'GET' && url.pathname === '/') {
     res.end('Hello World')
     return
   }
 
-  if (req.method === 'GET' && url.pathname === '/users') {
-    res.end('User list')
+  if (req.method === 'GET' && url.pathname === '/time') {
+    res.end(new Date().toISOString())
     return
   }
 
   res.statusCode = 404
   res.end('Not Found')
-}
+})
 ```
 
-两个路由还容易阅读；路由增加后，`handle` 会变成很长的条件分支。先把“匹配规则”和“匹配后的处理函数”放进数组：
+代码根据请求方法和 `pathname` 选择处理逻辑。查询字符串不参与路径匹配，因此需要先解析 `req.url`，再比较 `pathname`。
+
+路由增多后，请求监听器会包含大量路径判断。将方法、路径和处理函数记录在路由表中，可以把匹配逻辑与响应逻辑分开：
 
 ```js
 const routes = []
@@ -93,22 +91,20 @@ function get(path, handler) {
   routes.push({ method: 'GET', path, handler })
 }
 
-get('/hello', (req, res) => {
+get('/', (req, res) => {
   res.end('Hello World')
 })
 
-get('/users', (req, res) => {
-  res.end('User list')
+get('/time', (req, res) => {
+  res.end(new Date().toISOString())
 })
 ```
 
-`handle` 只负责解析 URL、查找路由和执行处理函数：
+请求监听器根据方法和路径查找路由，再调用对应的处理函数：
 
 ```js
-function handle(req, res) {
-  const host = req.headers.host ?? 'localhost'
-  const url = new URL(req.url ?? '/', `http://${host}`)
-
+async function handle(req, res) {
+  const url = new URL(req.url ?? '/', 'http://localhost')
   const route = routes.find((item) => {
     return item.method === req.method && item.path === url.pathname
   })
@@ -119,15 +115,33 @@ function handle(req, res) {
     return
   }
 
-  route.handler(req, res)
+  await route.handler(req, res)
 }
+
+const server = createServer((req, res) => {
+  handle(req, res).catch((error) => {
+    console.error(error)
+
+    if (res.headersSent) {
+      res.destroy()
+      return
+    }
+
+    res.statusCode = 500
+    res.end('Internal Server Error')
+  })
+})
 ```
 
-路由器最初不需要是一个类。它的核心数据就是一组路由记录，核心操作就是注册和匹配。
+`routes.find()` 负责匹配路由，`route.handler()` 负责生成响应。新增路由时，只需向 `routes` 添加记录，不再修改 `handle()` 中的条件分支。
 
-## 第三步：支持路径参数
+`handle()` 是异步函数，调用后返回 Promise。HTTP 服务器不会等待这个 Promise，也不会处理它的拒绝状态，因此监听器需要显式调用 `catch()`。响应头尚未发送时可以返回 `500`；响应头已经发送时无法改写状态码，只能关闭连接。
 
-静态字符串无法让 `/users/42` 匹配 `/users/:id`。路径匹配器需要逐段比较，并返回从动态片段中提取的参数：
+## 匹配路径参数
+
+字符串相等只能匹配固定路径。对于 `/users/42` 这类路径，可以用 `/users/:id` 声明动态片段，并将实际值保存为参数。
+
+以下匹配器逐段比较路由模式和请求路径：
 
 ```js
 function matchPath(pattern, pathname) {
@@ -139,25 +153,29 @@ function matchPath(pattern, pathname) {
   const params = {}
 
   for (let index = 0; index < patternParts.length; index += 1) {
-    const patternPart = patternParts[index]
-    const pathPart = pathParts[index]
+    const expected = patternParts[index]
+    const actual = pathParts[index]
 
-    if (patternPart.startsWith(':')) {
-      params[patternPart.slice(1)] = decodeURIComponent(pathPart)
+    if (expected.startsWith(':')) {
+      try {
+        params[expected.slice(1)] = decodeURIComponent(actual)
+      } catch {
+        return null
+      }
       continue
     }
 
-    if (patternPart !== pathPart) return null
+    if (expected !== actual) return null
   }
 
   return params
 }
 ```
 
-路由查找现在需要同时返回路由和参数：
+固定片段必须相等；以 `:` 开头的片段记录到参数对象中。匹配失败返回 `null`，匹配成功则由 `findRoute()` 一并返回路由和参数：
 
 ```js
-function matchRoute(routes, method, pathname) {
+function findRoute(routes, method, pathname) {
   for (const route of routes) {
     if (route.method !== method) continue
 
@@ -169,240 +187,100 @@ function matchRoute(routes, method, pathname) {
 }
 ```
 
-在入口中把参数放到 `req.params`，路由处理函数就不需要再次解析 URL：
-
-```js
-function handle(req, res) {
-  const host = req.headers.host ?? 'localhost'
-  const url = new URL(req.url ?? '/', `http://${host}`)
-  const matched = matchRoute(routes, req.method, url.pathname)
-
-  if (!matched) {
-    res.statusCode = 404
-    res.end('Not Found')
-    return
-  }
-
-  req.params = matched.params
-  matched.route.handler(req, res)
-}
-```
-
-这里已经出现框架的第一个增强：Node 原生请求对象没有 `params`，是框架在完成路由匹配后添加的。Express 的 `req.params` 也来自路由层，而不是来自 HTTP 协议。
-
-## 第四步：重复逻辑推动中间件出现
-
-假设部分接口需要记录日志和校验身份。直接写进每个处理函数会产生重复：
+请求监听器将参数写入 `req.params`，路由处理函数可以直接读取：
 
 ```js
 get('/users/:id', (req, res) => {
-  console.log(req.method, req.url)
-
-  if (req.headers.authorization !== 'Bearer demo') {
-    res.statusCode = 401
-    res.end('Unauthorized')
-    return
-  }
-
-  res.end(`User ${req.params.id}`)
-})
-```
-
-把这些逻辑拆成独立函数时，需要一种方式表达两种结果：
-
-- 当前函数已经生成响应，请求到此结束；
-- 当前函数处理完成，继续执行下一个函数。
-
-Express 使用 `next()` 表示第二种结果：
-
-```js
-function logger(req, res, next) {
-  const startedAt = Date.now()
-
-  res.once('finish', () => {
-    console.log(req.method, req.url, Date.now() - startedAt)
-  })
-
-  next()
-}
-
-function requireAuth(req, res, next) {
-  if (req.headers.authorization !== 'Bearer demo') {
-    res.statusCode = 401
-    res.end('Unauthorized')
-    return
-  }
-
-  next()
-}
-```
-
-框架需要一个调度器按顺序执行这些函数：
-
-```js
-function dispatch(stack, req, res, done) {
-  let index = 0
-
-  function next(error) {
-    if (error !== undefined) {
-      done(error)
-      return
-    }
-
-    const current = stack[index]
-    index += 1
-
-    if (!current) {
-      done()
-      return
-    }
-
-    try {
-      const result = current(req, res, next)
-      Promise.resolve(result).catch(next)
-    } catch (error) {
-      next(error)
-    }
-  }
-
-  next()
-}
-```
-
-执行 `dispatch([logger, requireAuth, getUser], ...)` 时：
-
-1. 调度器先执行 `logger`。
-2. `logger` 调用 `next()`，调度器执行 `requireAuth`。
-3. 认证失败时，`requireAuth` 发送 `401`，不调用 `next()`，处理链停止。
-4. 认证成功时，调度器继续执行 `getUser`。
-5. `getUser` 发送响应，通常不再调用 `next()`。
-
-这就是 Express 风格中间件的最小核心：数组保存顺序，游标记录位置，`next()` 转移控制权。生产实现还需要防止重复调用 `next()`，并区分普通中间件和错误处理中间件。
-
-## 第五步：把路由处理函数也放进栈
-
-路由处理函数和中间件都接收 `req`、`res`。因此一个路由可以保存多个处理函数：
-
-```js
-const globalMiddleware = []
-const routes = []
-
-function use(middleware) {
-  globalMiddleware.push(middleware)
-}
-
-function get(path, ...handlers) {
-  routes.push({ method: 'GET', path, handlers })
-}
-```
-
-注册时可以同时声明路由级中间件和最终处理函数：
-
-```js
-use(logger)
-
-get('/users/:id', requireAuth, (req, res) => {
   res.setHeader('content-type', 'application/json; charset=utf-8')
   res.end(JSON.stringify({ id: req.params.id }))
 })
 ```
 
-入口按照“全局中间件 → 路由中间件 → 路由处理函数”的顺序组装栈：
+`req.params` 不是 `IncomingMessage` 的原生属性，而是当前路由代码写入请求对象的数据。
+
+该匹配器只支持固定片段和单段参数，不支持通配符与可选参数。`filter(Boolean)` 会删除空片段，因此 `/users/42/` 和 `/users//42` 都能匹配 `/users/:id`；固定片段仍区分字母大小写。
+
+## 中间件
+
+请求日志、身份认证等逻辑通常服务于多个路由。直接把计时代码写入 `/time` 处理函数，会使其他路由重复相同代码：
 
 ```js
-function handle(req, res) {
-  const host = req.headers.host ?? 'localhost'
-  const url = new URL(req.url ?? '/', `http://${host}`)
-  const matched = matchRoute(routes, req.method, url.pathname)
+get('/time', async (req, res) => {
+  const startedAt = Date.now()
+  res.end(new Date().toISOString())
+  console.log(req.method, req.url, `${Date.now() - startedAt}ms`)
+})
+```
 
-  req.params = matched?.params ?? {}
+计时代码与 `/time` 的响应内容无关，可以移到公共处理函数中。中间件接收 `req`、`res` 和 `next` 三个参数；调用 `next()` 会执行后续中间件或路由处理函数。不调用 `next()` 时，后续函数不会执行，当前中间件需要结束响应，否则 `handle()` 最终返回 `404`。
 
-  const routeHandlers = matched?.route.handlers ?? []
-  const stack = [...globalMiddleware, ...routeHandlers]
+```js
+async function logger(req, res, next) {
+  const startedAt = Date.now()
 
-  dispatch(stack, req, res, (error) => {
-    finalHandler(res, error)
+  res.once('finish', () => {
+    console.log(req.method, req.url, res.statusCode, `${Date.now() - startedAt}ms`)
   })
+
+  await next()
 }
 ```
 
-当路由没有匹配时，栈中仍可执行日志等全局中间件；栈正常走完后，`finalHandler` 返回 `404`。处理过程中发生错误时，同一个入口返回 `500`：
+认证中间件在请求头有效时继续执行，认证失败时直接返回 `401`：
 
 ```js
-function finalHandler(res, error) {
-  if (res.writableEnded) return
-
-  if (res.headersSent) {
-    res.destroy(error instanceof Error ? error : undefined)
+async function requireAuth(req, res, next) {
+  if (req.headers.authorization !== 'Bearer demo') {
+    res.statusCode = 401
+    res.end('Unauthorized')
     return
   }
 
-  const status = error ? 500 : 404
-
-  res.writeHead(status, {
-    'content-type': 'application/json; charset=utf-8'
-  })
-  res.end(JSON.stringify({
-    code: status,
-    message: status === 404 ? 'Not Found' : 'Internal Server Error'
-  }))
+  await next()
 }
 ```
 
-这里的 `404` 不是路由器直接返回的，而是“处理栈已经走完，仍然没有人生成响应”的结果。最终处理器因此也常被称为兜底处理器。
-
-## 第六步：收拢成 Application
-
-目前的函数依赖几个模块级数组。把状态和操作收进 `createApp()`，就得到一个最小 Application：
+中间件按注册顺序存入数组，由调度器逐个执行：
 
 ```js
-import { createServer } from 'node:http'
+async function run(stack, req, res) {
+  let lastIndex = -1
 
-function createApp() {
-  const globalMiddleware = []
-  const routes = []
+  async function dispatch(index) {
+    if (index <= lastIndex) {
+      throw new Error('next() called multiple times')
+    }
 
-  function use(middleware) {
-    globalMiddleware.push(middleware)
+    lastIndex = index
+    const current = stack[index]
+    if (!current) return
+
+    await current(req, res, () => dispatch(index + 1))
   }
 
-  function get(path, ...handlers) {
-    routes.push({ method: 'GET', path, handlers })
-  }
-
-  function handle(req, res) {
-    const host = req.headers.host ?? 'localhost'
-    const url = new URL(req.url ?? '/', `http://${host}`)
-    const matched = matchRoute(routes, req.method, url.pathname)
-
-    req.params = matched?.params ?? {}
-
-    const routeHandlers = matched?.route.handlers ?? []
-    const stack = [...globalMiddleware, ...routeHandlers]
-
-    dispatch(stack, req, res, (error) => {
-      finalHandler(res, error)
-    })
-  }
-
-  function listen(port, callback) {
-    const server = createServer(handle)
-    return server.listen(port, callback)
-  }
-
-  return { use, get, listen }
+  await dispatch(0)
 }
 ```
 
-使用方式已经接近 Express：
+`dispatch(0)` 从数组中的第一个函数开始。`next()` 返回 `dispatch(index + 1)` 的 Promise，因此 `await next()` 会等待后续处理链完成。`lastIndex` 用于拒绝同一个中间件重复调用 `next()`，避免后续函数执行多次。
+
+该调度器要求 `next()` 返回 Promise，`await next()` 等待下游的方式与 Koa 中间件相近。Express 的 `next()` 只通知路由器继续调度，不能用 `await next()` 等待下游完成。详细差异见[Express 与 Koa 的中间件模型](./express-vs-koa-middleware.md)。
+
+## `createApp()`
+
+路由表和中间件数组放在 `createApp()` 的闭包中，不再使用模块级变量。每个应用持有独立的注册状态，返回对象暴露 `use()`、`get()` 和 `listen()` 三个方法：
 
 ```js
 const app = createApp()
 
 app.use(logger)
 
-app.get('/hello', (req, res) => {
+app.get('/', (req, res) => {
   res.end('Hello World')
+})
+
+app.get('/time', (req, res) => {
+  res.end(new Date().toISOString())
 })
 
 app.get('/users/:id', requireAuth, (req, res) => {
@@ -411,106 +289,207 @@ app.get('/users/:id', requireAuth, (req, res) => {
 })
 
 app.listen(3000, () => {
-  console.log('http://localhost:3000')
+  console.log('Server running at http://localhost:3000')
 })
 ```
 
-`handle` 的调用链现在非常明确：
+`app.use()` 注册全局中间件，所有请求都会经过 `logger`。`app.get()` 接收多个处理函数，`requireAuth` 因此只作用于 `/users/:id`。
 
-```text
-app.listen(3000)
-  -> createServer(handle)
-  -> 请求到达
-  -> Node 调用 handle(req, res)
-  -> matchRoute(...)
-  -> dispatch(...)
-  -> 路由处理函数调用 res.end()
-```
-
-`app.listen()` 只是把 `createServer(handle).listen()` 包装起来。框架的真正请求入口仍然是 `handle`。
-
-## 第七步：把请求体解析做成中间件
-
-Node 不会自动生成 `req.body`。`req` 同时是一个可读流，请求体可能分成多个数据块到达：
+完整的 `server.js` 如下：
 
 ```js
-async function readJson(req, limit = 1_000_000) {
-  const contentType = req.headers['content-type'] ?? ''
+import { createServer } from 'node:http'
 
-  if (!contentType.toLowerCase().startsWith('application/json')) {
-    return undefined
-  }
+function matchPath(pattern, pathname) {
+  const patternParts = pattern.split('/').filter(Boolean)
+  const pathParts = pathname.split('/').filter(Boolean)
 
-  const chunks = []
-  let size = 0
+  if (patternParts.length !== pathParts.length) return null
 
-  for await (const chunk of req) {
-    size += chunk.length
+  const params = {}
 
-    if (size > limit) {
-      throw new Error('Request body too large')
+  for (let index = 0; index < patternParts.length; index += 1) {
+    const expected = patternParts[index]
+    const actual = pathParts[index]
+
+    if (expected.startsWith(':')) {
+      try {
+        params[expected.slice(1)] = decodeURIComponent(actual)
+      } catch {
+        return null
+      }
+      continue
     }
 
-    chunks.push(chunk)
+    if (expected !== actual) return null
   }
 
-  const text = Buffer.concat(chunks).toString('utf8')
-  return text === '' ? undefined : JSON.parse(text)
-}
-```
-
-解析器可以包装成全局中间件：
-
-```js
-async function json(req, res, next) {
-  req.body = await readJson(req)
-  next()
+  return params
 }
 
-app.use(json)
+function findRoute(routes, method, pathname) {
+  for (const route of routes) {
+    if (route.method !== method) continue
+
+    const params = matchPath(route.path, pathname)
+    if (params !== null) return { route, params }
+  }
+
+  return null
+}
+
+async function run(stack, req, res) {
+  let lastIndex = -1
+
+  async function dispatch(index) {
+    if (index <= lastIndex) {
+      throw new Error('next() called multiple times')
+    }
+
+    lastIndex = index
+    const current = stack[index]
+    if (!current) return
+
+    await current(req, res, () => dispatch(index + 1))
+  }
+
+  await dispatch(0)
+}
+
+function sendText(res, statusCode, text) {
+  if (res.writableEnded) return
+
+  res.statusCode = statusCode
+  res.setHeader('content-type', 'text/plain; charset=utf-8')
+  res.end(text)
+}
+
+function createApp() {
+  const middleware = []
+  const routes = []
+
+  function use(handler) {
+    middleware.push(handler)
+  }
+
+  function get(path, ...handlers) {
+    routes.push({ method: 'GET', path, handlers })
+  }
+
+  async function handle(req, res) {
+    const url = new URL(req.url ?? '/', 'http://localhost')
+    const matched = findRoute(routes, req.method, url.pathname)
+
+    req.params = matched?.params ?? {}
+
+    const routeHandlers = matched?.route.handlers ?? [(req, res) => sendText(res, 404, 'Not Found')]
+
+    await run([...middleware, ...routeHandlers], req, res)
+
+    // 路由处理函数遗漏 res.end() 时返回 404，避免响应保持未完成。
+    if (!res.writableEnded) {
+      sendText(res, 404, 'Not Found')
+    }
+  }
+
+  function listen(port, callback) {
+    const server = createServer((req, res) => {
+      handle(req, res).catch((error) => {
+        console.error(error)
+
+        if (res.headersSent) {
+          res.destroy()
+          return
+        }
+
+        sendText(res, 500, 'Internal Server Error')
+      })
+    })
+
+    return server.listen(port, callback)
+  }
+
+  return { use, get, listen }
+}
+
+async function logger(req, res, next) {
+  const startedAt = Date.now()
+
+  res.once('finish', () => {
+    console.log(req.method, req.url, res.statusCode, `${Date.now() - startedAt}ms`)
+  })
+
+  await next()
+}
+
+async function requireAuth(req, res, next) {
+  if (req.headers.authorization !== 'Bearer demo') {
+    sendText(res, 401, 'Unauthorized')
+    return
+  }
+
+  await next()
+}
+
+const app = createApp()
+
+app.use(logger)
+
+app.get('/', (req, res) => {
+  sendText(res, 200, 'Hello World')
+})
+
+app.get('/time', (req, res) => {
+  sendText(res, 200, new Date().toISOString())
+})
+
+app.get('/users/:id', requireAuth, (req, res) => {
+  res.setHeader('content-type', 'application/json; charset=utf-8')
+  res.end(JSON.stringify({ id: req.params.id }))
+})
+
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000')
+})
 ```
 
-`json` 返回 Promise。解析失败时 Promise 会被拒绝，前面的 `dispatch` 通过 `Promise.resolve(result).catch(next)` 把错误交给最终处理器。
+启动服务后检查公开路由、认证路由和路径参数：
 
-真实请求体解析器还必须区分错误类型：无效 JSON 通常返回 `400 Bad Request`，超过限制返回 `413 Content Too Large`，不支持的媒体类型返回 `415 Unsupported Media Type`。还要处理请求中止、流错误和字符集，不能只把所有错误都映射为 `500`。
+```sh
+curl -i http://localhost:3000/time
+curl -i http://localhost:3000/users/42
+curl -i -H 'Authorization: Bearer demo' http://localhost:3000/users/42
+```
 
-## 最小框架解决了什么
+三个请求依次返回 `200`、`401` 和 `200`。未注册的路径返回 `404`。
 
-沿着这次演进，可以看到各组件是被具体问题推动出来的：
+## 实现范围
 
-| 遇到的问题 | 引入的结构 |
-| --- | --- |
-| Node 需要一个请求监听器 | `handle(req, res)` |
-| 多个接口挤在条件分支中 | 路由表与 `matchRoute` |
-| 动态路径需要传递参数 | `matchPath` 与 `req.params` |
-| 日志、认证等逻辑重复 | 中间件函数 |
-| 多个中间件需要有序执行 | `dispatch` 与 `next()` |
-| 没有匹配或处理过程出错 | `finalHandler` |
-| 原始请求体是数据流 | 请求体解析中间件与 `req.body` |
-| 多个应用不应共享全局状态 | `createApp()` 闭包 |
+一次请求的处理顺序如下：
 
-Controller、Service、数据库访问和依赖注入不在这条链中。它们解决应用代码的组织问题；HTTP 框架内核解决的是请求如何进入、如何匹配、如何传递控制权，以及最终如何结束。
+```text
+node:http 接收请求
+  -> 全局中间件
+  -> 按方法和路径查找路由
+  -> 路由级中间件
+  -> 最终处理函数
+  -> 返回 404 或处理异常
+```
 
-## 需要固定的行为
+当前代码只实现 `GET` 路由、单段路径参数和 Koa 风格中间件。以下行为仍需单独处理：
 
-继续扩展框架前，应先用测试确定这些语义：
+- `POST`、`PUT`、`HEAD` 和 `OPTIONS` 等方法；
+- 请求体大小限制、内容类型判断和 JSON 解析；
+- 请求中止、超时以及请求流、响应流产生的错误；
+- 通配符、可选参数和方法协商等路由行为。
 
-- HTTP 方法和路径必须同时匹配；
-- `/users/42` 能得到 `req.params.id === '42'`；
-- 中间件按注册顺序执行；
-- 中间件不调用 `next()` 时，后续处理函数不执行；
-- 未匹配路由返回 `404`；
-- 同步异常和 rejected Promise 都进入错误处理；
-- 同一个中间件重复调用 `next()` 不会重复执行后续栈；
-- 响应已经结束后，最终处理器不再写入第二个响应；
-- 请求体超限或中途断开时，解析过程能够结束。
-
-Express 和 Koa 对“如何传递控制权”给出了不同答案。掌握这条演进路径后，再阅读[Express 与 Koa 的中间件模型](./express-vs-koa-middleware.md)。
+`IncomingMessage` 是可读流，原生对象上不存在已经解析好的 `req.body`。请求体解析需要收集数据块、限制总大小、处理流错误，并根据内容类型转换数据。这部分逻辑可以实现为独立中间件，不属于当前路由与调度示例。
 
 ## 参考资料
 
-- [Node.js HTTP API：`http.createServer()`](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener)
-- [Node.js：Introduction to Node.js](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs)
+- [The Node Beginner Book：一个基础的 HTTP 服务器](https://www.nodebeginner.org/index-zh-cn.html#a-basic-http-server)（旧版 CommonJS 示例）
+- [Node.js Learn：Anatomy of an HTTP Transaction](https://nodejs.org/en/learn/http/anatomy-of-an-http-transaction)
+- [Node.js HTTP API](https://nodejs.org/api/http.html)
+- [MDN：Express/Node introduction](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction)
+- [Koa：Cascading middleware](https://koajs.com/#application)
 - [Express：Using middleware](https://expressjs.com/en/guide/using-middleware/)
-- [Express：Error handling](https://expressjs.com/en/guide/error-handling/)
-- [The Node Beginner Book：Building the application stack](https://www.nodebeginner.org/#building-the-application-stack)：用于参考从用例到模块的讲解顺序。页面最后更新于 2017 年，示例面向 Node.js 6/8，不作为当前 API 依据。
