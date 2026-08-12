@@ -86,6 +86,7 @@ export default [
         prefix: 'module/',
         children: ['', 'finalhandler']
       },
+      'streams-and-backpressure',
       'turso-prisma-integration'
     ]
   },
