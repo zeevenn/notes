@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-08-11T12:21:04.219Z</updated>
+  <updated>2026-08-12T03:44:01.533Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -27,6 +27,59 @@
   <category term="browser"/>
   <category term="CSS"/>
   <category term="JavaScript"/>
+  <entry>
+    <title type="text">Node.js 流与背压</title>
+    <id>https://zeevenn.github.io/notes/notes/backend/node/streams-and-backpressure.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/backend/node/streams-and-backpressure.html"/>
+    <updated>2026-08-12T03:42:19.000Z</updated>
+    <summary type="html"><![CDATA[<p>流（Stream）把一段持续到达的数据抽象成可以逐块读取、转换和写出的序列。文件、HTTP 请求与响应、TCP Socket、子进程的标准输出，都可能提供 Node.js 流接口。</p>
+<p>流解决的不只是“大文件不能一次读入内存”。它还规定了数据如何分块、上下游如何连接、错误如何传播，以及消费端跟不上生产端时如何让生产端减速。最后一个问题就是背压（Backpressure）。</p>
+<h2>从完整加载改为逐块处理</h2>
+<p>假设需要压缩一个可能很大的日志文件。完整加载会先让整个文件进入进程内存：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> readFile<span class="token punctuation">,</span> writeFile <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:fs/promises'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> gzip <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:zlib'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> promisify <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:util'</span>
+
+<span class="token keyword">const</span> gzipAsync <span class="token operator">=</span> <span class="token function">promisify</span><span class="token punctuation">(</span>gzip<span class="token punctuation">)</span>
+<span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">'access.log'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> output <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">gzipAsync</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span>
+<span class="token keyword">await</span> <span class="token function">writeFile</span><span class="token punctuation">(</span><span class="token string">'access.log.gz'</span><span class="token punctuation">,</span> output<span class="token punctuation">)</span>
+</code></pre></div>]]></summary>
+    <content type="html"><![CDATA[<p>流（Stream）把一段持续到达的数据抽象成可以逐块读取、转换和写出的序列。文件、HTTP 请求与响应、TCP Socket、子进程的标准输出，都可能提供 Node.js 流接口。</p>
+<p>流解决的不只是“大文件不能一次读入内存”。它还规定了数据如何分块、上下游如何连接、错误如何传播，以及消费端跟不上生产端时如何让生产端减速。最后一个问题就是背压（Backpressure）。</p>
+<h2>从完整加载改为逐块处理</h2>
+<p>假设需要压缩一个可能很大的日志文件。完整加载会先让整个文件进入进程内存：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> readFile<span class="token punctuation">,</span> writeFile <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:fs/promises'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> gzip <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:zlib'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> promisify <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:util'</span>
+
+<span class="token keyword">const</span> gzipAsync <span class="token operator">=</span> <span class="token function">promisify</span><span class="token punctuation">(</span>gzip<span class="token punctuation">)</span>
+<span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">'access.log'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> output <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">gzipAsync</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span>
+<span class="token keyword">await</span> <span class="token function">writeFile</span><span class="token punctuation">(</span><span class="token string">'access.log.gz'</span><span class="token punctuation">,</span> output<span class="token punctuation">)</span>
+</code></pre></div><p>这段代码只有在输入规模明确受控时才合适。输入越大，<code>input</code>、压缩过程中的中间数据和 <code>output</code> 占用的内存越多，而且必须等到读取完成后才能开始后续步骤。</p>
+<p>流式版本只在内存中保留当前正在处理和少量排队的数据块：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> createReadStream<span class="token punctuation">,</span> createWriteStream <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:fs'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> pipeline <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:stream/promises'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> createGzip <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:zlib'</span>
+
+<span class="token keyword">await</span> <span class="token function">pipeline</span><span class="token punctuation">(</span>
+  <span class="token function">createReadStream</span><span class="token punctuation">(</span><span class="token string">'access.log'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token function">createGzip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token string">'access.log.gz'</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+</code></pre></div><p>这个处理链包含三个参与者：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>文件（来源） -&gt; gzip（转换） -&gt; 压缩文件（去向）
+   Readable       Transform          Writable
+</code></pre></div><p>读取到一个数据块（chunk）后，压缩器就可以处理它，压缩结果也可以立即写入目标文件。这里的 chunk 是一次交给应用处理的数据片段，不等同于文件中的一行、一个 JSON 对象或一条业务消息；一次读取可能截断一行，也可能同时包含多行。</p>
+<h2>四种流对应四种角色</h2>
+<p>Node.js 提供四种基础流类型：</p>
+<p>| 类型 | 数据方向 | 常见实例 |<br>
+|</p>
+]]></content>
+    <category term="Node.js"/>
+    <published>2026-08-12T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">Node HTTP 框架原理</title>
     <id>https://zeevenn.github.io/notes/notes/backend/node/http-framework/</id>
@@ -6471,7 +6524,7 @@ PubkeyAuthentication <span class="token function">yes</span>
     <title type="text">Node.js</title>
     <id>https://zeevenn.github.io/notes/notes/backend/node/</id>
     <link href="https://zeevenn.github.io/notes/notes/backend/node/"/>
-    <updated>2026-08-10T13:52:10.000Z</updated>
+    <updated>2026-08-12T03:42:19.000Z</updated>
     <summary type="html"><![CDATA[
 <h2>目录</h2>
 <h3>子目录</h3>
@@ -6484,6 +6537,7 @@ PubkeyAuthentication <span class="token function">yes</span>
 </ul>
 <h3>笔记</h3>
 <ul>
+<li></li>
 <li></li>
 </ul>
 ]]></summary>
@@ -6499,6 +6553,7 @@ PubkeyAuthentication <span class="token function">yes</span>
 </ul>
 <h3>笔记</h3>
 <ul>
+<li></li>
 <li></li>
 </ul>
 ]]></content>
@@ -10123,71 +10178,5 @@ xhr<span class="token punctuation">.</span><span class="token function">send</sp
 </code></pre></div>]]></content>
     <category term="JavaScript"/>
     <published>2022-08-12T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">类数组对象</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/javascript/array-like-objects.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/javascript/array-like-objects.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<h2>概念</h2>
-<p>在 Javascript 里，有一个特殊的对象，它拥有 <code>length</code> 属性和若干索引属性，被称为类数组对象。常见的类数组对象有 <code>arguments</code> 和 DOM 方法返回的结果。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> arrLike <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token number">0</span><span class="token operator">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
-  <span class="token number">1</span><span class="token operator">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
-  <span class="token literal-property property">length</span><span class="token operator">:</span> <span class="token number">2</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">// arguments 对象</span>
-<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">return</span> arguments
-<span class="token punctuation">}</span>
-<span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">// Arguments(3) [1, 2, 3, callee: ƒ, Symbol(Symbol.iterator): ƒ]</span>
-
-<span class="token comment">// DOM 方法返回的结果</span>
-document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">'img'</span><span class="token punctuation">)</span> <span class="token comment">// HTMLCollection(3) [img, img, img]</span>
-</code></pre></div>]]></summary>
-    <content type="html"><![CDATA[<h2>概念</h2>
-<p>在 Javascript 里，有一个特殊的对象，它拥有 <code>length</code> 属性和若干索引属性，被称为类数组对象。常见的类数组对象有 <code>arguments</code> 和 DOM 方法返回的结果。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> arrLike <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token number">0</span><span class="token operator">:</span> <span class="token string">'name'</span><span class="token punctuation">,</span>
-  <span class="token number">1</span><span class="token operator">:</span> <span class="token string">'age'</span><span class="token punctuation">,</span>
-  <span class="token literal-property property">length</span><span class="token operator">:</span> <span class="token number">2</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">// arguments 对象</span>
-<span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">return</span> arguments
-<span class="token punctuation">}</span>
-<span class="token function">foo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment">// Arguments(3) [1, 2, 3, callee: ƒ, Symbol(Symbol.iterator): ƒ]</span>
-
-<span class="token comment">// DOM 方法返回的结果</span>
-document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">'img'</span><span class="token punctuation">)</span> <span class="token comment">// HTMLCollection(3) [img, img, img]</span>
-</code></pre></div><p>类数组对象和数组类似之处在于：访问、赋值、获取长度的操作与数组一致，因此叫做类数组对象。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// name</span>
-arrLike<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'wang'</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token comment">// 2</span>
-</code></pre></div><h2>使用数组方法</h2>
-<p>类数组对象不能 <strong>直接调用</strong> 数组的方法，如果想使用数组方法，需要使用 <code>call()</code> 或 <code>apply</code> 间接调用。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>arrLike<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">'hobby'</span><span class="token punctuation">)</span> <span class="token comment">// Uncaught TypeError: arrLike.push is not a function</span>
-
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">,</span> <span class="token string">'hobby'</span><span class="token punctuation">)</span> <span class="token comment">// { '0': 'name', '1': 'age', '2':  'hobby', length: 3 }</span>
-</code></pre></div><p>实际开发中，为了使操作方便，通常先将类数组对象转换为数组对象，通常使用 <code>Array.from()</code> 进行转换。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token comment">// call 调用 slice</span>
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">)</span>
-
-<span class="token comment">// call 调用 splice</span>
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-
-<span class="token comment">// apply 调用 concat</span>
-<span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> arrLike<span class="token punctuation">)</span>
-
-<span class="token comment">// Array.from</span>
-Array<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>arrLike<span class="token punctuation">)</span>
-
-<span class="token comment">// 展开运算符</span>
-<span class="token punctuation">[</span><span class="token operator">...</span>arrLike<span class="token punctuation">]</span>
-</code></pre></div>]]></content>
-    <category term="JavaScript"/>
-    <published>2022-08-24T00:00:00.000Z</published>
   </entry>
 </feed>
