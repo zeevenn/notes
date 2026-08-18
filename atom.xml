@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-08-17T12:48:10.267Z</updated>
+  <updated>2026-08-18T15:06:23.680Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -3034,13 +3034,28 @@ scores<span class="token punctuation">.</span><span class="token function">add</
     <title type="text">Agent 工具调用与 Function Calling</title>
     <id>https://zeevenn.github.io/notes/notes/ai/agents/function-calling.html</id>
     <link href="https://zeevenn.github.io/notes/notes/ai/agents/function-calling.html"/>
-    <updated>2026-08-05T01:56:33.000Z</updated>
+    <updated>2026-08-18T15:04:33.000Z</updated>
     <summary type="html"><![CDATA[<p>工具调用（Tool Calling）让大语言模型能够请求外部程序读取实时数据、执行计算或改变系统状态。Function Calling 通常指其中一种形式：应用向模型提供函数名称、用途和参数结构，模型返回一个结构化的调用请求。</p>
 <p>模型不会因为生成了调用请求就直接执行函数。真正拥有凭据、访问网络并执行代码的是宿主程序（承载模型调用和业务逻辑的应用）。这种边界使应用可以在执行前校验参数、检查权限或要求用户确认。</p>
-<h2>一个最小闭环</h2>
-<p>假设用户询问「上海现在多少度」，模型的训练数据无法提供实时天气。应用可以向模型声明一个 <code>get_current_weather</code> 工具：</p>]]></summary>
+<p>模型能够选择工具并生成参数，只解决了“提出动作”的问题。一次调用仍可能因为以下情况失败：</p>
+<ul>
+<li>参数符合 JSON 结构，但资源不存在、状态不允许或当前用户无权操作；</li>
+<li>请求超时，而下游实际上已经完成扣款、发信或建单；</li>
+<li>限流、网络中断或依赖服务暂时不可用；</li>
+<li>批量操作只完成了一部分；</li>
+<li>模型误读工具结果，或者未经确认执行了高影响操作。</li>
+</ul>]]></summary>
     <content type="html"><![CDATA[<p>工具调用（Tool Calling）让大语言模型能够请求外部程序读取实时数据、执行计算或改变系统状态。Function Calling 通常指其中一种形式：应用向模型提供函数名称、用途和参数结构，模型返回一个结构化的调用请求。</p>
 <p>模型不会因为生成了调用请求就直接执行函数。真正拥有凭据、访问网络并执行代码的是宿主程序（承载模型调用和业务逻辑的应用）。这种边界使应用可以在执行前校验参数、检查权限或要求用户确认。</p>
+<p>模型能够选择工具并生成参数，只解决了“提出动作”的问题。一次调用仍可能因为以下情况失败：</p>
+<ul>
+<li>参数符合 JSON 结构，但资源不存在、状态不允许或当前用户无权操作；</li>
+<li>请求超时，而下游实际上已经完成扣款、发信或建单；</li>
+<li>限流、网络中断或依赖服务暂时不可用；</li>
+<li>批量操作只完成了一部分；</li>
+<li>模型误读工具结果，或者未经确认执行了高影响操作。</li>
+</ul>
+<p>因此，工具调用是一条由模型、宿主程序和外部系统共同组成的工程链路。Schema、业务校验、授权、幂等、重试、人工确认和可观测性都必须由确定性代码实施，不能只依赖模型判断。</p>
 <h2>一个最小闭环</h2>
 <p>假设用户询问「上海现在多少度」，模型的训练数据无法提供实时天气。应用可以向模型声明一个 <code>get_current_weather</code> 工具：</p>
 <div class="language-json" data-ext="json" data-title="json"><pre class="language-json"><code><span class="token punctuation">{</span>
