@@ -2,37 +2,38 @@
 title: React
 article: false
 star: true
-publish: false
 ---
 
-## React
+# React
 
-### Hooks
+本节记录 React 组件模型、常用 Hook、并发渲染能力和 React DOM 接口。
 
-#### State Hooks
+## 基础
 
-状态可以让组件「记住」用户输入等信息，以下钩子可以为组件添加状态：
+- [React 基础](./fundamentals.md)
 
-- [useState](./use-state.md)：声明一个可以直接更新的状态变量。
-- `useReducer`：声明一个状态变量，其更新逻辑在一个 `reducer` 函数中。
+## 状态与外部同步
 
-#### Effect Hooks
+- [useState](./use-state.md)：在组件中保存并更新状态。
+- [useReducer](./use-reducer.md)：用 reducer 集中描述状态转换。
+- [useEffect](./use-effect.md)：让组件与 React 外部的系统保持同步。
+- [useSyncExternalStore](./use-sync-external-store.md)：订阅 React 外部的数据源。
 
-Effects 允许组件连接到外部系统并与之同步，包括处理网络、浏览器 DOM、动画、使用不同 UI 库编写的部件以及其他非 React 代码。
+## 引用与标识
 
-Effects 是 React 范式的 「逃生舱门」。不要使用 Effects 来协调应用程序的数据流。如果不需要与外部系统交互，**可能不需要 Effect**。
+- [useRef](./use-ref.md)：保存不参与渲染的数据或引用 DOM 节点。
+- [useImperativeHandle](./use-imperative-handle.md)：限制父组件通过 ref 获得的命令式接口。
+- [useId](./use-id.md)：生成适合无障碍属性关联的稳定标识。
 
-`useEffect` 有两种很少使用的变体，它们在时间上有所不同：
+## 性能与并发渲染
 
-- `useLayoutEffect` 在浏览器重绘屏幕之前触发。您可以在此处测量布局。
-- `useInsertionEffect` 在 React 更改 DOM 之前触发。库可以在此处插入动态 CSS。
+- [useMemo、useCallback 与 memo](./use-memo-callback-memo.md)：缓存计算、函数引用或组件渲染结果。
+- [useTransition](./use-transition.md)：把非紧急状态更新标记为 Transition。
+- [useDeferredValue](./use-deferred-value.md)：延迟更新界面中的非紧急部分。
+- [useOptimistic](./use-optimistic.md)：在异步操作完成前展示乐观状态。
+- [Suspense](./suspense.md)：为等待中的子树展示后备界面。
 
-- [useEffect](./use-effect.md)
+## React DOM
 
-#### Performance Hooks
-
-性能 Hook 可以缓存计算结果或函数引用，帮助 `memo` 子组件跳过不必要的渲染。它们应该作为性能优化使用，而不是作为组件正确性的前提。
-
-- [useMemo & useCallback & memo](./use-memo-callback-memo.md)
-
-## React Dom
+- [Portal](./create-portal.md)：把子节点渲染到当前 DOM 层级之外。
+- [flushSync](./flush-sync.md)：强制 React 同步提交指定更新。

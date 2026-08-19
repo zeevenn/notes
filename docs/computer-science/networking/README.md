@@ -17,4 +17,3 @@ star: true
 - [TCP 与 UDP 的区别](./tcp-vs-udp.md)
 - [登陆失败 HTTP 状态码](./auth-status-codes.md)
 - [401 和 403 状态码](./401-vs-403.md)
-- [WebSocket](./websocket.md)

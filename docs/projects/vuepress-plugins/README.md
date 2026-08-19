@@ -1,6 +1,5 @@
 ---
 title: Plugin
-publish: false
 ---
 
 # Plugin

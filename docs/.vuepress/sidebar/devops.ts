@@ -13,35 +13,5 @@ export default [
       'install-docker',
       'server-proxy'
     ]
-  },
-  {
-    text: 'CI/CD',
-    collapsible: true,
-    prefix: '/devops/ci-cd/',
-    children: ['']
-  },
-  {
-    text: 'Docker',
-    collapsible: true,
-    prefix: '/devops/docker/',
-    children: ['']
-  },
-  {
-    text: 'Kubernetes',
-    collapsible: true,
-    prefix: '/devops/kubernetes/',
-    children: ['']
-  },
-  {
-    text: 'Monitoring',
-    collapsible: true,
-    prefix: '/devops/monitoring/',
-    children: ['']
-  },
-  {
-    text: 'Nginx',
-    collapsible: true,
-    prefix: '/devops/nginx/',
-    children: ['']
   }
 ]

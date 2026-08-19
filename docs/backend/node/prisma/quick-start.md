@@ -1,5 +1,5 @@
 ---
-title: Prisma 入门
+title: Prisma 7 接入 MySQL
 date: 2024-12-17
 icon: STARTUP
 category:
@@ -7,309 +7,235 @@ category:
 tag:
   - prisma
   - ORM
+  - MySQL
 ---
 
-以关系型数据库 Mysql 为例，介绍 Prisma 在 Node.js 和 Typescript 项目中的安装和使用。
+# Prisma 7 接入 MySQL
+
+本例从空目录创建 TypeScript 项目，通过 Prisma ORM 7 连接已有的 MySQL 服务，创建两张关联表并执行一次写入和查询。
 
 ## 前置条件
 
-- 安装 [Node.js](https://nodejs.org/en)
-- 运行 [Mysql](https://www.mysql.com/)
+- Node.js 20.19.0 或更高版本。
+- TypeScript 5.4.0 或更高版本。
+- 可访问的 MySQL 数据库，以及非 `root` 的应用账号。
+- 数据库账号对目标数据库具有建表和修改表结构所需的权限。
 
-> [!NOTE]
-> 更多系统要求请参考 [Prisma 系统要求](https://www.prisma.io/docs/orm/reference/system-requirements)。
->
-> 确保拥有 [数据库连接 url](https://www.prisma.io/docs/orm/reference/connection-urls)。
+Prisma CLI 执行迁移时使用数据库连接 URL；应用运行时通过 driver adapter 建立连接。生产凭据不应提交到版本库。
 
-## 安装项目
-
-创建项目目录：
+## 创建项目
 
 ```bash
 mkdir hello-prisma
 cd hello-prisma
-```
-
-初始化 Typescript 项目并安装 Prisma CLI：
-
-```bash
 npm init -y
-npm install prisma typescript tsx @types/node --save-dev
-```
-
-这会创建 `package.json` 文件，并创建一个 Typescript 项目。
-
-接下来，初始化 Typescript：
-
-```bash
+npm install --save-dev prisma typescript tsx @types/node
+npm install @prisma/client @prisma/adapter-mariadb dotenv
 npx tsc --init
 ```
 
-你现在可以通过 `npx` 运行 Prisma CLI：
+Prisma ORM 7 使用 ECMAScript Module（ESM）格式。在 `package.json` 中声明模块类型：
 
-```bash
-npx prisma
-```
-
-接下来，你可以通过创建 [Prisma Schema](https://www.prisma.io/docs/concepts/components/prisma-schema) 文件来创建 Prisma ORM 项目：
-
-```bash
-npx prisma init
-```
-
-这个命令做了两件事：
-
-- 创建一个名为 `prisma` 的目录，其中包含一个名为 `schema.prisma` 的文件，该文件包含数据库连接变量和 schema 模型。
-- 在项目根目录中创建 [`.env`](https://www.prisma.io/docs/orm/more/development-environment/environment-variables/env-files) 文件，用于定义环境变量（例如数据库连接）。
-
-## 连接数据库
-
-为了连接数据库，你需要在 `schema.prisma` 文件中定义数据源：
-
-**prisma/schema.prisma**
-
-```prisma{2}
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+```json
+{
+  "type": "module"
 }
 ```
 
-**.env**
+`tsconfig.json` 至少需要兼容 ESM 和当前 Node.js 运行环境：
 
+```json
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2023",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}
 ```
-DATABASE_URL="mysql://johndoe:randompassword@localhost:3306/mydb"
+
+## 初始化 Prisma
+
+```bash
+npx prisma init --datasource-provider mysql --output ../generated/prisma
 ```
 
-URL 格式取决于你使用的数据库。对于 MySQL，它看起来如下（大写的部分是你的特定连接细节的占位符）：
+初始化命令会创建：
 
+- `prisma/schema.prisma`：数据源、客户端生成器和数据模型。
+- `prisma.config.ts`：schema、迁移目录和数据库连接配置。
+- `.env`：本地环境变量。
+
+`prisma.config.ts` 读取 Prisma CLI 使用的数据库连接 URL：
+
+```typescript
+import 'dotenv/config'
+import { defineConfig, env } from 'prisma/config'
+
+export default defineConfig({
+  schema: 'prisma/schema.prisma',
+  migrations: {
+    path: 'prisma/migrations'
+  },
+  datasource: {
+    url: env('DATABASE_URL')
+  }
+})
 ```
-mysql://USER:PASSWORD@HOST:PORT/DATABASE
+
+在 `.env` 中填写 MySQL 连接信息：
+
+```dotenv
+DATABASE_URL="mysql://app_user:password@localhost:3306/hello_prisma"
+DATABASE_HOST="localhost"
+DATABASE_PORT="3306"
+DATABASE_USER="app_user"
+DATABASE_PASSWORD="password"
+DATABASE_NAME="hello_prisma"
 ```
 
-这里是对每个组件的简要解释：
+`DATABASE_URL` 供 Prisma CLI 执行迁移使用；其余变量供 `@prisma/adapter-mariadb` 在应用运行时建立连接。
 
-- USER: 数据库用户名
-- PASSWORD: 数据库用户密码
-- PORT: 数据库服务器运行的端口（通常为 3306 用于 MySQL）
-- DATABASE: 数据库名称
+## 定义数据模型
 
-## Prisma Migrate
-
-[Prisma Migrate](https://www.prisma.io/docs/orm/prisma-migrate) 是 Prisma 的迁移工具，用于管理数据库 schema 的变更。
-
-**prisma/schema.prisma**
+编辑 `prisma/schema.prisma`：
 
 ```prisma
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+datasource db {
+  provider = "mysql"
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  posts Post[]
+}
+
+model Post {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String? @db.Text
+  published Boolean @default(false)
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
 }
 ```
 
-为了将 schema 转换为数据库，你需要运行 Prisma Migrate：
+关系字段 `User.posts` 只存在于 Prisma Client API 中；MySQL 中实际保存关系的是 `Post.authorId` 外键。
+
+## 创建迁移并生成客户端
 
 ```bash
-npx prisma migrate --name init
+npx prisma migrate dev --name init
+npx prisma generate
 ```
 
-这个命令会做两件事：
+`migrate dev` 根据模型生成 SQL 迁移文件并应用到开发数据库。该命令可能在检测到结构漂移时要求重置数据库，因此只应对可控的开发数据库执行。生产环境应用已经提交的迁移时使用 `prisma migrate deploy`。
 
-- 创建一个 SQL 迁移文件。
-- 在数据库中执行对应的 SQL 迁移文件。
+`prisma generate` 根据 schema 在 `generated/prisma` 中生成客户端代码。修改模型或生成器配置后需要重新执行该命令。
 
-> [!NOTE]
-> 注意：默认情况下，运行 `prisma migrate dev` 后，会在引擎盖下调用 `generate`。 如果模式中定义了 `prisma-client-js` 生成器，它会检查 `@prisma/client` 是否已安装，如果缺少，则安装。
+## 创建 Prisma Client
 
-## 安装 Prisma Client
+新建 `lib/prisma.ts`：
 
-要开始使用 Prisma 客户端，需要安装 `@prisma/client` 软件包：
+```typescript
+import 'dotenv/config'
+import { PrismaMariaDb } from '@prisma/adapter-mariadb'
+import { PrismaClient } from '../generated/prisma/client'
 
-```bash
-npm install @prisma/client
+const adapter = new PrismaMariaDb({
+  host: process.env.DATABASE_HOST,
+  port: Number(process.env.DATABASE_PORT ?? 3306),
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  connectionLimit: 5
+})
+
+export const prisma = new PrismaClient({ adapter })
 ```
 
-安装命令会调用 `prisma generate`，读取 Prisma schema 并生成适合你模型的 Prisma 客户端版本。
+Prisma ORM 7 直接连接数据库时要求向 `PrismaClient` 传入 driver adapter。`@prisma/adapter-mariadb` 同时适用于 MySQL 和 MariaDB。
 
-![workflow](https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/20241217183854.png)
+## 写入并查询数据
 
-无论何时更新 Prisma schema，都必须使用 `prisma migrate dev` 或 `prisma db push` 更新数据库模式。这将使数据库模式与 Prisma 模式保持同步。这些命令还将重新生成 Prisma 客户端。
+新建 `script.ts`：
 
-> [!WARNING] > `prisma db push` 不会生成迁移文件，只会在数据库中执行对应的 SQL 语句。
->
-> 因此如果你需要对数据库进行版本控制，需要更好的迁移记录和管理，请使用 `prisma migrate dev`。
-
-## 操作数据库
-
-### 查询数据
-
-现在已经生成了 [Prisma Client](https://www.prisma.io/docs/orm/prisma-client)，可以开始编写在数据库中读写数据的查询。
-
-创建一个名为 `index.ts` 的新文件，并在其中添加以下代码：
-
-```ts
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+```typescript
+import { prisma } from './lib/prisma'
 
 async function main() {
-  // ... you will write your Prisma Client queries here
+  const user = await prisma.user.create({
+    data: {
+      name: 'Alice',
+      email: 'alice@example.com',
+      posts: {
+        create: {
+          title: 'Hello Prisma',
+          published: true
+        }
+      }
+    },
+    include: {
+      posts: true
+    }
+  })
+
+  console.dir(user, { depth: null })
+
+  const users = await prisma.user.findMany({
+    include: {
+      posts: true
+    }
+  })
+
+  console.dir(users, { depth: null })
 }
 
 main()
-  .then(async () => {
+  .catch((error) => {
+    console.error(error)
+    process.exitCode = 1
+  })
+  .finally(async () => {
     await prisma.$disconnect()
   })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
-```
-
-以下是代码片段各部分的简要概述：
-
-- 从 `@prisma/client` 节点模块导入 `PrismaClient` 构造函数
-- 实例化 `PrismaClient`
-- 定义名为 `main` 的异步函数，向数据库发送查询
-- 调用 `main` 函数
-- 脚本终止时关闭数据库连接
-
-在 `main` 函数中，添加以下查询，从数据库中读取所有用户记录并打印结果：
-
-```ts
-async function main() {
-  // ... you will write your Prisma Client queries here
-  const allUsers = await prisma.user.findMany()
-  console.log(allUsers)
-}
 ```
 
 运行脚本：
 
 ```bash
-npx tsx index.ts
+npx tsx script.ts
 ```
 
-这将打印一个空数组，因为数据库中还没有用户记录：
+输出应包含新建的用户及其 `posts` 数组。再次运行会因为 `email` 的唯一约束而失败；重复测试前需要更换邮箱或清理测试数据。
+
+## 查看数据
 
 ```bash
-[]
+npx prisma studio
 ```
 
-### 写入数据
+Prisma Studio 使用项目配置连接数据库，可用于检查本地开发数据，不代替生产环境的权限控制和审计工具。
 
-`findMany` 查询只能从数据库中读取数据（尽管它仍然是空的）。接下来可以向 `Post` 表和 `User` 表中写入新记录。
+## 迁移与原型命令的区别
 
-调整 `main` 函数，向数据库发送创建查询：
+- `prisma migrate dev`：为开发阶段生成并应用有版本记录的迁移。
+- `prisma migrate deploy`：在测试或生产环境应用已经提交的迁移。
+- `prisma db push`：直接同步 schema，不生成迁移历史，适合短期原型。
+- `prisma db pull`：从现有数据库读取结构并更新 Prisma schema。
 
-```ts
-async function main() {
-  await prisma.user.create({
-    data: {
-      name: 'Alice',
-      email: 'alice@prisma.io',
-      posts: {
-        create: { title: 'Hello World' }
-      },
-      profile: {
-        create: { bio: 'I like turtles' }
-      }
-    }
-  })
+## 参考资料
 
-  const allUsers = await prisma.user.findMany({
-    include: {
-      posts: true,
-      profile: true
-    }
-  })
-  console.dir(allUsers, { depth: null })
-}
-```
-
-这段代码使用 [嵌套写查询](https://www.prisma.io/docs/orm/prisma-client/queries/relation-queries#nested-writes) 创建了一条新的用户记录以及新的帖子和简介记录。用户记录分别通过 `Post.author ↔ User.posts` 和 `Profile.user ↔ User.profile` 关系字段与其他两条记录创建 [关系](https://www.prisma.io/docs/orm/prisma-schema/data-model/relations#relation-fields)。
-
-请注意，您向 `findMany` 传递了 [`include`](https://www.prisma.io/docs/orm/prisma-client/queries/select-fields#return-nested-objects-by-selecting-relation-fields) 选项，该选项告诉 Prisma 客户端在返回的用户对象中包含 `posts` 和 `profile` 关系。
-
-运行脚本：
-
-```bash
-npx tsx index.ts
-```
-
-这将打印一个包含新创建的用户的数组：
-
-```bash
-[
-  {
-    email: 'alice@prisma.io',
-    id: 1,
-    name: 'Alice',
-    posts: [
-      {
-        content: null,
-        createdAt: 2020-03-21T16:45:01.246Z,
-        updatedAt: 2020-03-21T16:45:01.246Z,
-        id: 1,
-        published: false,
-        title: 'Hello World',
-        authorId: 1,
-      }
-    ],
-    profile: {
-      bio: 'I like turtles',
-      id: 1,
-      userId: 1,
-    }
-  }
-]
-```
-
-这个 query 向 `User` 和 `Post` 表中写入了新记录：
-
-User
-
-| id  | email           | name  |
-| --- | --------------- | ----- |
-| 1   | alice@prisma.io | Alice |
-
-Post
-
-| id  | createdAt                | updatedAt                | title       | content | published | authorId |
-| --- | ------------------------ | ------------------------ | ----------- | ------- | --------- | -------- |
-| 1   | 2020-03-21T16:45:01.246Z | 2020-03-21T16:45:01.246Z | Hello World | null    | false     | 1        |
-
-Profile
-
-| id  | bio            | userId |
-| --- | -------------- | ------ |
-| 1   | I like turtles | 1      |
-
-> [!TIP]
-> 你可以通过 `npx prisma studio` 启动 Prisma Studio，查看数据库中的数据。
-
-## 总结
-
-通过以上步骤，你已经了解了如何使用 Prisma 在 Node.js 和 Typescript 项目中连接数据库、查询数据和写入数据，并使用 Prisma Studio 查看数据库中的数据。
+- [Prisma ORM 7 MySQL Quickstart](https://www.prisma.io/docs/prisma-orm/quickstart/mysql)
+- [MySQL connector](https://www.prisma.io/docs/orm/core-concepts/supported-databases/mysql)
+- [Prisma ORM 7 升级指南](https://www.prisma.io/docs/guides/upgrade-prisma-orm/v7)
+- [Prisma Config](https://www.prisma.io/docs/orm/reference/prisma-config-reference)

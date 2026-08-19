@@ -33,12 +33,5 @@ export default [
       'greedy',
       'divide-and-conquer'
     ]
-  },
-  {
-    text: 'Problems',
-    collapsible: true,
-    icon: 'code',
-    prefix: '/algorithms/problems/',
-    children: ['']
   }
 ]

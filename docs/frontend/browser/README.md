@@ -5,33 +5,33 @@ star: true
 date: 2024-04-15
 ---
 
-## 浏览器内核
+# 浏览器
 
-浏览器内核是浏览器的核心，也就是浏览器的 **排版引擎**，分为两部分：
+现代浏览器由多个进程和服务协作完成导航、网络请求、脚本执行、页面渲染、存储和设备访问。“浏览器内核”不是边界稳定的标准术语，讨论实现时应直接指出渲染引擎、JavaScript 引擎或浏览器进程等具体组件。
 
-- 将 HTML 和 CSS 渲染到浏览器上的 **渲染引擎**，
-- 解析 JavaScript 的 **JavaScript 引擎**。
+## 主要组件
 
-最开始渲染引擎和 JS 引擎并没有明确的区分，后来 JS 引擎开始独立起来，慢慢发展到现在，内核一般指的是渲染引擎。
+- **浏览器进程**：管理窗口、标签页、导航和权限，并协调其他进程。
+- **渲染器进程**：解析页面内容、执行脚本、计算布局并生成绘制结果，通常运行在沙箱中。
+- **网络服务**：处理 DNS、HTTP、缓存和连接复用等网络操作。
+- **GPU 进程或线程**：参与栅格化、合成和最终显示。
+- **存储及其他服务**：管理 Cookie、Web Storage、IndexedDB、音视频等能力。
 
-不同的浏览器有不同的内核组成：
+不同浏览器的进程划分会随平台和版本变化。例如 Chromium 使用浏览器进程、多个渲染器进程以及独立的网络、GPU、存储服务；一个标签页也不一定只对应一个渲染器进程。
 
-- Gecko：早期是 Netscape 和 Firefox 浏览器的内核；
-- Trident：IE4 - IE11 的内核；
-- Webkit：Safari 内核，Google Chrome 之前也使用过；
-- Blink： Webkit 的一个分支，目前用于 Chrome、Edge、Opera 等。
+## 渲染引擎与 JavaScript 引擎
 
-## JavaScript 引擎
+渲染引擎负责解释 HTML 和 CSS、构建页面结构并完成布局、绘制和合成相关工作。常见组合包括：
 
-**JavaScript 引擎** 是一个专门处理 JavaScript 脚本的虚拟机，一般会附带在网页浏览器之中，能为程序员提供部分操作浏览器的功能（网络、DOM、外部事件、HTML5 视频、canvas 和存储），并且用于将 JavaScript 代码翻译成 CPU 指令。比较常见的引擎有：
+| 浏览器 | 渲染引擎 | JavaScript 引擎 |
+| --- | --- | --- |
+| Chrome、Chromium 版 Edge | Blink | V8 |
+| Firefox | Gecko | SpiderMonkey |
+| Safari | WebKit | JavaScriptCore |
 
-- SpiderMonkey：第一款 JavaScript 引擎，由 Brendan Eich 开发（也就是 JavaScript 作者）；
-- Chakra（JScript 引擎）：微软开发，用于 IE 浏览器；
-- Chakra（JavaScript 引擎）：微软开发，用于 Edge 浏览器；
-- JavaScriptCore：WebKit 中的 JavaScript 引擎，Apple 公司开发，用于 Safari；
-- V8：Google 开发的强大 JavaScript 引擎，C++ 编写。
+JavaScript 引擎实现 ECMAScript 语言并执行代码。DOM、定时器、网络和存储等 Web API 由浏览器这一宿主环境提供，再通过绑定暴露给 JavaScript；它们不属于 ECMAScript，也不是 JavaScript 引擎自身提供的能力。同一 JavaScript 引擎可以嵌入不同宿主，例如 V8 同时用于 Chromium 和 Node.js，但两者暴露的宿主 API 不同。
 
-## 目录
+## 内容索引
 
 - [从输入 URL 到页面显示](./url-to-page.md)
 - [HTTP 缓存（浏览器缓存）](../../computer-science/networking/http-caching.md)
@@ -44,3 +44,9 @@ date: 2024-04-15
 - [WebAssembly](./webassembly.md)
 - [AJAX](./ajax.md)
 - [DOM 事件监听](./event-listeners.md)
+
+## 参考资料
+
+- [Chromium Multi-process Architecture](https://www.chromium.org/developers/design-documents/multi-process-architecture/)
+- [MDN：JavaScript technologies overview](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/JavaScript_technologies_overview)
+- [MDN：JavaScript execution model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)

@@ -211,6 +211,7 @@ export default [
     icon: 'practice',
     prefix: '/frontend/snippets/',
     children: [
+      '',
       'dnd-kit',
       'canvas-annotation',
       'file-upload',
@@ -230,12 +231,6 @@ export default [
     ]
   },
   {
-    text: 'Animation',
-    collapsible: true,
-    prefix: '/frontend/animation/',
-    children: ['']
-  },
-  {
     text: 'Mobile',
     collapsible: true,
     prefix: '/frontend/mobile/',
@@ -248,17 +243,5 @@ export default [
         children: ['']
       }
     ]
-  },
-  {
-    text: 'State Management',
-    collapsible: true,
-    prefix: '/frontend/state-management/',
-    children: ['']
-  },
-  {
-    text: 'Testing',
-    collapsible: true,
-    prefix: '/frontend/testing/',
-    children: ['']
   }
 ]

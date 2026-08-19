@@ -1,6 +1,5 @@
 ---
 title: Vue
-publish: false
 ---
 
 # Vue

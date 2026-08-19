@@ -3,18 +3,14 @@ import {
   algorithms,
   architecture,
   backend,
-  changelog,
-  cloud,
   computerScience,
   devops,
   frontend,
-  performance,
   programmingLanguages,
   project,
   reading,
   security,
-  systemDesign,
-  tools
+  systemDesign
 } from './sidebar/index'
 
 import { sidebar } from 'vuepress-theme-hope'
@@ -26,17 +22,13 @@ export const Sidebar = sidebar({
   '/algorithms/': algorithms,
   '/architecture/': architecture,
   '/backend/': backend,
-  '/changelog/': changelog,
-  '/cloud/': cloud,
   '/computer-science/': computerScience,
   '/devops/': devops,
   '/frontend/': frontend,
-  '/performance/': performance,
   '/programming-languages/': programmingLanguages,
   '/projects/': project,
   '/reading/': reading,
   '/security/': security,
   '/system-design/': systemDesign,
-  '/tools/': tools,
   '/': ['']
 })

@@ -28,12 +28,5 @@ export default [
       'design-search-system',
       'design-feed-system'
     ]
-  },
-  {
-    text: 'Patterns',
-    collapsible: true,
-    icon: 'practice',
-    prefix: '/system-design/patterns/',
-    children: ['']
   }
 ]

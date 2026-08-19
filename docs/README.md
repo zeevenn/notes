@@ -13,21 +13,6 @@ projects:
     desc: A vuepress plugin for ordering headers in the sidebar.
     link: https://github.com/dribble-njr/vuepress-plugin-ordered-header.git
 
-  - icon: link
-    name: link name
-    desc: link detailed description
-    link: https://link.address
-
-  - icon: book
-    name: book name
-    desc: Detailed description of the book
-    link: https://link.to.your.book
-
-  - icon: article
-    name: article name
-    desc: Detailed description of the article
-    link: https://link.to.your.article
-
   - icon: https://yzjnnff.github.io/blog/avatar.jpg
     name: YanZJNNFF
     desc: No tomato sauce, please.

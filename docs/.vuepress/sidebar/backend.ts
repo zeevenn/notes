@@ -69,27 +69,6 @@ export default [
     ]
   },
   {
-    text: 'API Design',
-    collapsible: true,
-    icon: 'server',
-    prefix: '/backend/api-design/',
-    children: ['']
-  },
-  {
-    text: 'Message Queue',
-    collapsible: true,
-    icon: 'message',
-    prefix: '/backend/message-queue/',
-    children: ['']
-  },
-  {
-    text: 'Redis',
-    collapsible: true,
-    icon: 'database',
-    prefix: '/backend/redis/',
-    children: ['']
-  },
-  {
     text: 'Engineering',
     collapsible: true,
     icon: 'practice',

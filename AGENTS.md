@@ -52,7 +52,7 @@ Internal links should use relative Markdown links that VuePress can resolve. Whe
 
 ## Java Documentation Baseline
 
-Treat Java 17 as the default baseline for notes under `docs/backend/java/`. Java examples without an explicit version marker must compile against the Java 17 language and standard library API, preferably verified with `javac --release 17` when practical.
+Treat Java 17 as the default baseline for notes under `docs/programming-languages/java/`. Java examples without an explicit version marker must compile against the Java 17 language and standard library API, preferably verified with `javac --release 17` when practical.
 
 Place features introduced after Java 17 in a clearly separated section whose heading includes the minimum version, for example `[Java 21+]` or `[Java 25+]`. Explain the Java 17-compatible flow before presenting the newer alternative. Do not make preview or incubator features prerequisites for the main learning path; state their exact status and JDK version when they are discussed.
 

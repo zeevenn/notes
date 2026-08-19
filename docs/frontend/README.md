@@ -1,11 +1,11 @@
 ---
-title: 前端指南
+title: 前端
 article: false
 icon: creative
 star: true
 ---
 
-# 前端指南
+# 前端
 
 ## 目录
 

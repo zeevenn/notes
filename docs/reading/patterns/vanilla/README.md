@@ -1,5 +1,5 @@
 ---
-title: 介绍
+title: JavaScript 设计模式
 date: 2024-01-07
 icon: STARTUP
 author: patterns
@@ -10,7 +10,7 @@ tag:
   - vanilla
 ---
 
-# 介绍
+# JavaScript 设计模式
 
 ::: tip
 

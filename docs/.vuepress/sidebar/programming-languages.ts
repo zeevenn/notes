@@ -29,39 +29,6 @@ export default [
     ]
   },
   {
-    text: 'TypeScript',
-    collapsible: true,
-    icon: 'typescript',
-    prefix: '/programming-languages/typescript/',
-    children: [
-      '',
-      {
-        text: '类型系统',
-        collapsible: true,
-        prefix: 'type-system/',
-        children: ['']
-      },
-      {
-        text: '高级类型',
-        collapsible: true,
-        prefix: 'advanced-types/',
-        children: ['']
-      },
-      {
-        text: '声明文件',
-        collapsible: true,
-        prefix: 'declaration-files/',
-        children: ['']
-      },
-      {
-        text: '实践',
-        collapsible: true,
-        prefix: 'best-practices/',
-        children: ['']
-      }
-    ]
-  },
-  {
     text: 'Java',
     collapsible: true,
     icon: 'java',
@@ -115,19 +82,5 @@ export default [
         ]
       }
     ]
-  },
-  {
-    text: 'Python',
-    collapsible: true,
-    icon: 'python',
-    prefix: '/programming-languages/python/',
-    children: ['']
-  },
-  {
-    text: 'Go',
-    collapsible: true,
-    icon: 'code',
-    prefix: '/programming-languages/go/',
-    children: ['']
   }
 ]

@@ -57,13 +57,6 @@ export default [
     children: ['', 'what-is-mcp', 'architecture']
   },
   {
-    text: 'Fine-tuning',
-    collapsible: true,
-    icon: 'model',
-    prefix: '/ai/fine-tuning/',
-    children: ['']
-  },
-  {
     text: 'Skills',
     collapsible: true,
     icon: 'skill',

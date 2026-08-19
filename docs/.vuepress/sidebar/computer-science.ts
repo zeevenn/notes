@@ -15,8 +15,7 @@ export default [
       'tcp-handshake-teardown',
       'tcp-vs-udp',
       'auth-status-codes',
-      '401-vs-403',
-      'websocket'
+      '401-vs-403'
     ]
   },
   {
@@ -25,19 +24,5 @@ export default [
     icon: 'caozuoxitong',
     prefix: '/computer-science/operating-system/',
     children: ['', 'character-encoding', 'terminal-setup']
-  },
-  {
-    text: 'Compilation',
-    collapsible: true,
-    icon: 'code',
-    prefix: '/computer-science/compilation/',
-    children: ['']
-  },
-  {
-    text: 'Concurrency',
-    collapsible: true,
-    icon: 'code',
-    prefix: '/computer-science/concurrency/',
-    children: ['']
   }
 ]
