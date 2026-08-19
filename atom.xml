@@ -4,10 +4,11 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-08-19T09:28:46.858Z</updated>
+  <updated>2026-08-19T12:51:15.555Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
+  <category term="ai"/>
   <category term="Project"/>
   <category term="microservice"/>
   <category term="linux"/>
@@ -17,14 +18,79 @@
   <category term="node"/>
   <category term="Node.js"/>
   <category term="AI"/>
-  <category term="ai"/>
   <category term="backend"/>
   <category term="安全"/>
-  <category term="mcp"/>
   <category term="algorithm"/>
   <category term="LeetCode"/>
+  <category term="mcp"/>
   <category term="practice"/>
-  <category term="计算机网络"/>
+  <entry>
+    <title type="text">Agent 上下文管理</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/agents/context-management.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/agents/context-management.html"/>
+    <updated>2026-08-19T12:49:19.000Z</updated>
+    <summary type="html"><![CDATA[<p>上下文（Context）是模型在一次推理调用中实际能够看到的 token 集合。它可能包含系统指令、当前问题、部分对话历史、工具说明、工具结果、检索资料和记忆。上下文管理负责在每次模型调用前选择和组织这些信息，并在调用后更新会话状态。</p>
+<p>模型的 Context Window（上下文窗口）只规定单次调用能容纳多少输入和输出，不会自动形成跨调用的记忆。即使模型服务提供会话 ID 或前序响应 ID，也是服务端代替应用保存和传递会话状态；从 Agent 架构看，仍然需要决定下一次调用使用哪些信息。</p>
+<h2>每一轮都重新建立当前上下文</h2>
+<p>一个最小多轮对话可以直接保存消息数组，并在收到新消息时再次发送：</p>]]></summary>
+    <content type="html"><![CDATA[<p>上下文（Context）是模型在一次推理调用中实际能够看到的 token 集合。它可能包含系统指令、当前问题、部分对话历史、工具说明、工具结果、检索资料和记忆。上下文管理负责在每次模型调用前选择和组织这些信息，并在调用后更新会话状态。</p>
+<p>模型的 Context Window（上下文窗口）只规定单次调用能容纳多少输入和输出，不会自动形成跨调用的记忆。即使模型服务提供会话 ID 或前序响应 ID，也是服务端代替应用保存和传递会话状态；从 Agent 架构看，仍然需要决定下一次调用使用哪些信息。</p>
+<h2>每一轮都重新建立当前上下文</h2>
+<p>一个最小多轮对话可以直接保存消息数组，并在收到新消息时再次发送：</p>
+<div class="language-typescript" data-ext="ts" data-title="ts"><pre class="language-typescript"><code><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">reply</span><span class="token punctuation">(</span>threadId<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span> userMessage<span class="token operator">:</span> Message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">loadThread</span><span class="token punctuation">(</span>threadId<span class="token punctuation">)</span>
+  state<span class="token punctuation">.</span>messages<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>userMessage<span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">callModel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    instructions<span class="token operator">:</span> <span class="token constant">SYSTEM_INSTRUCTIONS</span><span class="token punctuation">,</span>
+    messages<span class="token operator">:</span> state<span class="token punctuation">.</span>messages
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  state<span class="token punctuation">.</span>messages<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>message<span class="token punctuation">)</span>
+  <span class="token keyword">await</span> <span class="token function">saveThread</span><span class="token punctuation">(</span>threadId<span class="token punctuation">,</span> state<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> response<span class="token punctuation">.</span>message
+<span class="token punctuation">}</span>
+</code></pre></div><p>这里的 <code>state.messages</code> 保存在应用或模型平台中，不在模型参数里。下一轮能延续对话，是因为历史消息再次进入了模型上下文，而不是模型在上一次调用结束后仍保留着这段对话。</p>
+<p>支持会话状态的模型 API 可以隐藏消息重放过程。例如，应用只发送 <code>previous_response_id</code>，由平台关联前序响应。应用自行管理历史时，则需要保存并重新发送所需的消息和工具调用项。两种方式改变了状态由谁保存，没有改变上下文仍受窗口限制这一事实。</p>
+<h2>会话状态与当前上下文</h2>
+<p>应用保存的状态不必全部发给模型。应把“系统持有什么”和“模型本轮看什么”分开：</p>
+<p>| 信息层 | 持续范围 | 示例 | 是否默认进入模型调用 |<br>
+|</p>
+]]></content>
+    <category term="ai"/>
+    <published>2026-08-19T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Agent 记忆系统</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/agents/memory-system.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/agents/memory-system.html"/>
+    <updated>2026-08-19T12:49:19.000Z</updated>
+    <summary type="html"><![CDATA[<p>Agent 记忆系统是宿主程序保存、更新和检索历史信息的机制。它让 Agent 能在后续步骤或会话中使用先前的事实、经验与状态，但不会改变模型本身的参数，也不会让模型天然获得跨调用记忆。</p>
+<p>一次模型调用结束后，当前上下文随之结束。下一次调用表现得像“记得”，是因为应用或模型平台保存了历史状态，并把其中一部分重新放进当前上下文。</p>
+<h2>先从会话记忆开始</h2>
+<p>最小记忆系统只需要让同一会话中的下一轮能够访问上一轮：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>用户消息
+  → 读取该会话的历史和状态
+  → 组装当前上下文
+  → 调用模型
+  → 保存用户消息、模型回答和状态变化
+</code></pre></div>]]></summary>
+    <content type="html"><![CDATA[<p>Agent 记忆系统是宿主程序保存、更新和检索历史信息的机制。它让 Agent 能在后续步骤或会话中使用先前的事实、经验与状态，但不会改变模型本身的参数，也不会让模型天然获得跨调用记忆。</p>
+<p>一次模型调用结束后，当前上下文随之结束。下一次调用表现得像“记得”，是因为应用或模型平台保存了历史状态，并把其中一部分重新放进当前上下文。</p>
+<h2>先从会话记忆开始</h2>
+<p>最小记忆系统只需要让同一会话中的下一轮能够访问上一轮：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>用户消息
+  → 读取该会话的历史和状态
+  → 组装当前上下文
+  → 调用模型
+  → 保存用户消息、模型回答和状态变化
+</code></pre></div><p>本文采用以下术语：</p>
+<p>| 概念 | 持续范围 | 保存内容 |<br>
+|</p>
+]]></content>
+    <category term="ai"/>
+    <published>2026-08-19T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">个人文档引擎 PRD</title>
     <id>https://zeevenn.github.io/notes/notes/projects/personal-document-engine/</id>
@@ -9018,220 +9084,6 @@ language = zh-CN
     <published>2026-07-09T00:00:00.000Z</published>
   </entry>
   <entry>
-    <title type="text">MCP</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/mcp/</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-<li></li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-<li></li>
-</ul>
-]]></content>
-    <published>2026-07-09T07:51:34.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">MCP Architecture</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<h2>MCP 生态组成</h2>
-<h3>1. MCP Specification</h3>
-<p><strong>协议规范本身</strong>。<br>
-定义了：</p>
-<ul>
-<li>客户端和服务端如何通信</li>
-<li>上下文（context）如何描述、传输、更新</li>
-<li>必须遵守的接口、数据结构、行为约束</li>
-</ul>
-<p>可以理解为协议层面的标准文档。</p>
-<h3>2. MCP SDKs</h3>
-<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
-作用是：</p>
-<ul>
-<li>把规范落地成可直接使用的代码</li>
-<li>降低实现 MCP 客户端/服务端的成本</li>
-</ul>]]></summary>
-    <content type="html"><![CDATA[<h2>MCP 生态组成</h2>
-<h3>1. MCP Specification</h3>
-<p><strong>协议规范本身</strong>。<br>
-定义了：</p>
-<ul>
-<li>客户端和服务端如何通信</li>
-<li>上下文（context）如何描述、传输、更新</li>
-<li>必须遵守的接口、数据结构、行为约束</li>
-</ul>
-<p>可以理解为协议层面的标准文档。</p>
-<h3>2. MCP SDKs</h3>
-<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
-作用是：</p>
-<ul>
-<li>把规范落地成可直接使用的代码</li>
-<li>降低实现 MCP 客户端/服务端的成本</li>
-</ul>
-<p>常见 SDK 方向包括：</p>
-<ul>
-<li>TypeScript SDK</li>
-<li>Python SDK</li>
-<li>Rust SDK</li>
-</ul>
-<p>SDK 是规范的工程化实现，负责把协议细节封装成可调用接口。</p>
-<h3>3. MCP Development Tools</h3>
-<p><strong>开发和调试 MCP 的工具链</strong>，比如：</p>
-<ul>
-<li>MCP Inspector（用于查看、调试 context 交换）</li>
-<li>本地调试工具</li>
-<li>验证协议是否符合规范的工具</li>
-</ul>
-<p>这类工具在 MCP 开发中的位置，类似 HTTP 生态中的 Postman 或 GraphQL 生态中的 Playground。</p>
-<h3>4. MCP Reference Server Implementations</h3>
-<p><strong>参考服务端实现</strong>。<br>
-特点：</p>
-<ul>
-<li>不是“唯一正确”的实现</li>
-<li>主要用于学习、对照、验证理解是否正确</li>
-</ul>
-<p>参考实现更接近最小示例项目，用于学习协议边界和验证实现是否符合规范。</p>
-<h2>MCP 不负责什么</h2>
-<blockquote>
-<p><strong>MCP focuses solely on the protocol for context exchange</strong></p>
-</blockquote>
-<p>MCP <strong>只关心「上下文如何交换」</strong>，不关心：</p>
-<ul>
-<li>使用 GPT、Claude 还是本地 LLM</li>
-<li>Prompt 如何编写</li>
-<li>多轮对话如何组织</li>
-<li>Agent 如何决策</li>
-<li>RAG、Memory、Tool calling 的具体策略</li>
-</ul>
-<p>也就是说：</p>
-<blockquote>
-<p><strong>MCP ≈ HTTP</strong></p>
-<p>它定义“怎么传”，而不是“传了之后你怎么用”。</p>
-</blockquote>
-<h2>协议边界</h2>
-<ul>
-<li>
-<p>MCP 是 <strong>“上下文交换层协议”</strong></p>
-</li>
-<li>
-<p>提供：</p>
-<ul>
-<li>规范（Specification）</li>
-<li>SDK</li>
-<li>开发工具</li>
-<li>参考实现</li>
-</ul>
-</li>
-<li>
-<p>不干涉：</p>
-<ul>
-<li>LLM 选型</li>
-<li>AI 应用架构</li>
-<li>业务逻辑与智能策略</li>
-</ul>
-</li>
-</ul>
-]]></content>
-    <category term="mcp"/>
-    <published>2026-01-19T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">What is MCP?</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
-<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
-<h2>MCP 能连接什么</h2>]]></summary>
-    <content type="html"><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
-<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
-<h2>MCP 能连接什么</h2>
-<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/nvim_clipboard_20260119150550.png" alt="nvim_clipboard_20260119150550" tabindex="0" loading="lazy"><figcaption>nvim_clipboard_20260119150550</figcaption></figure>
-<ul>
-<li>Agent 可以通过 MCP 连接外部工具和数据源，例如日历、文档、代码仓库和内部系统。</li>
-<li>不同 AI 应用可以围绕同一套协议集成上下文、工具和资源，降低重复适配成本。</li>
-</ul>
-<h2>MCP 的价值</h2>
-<ul>
-<li>对开发者：把外部系统接入抽象成协议适配，而不是为每个模型应用单独写集成。</li>
-<li>对 Agent：用标准方式访问工具、资源和提示模板，提升互操作性。</li>
-<li>对用户：让支持 MCP 的应用更容易接入已有工作流和数据源。</li>
-</ul>
-]]></content>
-    <category term="mcp"/>
-    <published>2026-01-19T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Skills</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/skills/</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/skills/"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-</ul>
-]]></content>
-    <published>2026-07-09T07:51:34.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Agent Skills Overview</title>
-    <id>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<h2>Overview</h2>
-<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
-<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
-<p>通过 Skills，Agent 可以：</p>
-<ul>
-<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
-<li>访问外部工具和服务</li>
-<li>扩展自身能力而无需修改核心代码</li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[<h2>Overview</h2>
-<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
-<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
-<p>通过 Skills，Agent 可以：</p>
-<ul>
-<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
-<li>访问外部工具和服务</li>
-<li>扩展自身能力而无需修改核心代码</li>
-</ul>
-<h2>What are skills?</h2>
-<p>一个标准的 Skill 通常包含以下文件：</p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>my-skill/
-├── SKILL.md          # Required: instructions + metadata (name and description)
-├── scripts/          # Optional: executable code
-├── references/       # Optional: documentation
-└── assets/           # Optional: templates, resources
-</code></pre></div><p>Skills 使用渐进式披露来高效管理上下文：</p>
-<ol>
-<li>发现阶段：启动时，Agent 仅加载每个可用 skill 的名称和描述——刚好足够判断该 skill 何时可能相关。</li>
-<li>激活阶段：当任务与某个 skill 的描述匹配时，Agent 会将完整的 <code>SKILL.md</code> 指令读入上下文。</li>
-<li>执行阶段：Agent 按照指令执行操作，根据需要加载引用的文件或运行捆绑的代码。</li>
-</ol>
-<p>这种方式能减少默认上下文占用，同时保留按需展开复杂指令的能力。</p>
-<div class="language-markdown" data-ext="md" data-title="md"><pre class="language-markdown"><code></code></pre></div>]]></content>
-    <category term="ai"/>
-    <published>2026-02-06T00:00:00.000Z</published>
-  </entry>
-  <entry>
     <title type="text">数组</title>
     <id>https://zeevenn.github.io/notes/notes/algorithms/data-structures/array.html</id>
     <link href="https://zeevenn.github.io/notes/notes/algorithms/data-structures/array.html"/>
@@ -11243,6 +11095,220 @@ language = zh-CN
     <published>2022-08-01T00:00:00.000Z</published>
   </entry>
   <entry>
+    <title type="text">MCP</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/mcp/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+<li></li>
+</ul>
+]]></summary>
+    <content type="html"><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+<li></li>
+</ul>
+]]></content>
+    <published>2026-07-09T07:51:34.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">MCP Architecture</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/architecture.html"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[<h2>MCP 生态组成</h2>
+<h3>1. MCP Specification</h3>
+<p><strong>协议规范本身</strong>。<br>
+定义了：</p>
+<ul>
+<li>客户端和服务端如何通信</li>
+<li>上下文（context）如何描述、传输、更新</li>
+<li>必须遵守的接口、数据结构、行为约束</li>
+</ul>
+<p>可以理解为协议层面的标准文档。</p>
+<h3>2. MCP SDKs</h3>
+<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
+作用是：</p>
+<ul>
+<li>把规范落地成可直接使用的代码</li>
+<li>降低实现 MCP 客户端/服务端的成本</li>
+</ul>]]></summary>
+    <content type="html"><![CDATA[<h2>MCP 生态组成</h2>
+<h3>1. MCP Specification</h3>
+<p><strong>协议规范本身</strong>。<br>
+定义了：</p>
+<ul>
+<li>客户端和服务端如何通信</li>
+<li>上下文（context）如何描述、传输、更新</li>
+<li>必须遵守的接口、数据结构、行为约束</li>
+</ul>
+<p>可以理解为协议层面的标准文档。</p>
+<h3>2. MCP SDKs</h3>
+<p><strong>各语言的官方/半官方 SDK 实现</strong>。<br>
+作用是：</p>
+<ul>
+<li>把规范落地成可直接使用的代码</li>
+<li>降低实现 MCP 客户端/服务端的成本</li>
+</ul>
+<p>常见 SDK 方向包括：</p>
+<ul>
+<li>TypeScript SDK</li>
+<li>Python SDK</li>
+<li>Rust SDK</li>
+</ul>
+<p>SDK 是规范的工程化实现，负责把协议细节封装成可调用接口。</p>
+<h3>3. MCP Development Tools</h3>
+<p><strong>开发和调试 MCP 的工具链</strong>，比如：</p>
+<ul>
+<li>MCP Inspector（用于查看、调试 context 交换）</li>
+<li>本地调试工具</li>
+<li>验证协议是否符合规范的工具</li>
+</ul>
+<p>这类工具在 MCP 开发中的位置，类似 HTTP 生态中的 Postman 或 GraphQL 生态中的 Playground。</p>
+<h3>4. MCP Reference Server Implementations</h3>
+<p><strong>参考服务端实现</strong>。<br>
+特点：</p>
+<ul>
+<li>不是“唯一正确”的实现</li>
+<li>主要用于学习、对照、验证理解是否正确</li>
+</ul>
+<p>参考实现更接近最小示例项目，用于学习协议边界和验证实现是否符合规范。</p>
+<h2>MCP 不负责什么</h2>
+<blockquote>
+<p><strong>MCP focuses solely on the protocol for context exchange</strong></p>
+</blockquote>
+<p>MCP <strong>只关心「上下文如何交换」</strong>，不关心：</p>
+<ul>
+<li>使用 GPT、Claude 还是本地 LLM</li>
+<li>Prompt 如何编写</li>
+<li>多轮对话如何组织</li>
+<li>Agent 如何决策</li>
+<li>RAG、Memory、Tool calling 的具体策略</li>
+</ul>
+<p>也就是说：</p>
+<blockquote>
+<p><strong>MCP ≈ HTTP</strong></p>
+<p>它定义“怎么传”，而不是“传了之后你怎么用”。</p>
+</blockquote>
+<h2>协议边界</h2>
+<ul>
+<li>
+<p>MCP 是 <strong>“上下文交换层协议”</strong></p>
+</li>
+<li>
+<p>提供：</p>
+<ul>
+<li>规范（Specification）</li>
+<li>SDK</li>
+<li>开发工具</li>
+<li>参考实现</li>
+</ul>
+</li>
+<li>
+<p>不干涉：</p>
+<ul>
+<li>LLM 选型</li>
+<li>AI 应用架构</li>
+<li>业务逻辑与智能策略</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    <category term="mcp"/>
+    <published>2026-01-19T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">What is MCP?</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/mcp/what-is-mcp.html"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
+<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
+<h2>MCP 能连接什么</h2>]]></summary>
+    <content type="html"><![CDATA[<p>MCP (Model Context Protocol) 是连接 AI 应用和外部系统的开放协议。它为模型应用访问工具、数据源和上下文提供统一接口。</p>
+<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/20260119143759889.png" alt="20260119143759889" tabindex="0" loading="lazy"><figcaption>20260119143759889</figcaption></figure>
+<h2>MCP 能连接什么</h2>
+<figure><img src="https://raw.githubusercontent.com/zeevenn/image-bed/main/img/nvim_clipboard_20260119150550.png" alt="nvim_clipboard_20260119150550" tabindex="0" loading="lazy"><figcaption>nvim_clipboard_20260119150550</figcaption></figure>
+<ul>
+<li>Agent 可以通过 MCP 连接外部工具和数据源，例如日历、文档、代码仓库和内部系统。</li>
+<li>不同 AI 应用可以围绕同一套协议集成上下文、工具和资源，降低重复适配成本。</li>
+</ul>
+<h2>MCP 的价值</h2>
+<ul>
+<li>对开发者：把外部系统接入抽象成协议适配，而不是为每个模型应用单独写集成。</li>
+<li>对 Agent：用标准方式访问工具、资源和提示模板，提升互操作性。</li>
+<li>对用户：让支持 MCP 的应用更容易接入已有工作流和数据源。</li>
+</ul>
+]]></content>
+    <category term="mcp"/>
+    <published>2026-01-19T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Skills</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/skills/</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/skills/"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+</ul>
+]]></summary>
+    <content type="html"><![CDATA[
+<h2>目录</h2>
+<ul>
+<li></li>
+</ul>
+]]></content>
+    <published>2026-07-09T07:51:34.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Agent Skills Overview</title>
+    <id>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[<h2>Overview</h2>
+<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
+<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
+<p>通过 Skills，Agent 可以：</p>
+<ul>
+<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
+<li>访问外部工具和服务</li>
+<li>扩展自身能力而无需修改核心代码</li>
+</ul>
+]]></summary>
+    <content type="html"><![CDATA[<h2>Overview</h2>
+<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
+<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
+<p>通过 Skills，Agent 可以：</p>
+<ul>
+<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
+<li>访问外部工具和服务</li>
+<li>扩展自身能力而无需修改核心代码</li>
+</ul>
+<h2>What are skills?</h2>
+<p>一个标准的 Skill 通常包含以下文件：</p>
+<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>my-skill/
+├── SKILL.md          # Required: instructions + metadata (name and description)
+├── scripts/          # Optional: executable code
+├── references/       # Optional: documentation
+└── assets/           # Optional: templates, resources
+</code></pre></div><p>Skills 使用渐进式披露来高效管理上下文：</p>
+<ol>
+<li>发现阶段：启动时，Agent 仅加载每个可用 skill 的名称和描述——刚好足够判断该 skill 何时可能相关。</li>
+<li>激活阶段：当任务与某个 skill 的描述匹配时，Agent 会将完整的 <code>SKILL.md</code> 指令读入上下文。</li>
+<li>执行阶段：Agent 按照指令执行操作，根据需要加载引用的文件或运行捆绑的代码。</li>
+</ol>
+<p>这种方式能减少默认上下文占用，同时保留按需展开复杂指令的能力。</p>
+<div class="language-markdown" data-ext="md" data-title="md"><pre class="language-markdown"><code></code></pre></div>]]></content>
+    <category term="ai"/>
+    <published>2026-02-06T00:00:00.000Z</published>
+  </entry>
+  <entry>
     <title type="text">数据库</title>
     <id>https://zeevenn.github.io/notes/notes/backend/database/</id>
     <link href="https://zeevenn.github.io/notes/notes/backend/database/"/>
@@ -11424,61 +11490,5 @@ datasource db {
 ]]></content>
     <category term="practice"/>
     <published>2024-09-24T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">401 和 403 状态码</title>
-    <id>https://zeevenn.github.io/notes/notes/computer-science/networking/401-vs-403.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/computer-science/networking/401-vs-403.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<h2>401 Unauthorized（未授权）</h2>
-<ul>
-<li><strong>含义</strong>：表示客户端请求的资源需要身份验证，但身份验证失败或未提供正确的认证信息。</li>
-<li><strong>触发情况</strong>：当服务器要求用户提供凭据（例如用户名和密码），但用户未提供凭据，或提供的凭据无效时，服务器返回 401。</li>
-<li><strong>处理方式</strong>：
-<ul>
-<li>客户端应该提供有效的凭据，如登录信息、API 密钥或 token。</li>
-<li>一般情况下，服务器会在响应中包含一个 <code>WWW-Authenticate</code> 头，提示客户端应该如何提供凭证。</li>
-</ul>
-</li>
-</ul>]]></summary>
-    <content type="html"><![CDATA[<h2>401 Unauthorized（未授权）</h2>
-<ul>
-<li><strong>含义</strong>：表示客户端请求的资源需要身份验证，但身份验证失败或未提供正确的认证信息。</li>
-<li><strong>触发情况</strong>：当服务器要求用户提供凭据（例如用户名和密码），但用户未提供凭据，或提供的凭据无效时，服务器返回 401。</li>
-<li><strong>处理方式</strong>：
-<ul>
-<li>客户端应该提供有效的凭据，如登录信息、API 密钥或 token。</li>
-<li>一般情况下，服务器会在响应中包含一个 <code>WWW-Authenticate</code> 头，提示客户端应该如何提供凭证。</li>
-</ul>
-</li>
-</ul>
-<p><strong>示例场景</strong>：</p>
-<ul>
-<li>用户访问一个需要登录才能查看的页面，但没有登录或登录信息无效。</li>
-<li>API 请求缺少认证信息（如缺少 Authorization Header 或 token 错误）。</li>
-</ul>
-]]></content>
-    <category term="计算机网络"/>
-    <published>2025-02-11T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">登陆失败 HTTP 状态码</title>
-    <id>https://zeevenn.github.io/notes/notes/computer-science/networking/auth-status-codes.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/computer-science/networking/auth-status-codes.html"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[<p>如果用户尝试登陆，但用户名或密码不正确，应该返回什么状态码？</p>
-<p>这个问题在社区中有一定争议，有些人认为应该返回 <code>403 Forbidden</code>，有些人认为应该返回 <code>404 Not Found</code>，有些人认为应该返回 <code>400 Bad Request</code>，有些人认为应该返回 <code>401 Unauthorized</code>。</p>
-<p><code>403 Forbidden</code> 表示拒绝访问，但是请求接口是可以访问的，因此该状态码肯定不正确。</p>
-<p><code>404 Not Found</code> 表示请求的资源不存在，但是请求接口是存在的，因此该状态码也不正确。</p>]]></summary>
-    <content type="html"><![CDATA[<p>如果用户尝试登陆，但用户名或密码不正确，应该返回什么状态码？</p>
-<p>这个问题在社区中有一定争议，有些人认为应该返回 <code>403 Forbidden</code>，有些人认为应该返回 <code>404 Not Found</code>，有些人认为应该返回 <code>400 Bad Request</code>，有些人认为应该返回 <code>401 Unauthorized</code>。</p>
-<p><code>403 Forbidden</code> 表示拒绝访问，但是请求接口是可以访问的，因此该状态码肯定不正确。</p>
-<p><code>404 Not Found</code> 表示请求的资源不存在，但是请求接口是存在的，因此该状态码也不正确。</p>
-<p><code>400 Bad Request</code> 表示请求参数错误，但是用户输入的数据格式也是完全正确的，因此也不应该用该状态码。</p>
-<p>而根据 <a href="https://stackoverflow.com/questions/32752578/whats-the-appropriate-http-status-code-to-return-if-a-user-tries-logging-in-wit" target="_blank" rel="noopener noreferrer">What's the appropriate HTTP status code to return if a user tries logging in with an incorrect username / password, but correct format?</a> 讨论，应该返回 <code>401 Unauthorized</code>。</p>
-<p>根据 <a href="https://www.rfc-editor.org/rfc/rfc7235#section-3.1" target="_blank" rel="noopener noreferrer">RFC7235</a>：如果请求中包含身份验证凭据，则 <code>401</code> 响应表示拒绝对这些凭据进行授权。</p>
-]]></content>
-    <category term="计算机网络"/>
-    <published>2024-07-10T00:00:00.000Z</published>
   </entry>
 </feed>
