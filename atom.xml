@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-08-19T02:14:10.288Z</updated>
+  <updated>2026-08-19T08:21:19.720Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -14,7 +14,6 @@
   <category term="java"/>
   <category term="JavaScript"/>
   <category term="node"/>
-  <category term="expo"/>
   <category term="Node.js"/>
   <category term="AI"/>
   <category term="ai"/>
@@ -24,6 +23,7 @@
   <category term="LeetCode"/>
   <category term="mcp"/>
   <category term="practice"/>
+  <category term="计算机网络"/>
   <entry>
     <title type="text">Fundamental Ideas Around Microservices</title>
     <id>https://zeevenn.github.io/notes/notes/architecture/microservices/fundamental-ideas.html</id>
@@ -4065,18 +4065,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
 ]]></content>
     <category term="node"/>
     <published>2024-08-27T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">从 React Native 到 Expo：快速实现跨平台开发</title>
-    <id>https://zeevenn.github.io/notes/notes/frontend/mobile/expo/</id>
-    <link href="https://zeevenn.github.io/notes/notes/frontend/mobile/expo/"/>
-    <updated>2026-08-19T02:12:32.000Z</updated>
-    <summary type="html"><![CDATA[<p>随着移动开发的需求日益增长，跨平台开发框架成为开发者的首选。其中，<a href="https://reactnative.dev/" target="_blank" rel="noopener noreferrer">React Native</a> 和 <a href="https://expo.dev/" target="_blank" rel="noopener noreferrer">Expo</a> 是两种备受关注的技术路线。这篇文章将从 React Native 的基础出发，探讨 Expo 的优势，并介绍如何搭建 Expo 项目、CI/CD 流程及开发体验。</p>
-<hr>]]></summary>
-    <content type="html"><![CDATA[<p>随着移动开发的需求日益增长，跨平台开发框架成为开发者的首选。其中，<a href="https://reactnative.dev/" target="_blank" rel="noopener noreferrer">React Native</a> 和 <a href="https://expo.dev/" target="_blank" rel="noopener noreferrer">Expo</a> 是两种备受关注的技术路线。这篇文章将从 React Native 的基础出发，探讨 Expo 的优势，并介绍如何搭建 Expo 项目、CI/CD 流程及开发体验。</p>
-]]></content>
-    <category term="expo"/>
-    <published>2025-01-24T00:00:00.000Z</published>
   </entry>
   <entry>
     <title type="text">Java 语言基础</title>
@@ -8741,25 +8729,6 @@ language = zh-CN
     <published>2026-07-09T00:00:00.000Z</published>
   </entry>
   <entry>
-    <title type="text">Changelog</title>
-    <id>https://zeevenn.github.io/notes/notes/changelog/</id>
-    <link href="https://zeevenn.github.io/notes/notes/changelog/"/>
-    <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-</ul>
-]]></summary>
-    <content type="html"><![CDATA[
-<h2>目录</h2>
-<ul>
-<li></li>
-</ul>
-]]></content>
-    <published>2026-07-09T07:51:34.000Z</published>
-  </entry>
-  <entry>
     <title type="text">数组</title>
     <id>https://zeevenn.github.io/notes/notes/algorithms/data-structures/array.html</id>
     <link href="https://zeevenn.github.io/notes/notes/algorithms/data-structures/array.html"/>
@@ -11168,22 +11137,139 @@ datasource db {
     <published>2024-09-24T00:00:00.000Z</published>
   </entry>
   <entry>
-    <title type="text">2024</title>
-    <id>https://zeevenn.github.io/notes/notes/changelog/2024/</id>
-    <link href="https://zeevenn.github.io/notes/notes/changelog/2024/"/>
+    <title type="text">401 和 403 状态码</title>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/networking/401-vs-403.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/networking/401-vs-403.html"/>
     <updated>2026-07-09T07:51:34.000Z</updated>
-    <summary type="html"><![CDATA[
-<h2>目录</h2>
+    <summary type="html"><![CDATA[<h2>401 Unauthorized（未授权）</h2>
 <ul>
-<li></li>
+<li><strong>含义</strong>：表示客户端请求的资源需要身份验证，但身份验证失败或未提供正确的认证信息。</li>
+<li><strong>触发情况</strong>：当服务器要求用户提供凭据（例如用户名和密码），但用户未提供凭据，或提供的凭据无效时，服务器返回 401。</li>
+<li><strong>处理方式</strong>：
+<ul>
+<li>客户端应该提供有效的凭据，如登录信息、API 密钥或 token。</li>
+<li>一般情况下，服务器会在响应中包含一个 <code>WWW-Authenticate</code> 头，提示客户端应该如何提供凭证。</li>
 </ul>
-]]></summary>
-    <content type="html"><![CDATA[
-<h2>目录</h2>
+</li>
+</ul>]]></summary>
+    <content type="html"><![CDATA[<h2>401 Unauthorized（未授权）</h2>
 <ul>
-<li></li>
+<li><strong>含义</strong>：表示客户端请求的资源需要身份验证，但身份验证失败或未提供正确的认证信息。</li>
+<li><strong>触发情况</strong>：当服务器要求用户提供凭据（例如用户名和密码），但用户未提供凭据，或提供的凭据无效时，服务器返回 401。</li>
+<li><strong>处理方式</strong>：
+<ul>
+<li>客户端应该提供有效的凭据，如登录信息、API 密钥或 token。</li>
+<li>一般情况下，服务器会在响应中包含一个 <code>WWW-Authenticate</code> 头，提示客户端应该如何提供凭证。</li>
+</ul>
+</li>
+</ul>
+<p><strong>示例场景</strong>：</p>
+<ul>
+<li>用户访问一个需要登录才能查看的页面，但没有登录或登录信息无效。</li>
+<li>API 请求缺少认证信息（如缺少 Authorization Header 或 token 错误）。</li>
 </ul>
 ]]></content>
-    <published>2026-07-09T07:51:34.000Z</published>
+    <category term="计算机网络"/>
+    <published>2025-02-11T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">登陆失败 HTTP 状态码</title>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/networking/auth-status-codes.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/networking/auth-status-codes.html"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[<p>如果用户尝试登陆，但用户名或密码不正确，应该返回什么状态码？</p>
+<p>这个问题在社区中有一定争议，有些人认为应该返回 <code>403 Forbidden</code>，有些人认为应该返回 <code>404 Not Found</code>，有些人认为应该返回 <code>400 Bad Request</code>，有些人认为应该返回 <code>401 Unauthorized</code>。</p>
+<p><code>403 Forbidden</code> 表示拒绝访问，但是请求接口是可以访问的，因此该状态码肯定不正确。</p>
+<p><code>404 Not Found</code> 表示请求的资源不存在，但是请求接口是存在的，因此该状态码也不正确。</p>]]></summary>
+    <content type="html"><![CDATA[<p>如果用户尝试登陆，但用户名或密码不正确，应该返回什么状态码？</p>
+<p>这个问题在社区中有一定争议，有些人认为应该返回 <code>403 Forbidden</code>，有些人认为应该返回 <code>404 Not Found</code>，有些人认为应该返回 <code>400 Bad Request</code>，有些人认为应该返回 <code>401 Unauthorized</code>。</p>
+<p><code>403 Forbidden</code> 表示拒绝访问，但是请求接口是可以访问的，因此该状态码肯定不正确。</p>
+<p><code>404 Not Found</code> 表示请求的资源不存在，但是请求接口是存在的，因此该状态码也不正确。</p>
+<p><code>400 Bad Request</code> 表示请求参数错误，但是用户输入的数据格式也是完全正确的，因此也不应该用该状态码。</p>
+<p>而根据 <a href="https://stackoverflow.com/questions/32752578/whats-the-appropriate-http-status-code-to-return-if-a-user-tries-logging-in-wit" target="_blank" rel="noopener noreferrer">What's the appropriate HTTP status code to return if a user tries logging in with an incorrect username / password, but correct format?</a> 讨论，应该返回 <code>401 Unauthorized</code>。</p>
+<p>根据 <a href="https://www.rfc-editor.org/rfc/rfc7235#section-3.1" target="_blank" rel="noopener noreferrer">RFC7235</a>：如果请求中包含身份验证凭据，则 <code>401</code> 响应表示拒绝对这些凭据进行授权。</p>
+]]></content>
+    <category term="计算机网络"/>
+    <published>2024-07-10T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">GET 和 POST 的区别</title>
+    <id>https://zeevenn.github.io/notes/notes/computer-science/networking/get-vs-post.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/computer-science/networking/get-vs-post.html"/>
+    <updated>2026-07-09T07:51:34.000Z</updated>
+    <summary type="html"><![CDATA[<h2>概述</h2>
+<p>GET 和 POST 是 HTTP 协议中发送请求的方法。</p>
+<ul>
+<li>GET：请求资源，从服务器获取数据；</li>
+<li>POST：将数据提交到指定地址。</li>
+</ul>
+<p>二者本质上都是 TCP 链接，因此本质上<strong>没有区别</strong>，但由于 HTTP 规定和浏览器/服务器的限制，导致它们在实际操作中会有一定区别。</p>
+<h2>区别</h2>
+<ul>
+<li>GET 在浏览器回退时是无害的，而 POST 会再次提交请求。</li>
+<li>GET 产生的 URL 地址可以被 Bookmarked，而 POST 不可以。</li>
+<li>GET 请求会被浏览器主动 cache，而 POST 不会，除非手动设置。</li>
+<li>GET 请求只能进行 url 编码，而 POST 支持多种编码方式。</li>
+<li>GET 请求参数会被完整保留在浏览器历史记录里，而 POST 中的参数不会被保留。</li>
+<li>GET 请求在 URL 中传送的参数是有长度限制的，而 POST 没有。</li>
+<li>对参数的数据类型，GET 只接受 ASCII 字符，而 POST 没有限制。</li>
+<li>GET 比 POST 更不安全，因为参数直接暴露在 URL 上，所以不能用来传递敏感信息。</li>
+<li>GET 参数通过 URL 传递，POST 放在 Request body 中。</li>
+<li>GET 方法是安全且幂等的，POST 方法是<strong>不安全且不幂等</strong>的。</li>
+</ul>]]></summary>
+    <content type="html"><![CDATA[<h2>概述</h2>
+<p>GET 和 POST 是 HTTP 协议中发送请求的方法。</p>
+<ul>
+<li>GET：请求资源，从服务器获取数据；</li>
+<li>POST：将数据提交到指定地址。</li>
+</ul>
+<p>二者本质上都是 TCP 链接，因此本质上<strong>没有区别</strong>，但由于 HTTP 规定和浏览器/服务器的限制，导致它们在实际操作中会有一定区别。</p>
+<h2>区别</h2>
+<ul>
+<li>GET 在浏览器回退时是无害的，而 POST 会再次提交请求。</li>
+<li>GET 产生的 URL 地址可以被 Bookmarked，而 POST 不可以。</li>
+<li>GET 请求会被浏览器主动 cache，而 POST 不会，除非手动设置。</li>
+<li>GET 请求只能进行 url 编码，而 POST 支持多种编码方式。</li>
+<li>GET 请求参数会被完整保留在浏览器历史记录里，而 POST 中的参数不会被保留。</li>
+<li>GET 请求在 URL 中传送的参数是有长度限制的，而 POST 没有。</li>
+<li>对参数的数据类型，GET 只接受 ASCII 字符，而 POST 没有限制。</li>
+<li>GET 比 POST 更不安全，因为参数直接暴露在 URL 上，所以不能用来传递敏感信息。</li>
+<li>GET 参数通过 URL 传递，POST 放在 Request body 中。</li>
+<li>GET 方法是安全且幂等的，POST 方法是<strong>不安全且不幂等</strong>的。</li>
+</ul>
+<div class="hint-container tip">
+<p class="hint-container-title">提示</p>
+<ul>
+<li>安全：请求方法不会破坏服务器上的资源；</li>
+<li>幂等：执行多次相同的操作，结果都是相同的。</li>
+</ul>
+</div>
+<h2>误区</h2>
+<h3>参数长度</h3>
+<p>GET 参数有长度限制，但这是因为浏览器对 URL 的长度限制，而不是 HTTP 协议本身对参数长度的限制。HTTP 同样对 POST 参数长度没有限制，而是靠服务器的设置来限制大小的。</p>
+<h3>安全性</h3>
+<p>POST <strong>相对</strong>比 GET 安全性要高。</p>
+<p>通过 GET 提交的请求都将显示到 URL 上，页面会被浏览器缓存，其他人查看历史记录会看到提交的数据。</p>
+<p>这里的相对在于：<strong>HTTP 本身是明文传输的协议</strong>，无论使用 GET 还是 POST 都有可能受到中间人攻击而造成数据泄露。</p>
+<p>如果 HTTP 链接使用 SSL/TLS，那么 GET 参数也会被加密，但是仍然会在某些地方出现，比如服务器日志、浏览器插件和其他应用。而 POST 数据会被加密并且不会被任何方式泄露。</p>
+<div class="hint-container tip">
+<p class="hint-container-title">提示</p>
+<p>因此如果想要保证总是安全地传输数据，需要使用 HTTPS 上的 POST。</p>
+</div>
+<h3>Request Body</h3>
+<p>GET 可以带 Request Body，但不能保证一定能被接收到。如果你用 GET 请求，在 Request Body 携带数据，不同服务器的处理方式也是不同的，有些服务器会帮你读出数据，有些服务器直接忽略。</p>
+<h3>数据包</h3>
+<p>对于 GET 请求，浏览器会把 http header 和 data 一并发送出去，服务器响应 200（返回数据）。</p>
+<p>对于 POST，浏览器先发送 header，服务器响应 100 continue，浏览器再发送 data，服务器响应 200 ok。</p>
+<p>并不是所有浏览器都会在 POST 中发送两次包，Firefox 就只发送一次。</p>
+<h2>参考链接</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/3063530/what-is-the-difference-between-get-and-post-encryption" target="_blank" rel="noopener noreferrer">https - What is the difference between GET and POST encryption? - Stack Overflow</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzI3NzIzMzg3Mw==&amp;mid=100000054&amp;idx=1&amp;sn=71f6c214f3833d9ca20b9f7dcd9d33e4#rd" target="_blank" rel="noopener noreferrer">99%的人都理解错了 HTTP 中 GET 与 POST 的区别 (qq.com)</a></li>
+<li><a href="https://github.com/febobo/web-interview/issues/145" target="_blank" rel="noopener noreferrer">面试官：说一下 GET 和 POST 的区别？ · Issue #145 · febobo/web-interview (github.com)</a></li>
+</ul>
+]]></content>
+    <category term="计算机网络"/>
+    <published>2022-04-24T00:00:00.000Z</published>
   </entry>
 </feed>
