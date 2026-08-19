@@ -1,11 +1,13 @@
 ---
-title: Context Engineering for Agents
+title: 阅读笔记：Context Engineering for Agents
 date: 2026-05-23
 ---
 
 > 原文：<https://rlancemartin.github.io/2025/06/23/context_engineering/>
 >
 > 作者：[Lance Martin](https://x.com/RLanceMartin) | 2025-06-23
+
+> 页面定位：本文保留原文对“写入、选择、压缩、隔离”四类策略及业界案例的梳理。Agent 每轮如何组装上下文、管理状态和预算，见 [Agent 上下文管理](../agents/context-management.md)。
 
 ---
 
@@ -156,3 +158,5 @@ Agent 上下文工程的模式仍在发展中，但我们可以将常见方法�
 - _隔离上下文是指将上下文拆分以帮助 Agent 执行任务。_
 
 理解和运用这些模式是当今构建高效 Agent 的核心部分。
+
+本文侧重策略来源和案例。规范性的工程流程见 [Agent 上下文管理](../agents/context-management.md)，会话记忆和长期记忆的生命周期见 [Agent 记忆系统](../agents/memory-system.md)。

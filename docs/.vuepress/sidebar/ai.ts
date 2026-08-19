@@ -25,7 +25,7 @@ export default [
     collapsible: true,
     icon: 'practice',
     prefix: '/ai/prompt-engineering/',
-    children: ['', 'context-engineering-for-agents']
+    children: ['']
   },
   {
     text: 'RAG',
@@ -47,7 +47,7 @@ export default [
     collapsible: true,
     icon: 'robot',
     prefix: '/ai/agents/',
-    children: ['', 'function-calling']
+    children: ['', 'function-calling', 'context-management', 'memory-system']
   },
   {
     text: 'MCP',

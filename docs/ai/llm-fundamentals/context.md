@@ -110,3 +110,5 @@ query → 检索 top-k 相关段落 → 拼入 context → 生成回答
 ```
 
 工程上需要显式分配 context 预算：system prompt 和 few-shot 通常占固定空间，检索内容和对话历史按任务动态裁剪。
+
+Agent 如何在多轮执行中选择历史、工具结果和记忆，见 [Agent 上下文管理](../agents/context-management.md)；跨轮和跨会话信息如何持久化，见 [Agent 记忆系统](../agents/memory-system.md)。

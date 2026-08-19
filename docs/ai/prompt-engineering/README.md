@@ -33,6 +33,6 @@
 3. 读 Building Effective Agents — 进入 Agent 设计层面
 4. 持续关注 Context Engineering — 从单条 prompt 设计扩展到完整上下文组织
 
-## 目录
+## 延伸阅读
 
-- [Context Engineering for Agents](./context-engineering-for-agents.md)
+- [阅读笔记：Context Engineering for Agents](./context-engineering-for-agents.md) — 从原文理解写入、选择、压缩和隔离四类策略；工程主线见 [Agent 上下文管理](../agents/context-management.md)。
