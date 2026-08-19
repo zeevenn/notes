@@ -6,6 +6,7 @@ title: 项目
 
 ## 目录
 
+- [个人文档引擎](./personal-document-engine/)
 - [自动点亮 GitHub 热点图](./github-auto-commit/)
 - [VuePress 插件](./vuepress-plugins/)
 - [mini-vue-cli](./mini-vue-cli/)

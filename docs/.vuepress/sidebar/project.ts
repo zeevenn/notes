@@ -1,5 +1,12 @@
 export default [
   {
+    text: '个人文档引擎',
+    icon: 'book',
+    collapsible: true,
+    prefix: '/projects/personal-document-engine/',
+    children: ['']
+  },
+  {
     text: 'github-auto-commit',
     icon: 'github-fill',
     collapsible: true,
