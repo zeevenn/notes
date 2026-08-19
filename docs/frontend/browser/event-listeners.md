@@ -1,7 +1,7 @@
 ---
 title: addEventListener
 date: 2025-08-25
-tags: ["javascript", "event"]
+tags: ["browser", "dom", "event"]
 ---
 
 `addEventListener` 的第三个参数可以是一个布尔值 `useCapture`，也可以是一个包含多个配置项的 `options` 对象。两者的作用有所不同：

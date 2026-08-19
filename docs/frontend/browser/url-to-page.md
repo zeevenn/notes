@@ -239,7 +239,7 @@ JavaScript 可修改 DOM 和 CSSOM，并使部分阶段重新执行
 
 FP 或 FCP 可能早于 `DOMContentLoaded`，也可能因为阻塞样式、脚本或主线程繁忙而更晚。`load` 触发后，JavaScript 仍然可以继续请求数据、修改 DOM 并产生新的帧，因此它也不代表页面永远不再变化。
 
-浏览器事件循环以及 JavaScript、微任务与渲染机会的关系见[浏览器事件循环](../javascript/event-loop.md)。
+浏览器事件循环以及 JavaScript、微任务与渲染机会的关系见[浏览器事件循环](../../programming-languages/javascript/event-loop.md)。
 
 ## 常见的非完整流程
 

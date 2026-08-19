@@ -42,3 +42,5 @@ date: 2024-04-15
 - [Service Worker](./service-worker.md)
 - [Web Worker](./web-worker.md)
 - [WebAssembly](./webassembly.md)
+- [AJAX](./ajax.md)
+- [DOM 事件监听](./event-listeners.md)

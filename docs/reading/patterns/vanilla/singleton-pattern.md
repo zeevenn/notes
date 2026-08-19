@@ -50,7 +50,7 @@ class EmailClient {
 
 这里构造函数为 `private`，因此无法在外部创建 `EmailClient` 对象，但可以通过 `getInstance` 方法获取单例对象。
 
-如果使用 js 创建对象，由于 js 无 `private` 修饰符，可以在 `constructor` 中使用 [`new.target`](../../../frontend/javascript/class.md#抽象基类) 判断是否为 `EmailClient` 类，如果是则抛出错误。
+如果使用 js 创建对象，由于 js 无 `private` 修饰符，可以在 `constructor` 中使用 [`new.target`](../../../programming-languages/javascript/class.md#抽象基类) 判断是否为 `EmailClient` 类，如果是则抛出错误。
 
 ```js
 class EmailClient {

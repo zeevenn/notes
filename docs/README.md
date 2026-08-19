@@ -3,7 +3,7 @@ home: true
 layout: BlogHome
 icon: home
 title: Home
-heroText: Frontend knowledge base
+heroText: Technical knowledge base
 bgImage: /hero.webp
 tagline: Enquanto houver 1% de chance, teremo 99% fé.
 heroFullScreen: true

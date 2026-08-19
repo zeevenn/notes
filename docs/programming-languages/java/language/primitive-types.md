@@ -118,7 +118,7 @@ System.out.println("Result of overflow: " + willThisCompile); // 输出 -2147483
 | `boolean`      | `Boolean`     |
 
 > [!TIP]
-> JavaScript 中也有类似的概念，详情见 [原始值包装类型](../../../frontend/javascript/basic-reference-types.md#原始值包装类型)。
+> JavaScript 中也有类似的概念，详情见 [原始值包装类型](../../javascript/basic-reference-types.md#原始值包装类型)。
 
 ## Casting（类型转换）
 
@@ -267,5 +267,5 @@ System.out.println(c1 + c2 + c3);  // 输出：195（字符参与运算会转为
 | `\uXXXX` | Unicode 字符 |
 
 > [!TIP]
-> 单个字符用 `char`，字符串用 `String` 类。详见 [String and Array](/docs/backend/java/language/string-array.md)。
+> 单个字符用 `char`，字符串用 `String` 类。详见 [String and Array](/programming-languages/java/language/string-array.md)。
 > `char` 用单引号括起，`String` 用双引号括起。

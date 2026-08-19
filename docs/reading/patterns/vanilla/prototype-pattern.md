@@ -11,4 +11,4 @@ tag:
   - prototype-pattern
 ---
 
-详见 [原型模式](../../../frontend/javascript/creating-objects.md#原型模式)。
+详见 [原型模式](../../../programming-languages/javascript/creating-objects.md#原型模式)。

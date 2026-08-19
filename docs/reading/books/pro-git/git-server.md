@@ -16,5 +16,5 @@ tag:
 
 直接看实战：
 
-- [服务器设置 ssh 密钥登录](../../../backend/linux/set-the-ssh.md)
-- [搭建 git 私服](../../../backend/linux/build-git-server.md)
+- [服务器设置 ssh 密钥登录](../../../devops/linux/set-the-ssh.md)
+- [搭建 git 私服](../../../devops/linux/build-git-server.md)

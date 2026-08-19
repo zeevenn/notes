@@ -2,7 +2,7 @@
 title: AJAX
 date: 2022-08-12
 category:
-  - JavaScript
+  - Browser
 tag:
   - 网络请求
   - 手写代码

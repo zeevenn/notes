@@ -24,10 +24,10 @@
 
 | 周次 | 优先级 | 主题方向                                                 | 目标目录                                  |
 | ---- | ------ | -------------------------------------------------------- | ----------------------------------------- |
-| W1   | P0     | JavaScript：原型链、继承、闭包                           | `docs/frontend/javascript/`               |
-| W2   | P0     | JavaScript：this 绑定、执行上下文、作用域                | `docs/frontend/javascript/`               |
-| W3   | P0     | JavaScript：异步模型、Event Loop、Promise/async          | `docs/frontend/javascript/`               |
-| W4   | P0     | JavaScript：深拷贝、类型系统、手写题汇总                 | `docs/frontend/javascript/`               |
+| W1   | P0     | JavaScript：原型链、继承、闭包                           | `docs/programming-languages/javascript/`               |
+| W2   | P0     | JavaScript：this 绑定、执行上下文、作用域                | `docs/programming-languages/javascript/`               |
+| W3   | P0     | JavaScript：异步模型、Event Loop、Promise/async          | `docs/programming-languages/javascript/`               |
+| W4   | P0     | JavaScript：深拷贝、类型系统、手写题汇总                 | `docs/programming-languages/javascript/`               |
 | W5   | P0     | 浏览器：渲染流程（Parse/Style/Layout/Paint/Composite）   | `docs/frontend/browser/`                  |
 | W6   | P0     | 浏览器：V8 引擎、内存管理、垃圾回收                      | `docs/frontend/browser/`                  |
 | W7   | P0     | 计算机网络：HTTP/1.1、HTTP/2、HTTP/3、HTTPS              | `docs/computer-science/networking/`       |
@@ -36,8 +36,8 @@
 | W10  | P0     | 系统设计基础：缓存策略、数据库分片                       | `docs/system-design/fundamentals/`        |
 | W11  | P1     | CSS：BFC、层叠上下文、position、z-index                  | `docs/frontend/css/`                      |
 | W12  | P1     | CSS：Flex/Grid 深度、响应式、动画性能                    | `docs/frontend/css/`                      |
-| W13  | P1     | TypeScript：泛型、条件类型、infer、Mapped Types          | `docs/frontend/typescript/`               |
-| W14  | P1     | TypeScript：工具类型、声明文件、工程实践                 | `docs/frontend/typescript/`               |
+| W13  | P1     | TypeScript：泛型、条件类型、infer、Mapped Types          | `docs/programming-languages/typescript/`               |
+| W14  | P1     | TypeScript：工具类型、声明文件、工程实践                 | `docs/programming-languages/typescript/`               |
 | W15  | P1     | 数据库：SQL 基础、事务、ACID、隔离级别                   | `docs/backend/database/`                  |
 | W16  | P1     | 数据库：索引原理（B+ 树）、EXPLAIN、慢查询优化           | `docs/backend/database/`                  |
 | W17  | P1     | Redis：数据结构、持久化、缓存穿透/雪崩/击穿              | `docs/backend/redis/`                     |
@@ -76,13 +76,13 @@
 
 **知识沉淀**（项目）
 
-- [ ] 笔记：`docs/frontend/framework/next/app-router/` — App Router 与 Pages Router 核心差异
+- [ ] 笔记：`docs/frontend/next/` — App Router 与 Pages Router 核心差异
 - [ ] 笔记：`docs/frontend/react/` — Fiber 为什么取代 Stack Reconciler（调研结论）
 
 **主动学习**（P0 · JavaScript）
 
-- [ ] 笔记：`docs/frontend/javascript/` — 原型链与原型继承（**proto** / prototype）
-- [ ] 笔记：`docs/frontend/javascript/` — 闭包：定义、应用场景、内存泄漏风险
+- [ ] 笔记：`docs/programming-languages/javascript/` — 原型链与原型继承（**proto** / prototype）
+- [ ] 笔记：`docs/programming-languages/javascript/` — 闭包：定义、应用场景、内存泄漏风险
 
 ---
 
@@ -109,8 +109,8 @@
 
 **主动学习**（P0 · JavaScript）
 
-- [ ] 笔记：`docs/frontend/javascript/` — this 绑定规则（默认/隐式/显式/new）
-- [ ] 笔记：`docs/frontend/javascript/` — 执行上下文、调用栈、变量提升、暂时性死区
+- [ ] 笔记：`docs/programming-languages/javascript/` — this 绑定规则（默认/隐式/显式/new）
+- [ ] 笔记：`docs/programming-languages/javascript/` — 执行上下文、调用栈、变量提升、暂时性死区
 
 ---
 
@@ -139,8 +139,8 @@
 
 **主动学习**（P0 · JavaScript）
 
-- [ ] 笔记：`docs/frontend/javascript/` — 异步演进：回调 → Promise → async/await
-- [ ] 笔记：`docs/frontend/javascript/` — Event Loop：宏任务/微任务执行顺序
+- [ ] 笔记：`docs/programming-languages/javascript/` — 异步演进：回调 → Promise → async/await
+- [ ] 笔记：`docs/programming-languages/javascript/` — Event Loop：宏任务/微任务执行顺序
 
 ---
 
@@ -165,12 +165,12 @@
 **知识沉淀**（项目）
 
 - [ ] 笔记：`docs/frontend/react/` — reconcileChildFibers diff 算法核心逻辑
-- [ ] 笔记：`docs/frontend/typescript/` — 本周遇到的 TS 类型问题整理
+- [ ] 笔记：`docs/programming-languages/typescript/` — 本周遇到的 TS 类型问题整理
 
 **主动学习**（P0 · JavaScript）
 
-- [ ] 笔记：`docs/frontend/javascript/` — 深拷贝 vs 浅拷贝实现方案汇总
-- [ ] 笔记：`docs/frontend/javascript/` — 手写题汇总：new / call / apply / bind / instanceof
+- [ ] 笔记：`docs/programming-languages/javascript/` — 深拷贝 vs 浅拷贝实现方案汇总
+- [ ] 笔记：`docs/programming-languages/javascript/` — 手写题汇总：new / call / apply / bind / instanceof
 
 ---
 
@@ -264,7 +264,7 @@
 **知识沉淀**（项目）
 
 - [ ] 笔记：`docs/frontend/react/` — useEffect vs useLayoutEffect 执行时机
-- [ ] 笔记：`docs/frontend/performance/` — react-force-graph 大图谱性能优化方案
+- [ ] 笔记：`docs/performance/frontend/` — react-force-graph 大图谱性能优化方案
 
 **主动学习**（P0 · 计算机网络）
 
@@ -335,7 +335,7 @@
 **知识沉淀**（项目）
 
 - [ ] 笔记：`docs/devops/ci-cd/` — GitHub Actions 自动部署 Vercel 配置详解
-- [ ] 笔记：`docs/frontend/performance/` — Lighthouse 跑分 + 博客性能指标基线
+- [ ] 笔记：`docs/performance/frontend/` — Lighthouse 跑分 + 博客性能指标基线
 
 **主动学习**（P1 · CSS）
 
@@ -388,8 +388,8 @@
 
 **主动学习**（P1 · TypeScript）
 
-- [ ] 笔记：`docs/frontend/typescript/type-system/` — 泛型：约束、多泛型、泛型工具函数
-- [ ] 笔记：`docs/frontend/typescript/type-system/` — 条件类型、infer 关键字
+- [ ] 笔记：`docs/programming-languages/typescript/type-system/` — 泛型：约束、多泛型、泛型工具函数
+- [ ] 笔记：`docs/programming-languages/typescript/type-system/` — 条件类型、infer 关键字
 
 ---
 
@@ -498,7 +498,7 @@
 
 **面试知识**
 
-- [ ] 笔记：`docs/frontend/javascript/` — 原型链、继承、闭包深度复习
+- [ ] 笔记：`docs/programming-languages/javascript/` — 原型链、继承、闭包深度复习
 - [ ] 手写题：实现 `new`、`call`、`apply`、`bind`
 
 **主动学习**（P1 · 设计模式）
@@ -517,7 +517,7 @@
 **面试知识**
 
 - [ ] 笔记：`docs/frontend/browser/` — 渲染流程（重排/重绘/合成）
-- [ ] 笔记：`docs/frontend/javascript/` — Event Loop、微任务/宏任务
+- [ ] 笔记：`docs/programming-languages/javascript/` — Event Loop、微任务/宏任务
 
 **主动学习**（P1 · 设计模式）
 
@@ -553,7 +553,7 @@
 
 **面试知识**
 
-- [ ] 笔记：`docs/frontend/javascript/` — 异步编程（Promise/async-await 原理）
+- [ ] 笔记：`docs/programming-languages/javascript/` — 异步编程（Promise/async-await 原理）
 - [ ] 笔记：`docs/frontend/react/` — React 面试高频（Fiber、diff、调度、hooks 原理）
 
 **主动学习**（P2 · 操作系统）

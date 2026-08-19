@@ -5,7 +5,7 @@ icon: creative
 star: true
 ---
 
-学习 JavaScript 过程中的笔记。
+这里记录 ECMAScript 语言语法、语义和内置对象。浏览器 API 与 Node.js API 分别放在对应的宿主环境目录。
 
 ## 目录
 
@@ -26,8 +26,13 @@ star: true
 - [函数](./functions.md)
 - [this 指向](./this-binding.md)
 - [手写 call、apply、bind](./implement-call-apply-bind.md)
-- [addEventListener](./event-listeners.md)
 - [判断对象值相等](./object-equality.md)
-- [AJAX](./ajax.md)
 - [浅拷贝与深拷贝](./shallow-deep-copy.md)
 - [事件循环](./event-loop.md)
+
+## 相关平台
+
+- [浏览器](../../frontend/browser/)
+- [AJAX](../../frontend/browser/ajax.md)
+- [DOM 事件监听](../../frontend/browser/event-listeners.md)
+- [Node.js](../../backend/node/)

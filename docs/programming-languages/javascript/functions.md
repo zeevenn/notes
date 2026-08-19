@@ -405,7 +405,7 @@ console.log(fn()) // 'bar'
 })()
 ```
 
-具体应用见 [早期模块化方案](../engineering/concepts/modularization.md#iife)。
+具体应用见 [早期模块化方案](../../frontend/engineering/concepts/modularization.md#iife)。
 
 ## 私有变量
 

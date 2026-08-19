@@ -48,37 +48,6 @@ export default [
     ]
   },
   {
-    text: 'JavaScript',
-    icon: 'js',
-    collapsible: true,
-    prefix: '/frontend/javascript/',
-    children: [
-      '',
-      'var-let-const',
-      'data-types',
-      'type-checking',
-      'primitive-vs-reference',
-      'execution-context',
-      'type-conversion-methods',
-      'basic-reference-types',
-      'collection-types',
-      'array-like-objects',
-      'object-properties',
-      'creating-objects',
-      'inheritance',
-      'class',
-      'implement-new',
-      'functions',
-      'this-binding',
-      'implement-call-apply-bind',
-      'event-listeners',
-      'object-equality',
-      'ajax',
-      'shallow-deep-copy',
-      'event-loop'
-    ]
-  },
-  {
     text: 'Browser',
     collapsible: true,
     icon: 'gugeliulanqi',
@@ -91,7 +60,10 @@ export default [
       'cross-origin',
       'web-storage',
       'web-worker',
-      'service-worker'
+      'service-worker',
+      'webassembly',
+      'ajax',
+      'event-listeners'
     ]
   },
   {
@@ -256,5 +228,37 @@ export default [
       'videojs-component-guide',
       'wechat-video-preload'
     ]
+  },
+  {
+    text: 'Animation',
+    collapsible: true,
+    prefix: '/frontend/animation/',
+    children: ['']
+  },
+  {
+    text: 'Mobile',
+    collapsible: true,
+    prefix: '/frontend/mobile/',
+    children: [
+      '',
+      {
+        text: 'React Native 与 Expo',
+        collapsible: true,
+        prefix: 'expo/',
+        children: ['']
+      }
+    ]
+  },
+  {
+    text: 'State Management',
+    collapsible: true,
+    prefix: '/frontend/state-management/',
+    children: ['']
+  },
+  {
+    text: 'Testing',
+    collapsible: true,
+    prefix: '/frontend/testing/',
+    children: ['']
   }
 ]
