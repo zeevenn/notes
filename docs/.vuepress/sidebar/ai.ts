@@ -47,7 +47,13 @@ export default [
     collapsible: true,
     icon: 'robot',
     prefix: '/ai/agents/',
-    children: ['', 'function-calling', 'context-management', 'memory-system']
+    children: [
+      '',
+      'function-calling',
+      'context-management',
+      'memory-system',
+      'prompt-injection-defense'
+    ]
   },
   {
     text: 'MCP',

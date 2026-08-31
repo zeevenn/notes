@@ -159,6 +159,8 @@ open_questions:
 
 上传文件、网页、工具结果和其他 Agent 的输出都可能包含不可信指令。如果这些内容被写入摘要或长期记忆，影响会跨轮甚至跨会话持续。OWASP 将这种情况归为 [Memory & Context Poisoning](https://genai.owasp.org/2026/05/13/memory-is-a-feature-it-is-also-an-attack-surface/)。防护不能只依赖提示词，应由宿主程序实施来源标记、租户隔离、写入审批、权限检查和高影响操作确认。
 
+这些来源形成的完整攻击路径及其工具、外发和测试边界见 [Agent 提示词注入防护](./prompt-injection-defense.md)。
+
 ## 如何评估上下文管理
 
 上下文管理需要在固定任务集上评估，而不是只观察回答是否流畅：
