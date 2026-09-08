@@ -35,13 +35,13 @@ export default [
     prefix: '/programming-languages/java/',
     children: [
       '',
-      'maven',
       {
-        text: 'Maven 专题',
+        text: 'Maven',
         collapsible: true,
         icon: 'Maven',
         prefix: 'maven/',
         children: [
+          '',
           'lifecycle-and-plugins',
           'dependency-management',
           'pom-and-inheritance',

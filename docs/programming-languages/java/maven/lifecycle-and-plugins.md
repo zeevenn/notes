@@ -17,22 +17,33 @@ Maven 把构建过程拆成有顺序的阶段，但阶段本身不包含编译�
 mvn clean package
 ```
 
-这条命令包含两个阶段：
+这条命令依次调用两套生命周期：
 
 1. 执行 `clean` 生命周期直到 `clean` 阶段，删除上次构建产生的 `target`。
 2. 执行 `default` 生命周期，从起点一直运行到 `package` 阶段。
 
-`package` 不是只执行打包。Maven 到达它之前，会依次完成资源处理、主代码编译、测试代码编译和单元测试。
+`clean` 不属于 `default` 生命周期，也不会在 `package`、`verify` 前自动执行。只有命令显式包含 `clean` 时，Maven 才先清理旧输出。IDEA 的 Maven 面板通常把 Clean 生命周期显示在 Default 生命周期前面，这只是分组和显示顺序，不表示执行 Default 阶段时会自动运行 Clean。
+
+`package` 也不是只执行打包。Maven 到达它之前，会依次完成资源处理、主代码编译、测试代码编译和单元测试。
 
 ```mermaid
 flowchart LR
-    V[validate] --> C[compile]
-    C --> T[test]
-    T --> P[package]
-    P --> VE[verify]
-    VE --> I[install]
-    I --> D[deploy]
+    subgraph cleanLifecycle[Clean 生命周期]
+        PC[pre-clean] --> CL[clean]
+        CL --> POC[post-clean]
+    end
+
+    subgraph defaultLifecycle[Default 生命周期]
+        V[validate] --> C[compile]
+        C --> T[test]
+        T --> P[package]
+        P --> VE[verify]
+        VE --> I[install]
+        I --> D[deploy]
+    end
 ```
+
+上方是两条独立链路。执行 `mvn clean verify` 时，Maven 先沿 Clean 链路运行到 `clean`，再沿 Default 链路运行到 `verify`。
 
 调用较后的阶段会包含此前阶段。因此日常完整检查通常使用 `verify`，而不是依次执行 `compile test package verify`。
 

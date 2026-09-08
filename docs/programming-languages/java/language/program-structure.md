@@ -258,7 +258,7 @@ java Hello.java
 - [变量与运算符](./variables-and-operators.md)
 - [方法](./methods.md)
 - [类与封装](./classes-and-encapsulation.md)
-- [Maven](../maven.md)
+- [Maven](../maven/)
 
 ## 参考资料
 

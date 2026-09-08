@@ -169,7 +169,7 @@ Java 9 引入模块系统和模块路径（module path）。模块通过 `module
 
 - [程序基本结构](./program-structure.md)
 - [类与封装](./classes-and-encapsulation.md)
-- [Maven](../maven.md)
+- [Maven](../maven/)
 
 ## 参考资料
 

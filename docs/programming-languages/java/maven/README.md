@@ -10,7 +10,7 @@ tag:
 
 Maven 使用项目对象模型（Project Object Model，POM）描述项目，并由插件执行编译、测试、打包和发布等工作。POM 位于项目根目录的 `pom.xml`；它声明项目坐标、依赖、构建插件以及这些配置之间的继承关系。
 
-本组笔记以 Maven 3.9.x 和 Java 17 为基线。截至 2026-09-08，Maven 4 仍处于候选发布阶段，不作为主学习路径的前提。
+未特别标注时，本组笔记以 Maven 3.9.x 和 Java 17 为基线。Maven 4 的差异应单独标注，不混入 Maven 3 的默认行为。
 
 ## 一个最小构建
 
@@ -133,13 +133,13 @@ mvnw.cmd clean verify
 
 ## 学习路径
 
-1. [生命周期与插件](./maven/lifecycle-and-plugins.md)：理解一条 Maven 命令实际执行了什么。
-2. [依赖管理](./maven/dependency-management.md)：理解类路径、传递依赖、scope、版本调解和 BOM。
-3. [POM、继承与配置](./maven/pom-and-inheritance.md)：理解有效 POM、父 POM、属性和插件管理。
-4. [多模块构建](./maven/multi-module-builds.md)：理解聚合项目、父项目和 Reactor。
-5. [仓库与 settings.xml](./maven/repositories-and-settings.md)：理解构件从哪里下载、向哪里发布以及凭据放在哪里。
-6. [排障方法](./maven/troubleshooting.md)：从运行环境、有效模型、依赖图和插件输出定位问题。
-7. [CI 与可复现构建](./maven/ci-and-reproducible-builds.md)：固定工具版本、构建环境和发布边界。
+1. [生命周期与插件](./lifecycle-and-plugins.md)：理解一条 Maven 命令实际执行了什么。
+2. [依赖管理](./dependency-management.md)：理解类路径、传递依赖、scope、版本调解和 BOM。
+3. [POM、继承与配置](./pom-and-inheritance.md)：理解有效 POM、父 POM、属性和插件管理。
+4. [多模块构建](./multi-module-builds.md)：理解聚合项目、父项目和 Reactor。
+5. [仓库与 settings.xml](./repositories-and-settings.md)：理解构件从哪里下载、向哪里发布以及凭据放在哪里。
+6. [排障方法](./troubleshooting.md)：从运行环境、有效模型、依赖图和插件输出定位问题。
+7. [CI 与可复现构建](./ci-and-reproducible-builds.md)：固定工具版本、构建环境和发布边界。
 
 ## 参考资料
 

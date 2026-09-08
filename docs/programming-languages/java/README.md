@@ -11,7 +11,7 @@
 
 ### 笔记
 
-- [Maven](./maven.md)
+- [Maven](./maven/)
   - [生命周期与插件](./maven/lifecycle-and-plugins.md)
   - [依赖管理](./maven/dependency-management.md)
   - [POM、继承与配置](./maven/pom-and-inheritance.md)
