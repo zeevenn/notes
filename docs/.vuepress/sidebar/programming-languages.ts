@@ -37,6 +37,21 @@ export default [
       '',
       'maven',
       {
+        text: 'Maven 专题',
+        collapsible: true,
+        icon: 'Maven',
+        prefix: 'maven/',
+        children: [
+          'lifecycle-and-plugins',
+          'dependency-management',
+          'pom-and-inheritance',
+          'multi-module-builds',
+          'repositories-and-settings',
+          'troubleshooting',
+          'ci-and-reproducible-builds'
+        ]
+      },
+      {
         text: 'Language',
         collapsible: true,
         icon: 'code',
