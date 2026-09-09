@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Tue, 08 Sep 2026 14:54:27 GMT</pubDate>
-    <lastBuildDate>Tue, 08 Sep 2026 14:54:27 GMT</lastBuildDate>
+    <pubDate>Wed, 09 Sep 2026 01:38:50 GMT</pubDate>
+    <lastBuildDate>Wed, 09 Sep 2026 01:38:50 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
@@ -1657,16 +1657,6 @@ element<span class="token punctuation">.</span><span class="token function">addE
 </ul>
 </li>
 </ul>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>Python</title>
-      <link>https://zeevenn.github.io/notes/notes/programming-languages/python/</link>
-      <guid>https://zeevenn.github.io/notes/notes/programming-languages/python/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Python</source>
-      <description>Python </description>
-      <pubDate>Wed, 19 Aug 2026 02:12:32 GMT</pubDate>
-      <content:encoded><![CDATA[
 ]]></content:encoded>
     </item>
     <item>
@@ -4494,6 +4484,16 @@ console<span class="token punctuation">.</span><span class="token function">log<
       <content:encoded><![CDATA[<p>首先，三者都是 JavaScript 声明变量的方式。区别在于：</p>
 <p>|              | var                        | let                        | const                      |<br>
 |</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>https://zeevenn.github.io/notes/notes/programming-languages/python/</link>
+      <guid>https://zeevenn.github.io/notes/notes/programming-languages/python/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Python</source>
+      <description>Python </description>
+      <pubDate>Wed, 19 Aug 2026 02:12:32 GMT</pubDate>
+      <content:encoded><![CDATA[
 ]]></content:encoded>
     </item>
     <item>

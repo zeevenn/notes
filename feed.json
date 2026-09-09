@@ -328,17 +328,6 @@
       "tags": []
     },
     {
-      "title": "Python",
-      "url": "https://zeevenn.github.io/notes/notes/programming-languages/python/",
-      "id": "https://zeevenn.github.io/notes/notes/programming-languages/python/",
-      "summary": "Python ",
-      "content_html": "\n",
-      "date_published": "2026-08-19T02:12:32.000Z",
-      "date_modified": "2026-08-19T02:12:32.000Z",
-      "authors": [],
-      "tags": []
-    },
-    {
       "title": "类数组对象",
       "url": "https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html",
       "id": "https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html",
@@ -599,6 +588,17 @@
       "tags": [
         "JavaScript"
       ]
+    },
+    {
+      "title": "Python",
+      "url": "https://zeevenn.github.io/notes/notes/programming-languages/python/",
+      "id": "https://zeevenn.github.io/notes/notes/programming-languages/python/",
+      "summary": "Python ",
+      "content_html": "\n",
+      "date_published": "2026-08-19T02:12:32.000Z",
+      "date_modified": "2026-08-19T02:12:32.000Z",
+      "authors": [],
+      "tags": []
     },
     {
       "title": "TypeScript",
