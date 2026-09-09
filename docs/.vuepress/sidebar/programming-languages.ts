@@ -39,9 +39,9 @@ export default [
         text: 'Maven',
         collapsible: true,
         icon: 'Maven',
+        link: 'maven/',
         prefix: 'maven/',
         children: [
-          '',
           'lifecycle-and-plugins',
           'dependency-management',
           'pom-and-inheritance',
