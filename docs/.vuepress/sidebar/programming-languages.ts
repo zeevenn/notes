@@ -3,9 +3,9 @@ export default [
     text: 'JavaScript',
     collapsible: true,
     icon: 'js',
+    link: '/programming-languages/javascript/',
     prefix: '/programming-languages/javascript/',
     children: [
-      '',
       'var-let-const',
       'data-types',
       'type-checking',
@@ -32,9 +32,9 @@ export default [
     text: 'Java',
     collapsible: true,
     icon: 'java',
+    link: '/programming-languages/java/',
     prefix: '/programming-languages/java/',
     children: [
-      '',
       {
         text: 'Maven',
         collapsible: true,
@@ -55,9 +55,9 @@ export default [
         text: 'Language',
         collapsible: true,
         icon: 'code',
+        link: 'language/',
         prefix: 'language/',
         children: [
-          '',
           'program-structure',
           'primitive-types',
           'variables-and-operators',
@@ -84,9 +84,9 @@ export default [
         text: 'Standard Library',
         collapsible: true,
         icon: 'library',
+        link: 'standard-library/',
         prefix: 'standard-library/',
         children: [
-          '',
           'collections-overview',
           'list',
           'set',

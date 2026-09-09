@@ -3,9 +3,9 @@ export default [
     text: 'Networking',
     collapsible: true,
     icon: 'network',
+    link: '/computer-science/networking/',
     prefix: '/computer-science/networking/',
     children: [
-      '',
       'network-model',
       'http-overview',
       'get-vs-post',
@@ -22,7 +22,8 @@ export default [
     text: 'Operating System',
     collapsible: true,
     icon: 'caozuoxitong',
+    link: '/computer-science/operating-system/',
     prefix: '/computer-science/operating-system/',
-    children: ['', 'character-encoding', 'terminal-setup']
+    children: ['character-encoding', 'terminal-setup']
   }
 ]

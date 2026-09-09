@@ -3,9 +3,9 @@ export default [
     text: 'Data Structures',
     collapsible: true,
     icon: 'suanfa',
+    link: '/algorithms/data-structures/',
     prefix: '/algorithms/data-structures/',
     children: [
-      '',
       'array',
       'binary-tree',
       'binary-search-tree',
@@ -21,9 +21,9 @@ export default [
     text: 'Patterns & Techniques',
     collapsible: true,
     icon: 'practice',
+    link: '/algorithms/patterns/',
     prefix: '/algorithms/patterns/',
     children: [
-      '',
       'dynamic-programming',
       'two-pointers',
       'sliding-window',

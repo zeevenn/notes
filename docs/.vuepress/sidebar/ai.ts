@@ -3,9 +3,9 @@ export default [
     text: 'LLM 基础',
     collapsible: true,
     icon: 'basic',
+    link: '/ai/llm-fundamentals/',
     prefix: '/ai/llm-fundamentals/',
     children: [
-      '',
       {
         text: '核心原理',
         collapsible: true,
@@ -24,16 +24,17 @@ export default [
     text: 'Prompt Engineering',
     collapsible: true,
     icon: 'practice',
+    link: '/ai/prompt-engineering/',
     prefix: '/ai/prompt-engineering/',
-    children: ['']
+    children: []
   },
   {
     text: 'RAG',
     collapsible: true,
     icon: 'search',
+    link: '/ai/rag/',
     prefix: '/ai/rag/',
     children: [
-      '',
       'ingestion-and-chunking',
       'retrieval-and-reranking',
       'generation-and-citations',
@@ -46,9 +47,9 @@ export default [
     text: 'Agents',
     collapsible: true,
     icon: 'robot',
+    link: '/ai/agents/',
     prefix: '/ai/agents/',
     children: [
-      '',
       'function-calling',
       'context-management',
       'memory-system',
@@ -59,14 +60,16 @@ export default [
     text: 'MCP',
     collapsible: true,
     icon: 'plugin',
+    link: '/ai/mcp/',
     prefix: '/ai/mcp/',
-    children: ['', 'what-is-mcp', 'architecture']
+    children: ['what-is-mcp', 'architecture']
   },
   {
     text: 'Skills',
     collapsible: true,
     icon: 'skill',
+    link: '/ai/skills/',
     prefix: '/ai/skills/',
-    children: ['', 'agent-skills-overview']
+    children: ['agent-skills-overview']
   }
 ]

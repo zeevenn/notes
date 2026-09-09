@@ -3,9 +3,9 @@ export default [
     text: 'Fundamentals',
     collapsible: true,
     icon: 'basic',
+    link: '/system-design/fundamentals/',
     prefix: '/system-design/fundamentals/',
     children: [
-      '',
       'scalability',
       'availability-vs-consistency',
       'load-balancing',
@@ -17,9 +17,9 @@ export default [
     text: 'Case Studies',
     collapsible: true,
     icon: 'practice',
+    link: '/system-design/cases/',
     prefix: '/system-design/cases/',
     children: [
-      '',
       'design-url-shortener',
       'design-rate-limiter',
       'design-message-queue',

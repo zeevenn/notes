@@ -3,9 +3,9 @@ export default [
     text: 'HTML',
     icon: 'html5',
     collapsible: true,
+    link: '/frontend/html/',
     prefix: '/frontend/html/',
     children: [
-      '',
       'src-vs-href',
       'defer-async-module',
       'meta-tags',
@@ -20,9 +20,9 @@ export default [
     text: 'CSS',
     icon: 'css3',
     collapsible: true,
+    link: '/frontend/css/',
     prefix: '/frontend/css/',
     children: [
-      '',
       'selectors',
       'box-model',
       'text-and-font',
@@ -51,9 +51,9 @@ export default [
     text: 'Browser',
     collapsible: true,
     icon: 'gugeliulanqi',
+    link: '/frontend/browser/',
     prefix: '/frontend/browser/',
     children: [
-      '',
       'url-to-page',
       'v8-engine',
       'memory-management',
@@ -69,10 +69,10 @@ export default [
   {
     text: 'React',
     collapsible: true,
+    link: '/frontend/react/',
     prefix: '/frontend/react/',
     icon: 'react',
     children: [
-      '',
       'fundamentals',
       'use-state',
       'use-effect',
@@ -93,10 +93,10 @@ export default [
   {
     text: 'Vue',
     collapsible: true,
+    link: '/frontend/vue/',
     prefix: '/frontend/vue/',
     icon: 'vue',
     children: [
-      '',
       'parent-child-communication',
       'provide-inject',
       'vuex-internals',
@@ -113,53 +113,58 @@ export default [
   {
     text: 'Next.js',
     collapsible: true,
+    link: '/frontend/next/',
     prefix: '/frontend/next/',
     icon: 'next-js',
     children: [
-      '',
       {
         text: 'Pages Router',
         collapsible: true,
+        link: 'pages-router/',
         prefix: 'pages-router/',
         icon: 'page-dir',
-        children: ['', 'pages-and-layouts']
+        children: ['pages-and-layouts']
       }
     ]
   },
   {
     text: 'Pixi',
     collapsible: true,
+    link: '/frontend/pixi/',
     prefix: '/frontend/pixi/',
     icon: 'pixi',
-    children: ['', 'quick-start', 'architecture-overview', 'render-loop', 'scene-graph']
+    children: ['quick-start', 'architecture-overview', 'render-loop', 'scene-graph']
   },
   {
     text: 'Rendering',
     collapsible: true,
     icon: '7',
+    link: '/frontend/rendering/',
     prefix: '/frontend/rendering/',
-    children: ['', 'qwik', 'react-server-components', 'resumability-vs-hydration']
+    children: ['qwik', 'react-server-components', 'resumability-vs-hydration']
   },
   {
     text: 'Engineering',
     collapsible: true,
     icon: 'jiejiangongcheng',
+    link: '/frontend/engineering/',
     prefix: '/frontend/engineering/',
     children: [
       {
         text: 'Basic',
         collapsible: true,
         icon: 'config',
+        link: 'basic/',
         prefix: 'basic/',
-        children: ['', 'tsconfig']
+        children: ['tsconfig']
       },
       {
         text: 'Concepts',
         collapsible: true,
         icon: 'basic',
+        link: 'concepts/',
         prefix: 'concepts/',
         children: [
-          '',
           'modularization',
           'package-managers',
           'toolchain-overview',
@@ -174,10 +179,10 @@ export default [
       {
         text: 'Webpack',
         collapsible: true,
+        link: 'webpack/',
         prefix: 'webpack/',
         icon: 'webpack',
         children: [
-          '',
           'basics',
           'css-handling',
           'asset-handling',
@@ -192,16 +197,18 @@ export default [
       {
         text: 'Vite',
         collapsible: true,
+        link: 'vite/',
         prefix: 'vite/',
         icon: 'vite',
-        children: ['', 'getting-started']
+        children: ['getting-started']
       },
       {
         text: 'Rspack',
         collapsible: true,
+        link: 'rspack/',
         prefix: 'rspack/',
         icon: 'r-mark',
-        children: ['', 'getting-started']
+        children: ['getting-started']
       }
     ]
   },
@@ -209,9 +216,9 @@ export default [
     text: 'Snippets',
     collapsible: true,
     icon: 'practice',
+    link: '/frontend/snippets/',
     prefix: '/frontend/snippets/',
     children: [
-      '',
       'dnd-kit',
       'canvas-annotation',
       'file-upload',
@@ -233,14 +240,15 @@ export default [
   {
     text: 'Mobile',
     collapsible: true,
+    link: '/frontend/mobile/',
     prefix: '/frontend/mobile/',
     children: [
-      '',
       {
         text: 'React Native 与 Expo',
         collapsible: true,
+        link: 'expo/',
         prefix: 'expo/',
-        children: ['']
+        children: []
       }
     ]
   }
