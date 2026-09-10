@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Wed, 09 Sep 2026 02:14:57 GMT</pubDate>
-    <lastBuildDate>Wed, 09 Sep 2026 02:14:57 GMT</lastBuildDate>
+    <pubDate>Thu, 10 Sep 2026 05:21:05 GMT</pubDate>
+    <lastBuildDate>Thu, 10 Sep 2026 05:21:05 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
@@ -7335,13 +7335,13 @@ scores<span class="token punctuation">.</span><span class="token function">add</
       <link>https://zeevenn.github.io/notes/notes/backend/node/streams-and-backpressure.html</link>
       <guid>https://zeevenn.github.io/notes/notes/backend/node/streams-and-backpressure.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Node.js 流与背压</source>
-      <description>流（Stream）把一段持续到达的数据抽象成可以逐块读取、转换和写出的序列。文件、HTTP 请求与响应、TCP Socket、子进程的标准输出，都可能提供 Node.js 流接口。 流解决的不只是“大文件不能一次读入内存”。它还规定了数据如何分块、上下游如何连接、错误如何传播，以及消费端跟不上生产端时如何让生产端减速。最后一个问题就是背压（Backpr...</description>
+      <description>流（Stream）把持续到达的数据表示成一系列数据块（chunk），让程序可以边读取、边处理、边写出。它适合文件、HTTP 请求与响应、TCP Socket、子进程输出等不能或不适合一次性全部加载的数据。 流需要解决两个相互关联的问题：如何只保留当前正在处理的数据，以及下游处理速度跟不上时，如何让上游减速。第二个问题就是背压（Backpressure）...</description>
       <category>Node.js</category>
       <pubDate>Wed, 12 Aug 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p>流（Stream）把一段持续到达的数据抽象成可以逐块读取、转换和写出的序列。文件、HTTP 请求与响应、TCP Socket、子进程的标准输出，都可能提供 Node.js 流接口。</p>
-<p>流解决的不只是“大文件不能一次读入内存”。它还规定了数据如何分块、上下游如何连接、错误如何传播，以及消费端跟不上生产端时如何让生产端减速。最后一个问题就是背压（Backpressure）。</p>
-<h2>从完整加载改为逐块处理</h2>
-<p>假设需要压缩一个可能很大的日志文件。完整加载会先让整个文件进入进程内存：</p>
+      <content:encoded><![CDATA[<p>流（Stream）把持续到达的数据表示成一系列数据块（chunk），让程序可以边读取、边处理、边写出。它适合文件、HTTP 请求与响应、TCP Socket、子进程输出等不能或不适合一次性全部加载的数据。</p>
+<p>流需要解决两个相互关联的问题：如何只保留当前正在处理的数据，以及下游处理速度跟不上时，如何让上游减速。第二个问题就是背压（Backpressure）。</p>
+<h2>从一次性加载到流式处理</h2>
+<p>假设需要压缩一个日志文件。一次性处理会依次把完整输入和完整输出放进内存：</p>
 <div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> readFile<span class="token punctuation">,</span> writeFile <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:fs/promises'</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> gzip <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:zlib'</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> promisify <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:util'</span>
@@ -7350,8 +7350,8 @@ scores<span class="token punctuation">.</span><span class="token function">add</
 <span class="token keyword">const</span> input <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">'access.log'</span><span class="token punctuation">)</span>
 <span class="token keyword">const</span> output <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">gzipAsync</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span>
 <span class="token keyword">await</span> <span class="token function">writeFile</span><span class="token punctuation">(</span><span class="token string">'access.log.gz'</span><span class="token punctuation">,</span> output<span class="token punctuation">)</span>
-</code></pre></div><p>这段代码只有在输入规模明确受控时才合适。输入越大，<code>input</code>、压缩过程中的中间数据和 <code>output</code> 占用的内存越多，而且必须等到读取完成后才能开始后续步骤。</p>
-<p>流式版本只在内存中保留当前正在处理和少量排队的数据块：</p>
+</code></pre></div><p>这段代码直观，适合规模明确且较小的数据。输入变大或并发任务增多时，完整输入、处理过程中的中间结果和完整输出会共同占用内存，而且压缩必须等待读取结束后才能开始。</p>
+<p>流式版本把三个阶段连成一条处理链：</p>
 <div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> createReadStream<span class="token punctuation">,</span> createWriteStream <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:fs'</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> pipeline <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:stream/promises'</span>
 <span class="token keyword">import</span> <span class="token punctuation">{</span> createGzip <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'node:zlib'</span>
@@ -7361,13 +7361,11 @@ scores<span class="token punctuation">.</span><span class="token function">add</
   <span class="token function">createGzip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
   <span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token string">'access.log.gz'</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span>
-</code></pre></div><p>这个处理链包含三个参与者：</p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>文件（来源） -&gt; gzip（转换） -&gt; 压缩文件（去向）
+</code></pre></div><div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>文件（来源） -&gt; gzip（转换） -&gt; 压缩文件（去向）
    Readable       Transform          Writable
-</code></pre></div><p>读取到一个数据块（chunk）后，压缩器就可以处理它，压缩结果也可以立即写入目标文件。这里的 chunk 是一次交给应用处理的数据片段，不等同于文件中的一行、一个 JSON 对象或一条业务消息；一次读取可能截断一行，也可能同时包含多行。</p>
-<h2>四种流对应四种角色</h2>
-<p>Node.js 提供四种基础流类型：</p>
-<p>| 类型 | 数据方向 | 常见实例 |<br>
+</code></pre></div><p>文件的第一批数据到达后，压缩和写出就可以开始。内存中主要保留当前处理的数据和各阶段少量排队的数据，而不是完整文件。</p>
+<p>Stream 和完整 <code>Buffer</code> 不是谁替代谁，而是面向不同约束：</p>
+<p>| 约束 | 一次性读取完整 <code>Buffer</code> | Stream |<br>
 |</p>
 ]]></content:encoded>
     </item>
