@@ -6,16 +6,16 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Tue, 15 Sep 2026 11:37:12 GMT</pubDate>
-    <lastBuildDate>Tue, 15 Sep 2026 11:37:12 GMT</lastBuildDate>
+    <pubDate>Tue, 15 Sep 2026 14:19:02 GMT</pubDate>
+    <lastBuildDate>Tue, 15 Sep 2026 14:19:02 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
     <category>ai</category>
     <category>Project</category>
     <category>microservice</category>
-    <category>Browser</category>
     <category>linux</category>
+    <category>Browser</category>
     <category>JavaScript</category>
     <category>node</category>
     <category>Node.js</category>
@@ -23,6 +23,144 @@
     <category>backend</category>
     <category>安全</category>
     <category>mcp</category>
+    <item>
+      <title>数组</title>
+      <link>https://zeevenn.github.io/notes/notes/programming-languages/java/language/arrays.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/programming-languages/java/language/arrays.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">数组</source>
+      <description>数组用来保存一组相同类型的元素，例如一组成绩。数组创建后长度固定，但其中的元素可以修改。 固定长度与默认值 Java 数组可以保存基本类型值，也可以保存对象引用： 新数组的数值元素默认为零，char 为 &amp;apos;\u0000&amp;apos;，boolean 为 false，引用元素为 null。数组的长度通过字段 length 读取，则调用 length() 方法。 下标...</description>
+      <category>java</category>
+      <pubDate>Sun, 25 Jan 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p>数组用来保存一组相同类型的元素，例如一组成绩。数组创建后长度固定，但其中的元素可以修改。</p>
+<h2>固定长度与默认值</h2>
+<p>Java 数组可以保存基本类型值，也可以保存对象引用：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> zeros <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> numbers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">99</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>zeros<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 0</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 99</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>numbers<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 3</span>
+</code></pre></div><p>新数组的数值元素默认为零，<code>char</code> 为 <code>'\u0000'</code>，<code>boolean</code> 为 <code>false</code>，引用元素为 <code>null</code>。数组的长度通过字段 <code>length</code> 读取，则调用 <code>length()</code> 方法。</p>
+<p>下标范围是 <code>0</code> 到 <code>length - 1</code>；上例读取 <code>numbers[3]</code> 会抛出 <code>ArrayIndexOutOfBoundsException</code>（数组下标越界异常）。需要改变长度时，要创建新数组或改用。</p>
+<h2>复制、内容比较与输出</h2>
+<p>数组赋值只复制引用。<code>Arrays.copyOf()</code> 才会创建新的数组；<code>Arrays</code> 是 <code>java.util</code> 包中的数组工具类：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Arrays</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> original <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> same <span class="token operator">=</span> original<span class="token punctuation">;</span>
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> copy <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">copyOf</span><span class="token punctuation">(</span>original<span class="token punctuation">,</span> original<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>original <span class="token operator">==</span> same<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">// true</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>original <span class="token operator">==</span> copy<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">// false</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>original<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>copy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// false：数组没有重写内容比较</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>original<span class="token punctuation">,</span> copy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true：逐个比较元素</span>
+
+copy<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>original<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 3]</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>copy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// [9, 2, 3]</span>
+</code></pre></div><p>直接打印 <code>int[]</code> 不会列出元素，使用 <code>Arrays.toString()</code> 才能得到上面的输出。对于对象数组，复制的元素仍是对象引用，不会复制对象本身，见。</p>
+<h2>排序、查找与区间复制</h2>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Arrays</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> numbers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 修改原数组</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [1, 2, 5, 8, 9]</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">binarySearch</span><span class="token punctuation">(</span>numbers<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 2</span>
+
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> middle <span class="token operator">=</span> <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">copyOfRange</span><span class="token punctuation">(</span>numbers<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>middle<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [2, 5]：包含下标 1，不包含下标 3</span>
+
+<span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span>numbers<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [10, 10, 10, 10, 10]</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>middle<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// [2, 5]：副本不受影响</span>
+</code></pre></div><p><code>binarySearch()</code> 使用二分查找，前提是数组已经按相同规则排序；未排序时结果没有保证。<code>sort()</code> 和 <code>fill()</code> 修改原数组，<code>copyOf()</code> 和 <code>copyOfRange()</code> 返回新数组。</p>
+<h2>多维数组</h2>
+<p>Java 的二维数组是“数组的数组”，每一行可以有不同长度：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Arrays</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> rows <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>rows<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 2：行数</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>rows<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 2：第一行长度</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>rows<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 3：第二行长度</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">deepToString</span><span class="token punctuation">(</span>rows<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [[1, 2], [3, 4, 5]]</span>
+</code></pre></div><p>嵌套数组的内容输出使用 <code>Arrays.deepToString()</code>，内容比较使用 <code>Arrays.deepEquals()</code>。</p>
+<p>数组与字符串互转见 ；数组与列表之间的转换见 ；方法参数中的 <code>int...</code> 写法见。</p>
+<h2>参考资料</h2>
+<ul>
+<li><a href="https://dev.java/learn/language-basics/arrays/" target="_blank" rel="noopener noreferrer">Dev.java：Creating Arrays in Your Programs</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html" target="_blank" rel="noopener noreferrer">Java 17：Arrays</a></li>
+</ul>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>String</title>
+      <link>https://zeevenn.github.io/notes/notes/programming-languages/java/language/string.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/programming-languages/java/language/string.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">String</source>
+      <description>String 用来保存文本，例如姓名或一行消息。它是引用类型，但因为文本处理十分常见，Java 为字符串字面量和拼接提供了专门的语法支持。 基本使用 用 String 声明字符串变量，文本内容写在双引号中： 得到字符串后，可以调用它的方法读取长度、取出一段文本，或检查是否包含某段内容： length() 按 char 单位计数，部分字符占两个 char...</description>
+      <category>java</category>
+      <pubDate>Sun, 25 Jan 2026 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p><code>String</code> 用来保存文本，例如姓名或一行消息。它是引用类型，但因为文本处理十分常见，Java 为字符串字面量和拼接提供了专门的语法支持。</p>
+<h2>基本使用</h2>
+<p>用 <code>String</code> 声明字符串变量，文本内容写在双引号中：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> name <span class="token operator">=</span> <span class="token string">"Alice"</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Alice</span>
+
+<span class="token class-name">String</span> message <span class="token operator">=</span> <span class="token string">"Hello, "</span> <span class="token operator">+</span> name<span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hello, Alice</span>
+</code></pre></div><p>得到字符串后，可以调用它的方法读取长度、取出一段文本，或检查是否包含某段内容：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> text <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">// 11</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// H：下标从 0 开始</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hello：包含起点，不包含终点</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">"Java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// -1：未找到</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"  "</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// false：长度不是 0</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"  "</span><span class="token punctuation">.</span><span class="token function">isBlank</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// true：仅包含空白</span>
+</code></pre></div><p><code>length()</code> 按 <code>char</code> 单位计数，部分字符占两个 <code>char</code>，因此它不一定等于看到的字符数，详见。</p>
+<h2>内容与对象</h2>
+<h3>内容比较</h3>
+<p>判断两段文本是否相同，使用 <code>equals()</code>。即使两个字符串对象保存着相同文字，它们也可能是两个不同的对象：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> text <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> another <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 显式创建另一个字符串对象</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>another<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true：内容相同</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text <span class="token operator">==</span> another<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// false：不是同一个对象</span>
+</code></pre></div><p>这里用 <code>new String(...)</code> 演示两个独立对象，普通文本赋值直接用双引号即可。<code>==</code> 检查是否为同一个对象，不能代替内容比较。两个值可能为 <code>null</code> 时，可用 <code>Objects.equals()</code>，见。</p>
+<h3>不可变性</h3>
+<p>把 <code>"Hello World"</code> 中的 <code>"World"</code> 替换为 <code>"Java"</code>，需要接收 <code>replace()</code> 的返回值：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> text <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> changed <span class="token operator">=</span> text<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">,</span> <span class="token string">"Java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>changed<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hello Java</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Hello World：原来的内容没有改变</span>
+</code></pre></div><p>这种“原字符串的内容不会被改动”的性质称为<strong>不可变性</strong>。<code>replace()</code>、<code>toUpperCase()</code> 等方法返回处理结果，忽略返回值就得不到处理后的文本。</p>
+<p>如果希望后续使用处理结果，也可以把它赋回原变量，例如 <code>text = text.replace("World", "Java")</code>。这会让变量指向处理后的字符串，原字符串对象的内容仍然不变。</p>
+<h3>字符串常量池（String Pool）</h3>
+<p>字符串常量池用于复用内容相同的字符串实例，字符串字面量会参与这种复用。因为 <code>String</code> 不可变，共享实例不会让一个使用者改掉另一个使用者看到的内容。</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> first <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> second <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> separate <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first <span class="token operator">==</span> second<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// true</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first <span class="token operator">==</span> separate<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">// false</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first <span class="token operator">==</span> separate<span class="token punctuation">.</span><span class="token function">intern</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
+</code></pre></div><p><code>intern()</code> 返回池中内容相同的实例；若不存在，则把当前实例加入池并返回它。字面量之间的 <code>==</code> 恰好为 <code>true</code>，不代表可以用 <code>==</code> 比较任意字符串的内容。</p>
+<h2>字符串拼接</h2>
+<p>少量拼接直接使用 <code>+</code>；循环中累积大量文本时，可以用 <code>StringBuilder</code> 逐步追加：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">StringBuilder</span> builder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    builder<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token class-name">String</span> result <span class="token operator">=</span> builder<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 012</span>
+</code></pre></div><h2>String vs StringBuilder vs StringBuffer</h2>
+<p>三者的区别来自内容能否修改，以及修改时是否提供线程同步：</p>
+<ul>
+<li><strong><code>String</code> 不可变</strong>：创建后内容不变，<code>s += part</code> 会把拼接结果赋回 <code>s</code>，不会修改原对象。多个线程可以共享同一个字符串的内容；但在循环中不断累积拼接，会反复复制已经拼好的内容，字符串越长，复制成本越高。</li>
+<li><strong><code>StringBuilder</code> 可变</strong>：<code>append()</code> 在同一个对象的内部缓冲区（用于存放内容的可扩容存储空间）中追加数据，容量足够时可直接复用，最后用 <code>toString()</code> 得到字符串。它不提供线程同步，省去了同步开销，但多个线程同时修改同一个实例可能相互干扰。</li>
+<li><strong><code>StringBuffer</code> 可变且提供同步</strong>：<code>append()</code> 等操作通过 <code>synchronized</code> 锁协调对同一对象的访问，使受保护的操作依次执行。同步可能带来额外开销；而且连续两次调用，如 <code>append("A").append("B")</code>，仍可能被其他线程的操作插入，两次调用不会自动成为一个不可分割的整体。</li>
+</ul>
+<p>| 特性     | String                       | StringBuilder          | StringBuffer                 |<br>
+|</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>包装类与装箱拆箱</title>
       <link>https://zeevenn.github.io/notes/notes/programming-languages/java/language/wrapper-classes.html</link>
@@ -1038,142 +1176,6 @@ mvn help:active-profiles
 ]]></content:encoded>
     </item>
     <item>
-      <title>AJAX</title>
-      <link>https://zeevenn.github.io/notes/notes/frontend/browser/ajax.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/frontend/browser/ajax.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">AJAX</source>
-      <description>AJAX，即 Asynchronous JavaScript + XML，通过 JavaScript 异步请求服务器 XML 文档（格式不一定是 XML），可以实现在不刷新页面的情况下从服务器获取数据。 AJAX 最初是通过 XMLHttpRequest 对象实现，但是它的 API 比较难用。随着 Fetch API 的出现，它支持期约（promise...</description>
-      <category>Browser</category>
-      <pubDate>Fri, 12 Aug 2022 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p>AJAX，即 Asynchronous JavaScript + XML，通过 JavaScript 异步请求服务器 XML 文档（格式不一定是 XML），可以实现在不刷新页面的情况下从服务器获取数据。</p>
-<p>AJAX 最初是通过 XMLHttpRequest 对象实现，但是它的 API 比较难用。随着 Fetch API 的出现，它支持期约（promise）和服务线程（service worker），逐渐代替了 XHR 对象。</p>
-<h2>XMLHttpRequest 对象</h2>
-<h3>基本 API</h3>
-<p>所有现代浏览器都支持的对象，通过 XMLHttpRequest 构造函数支持 XHR 对象。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">let</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre></div><p>XHR 对象需要首先调用 <code>open()</code> 方法，这个方法接收3 个参数：请求类型（"get"、"post"等）、请求 URL，以及表示请求是否异步的布尔值。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"get"</span><span class="token punctuation">,</span> <span class="token string">"server.com"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>要发送定义好的请求，就需要调用 <code>send()</code> 方法，它接收一个参数，作为请求体发送的数据。如果不需要发送请求体，则必须传 null。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
-</code></pre></div><p>收到响应后，XHR 对象的以下属性会被填充上数据。</p>
-<ul>
-<li><code>responseText</code>：作为响应体返回的文本；</li>
-<li><code>responseXML</code>：如果响应的内容类型是 "text/xml" 或 "application/xml"，那就是包含响应数据的 XML DOM 文档；</li>
-<li><code>status</code>：响应的 HTTP 状态；</li>
-<li><code>statusText</code>：响应的 HTTP 状态描述。</li>
-</ul>
-<p>同时 XHR 对象还有一个 <code>readyState</code> 属性，表示当前处于请求/响应的哪个阶段：</p>
-<ul>
-<li>0：未初始化（Uninitialized）。尚未调用 <code>open()</code> 方法；</li>
-<li>1：已打开（Open）。已调用 <code>open()</code> 方法，尚未调用 <code>send()</code> 方法；</li>
-<li>2：已发送（Sent）。已调用 <code>send()</code> 方法，尚未收到响应；</li>
-<li>3：接收中（Receiving）。已经收到部分响应；</li>
-<li>4：完成（Complete）。已经收到所有响应，可以使用了；</li>
-</ul>
-<p>每次 <code>readyState</code> 从一个值变成另一个值，都会触发 <code>readystatechange</code> 事件。可以借此机会检查 <code>readyState</code> 的值。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>xhr<span class="token punctuation">.</span><span class="token function-variable function">onreadystatechange</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>readyState <span class="token operator">==</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>status <span class="token operator">&gt;=</span> <span class="token number">200</span> <span class="token operator">&amp;&amp;</span> xhr<span class="token punctuation">.</span>status <span class="token operator">&lt;</span> <span class="token number">300</span><span class="token punctuation">)</span> <span class="token operator">||</span> xhr<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">304</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>response<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-      console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>status<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>除此之外，可以使用 <code>setRequestHeader()</code> 方法添加一些头部信息，这个方法接收两个参数：头部字段的名称和值。为保证请求头部被发送，必须在 <code>open()</code> 之后、<code>send()</code> 之前调用。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"get"</span><span class="token punctuation">,</span> <span class="token string">"server.com"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-xhr<span class="token punctuation">.</span><span class="token function">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">"MyHeader"</span><span class="token punctuation">,</span> <span class="token string">"MyValue"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><h3>实现 AJAX</h3>
-<p>使用 XMLHttpRequest 实现 AJAX 的基本步骤如下：</p>
-<ol>
-<li>创建 XHR 对象；</li>
-<li>在这个对象上使用 <code>open()</code> 方法创建 HTTP 请求；</li>
-<li>在发起请求前，可以为这个对象添加一些信息（如请求头）和监听函数；</li>
-<li>当请求的额外信息和监听函数添加完成后，使用 <code>send()</code> 发送请求。</li>
-</ol>
-<p>可以使用 Promise 对 AJAX 请求进行封装。</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token string">'server.com'</span>
-
-<span class="token keyword">function</span> <span class="token function">getJSON</span><span class="token punctuation">(</span><span class="token parameter">url</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">const</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-    <span class="token comment">// 创建 http 请求</span>
-    xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">,</span> url<span class="token punctuation">)</span>
-    <span class="token comment">// 设置状态监听函数</span>
-    xhr<span class="token punctuation">.</span><span class="token function-variable function">onreadystatechange</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>readyState <span class="token operator">==</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>status <span class="token operator">&gt;=</span> <span class="token number">200</span> <span class="token operator">&amp;&amp;</span> xhr<span class="token punctuation">.</span>status <span class="token operator">&lt;</span> <span class="token number">300</span><span class="token punctuation">)</span> <span class="token operator">||</span> xhr<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">304</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-          <span class="token function">resolve</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>response<span class="token punctuation">)</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-          <span class="token function">reject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>statusText<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">// 设置请求头信息</span>
-    xhr<span class="token punctuation">.</span>responeseType <span class="token operator">=</span> <span class="token string">'json'</span>
-    xhr<span class="token punctuation">.</span><span class="token function">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">'Accept'</span><span class="token punctuation">,</span> <span class="token string">'application/json'</span><span class="token punctuation">)</span>
-    <span class="token comment">// 发送请求</span>
-    xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div>]]></content:encoded>
-    </item>
-    <item>
-      <title>addEventListener</title>
-      <link>https://zeevenn.github.io/notes/notes/frontend/browser/event-listeners.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/frontend/browser/event-listeners.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">addEventListener</source>
-      <description>addEventListener 的第三个参数可以是一个布尔值 useCapture，也可以是一个包含多个配置项的 options 对象。两者的作用有所不同： useCapture 参数 (布尔值) 这个是较早的写法，主要用于指定事件监听器的触发阶段： true：表示监听器会在捕获阶段（capture phase）触发。 false：表示监听器会在冒泡...</description>
-      <pubDate>Mon, 25 Aug 2025 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p><code>addEventListener</code> 的第三个参数可以是一个布尔值 <code>useCapture</code>，也可以是一个包含多个配置项的 <code>options</code> 对象。两者的作用有所不同：</p>
-<ol>
-<li><code>useCapture</code> 参数 (布尔值)</li>
-</ol>
-<p>这个是较早的写法，主要用于指定事件监听器的触发阶段：</p>
-<ul>
-<li><code>true</code>：表示监听器会在捕获阶段（capture phase）触发。</li>
-<li><code>false</code>：表示监听器会在冒泡阶段（bubble phase）触发（默认值）。</li>
-</ul>
-<p>事件的传播分为三个阶段：</p>
-<ul>
-<li>捕获阶段：事件从根节点向目标节点传播。</li>
-<li>目标阶段：事件到达目标节点。</li>
-<li>冒泡阶段：事件从目标节点向根节点反向传播。</li>
-</ul>
-<p>举例：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>element<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 在捕获阶段触发</span>
-element<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 在冒泡阶段触发（默认）</span>
-</code></pre></div><ol start="2">
-<li><code>options</code> 对象</li>
-</ol>
-<p>ES6 引入了 <code>options</code> 对象，取代了仅使用 <code>useCapture</code> 布尔值的单一功能，提供了更丰富的配置选项。<code>options</code> 可以包含以下属性：</p>
-<ul>
-<li><code>capture</code>：等价于以前的 <code>useCapture</code> 参数。<code>true</code> 表示在捕获阶段触发，<code>false</code> 表示在冒泡阶段触发。</li>
-<li><code>once</code>：如果设为 <code>true</code>，监听器只会触发一次，然后自动移除。</li>
-<li><code>passive</code>：如果设为 <code>true</code>，表示监听器不会调用 <code>preventDefault()</code>。这可以提高滚动性能，尤其是在移动设备上。</li>
-<li><code>signal</code>：允许通过 <code>AbortSignal</code> 来移除事件监听器，通常配合 <code>AbortController</code> 使用。</li>
-</ul>
-<p>举例说明：</p>
-<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>element<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  <span class="token literal-property property">capture</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>   <span class="token comment">// 捕获阶段触发</span>
-  <span class="token literal-property property">once</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>      <span class="token comment">// 监听器只会执行一次</span>
-  <span class="token literal-property property">passive</span><span class="token operator">:</span> <span class="token boolean">true</span>    <span class="token comment">// 不能调用 preventDefault()</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><ul>
-<li><code>capture: true</code>：在捕获阶段触发。</li>
-<li><code>once: true</code>：只会触发一次，触发后自动移除事件监听器。</li>
-<li><code>passive: true</code>：禁止调用 <code>event.preventDefault()</code>，这样可以提升性能，尤其是在处理滚动事件时。</li>
-</ul>
-<p>总结：</p>
-<ul>
-<li><code>useCapture</code> 是布尔值，简单控制事件在捕获还是冒泡阶段触发。</li>
-<li><code>options</code> 是扩展的配置对象，提供了更多的功能（例如 <code>once</code>、<code>passive</code> 等），可以更灵活地控制事件监听行为。</li>
-</ul>
-]]></content:encoded>
-    </item>
-    <item>
       <title>Linux</title>
       <link>https://zeevenn.github.io/notes/notes/devops/linux/</link>
       <guid>https://zeevenn.github.io/notes/notes/devops/linux/</guid>
@@ -1664,6 +1666,142 @@ PubkeyAuthentication <span class="token function">yes</span>
 <figure><img src="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/step4-pw-fail.png" alt="step4-pw-fail" tabindex="0" loading="lazy"><figcaption>step4-pw-fail</figcaption></figure>
 ]]></content:encoded>
       <enclosure url="https://raw.githubusercontent.com/dribble-njr/typora-njr/master/img/step1-create-ssh.png" type="image/png"/>
+    </item>
+    <item>
+      <title>AJAX</title>
+      <link>https://zeevenn.github.io/notes/notes/frontend/browser/ajax.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/browser/ajax.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">AJAX</source>
+      <description>AJAX，即 Asynchronous JavaScript + XML，通过 JavaScript 异步请求服务器 XML 文档（格式不一定是 XML），可以实现在不刷新页面的情况下从服务器获取数据。 AJAX 最初是通过 XMLHttpRequest 对象实现，但是它的 API 比较难用。随着 Fetch API 的出现，它支持期约（promise...</description>
+      <category>Browser</category>
+      <pubDate>Fri, 12 Aug 2022 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p>AJAX，即 Asynchronous JavaScript + XML，通过 JavaScript 异步请求服务器 XML 文档（格式不一定是 XML），可以实现在不刷新页面的情况下从服务器获取数据。</p>
+<p>AJAX 最初是通过 XMLHttpRequest 对象实现，但是它的 API 比较难用。随着 Fetch API 的出现，它支持期约（promise）和服务线程（service worker），逐渐代替了 XHR 对象。</p>
+<h2>XMLHttpRequest 对象</h2>
+<h3>基本 API</h3>
+<p>所有现代浏览器都支持的对象，通过 XMLHttpRequest 构造函数支持 XHR 对象。</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">let</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><p>XHR 对象需要首先调用 <code>open()</code> 方法，这个方法接收3 个参数：请求类型（"get"、"post"等）、请求 URL，以及表示请求是否异步的布尔值。</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"get"</span><span class="token punctuation">,</span> <span class="token string">"server.com"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>要发送定义好的请求，就需要调用 <code>send()</code> 方法，它接收一个参数，作为请求体发送的数据。如果不需要发送请求体，则必须传 null。</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+</code></pre></div><p>收到响应后，XHR 对象的以下属性会被填充上数据。</p>
+<ul>
+<li><code>responseText</code>：作为响应体返回的文本；</li>
+<li><code>responseXML</code>：如果响应的内容类型是 "text/xml" 或 "application/xml"，那就是包含响应数据的 XML DOM 文档；</li>
+<li><code>status</code>：响应的 HTTP 状态；</li>
+<li><code>statusText</code>：响应的 HTTP 状态描述。</li>
+</ul>
+<p>同时 XHR 对象还有一个 <code>readyState</code> 属性，表示当前处于请求/响应的哪个阶段：</p>
+<ul>
+<li>0：未初始化（Uninitialized）。尚未调用 <code>open()</code> 方法；</li>
+<li>1：已打开（Open）。已调用 <code>open()</code> 方法，尚未调用 <code>send()</code> 方法；</li>
+<li>2：已发送（Sent）。已调用 <code>send()</code> 方法，尚未收到响应；</li>
+<li>3：接收中（Receiving）。已经收到部分响应；</li>
+<li>4：完成（Complete）。已经收到所有响应，可以使用了；</li>
+</ul>
+<p>每次 <code>readyState</code> 从一个值变成另一个值，都会触发 <code>readystatechange</code> 事件。可以借此机会检查 <code>readyState</code> 的值。</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>xhr<span class="token punctuation">.</span><span class="token function-variable function">onreadystatechange</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>readyState <span class="token operator">==</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>status <span class="token operator">&gt;=</span> <span class="token number">200</span> <span class="token operator">&amp;&amp;</span> xhr<span class="token punctuation">.</span>status <span class="token operator">&lt;</span> <span class="token number">300</span><span class="token punctuation">)</span> <span class="token operator">||</span> xhr<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">304</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>response<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>status<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>除此之外，可以使用 <code>setRequestHeader()</code> 方法添加一些头部信息，这个方法接收两个参数：头部字段的名称和值。为保证请求头部被发送，必须在 <code>open()</code> 之后、<code>send()</code> 之前调用。</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"get"</span><span class="token punctuation">,</span> <span class="token string">"server.com"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+xhr<span class="token punctuation">.</span><span class="token function">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">"MyHeader"</span><span class="token punctuation">,</span> <span class="token string">"MyValue"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3>实现 AJAX</h3>
+<p>使用 XMLHttpRequest 实现 AJAX 的基本步骤如下：</p>
+<ol>
+<li>创建 XHR 对象；</li>
+<li>在这个对象上使用 <code>open()</code> 方法创建 HTTP 请求；</li>
+<li>在发起请求前，可以为这个对象添加一些信息（如请求头）和监听函数；</li>
+<li>当请求的额外信息和监听函数添加完成后，使用 <code>send()</code> 发送请求。</li>
+</ol>
+<p>可以使用 Promise 对 AJAX 请求进行封装。</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code><span class="token keyword">const</span> url <span class="token operator">=</span> <span class="token string">'server.com'</span>
+
+<span class="token keyword">function</span> <span class="token function">getJSON</span><span class="token punctuation">(</span><span class="token parameter">url</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// 创建 http 请求</span>
+    xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">'get'</span><span class="token punctuation">,</span> url<span class="token punctuation">)</span>
+    <span class="token comment">// 设置状态监听函数</span>
+    xhr<span class="token punctuation">.</span><span class="token function-variable function">onreadystatechange</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>readyState <span class="token operator">==</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>status <span class="token operator">&gt;=</span> <span class="token number">200</span> <span class="token operator">&amp;&amp;</span> xhr<span class="token punctuation">.</span>status <span class="token operator">&lt;</span> <span class="token number">300</span><span class="token punctuation">)</span> <span class="token operator">||</span> xhr<span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">304</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">resolve</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>response<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+          <span class="token function">reject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>statusText<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 设置请求头信息</span>
+    xhr<span class="token punctuation">.</span>responeseType <span class="token operator">=</span> <span class="token string">'json'</span>
+    xhr<span class="token punctuation">.</span><span class="token function">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">'Accept'</span><span class="token punctuation">,</span> <span class="token string">'application/json'</span><span class="token punctuation">)</span>
+    <span class="token comment">// 发送请求</span>
+    xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div>]]></content:encoded>
+    </item>
+    <item>
+      <title>addEventListener</title>
+      <link>https://zeevenn.github.io/notes/notes/frontend/browser/event-listeners.html</link>
+      <guid>https://zeevenn.github.io/notes/notes/frontend/browser/event-listeners.html</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">addEventListener</source>
+      <description>addEventListener 的第三个参数可以是一个布尔值 useCapture，也可以是一个包含多个配置项的 options 对象。两者的作用有所不同： useCapture 参数 (布尔值) 这个是较早的写法，主要用于指定事件监听器的触发阶段： true：表示监听器会在捕获阶段（capture phase）触发。 false：表示监听器会在冒泡...</description>
+      <pubDate>Mon, 25 Aug 2025 00:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p><code>addEventListener</code> 的第三个参数可以是一个布尔值 <code>useCapture</code>，也可以是一个包含多个配置项的 <code>options</code> 对象。两者的作用有所不同：</p>
+<ol>
+<li><code>useCapture</code> 参数 (布尔值)</li>
+</ol>
+<p>这个是较早的写法，主要用于指定事件监听器的触发阶段：</p>
+<ul>
+<li><code>true</code>：表示监听器会在捕获阶段（capture phase）触发。</li>
+<li><code>false</code>：表示监听器会在冒泡阶段（bubble phase）触发（默认值）。</li>
+</ul>
+<p>事件的传播分为三个阶段：</p>
+<ul>
+<li>捕获阶段：事件从根节点向目标节点传播。</li>
+<li>目标阶段：事件到达目标节点。</li>
+<li>冒泡阶段：事件从目标节点向根节点反向传播。</li>
+</ul>
+<p>举例：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>element<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 在捕获阶段触发</span>
+element<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 在冒泡阶段触发（默认）</span>
+</code></pre></div><ol start="2">
+<li><code>options</code> 对象</li>
+</ol>
+<p>ES6 引入了 <code>options</code> 对象，取代了仅使用 <code>useCapture</code> 布尔值的单一功能，提供了更丰富的配置选项。<code>options</code> 可以包含以下属性：</p>
+<ul>
+<li><code>capture</code>：等价于以前的 <code>useCapture</code> 参数。<code>true</code> 表示在捕获阶段触发，<code>false</code> 表示在冒泡阶段触发。</li>
+<li><code>once</code>：如果设为 <code>true</code>，监听器只会触发一次，然后自动移除。</li>
+<li><code>passive</code>：如果设为 <code>true</code>，表示监听器不会调用 <code>preventDefault()</code>。这可以提高滚动性能，尤其是在移动设备上。</li>
+<li><code>signal</code>：允许通过 <code>AbortSignal</code> 来移除事件监听器，通常配合 <code>AbortController</code> 使用。</li>
+</ul>
+<p>举例说明：</p>
+<div class="language-javascript" data-ext="js" data-title="js"><pre class="language-javascript"><code>element<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">capture</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>   <span class="token comment">// 捕获阶段触发</span>
+  <span class="token literal-property property">once</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>      <span class="token comment">// 监听器只会执行一次</span>
+  <span class="token literal-property property">passive</span><span class="token operator">:</span> <span class="token boolean">true</span>    <span class="token comment">// 不能调用 preventDefault()</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><ul>
+<li><code>capture: true</code>：在捕获阶段触发。</li>
+<li><code>once: true</code>：只会触发一次，触发后自动移除事件监听器。</li>
+<li><code>passive: true</code>：禁止调用 <code>event.preventDefault()</code>，这样可以提升性能，尤其是在处理滚动事件时。</li>
+</ul>
+<p>总结：</p>
+<ul>
+<li><code>useCapture</code> 是布尔值，简单控制事件在捕获还是冒泡阶段触发。</li>
+<li><code>options</code> 是扩展的配置对象，提供了更多的功能（例如 <code>once</code>、<code>passive</code> 等），可以更灵活地控制事件监听行为。</li>
+</ul>
+]]></content:encoded>
     </item>
     <item>
       <title>Go</title>
@@ -4595,6 +4733,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <li></li>
 <li></li>
 <li></li>
+<li></li>
 </ul>
 <h2>类与对象</h2>
 <ul>
@@ -6379,66 +6518,6 @@ copied<span class="token punctuation">[</span><span class="token number">0</span
 <span class="token keyword">double</span> result <span class="token operator">=</span> <span class="token function">sqrt</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token constant">PI</span><span class="token punctuation">;</span>  <span class="token comment">// 不需要写 Math.sqrt() 和 Math.PI</span>
 </code></pre></div><h3>与 TypeScript 的区别</h3>
 <p>| 特性              | Java                     | TypeScript           |<br>
-|</p>
-]]></content:encoded>
-    </item>
-    <item>
-      <title>String 与数组</title>
-      <link>https://zeevenn.github.io/notes/notes/programming-languages/java/language/string-array.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/programming-languages/java/language/string-array.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">String 与数组</source>
-      <description>String 用来保存文本，例如姓名或一行消息；数组用来保存一组元素，例如一组成绩。 String（字符串） 字符串的基本使用 用 String 声明字符串变量，文本内容写在双引号中： 得到字符串后，可以调用它的方法读取长度、取出一段文本，或检查是否包含某段内容： length() 按 char 单位计数，部分字符占两个 char，因此它不一定等于看到...</description>
-      <category>java</category>
-      <pubDate>Sun, 25 Jan 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<p><code>String</code> 用来保存文本，例如姓名或一行消息；数组用来保存一组元素，例如一组成绩。</p>
-<h2>String（字符串）</h2>
-<h3>字符串的基本使用</h3>
-<p>用 <code>String</code> 声明字符串变量，文本内容写在双引号中：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> name <span class="token operator">=</span> <span class="token string">"Alice"</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Alice</span>
-
-<span class="token class-name">String</span> message <span class="token operator">=</span> <span class="token string">"Hello, "</span> <span class="token operator">+</span> name<span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hello, Alice</span>
-</code></pre></div><p>得到字符串后，可以调用它的方法读取长度、取出一段文本，或检查是否包含某段内容：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> text <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">// 11</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// H：下标从 0 开始</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hello：包含起点，不包含终点</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">"Java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// -1：未找到</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"  "</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// false：长度不是 0</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"  "</span><span class="token punctuation">.</span><span class="token function">isBlank</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// true：仅包含空白</span>
-</code></pre></div><p><code>length()</code> 按 <code>char</code> 单位计数，部分字符占两个 <code>char</code>，因此它不一定等于看到的字符数，详见。</p>
-<p>判断两段文本是否相同，使用 <code>equals()</code>。即使两个字符串对象保存着相同文字，它们也可能是两个不同的对象：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> text <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> another <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 显式创建另一个字符串对象</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>another<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true：内容相同</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text <span class="token operator">==</span> another<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// false：不是同一个对象</span>
-</code></pre></div><p>这里用 <code>new String(...)</code> 演示两个独立对象，普通文本赋值直接用双引号即可。<code>==</code> 检查是否为同一个对象，不能代替内容比较。两个值可能为 <code>null</code> 时，可用 <code>Objects.equals()</code>，见。</p>
-<h3>不可变性</h3>
-<p>把 <code>"Hello World"</code> 中的 <code>"World"</code> 替换为 <code>"Java"</code>，需要接收 <code>replace()</code> 的返回值：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">String</span> text <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">;</span>
-<span class="token class-name">String</span> changed <span class="token operator">=</span> text<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">,</span> <span class="token string">"Java"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>changed<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Hello Java</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>text<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Hello World：原来的内容没有改变</span>
-</code></pre></div><p>这种“原字符串的内容不会被改动”的性质称为<strong>不可变性</strong>。<code>replace()</code>、<code>toUpperCase()</code> 等方法返回处理结果，忽略返回值就得不到处理后的文本。</p>
-<p>如果希望后续使用处理结果，也可以把它赋回原变量，例如 <code>text = text.replace("World", "Java")</code>。这会让变量指向处理后的字符串，原字符串对象的内容仍然不变。</p>
-<h3>字符串拼接</h3>
-<p>少量拼接直接使用 <code>+</code>；循环中累积大量文本时，可以用 <code>StringBuilder</code> 逐步追加：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">StringBuilder</span> builder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    builder<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token class-name">String</span> result <span class="token operator">=</span> builder<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 012</span>
-</code></pre></div><h3>String vs StringBuilder vs StringBuffer</h3>
-<p>三者的区别来自内容能否修改，以及修改时是否提供线程同步：</p>
-<ul>
-<li><strong><code>String</code> 不可变</strong>：创建后内容不变，<code>s += part</code> 会把拼接结果赋回 <code>s</code>，不会修改原对象。多个线程可以共享同一个字符串的内容；但在循环中不断累积拼接，会反复复制已经拼好的内容，字符串越长，复制成本越高。</li>
-<li><strong><code>StringBuilder</code> 可变</strong>：<code>append()</code> 在同一个对象的内部缓冲区（用于存放内容的可扩容存储空间）中追加数据，容量足够时可直接复用，最后用 <code>toString()</code> 得到字符串。它不提供线程同步，省去了同步开销，但多个线程同时修改同一个实例可能相互干扰。</li>
-<li><strong><code>StringBuffer</code> 可变且提供同步</strong>：<code>append()</code> 等操作通过 <code>synchronized</code> 锁协调对同一对象的访问，使受保护的操作依次执行。同步可能带来额外开销；而且连续两次调用，如 <code>append("A").append("B")</code>，仍可能被其他线程的操作插入，两次调用不会自动成为一个不可分割的整体。</li>
-</ul>
-<p>| 特性     | String                       | StringBuilder          | StringBuffer                 |<br>
 |</p>
 ]]></content:encoded>
     </item>
@@ -8570,39 +8649,6 @@ language = zh-CN
 <li></li>
 </ul>
 ]]></content:encoded>
-    </item>
-    <item>
-      <title>Agent Skills Overview</title>
-      <link>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</link>
-      <guid>https://zeevenn.github.io/notes/notes/ai/skills/agent-skills-overview.html</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Agent Skills Overview</source>
-      <description>Overview Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。 从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。 通过 Skills，Agent 可以： 执行特定任务...</description>
-      <category>ai</category>
-      <pubDate>Fri, 06 Feb 2026 00:00:00 GMT</pubDate>
-      <content:encoded><![CDATA[<h2>Overview</h2>
-<p>Agent Skills 是一种轻量、开放的能力封装格式。一个 skill 通常是包含指令、脚本和资源的文件夹，用于把特定任务的知识、流程和工具调用方式交给 Agent。</p>
-<p>从工程角度看，Skills 是 Agent 可以按需加载的可复用功能单元，位置接近插件、任务模板或小型工作流。</p>
-<p>通过 Skills，Agent 可以：</p>
-<ul>
-<li>执行特定任务（如创建 Git commit、生成 PDF、分析代码）</li>
-<li>访问外部工具和服务</li>
-<li>扩展自身能力而无需修改核心代码</li>
-</ul>
-<h2>What are skills?</h2>
-<p>一个标准的 Skill 通常包含以下文件：</p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>my-skill/
-├── SKILL.md          # Required: instructions + metadata (name and description)
-├── scripts/          # Optional: executable code
-├── references/       # Optional: documentation
-└── assets/           # Optional: templates, resources
-</code></pre></div><p>Skills 使用渐进式披露来高效管理上下文：</p>
-<ol>
-<li>发现阶段：启动时，Agent 仅加载每个可用 skill 的名称和描述——刚好足够判断该 skill 何时可能相关。</li>
-<li>激活阶段：当任务与某个 skill 的描述匹配时，Agent 会将完整的 <code>SKILL.md</code> 指令读入上下文。</li>
-<li>执行阶段：Agent 按照指令执行操作，根据需要加载引用的文件或运行捆绑的代码。</li>
-</ol>
-<p>这种方式能减少默认上下文占用，同时保留按需展开复杂指令的能力。</p>
-<div class="language-markdown" data-ext="md" data-title="md"><pre class="language-markdown"><code></code></pre></div>]]></content:encoded>
     </item>
   </channel>
 </rss>
