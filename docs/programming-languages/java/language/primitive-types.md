@@ -1,5 +1,5 @@
 ---
-title: Primitive Types
+title: 基本数据类型
 date: 2026-01-24
 category: java
 ---
@@ -10,6 +10,8 @@ Java 有八个基本数据类型（primitive data types）：
 - 浮点类型：`float`、`double`
 - 字符类型：`char`
 - 布尔类型：`boolean`
+
+变量按声明位置区分：直接声明在类中、方法外的变量叫 **字段**；在方法内部声明的变量叫 **局部变量**。**数组元素** 是数组中每个位置存放的值。
 
 | 类型      | 含义                     | 字段和数组元素的默认值 |
 | --------- | ------------------------ | ---------------------- |
@@ -22,11 +24,22 @@ Java 有八个基本数据类型（primitive data types）：
 | `char`    | 16-bit Unicode character | `'\u0000'`             |
 | `boolean` | true or false            | `false`                |
 
-默认值只适用于字段和数组元素。局部变量没有默认值，必须在读取前明确赋值：
+表中的默认值由 Java 自动赋给字段和新建数组的元素。局部变量不会自动获得默认值，必须在读取前赋值：
 
 ```java
-int count;
-// System.out.println(count); // 编译错误：count 可能尚未初始化
+public class App {
+    static int total; // 字段：声明在类中、方法外，默认值为 0
+
+    public static void main(String[] args) {
+        int count; // 局部变量：声明在方法内，没有默认值
+
+        System.out.println(total); // 输出 0
+        // System.out.println(count); // 编译错误：count 尚未赋值
+
+        count = 1;
+        System.out.println(count); // 输出 1
+    }
+}
 ```
 
 > [!TIP]
@@ -203,8 +216,6 @@ System.out.println(0.1 + 0.2 == 0.3); // 输出：false
 
 1. **使用 `BigDecimal` 进行精确计算**（推荐用于金融、货币等场景）：
 
-`BigDecimal` 位于标准库的 `java.math` 包。下面的 `import` 让当前文件可以直接使用 `BigDecimal` 这个简单名称；此处先理解为“引入要使用的类型”，完整规则见[包与导入](./packages-and-imports.md)。
-
 ```java
 import java.math.BigDecimal;
 
@@ -217,7 +228,7 @@ System.out.println(sum);  // 输出：0.3
 > [!WARNING]
 > 必须使用 `new BigDecimal("0.1")` 而非 `new BigDecimal(0.1)`，后者仍会受到 double 精度影响。
 
-**使用整数运算**（金额以"分"为单位）：
+**使用整数运算**（金额以“分”为单位）：
 
 ```java
 int priceInCents = 100;  // 1.00 元
@@ -267,5 +278,5 @@ System.out.println(c1 + c2 + c3);  // 输出：195（字符参与运算会转为
 | `\uXXXX` | Unicode 字符 |
 
 > [!TIP]
-> 单个字符用 `char`，字符串用 `String` 类。详见 [String and Array](/programming-languages/java/language/string-array.md)。
+> 单个字符用 `char`，字符串用 `String` 类。详见 [String and Array](./string-array.md)。
 > `char` 用单引号括起，`String` 用双引号括起。
