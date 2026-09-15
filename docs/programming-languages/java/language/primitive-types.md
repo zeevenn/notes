@@ -113,25 +113,7 @@ int willThisCompile = (Integer.MAX_VALUE + 1); // 编译通过，但结果是 In
 System.out.println("Result of overflow: " + willThisCompile); // 输出 -2147483648
 ```
 
-## 包装类
-
-上述这八种基本数据类型都有对应的包装类（Wrapper Classes），它们位于 `java.lang` 包中。
-
-包装类提供了基本的操作方法，并且允许将基本数据类型作为对象来处理。包装类如下：
-
-| Primitive Type | Wrapper Class |
-| -------------- | ------------- |
-| `byte`         | `Byte`        |
-| `short`        | `Short`       |
-| `int`          | `Integer`     |
-| `long`         | `Long`        |
-| `float`        | `Float`       |
-| `double`       | `Double`      |
-| `char`         | `Character`   |
-| `boolean`      | `Boolean`     |
-
-> [!TIP]
-> JavaScript 中也有类似的概念，详情见 [原始值包装类型](../../javascript/basic-reference-types.md#原始值包装类型)。
+基本类型也有对应的对象形式，见[包装类与装箱拆箱](./wrapper-classes.md)。
 
 ## Casting（类型转换）
 
@@ -278,5 +260,5 @@ System.out.println(c1 + c2 + c3);  // 输出：195（字符参与运算会转为
 | `\uXXXX` | Unicode 字符 |
 
 > [!TIP]
-> 单个字符用 `char`，字符串用 `String` 类。详见 [String and Array](./string-array.md)。
+> 单个字符用 `char`，字符串用 `String` 类。详见 [String 与数组](./string-array.md)。
 > `char` 用单引号括起，`String` 用双引号括起。

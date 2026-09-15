@@ -199,7 +199,6 @@ if (value instanceof Segment(Point(int x1, int y1), Point(int x2, int y2))) {
 - [类与封装](./classes-and-encapsulation.md)
 - [继承与多态](./inheritance-and-polymorphism.md)
 - [抽象类与接口](./abstract-and-interface.md)
-- [控制流](./control-flow.md)
 - [Object 的通用契约](./object-contract.md)
 
 ## 参考资料

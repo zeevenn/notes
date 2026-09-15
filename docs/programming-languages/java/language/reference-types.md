@@ -174,6 +174,7 @@ Java 不依赖垃圾收集器关闭文件、网络连接等外部资源。这类
 
 ## 相关内容
 
+- [包装类与装箱拆箱](./wrapper-classes.md)
 - [基本数据类型](./primitive-types.md)
 - [Object 的通用契约](./object-contract.md)
 - [方法](./methods.md)

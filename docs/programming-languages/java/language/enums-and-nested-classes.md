@@ -189,7 +189,6 @@ Comparator<String> byLength =
 ## 相关内容
 
 - [类与封装](./classes-and-encapsulation.md)
-- [控制流](./control-flow.md)
 - [Lambda 与方法引用](./lambda-and-method-references.md)
 
 ## 参考资料

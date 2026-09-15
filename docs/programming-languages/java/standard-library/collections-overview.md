@@ -66,6 +66,8 @@ List<Integer> scoreList = new ArrayList<>();
 scoreList.add(90); // int 自动装箱为 Integer
 ```
 
+基本类型值如何转换成包装对象，见[包装类与装箱拆箱](../language/wrapper-classes.md)。
+
 选择数组的常见情况：
 
 - 长度固定并且自然由索引表示；
