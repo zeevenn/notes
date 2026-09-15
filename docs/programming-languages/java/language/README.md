@@ -5,7 +5,8 @@
 - [程序基本结构](./program-structure.md)
 - [变量](./variables.md)
 - [基本数据类型](./primitive-types.md)
-- [String 与数组](./string-array.md)
+- [String](./string.md)
+- [数组](./arrays.md)
 - [方法](./methods.md)
 
 ## 类与对象

@@ -260,5 +260,5 @@ System.out.println(c1 + c2 + c3);  // 输出：195（字符参与运算会转为
 | `\uXXXX` | Unicode 字符 |
 
 > [!TIP]
-> 单个字符用 `char`，字符串用 `String` 类。详见 [String 与数组](./string-array.md)。
+> 单个字符用 `char`，字符串用 `String` 类。详见 [String](./string.md)。
 > `char` 用单引号括起，`String` 用双引号括起。

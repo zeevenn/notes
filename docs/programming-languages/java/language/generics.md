@@ -226,7 +226,7 @@ Number[] numbers = new Integer[1];
 
 - [引用类型与对象](./reference-types.md)
 - [抽象类与接口](./abstract-and-interface.md)
-- [String 与数组](./string-array.md)
+- [数组](./arrays.md)
 - [异常处理](./exceptions.md)
 - [集合框架总览](../standard-library/collections-overview.md)
 
