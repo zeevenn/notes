@@ -52,15 +52,15 @@ export default [
         ]
       },
       {
-        text: 'Language',
+        text: '语言基础',
         collapsible: true,
         icon: 'code',
         link: 'language/',
         prefix: 'language/',
         children: [
           'program-structure',
+          'variables',
           'primitive-types',
-          'variables-and-operators',
           'string-array',
           'control-flow',
           'methods',
@@ -81,7 +81,7 @@ export default [
         ]
       },
       {
-        text: 'Standard Library',
+        text: '标准库',
         collapsible: true,
         icon: 'library',
         link: 'standard-library/',

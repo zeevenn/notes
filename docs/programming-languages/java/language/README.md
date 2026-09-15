@@ -3,8 +3,8 @@
 ## 基础语法
 
 - [程序基本结构](./program-structure.md)
+- [变量](./variables.md)
 - [基本数据类型](./primitive-types.md)
-- [变量与运算符](./variables-and-operators.md)
 - [String 与数组](./string-array.md)
 - [控制流](./control-flow.md)
 - [方法](./methods.md)
