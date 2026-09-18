@@ -149,19 +149,48 @@ Scope = [AO].concat([[Scope]])
 
 作用域链决定了各级上下文的代码在访问变量和函数时的顺序，在搜索变量时会从最前端开始查找，然后逐级往后，直到找到变量。
 
+以浏览器普通脚本中的嵌套函数为例：
+
 ```js
 var color = 'blue'
+
 function changeColor() {
-  if (color === 'blue') {
-    color = 'red'
-  } else {
-    color = 'blue'
+  var anotherColor = 'red'
+
+  function swapColors() {
+    var tempColor = anotherColor
+    anotherColor = color
+    color = tempColor
   }
+
+  swapColors()
 }
+
 changeColor()
 ```
 
-这里由于作用域链就可以访问到 `color` 变量，这里 `changeColor` 的作用域链包含两个对象，自身的活动对象和全局上下文的变量对象。
+作用域的嵌套关系：
+
+```text
+window
+┌─────────────────────────────────────────┐
+│ color                                   │
+│                                         │
+│ changeColor()                           │
+│ ┌─────────────────────────────────────┐ │
+│ │ anotherColor                        │ │
+│ │                                     │ │
+│ │ swapColors()                        │ │
+│ │ ┌─────────────────────────────────┐ │ │
+│ │ │ tempColor                       │ │ │
+│ │ └─────────────────────────────────┘ │ │
+│ └─────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+
+变量查找方向：swapColors() → changeColor() → window
+```
+
+`swapColors()` 在自身作用域找到 `tempColor`，向外一层找到 `anotherColor`，再向外找到全局变量 `color`。外层作用域不能反过来访问内层的局部变量。
 
 ### `this`
 
