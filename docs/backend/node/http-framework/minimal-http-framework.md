@@ -11,6 +11,10 @@ tag:
   - framework
 ---
 
+`node:http` 会把每次请求交给一个 `(req, res)` 函数。接口少时，在这个函数里判断路径、返回内容就够了；接口多起来，就需要把路由和公共处理逻辑拆出来。
+
+下面的小框架保留 Node 原生的请求、响应对象，实现 `use()`、`get()` 和路径参数。中间件采用 Koa 风格的洋葱调度；与 Express 的区别见[中间件模型对比](./express-vs-koa-middleware.md)。
+
 ## 最小 HTTP 服务器
 
 新建 `server.js`，监听 3000 端口并返回 `Hello World`：
@@ -200,7 +204,7 @@ get('/users/:id', (req, res) => {
 
 该匹配器只支持固定片段和单段参数，不支持通配符与可选参数。`filter(Boolean)` 会删除空片段，因此 `/users/42/` 和 `/users//42` 都能匹配 `/users/:id`；固定片段仍区分字母大小写。
 
-## 中间件
+## 加入 Koa 风格的洋葱调度
 
 请求日志、身份认证等逻辑通常服务于多个路由。直接把计时代码写入 `/time` 处理函数，会使其他路由重复相同代码：
 
@@ -212,19 +216,19 @@ get('/time', async (req, res) => {
 })
 ```
 
-计时代码与 `/time` 的响应内容无关，可以移到公共处理函数中。中间件接收 `req`、`res` 和 `next` 三个参数；调用 `next()` 会执行后续中间件或路由处理函数。不调用 `next()` 时，后续函数不会执行，当前中间件需要结束响应，否则 `handle()` 最终返回 `404`。
+将计时提取成公共中间件 `logger`：
 
 ```js
 async function logger(req, res, next) {
   const startedAt = Date.now()
-
-  res.once('finish', () => {
-    console.log(req.method, req.url, res.statusCode, `${Date.now() - startedAt}ms`)
-  })
-
   await next()
+  console.log(req.method, req.url, res.statusCode, `${Date.now() - startedAt}ms`)
 }
 ```
+
+`next()` 负责调用后面的处理函数，称为当前中间件的“下游”。这里约定它返回下游执行的 Promise；`await next()` 等它完成，才继续计算耗时。这样，日志就能包含路由中异步查询的时间。
+
+如果一个中间件没有调用 `next()`，请求就停在这一层。例如认证失败时，直接返回错误响应，不再执行后面的业务逻辑。
 
 认证中间件在请求头有效时继续执行，认证失败时直接返回 `401`：
 
@@ -240,7 +244,7 @@ async function requireAuth(req, res, next) {
 }
 ```
 
-中间件按注册顺序存入数组，由调度器逐个执行：
+为了让 `next()` 真正调用到下一个函数，需要把中间件存入数组，再给每个函数传入对应的 `next`：
 
 ```js
 async function run(stack, req, res) {
@@ -262,13 +266,28 @@ async function run(stack, req, res) {
 }
 ```
 
-`dispatch(0)` 从数组中的第一个函数开始。`next()` 返回 `dispatch(index + 1)` 的 Promise，因此 `await next()` 会等待后续处理链完成。`lastIndex` 用于拒绝同一个中间件重复调用 `next()`，避免后续函数执行多次。
+`dispatch(0)` 调用第一个中间件。传给它的 `next` 是 `() => dispatch(1)`，再下一层则是 `() => dispatch(2)`。由于 `dispatch` 是异步函数，每层都能拿到下一层的 Promise，等待它完成。
 
-该调度器要求 `next()` 返回 Promise，`await next()` 等待下游的方式与 Koa 中间件相近。Express 的 `next()` 只通知路由器继续调度，不能用 `await next()` 等待下游完成。详细差异见[Express 与 Koa 的中间件模型](./express-vs-koa-middleware.md)。
+例如数组里只有 `logger` 和路由函数，请求会按下面的顺序执行：
+
+```text
+logger 记录开始时间
+  → await next()，进入路由函数
+  → 路由等待异步查询，返回结果
+  → logger 恢复执行，计算耗时
+```
+
+`lastIndex` 记录已经执行到的位置。如果同一层第二次调用 `next()`，索引就会小于或等于这个值，调度器抛出错误，阻止后面的函数被重复执行。
+
+中间件调用 `next()` 后，应当等待或返回这个 Promise。只有传递逻辑时可以写 `return next()`；还有后置操作时使用 `await next()`。否则，当前层会提前结束，外层也就等不到下游。
+
+这个调度器采用 Koa 的洋葱模型：`next` 返回 `dispatch(index + 1)` 的 Promise，当前层等待下游完成后再继续。参数保留 `(req, res, next)`，不影响这种等待关系。
+
+对照 [koa-compose 完整源码](./express-vs-koa-middleware.md#源码中的-dispatch)，这里把 `compose(stack)(ctx)` 的两步调用合并成一次 `run(stack, req, res)`。原版用 `Promise.resolve()` 和 `Promise.reject()` 处理返回值与异常，这里交给 `async dispatch()`；原版的 `dispatch.bind(null, i + 1)` 则写成了 `() => dispatch(index + 1)`。`lastIndex` 对应原版的 `index`，都用于检查重复调用。
 
 ## `createApp()`
 
-路由表和中间件数组放在 `createApp()` 的闭包中，不再使用模块级变量。每个应用持有独立的注册状态，返回对象暴露 `use()`、`get()` 和 `listen()` 三个方法：
+把路由表和中间件数组收进 `createApp()`，每次调用就能创建一个独立的应用。对外提供 `use()`、`get()` 和 `listen()`：
 
 ```js
 const app = createApp()
@@ -294,6 +313,8 @@ app.listen(3000, () => {
 ```
 
 `app.use()` 注册全局中间件，所有请求都会经过 `logger`。`app.get()` 接收多个处理函数，`requireAuth` 因此只作用于 `/users/:id`。
+
+这个实现分别保存全局中间件和路由。处理请求时先找到路由，再拼成 `[...middleware, ...routeHandlers]`，所以全局中间件总在路由函数前执行，写在 `get()` 后面的 `use()` 也一样。Express 将两类注册放进同一个有序数组，执行顺序会受它们的位置影响，见 [Express 的 Layer 结构](../express/overview-architecture.md#layer)。
 
 完整的 `server.js` 如下：
 
@@ -415,11 +436,8 @@ function createApp() {
 async function logger(req, res, next) {
   const startedAt = Date.now()
 
-  res.once('finish', () => {
-    console.log(req.method, req.url, res.statusCode, `${Date.now() - startedAt}ms`)
-  })
-
   await next()
+  console.log(req.method, req.url, res.statusCode, `${Date.now() - startedAt}ms`)
 }
 
 async function requireAuth(req, res, next) {
@@ -463,18 +481,22 @@ curl -i -H 'Authorization: Bearer demo' http://localhost:3000/users/42
 
 三个请求依次返回 `200`、`401` 和 `200`。未注册的路径返回 `404`。
 
-## 实现范围
+## 请求的处理过程
 
-一次请求的处理顺序如下：
+完整代码先匹配路由，再执行拼好的中间件数组：
 
 ```text
 node:http 接收请求
-  -> 全局中间件
   -> 按方法和路径查找路由
+  -> 拼接全局中间件与匹配路由的处理函数
+  -> 全局中间件进入
   -> 路由级中间件
   -> 最终处理函数
-  -> 返回 404 或处理异常
+  -> 沿 await next() 逐层恢复外层中间件
+  -> 链正常完成后检查是否需要兜底 404；异常由入口 catch 处理
 ```
+
+这里采用洋葱调度，但响应仍由处理函数直接调用 `res.end()`。下游可能已经发送响应，日志中间件才恢复执行；Koa 的常规写法则先设置 `ctx.body`，等整条中间件链完成后再发送。要记录响应发送耗时，应监听 `finish`，见[两种模型的使用差别](./express-vs-koa-middleware.md#两种模型的使用差别)。
 
 当前代码只实现 `GET` 路由、单段路径参数和 Koa 风格中间件。以下行为仍需单独处理：
 
@@ -492,4 +514,7 @@ node:http 接收请求
 - [Node.js HTTP API](https://nodejs.org/api/http.html)
 - [MDN：Express/Node introduction](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction)
 - [Koa：Cascading middleware](https://koajs.com/#application)
+- [Koa：Writing middleware](https://github.com/koajs/koa/blob/master/docs/guide.md#writing-middleware)：组合中间件、上游恢复与响应发送顺序。
+- [koa-compose 4.1.0 源码](https://github.com/koajs/compose/blob/4.1.0/index.js)：下游 Promise 的返回关系和重复调用保护。
+- [Express：Writing middleware](https://expressjs.com/en/guide/writing-middleware/)：核对前置操作与 `next()` 的交接规则。
 - [Express：Using middleware](https://expressjs.com/en/guide/using-middleware/)

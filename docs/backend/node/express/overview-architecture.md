@@ -40,7 +40,7 @@ tag:
 
 ::: warning
 
-Most middleware (like ' + name + ') is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.
+Most middleware (like ' + name + ') is no longer bundled with Express and must be installed separately. Please see <https://github.com/senchalabs/connect#middleware>.
 
 ```js
 var removedMiddlewares = [
@@ -73,6 +73,43 @@ var removedMiddlewares = [
 支持自动解析 `query parameters` 和 `URL` 中的 `:param` 值。
 
 简单理解为分发请求并进行相应处理。
+
+## Layer
+
+Express 用 `Layer` 保存路径匹配规则和处理函数。例如：
+
+```js
+app.use(logger)
+app.get('/users/:id', requireAuth, showUser)
+```
+
+`logger` 用于所有请求，`requireAuth` 和 `showUser` 只用于匹配该路径的 GET 请求。
+
+应用里的 `Router` 是路由器，它用 `stack` 数组按注册顺序保存这些层。一条 `Route` 则记录某个路径支持的请求方法和处理函数。上面的注册结果可以简化为：
+
+```text
+Router.stack
+├─ Layer：根路径前缀匹配，调用 logger
+└─ Layer：匹配 /users/:id，进入对应 Route
+   └─ Route：支持 GET
+      └─ Route.stack
+         ├─ Layer：调用 requireAuth
+         └─ Layer：调用 showUser
+```
+
+请求 `GET /users/42` 时，先执行 `logger`。它调用 `next()`，路由器继续找到匹配 `/users/:id` 的层，取得参数 `id = '42'`，再进入 `Route`。路由里的 `requireAuth` 调用自己的 `next()` 后，才轮到 `showUser`。源码分别在 [`Router`](https://github.com/pillarjs/router/blob/v2.2.0/index.js) 和 [`Route`](https://github.com/pillarjs/router/blob/v2.2.0/lib/route.js) 中。
+
+`use()` 和路由按顺序放进同一个路由器数组。如果把日志中间件注册在一个已经响应且不再调用 `next()` 的路由后面，这个请求就不会执行日志中间件。`stack` 虽然叫“栈”，这里仍是从前往后查找，而非最后注册的先执行。
+
+`Layer` 在 [Express 4.18.2](https://github.com/expressjs/express/blob/4.18.2/lib/router/layer.js) 中就有。Express 5.1.0 将路由实现交给独立的 `router` 包，仍然使用这套结构。中间件的执行方式见[Express 与 Koa 的中间件模型](../http-framework/express-vs-koa-middleware.md)。
+
+### 相关源码
+
+- [`router` 2.2.0：Router](https://github.com/pillarjs/router/blob/v2.2.0/index.js)
+- [`router` 2.2.0：Layer](https://github.com/pillarjs/router/blob/v2.2.0/lib/layer.js)
+- [`router` 2.2.0：Route](https://github.com/pillarjs/router/blob/v2.2.0/lib/route.js)
+- [Express 4.18.2：Layer](https://github.com/expressjs/express/blob/4.18.2/lib/router/layer.js)
+- [Express 5.1.0：依赖声明](https://github.com/expressjs/express/blob/v5.1.0/package.json)
 
 ## lib 源码结构
 
