@@ -225,12 +225,7 @@ Node 会对引入过的模块进行缓存，以减少二次引入时的开销，
 在 Linux 下，打印这个可能输出：
 
 ```js
-;[
-  '/home/jackson/research/node_modules',
-  '/home/jackson/node_modules',
-  '/home/node_modules',
-  '/node_modules'
-]
+;['/home/jackson/research/node_modules', '/home/jackson/node_modules', '/home/node_modules', '/node_modules']
 ```
 
 Windows 下，可能会输出：
@@ -277,7 +272,7 @@ Windows 下，可能会输出：
 - 查找 `X/index.json` 文件
 - 查找 `X/index.node` 文件
 
-3. 如果目录分析的过程中没有成功定位，则自定义模块进入下一个模块路径中进行搜索；如果所有路径都遍历完毕，仍然没有找到目标文件，那么报错：`not found`
+1. 如果目录分析的过程中没有成功定位，则自定义模块进入下一个模块路径中进行搜索；如果所有路径都遍历完毕，仍然没有找到目标文件，那么报错：`not found`
 
 ### 模块编译
 

@@ -5,9 +5,7 @@
 ### 子目录
 
 - [Node HTTP 框架原理](./http-framework/)
-- [Express](./express/)
 - [Prisma](./prisma/)
-- [Node 模块系统与源码](./modules/)
 
 ### 笔记
 

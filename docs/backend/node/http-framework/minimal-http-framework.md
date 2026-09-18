@@ -314,7 +314,7 @@ app.listen(3000, () => {
 
 `app.use()` 注册全局中间件，所有请求都会经过 `logger`。`app.get()` 接收多个处理函数，`requireAuth` 因此只作用于 `/users/:id`。
 
-这个实现分别保存全局中间件和路由。处理请求时先找到路由，再拼成 `[...middleware, ...routeHandlers]`，所以全局中间件总在路由函数前执行，写在 `get()` 后面的 `use()` 也一样。Express 将两类注册放进同一个有序数组，执行顺序会受它们的位置影响，见 [Express 的 Layer 结构](../express/overview-architecture.md#layer)。
+这个实现分别保存全局中间件和路由。处理请求时先找到路由，再拼成 `[...middleware, ...routeHandlers]`，所以全局中间件总在路由函数前执行，写在 `get()` 后面的 `use()` 也一样。Express 将两类注册放进同一个有序数组，执行顺序会受它们的位置影响。
 
 完整的 `server.js` 如下：
 

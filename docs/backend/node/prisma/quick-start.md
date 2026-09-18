@@ -10,8 +10,6 @@ tag:
   - MySQL
 ---
 
-# Prisma 7 接入 MySQL
-
 本例从空目录创建 TypeScript 项目，通过 Prisma ORM 7 连接已有的 MySQL 服务，创建两张关联表并执行一次写入和查询。
 
 ## 前置条件

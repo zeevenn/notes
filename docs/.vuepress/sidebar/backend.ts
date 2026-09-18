@@ -48,28 +48,12 @@ export default [
         children: ['minimal-http-framework', 'express-vs-koa-middleware']
       },
       {
-        text: 'Express',
-        collapsible: true,
-        icon: 'express',
-        link: 'express/',
-        prefix: 'express/',
-        children: ['overview-architecture', 'express.js']
-      },
-      {
         text: 'Prisma',
         collapsible: true,
         icon: 'prisma',
         link: 'prisma/',
         prefix: 'prisma/',
         children: ['quick-start']
-      },
-      {
-        text: 'Modules',
-        collapsible: true,
-        icon: 'npm',
-        link: 'modules/',
-        prefix: 'modules/',
-        children: ['module-system', 'finalhandler']
       },
       'streams-and-backpressure',
       'turso-prisma-integration'
