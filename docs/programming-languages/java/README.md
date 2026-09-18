@@ -4,12 +4,12 @@
 
 ### 子目录
 
-- [Java 语言基础](./language/)
-- [Java 标准库](./standard-library/)
+- [Java 语言基础](./language/README.md)
+- [Java 标准库](./standard-library/README.md)
 
 ### 笔记
 
-- [Maven](./maven/)
+- [Maven](./maven/README.md)
   - [生命周期与插件](./maven/lifecycle-and-plugins.md)
   - [依赖管理](./maven/dependency-management.md)
   - [POM、继承与配置](./maven/pom-and-inheritance.md)

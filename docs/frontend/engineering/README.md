@@ -34,8 +34,8 @@ category: 工程化
 
 ## 目录
 
-- [工程基础](./basic/)
-- [工程概念](./concepts/)
+- [工程基础](./basic/README.md)
+- [工程概念](./concepts/README.md)
 - [Webpack](./webpack/)
 - [Vite](./vite/)
 - [Rspack](./rspack/)

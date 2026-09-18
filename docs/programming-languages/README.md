@@ -11,7 +11,7 @@ star: true
 
 ## 目录
 
-- [JavaScript](./javascript/)
+- [JavaScript](./javascript/README.md)
 - [TypeScript](./typescript/)
 - [Java](./java/)
 - [Python](./python/)

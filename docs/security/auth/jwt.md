@@ -309,7 +309,7 @@ JWT 可以由业务接口独立验证，但这也意味着一个已签发的 JWT
 
 ## 相关笔记
 
-- [认证与授权](./)
+- [认证与授权](./README.md)
 - [浏览器存储](../../frontend/browser/web-storage.md)
 - [跨域](../../frontend/browser/cross-origin.md)
 - [401 和 403 状态码](../../computer-science/networking/401-vs-403.md)

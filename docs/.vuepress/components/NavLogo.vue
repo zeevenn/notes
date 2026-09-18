@@ -52,8 +52,8 @@ const paths = ref([
 ])
 </script>
 
-<style>
-:root {
+<style scoped>
+svg {
   --dash-array-1: 1722px;
   --dash-array-2: 633px;
   --dash-array-3: 436px;

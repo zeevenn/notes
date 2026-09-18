@@ -17,7 +17,7 @@
 
 ## 相关章节
 
-- [RAG](../rag/) — 检索增强生成
-- [Agents](../agents/) — AI Agent
-- [Fine-tuning](../fine-tuning/) — 微调
-- [Prompt Engineering](../prompt-engineering/) — 提示词工程
+- [RAG](../rag/README.md) — 检索增强生成
+- [Agents](../agents/README.md) — AI Agent
+- [Fine-tuning](../fine-tuning/README.md) — 微调
+- [Prompt Engineering](../prompt-engineering/README.md) — 提示词工程

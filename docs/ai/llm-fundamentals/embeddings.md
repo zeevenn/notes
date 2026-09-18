@@ -82,7 +82,7 @@ cosine_similarity(A, B) = (A · B) / (|A| × |B|)
 
 ### RAG（检索增强生成）
 
-将知识库文档切分并 embedding，存入向量数据库。用户提问时检索相关片段，送入 LLM 生成回答。详见 [RAG 章节](../rag/)。
+将知识库文档切分并 embedding，存入向量数据库。用户提问时检索相关片段，送入 LLM 生成回答。详见 [RAG 章节](../rag/README.md)。
 
 ### 聚类与分类
 

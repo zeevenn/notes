@@ -238,18 +238,45 @@ export default [
     ]
   },
   {
-    text: 'Mobile',
+    text: '移动端与跨端',
     collapsible: true,
     link: '/frontend/mobile/',
     prefix: '/frontend/mobile/',
     children: [
       {
-        text: 'React Native 与 Expo',
+        text: '微信小程序',
         collapsible: true,
-        link: 'expo/',
-        prefix: 'expo/',
-        children: []
-      }
+        link: 'wechat-miniprogram/',
+        prefix: 'wechat-miniprogram/',
+        children: [
+          'dual-thread',
+          'setdata-performance',
+          'renderers',
+          'startup-performance',
+          'solutions-and-tools'
+        ]
+      },
+      {
+        text: 'React Native',
+        collapsible: true,
+        link: 'react-native/',
+        prefix: 'react-native/',
+        children: [
+          'architecture-overview',
+          'legacy-bridge',
+          'jsi',
+          'turbo-modules-codegen',
+          'fabric-yoga',
+          'hermes',
+          'performance-tools',
+          'solutions-and-tools',
+          {
+            text: 'Expo 应用开发工作流',
+            link: '/frontend/mobile/expo/'
+          }
+        ]
+      },
+      'runtime-models'
     ]
   }
 ]

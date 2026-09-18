@@ -4,8 +4,8 @@
 
 ### 子目录
 
-- [Node HTTP 框架原理](./http-framework/)
-- [Prisma](./prisma/)
+- [Node HTTP 框架原理](./http-framework/README.md)
+- [Prisma](./prisma/README.md)
 
 ### 笔记
 

@@ -2,7 +2,7 @@
 
 ## 目录
 
-- [高级类型](./advanced-types/)
-- [类型系统](./type-system/)
-- [声明文件](./declaration-files/)
-- [最佳实践](./best-practices/)
+- [高级类型](./advanced-types/README.md)
+- [类型系统](./type-system/README.md)
+- [声明文件](./declaration-files/README.md)
+- [最佳实践](./best-practices/README.md)

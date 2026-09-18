@@ -32,7 +32,7 @@ star: true
 
 ## 相关平台
 
-- [浏览器](../../frontend/browser/)
+- [浏览器](../../frontend/browser/README.md)
 - [AJAX](../../frontend/browser/ajax.md)
 - [DOM 事件监听](../../frontend/browser/event-listeners.md)
-- [Node.js](../../backend/node/)
+- [Node.js](../../backend/node/README.md)

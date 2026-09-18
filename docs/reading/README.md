@@ -4,5 +4,5 @@
 
 ## 目录
 
-- [书籍](./books/)
-- [Patterns.dev 阅读笔记](./patterns/)
+- [书籍](./books/README.md)
+- [Patterns.dev 阅读笔记](./patterns/README.md)

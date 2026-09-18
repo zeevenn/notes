@@ -9,17 +9,17 @@ star: true
 
 ## 目录
 
-- [数据库](./database/)
-- [Node.js](./node/)
-- [Engineering](./engineering/)
-- [API 设计](./api-design/)
-- [消息队列](./message-queue/)
+- [数据库](./database/README.md)
+- [Node.js](./node/README.md)
+- [Engineering](./engineering/README.md)
+- [API 设计](./api-design/README.md)
+- [消息队列](./message-queue/README.md)
 - [Redis](./redis/)
 
 ## 相关知识
 
-- [Java](../programming-languages/java/)
-- [Python](../programming-languages/python/)
-- [Go](../programming-languages/go/)
-- [Linux 运维](../devops/linux/)
-- [微服务架构](../architecture/microservices/)
+- [Java](../programming-languages/java/README.md)
+- [Python](../programming-languages/python/README.md)
+- [Go](../programming-languages/go/README.md)
+- [Linux 运维](../devops/linux/README.md)
+- [微服务架构](../architecture/microservices/README.md)

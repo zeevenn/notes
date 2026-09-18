@@ -9,7 +9,7 @@ star: true
 
 ## 目录
 
-- [密码学](./cryptography/)
-- [认证与授权](./auth/)
-- [网络安全](./network-security/)
-- [Web 安全](./web-security/)
+- [密码学](./cryptography/README.md)
+- [认证与授权](./auth/README.md)
+- [网络安全](./network-security/README.md)
+- [Web 安全](./web-security/README.md)

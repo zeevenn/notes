@@ -8,6 +8,6 @@ title: 算法
 
 ## 目录
 
-- [数据结构](./data-structures/)
-- [算法模式](./patterns/)
-- [题目](./problems/)
+- [数据结构](./data-structures/README.md)
+- [算法模式](./patterns/README.md)
+- [题目](./problems/README.md)

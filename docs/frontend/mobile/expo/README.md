@@ -152,6 +152,11 @@ CI 可以调用 EAS CLI、EAS Workflows 或 `expo/expo-github-action`。自动�
 - 构建与 Update 使用明确的 profile、channel 和 environment，避免把预览更新发布到生产 channel。
 - action 和运行时版本应固定到经过验证的主版本，并定期升级。
 
+## 相关内容
+
+- [React Native 笔记目录](../react-native/)
+- [整体架构与线程模型](../react-native/architecture-overview.md)
+
 ## 参考资料
 
 - [Expo 开发工作流](https://docs.expo.dev/workflow/overview/)

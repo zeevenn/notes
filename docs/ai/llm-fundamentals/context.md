@@ -81,7 +81,7 @@ chunks → [summary1, summary2, summary3] → final_summary
 query → 检索 top-k 相关段落 → 拼入 context → 生成回答
 ```
 
-适合知识库问答、文档搜索等查询驱动的场景。详见 [RAG 章节](../rag/)。
+适合知识库问答、文档搜索等查询驱动的场景。详见 [RAG 章节](../rag/README.md)。
 
 ### 4. 滑动窗口 + 摘要
 
