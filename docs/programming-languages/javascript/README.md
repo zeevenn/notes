@@ -19,6 +19,7 @@ star: true
 - [集合引用类型](./collection-types.md)
 - [类数组对象](./array-like-objects.md)
 - [对象属性](./object-properties.md)
+- [原型与原型链](./prototype-chain.md)
 - [创建对象](./creating-objects.md)
 - [继承](./inheritance.md)
 - [类](./class.md)

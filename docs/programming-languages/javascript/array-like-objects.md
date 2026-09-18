@@ -62,6 +62,8 @@ Array.prototype.concat.apply([], arrLike)
 // Array.from
 Array.from(arrLike)
 
-// 展开运算符
-[...arrLike]
+// 展开语法要求对象可迭代
+// [...arrLike] // TypeError：上面的 arrLike 没有实现 Symbol.iterator
 ```
+
+`Array.from()` 支持类数组对象和可迭代对象；数组展开只支持可迭代对象，索引和 `length` 并不足够。

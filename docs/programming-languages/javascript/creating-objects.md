@@ -38,7 +38,7 @@ console.log(person) // { name: 'wang', age: 18, sayName: [Function (anonymous)] 
 
 ## 构造函数模式
 
-在 JavaScript 中，任何函数只要使用 `new` 操作符调用就是构造函数，而不使用 `new` 操作符调用的函数就是普通函数。
+只有具备构造能力的函数才能通过 `new` 调用；普通函数声明可以用作构造函数，箭头函数和简写方法则不能。
 
 构造函数也称构造器（`constructor`），是创建对象时会调用的函数。
 
@@ -71,7 +71,7 @@ console.log(person2) // Person { name: 'hou', age: 18, sayName: [Function (anony
 首先让我们来看看 `new` 操作的过程：
 
 1. 首先创建一个空对象；
-2. 将空对象的原型（`[[prototype]]` 属性）赋值为构造函数的 `prototype` 对象；
+2. 将空对象的原型（`[[Prototype]]` 内部链接）赋值为构造函数的 `prototype` 对象；
 3. 让构造函数的 `this` 指向这个空对象，执行构造函数的代码；
 4. 判断构造函数返回值的类型，如果是基本类型，则返回创建的对象，如果是引用类型，则返回这个引用类型。
 
@@ -98,83 +98,11 @@ let person2 = new Person('hou', 18)
 
 ## 原型模式
 
-在了解原型模式的具体过程前，先来看看隐式原型和显示原型的概念。
-
-### 隐式原型和显示原型
-
-#### 隐式原型（Implicit Prototype）
-
-每个 JavaScript 「对象」都有一个指向其原型对象的内部链接，这个链接就是 **隐式原型**。
-
-当访问对象的属性时，如果该对象本身没有这个属性，JavaScript 引擎就会沿着 **隐式原型链** 继续查找，直到找到对应的属性或者到达原型链的顶端（即 `Object.prototype`）。
-
-每个 **对象** 都有一个特殊的内置属性 `[[prototype]]`，这个特殊的对象指向另外一个对象。早期的 ECMA 没有规范如何去查看 `[[prototype]]`，因此浏览器给对象提供一个 `__proto__` 属性来查看这个属性。
-
-```js
-function Person(name, age) {
-  this.name = name
-  this.age = age
-  this.sayName = sayName
-}
-
-function sayName() {
-  console.log(this.name)
-}
-
-let person1 = new Person('wang', 18)
-// 查看对象隐式原型
-console.log(person1.__proto__) // {}
-```
-
-ES5 之后提供了 `Object.getPrototypeOf()` 查看：
-
-```js
-// 查看对象隐式原型
-console.log(Object.getPrototypeOf(person1)) // {}
-```
-
-#### 显式原型
-
-函数作为对象，也拥有隐式原型 `[[prototype]]` 属性。
-
-```js
-function Foo() {}
-
-console.log(Foo.__proto__) // 输出 "function () {...}"
-console.log(Foo.__proto__ === Function.prototype) // true
-console.log(Foo.__proto__ === Object.getPrototypeOf(Foo)) // true
-```
-
-此外，每个函数都会创建一个 `prototype` 属性，称为函数的 **显式原型**。这个属性指向原型对象，包含应该由特定引用类型的实例共享的属性和方法。所有原型对象自动获得一个名为 `constructor` 的属性，指回与之关联的构造函数。
-
-```js
-function foo() {}
-
-console.log(Object.getOwnPropertyDescriptors(foo.prototype))
-// {
-//   constructor: {
-//     value: [Function: foo], // 原型对象的构造函数指回与之关联的构造函数
-//     writable: true,
-//     enumerable: false,
-//     configurable: true
-//   }
-// }
-```
+原型模式把共享方法或属性放在构造函数的 `prototype` 对象上，实例通过原型链访问它们。`[[Prototype]]`、`prototype`、`constructor` 的区别及属性查找规则见 [原型与原型链](./prototype-chain.md)。
 
 ### 原型模式具体实现过程
 
-了解了隐式原型和显式原型后，我们就可以来看看原型模式具体是如何实现的了。
-
-JavaScript 每个函数都有一个 **显式原型** `prototype` 属性（这个属性是一个对象，包含应该由特定引用类型的实例共享的属性和方法），将需要共享的函数或属性放在这个原型对象上，而新创建的实例对象，就会通过它的 **隐式原型 `__proto__`** 顺着原型链往上找，就可以很好的解决构造函数模式污染全局作用域的问题。
-
-让我们回忆一下前面 `new` 关键字的步骤时：
-
-1. 首先创建一个空对象；
-2. 将空对象的原型（`[[prototype]]` 属性）赋值为构造函数的 `prototype` 对象；
-3. 让构造函数的 `this` 指向这个空对象，执行构造函数的代码；
-4. 判断构造函数返回值的类型，如果是基本类型，则返回创建的对象，如果是引用类型，则返回这个引用类型。
-
-其中第 2 步就是：**构造函数的显示原型会被赋值给新对象的隐式原型**。
+对下面的普通构造函数，`new Person()` 创建的实例以 `Person.prototype` 为直接原型，因此可以访问其中的 `sayName` 方法。
 
 ```js
 function Person() {}

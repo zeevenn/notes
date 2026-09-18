@@ -288,7 +288,7 @@ console.log(o)
 // Symbol(baz): baz val, Symbol(qux): qux val}
 ```
 
-ES6 引入了一些内置符号，比如 `Symbol.iterator` 属性，用以定义在 `for-of` 循环中的迭代行为。
+ES6 引入了一些内置符号，对象可以通过以 `Symbol.iterator` 为键的方法定义 `for...of` 使用的迭代行为。
 
 `Symbol.hasInstance` 属性会由 `instanceof` 操作符使用，确定一个实例的原型链上是否有当前构造函数。这个属性定义在 Function 的原型上，因此默认在所有函数和类上都可以调用。
 

@@ -72,7 +72,7 @@ object instanceof constructor
 
 ::: tip
 
-不同环境对 `__proto__` 的实现不同，而且 Web 标准已经删除该特性，这里只是为了表示方便，开发中需要使用 `Object.getPrototypeOf()` 获取原型对象。
+`__proto__` 是规范保留的历史访问器，并未从标准中删除；它可能被同名属性遮蔽，读取原型应使用 `Object.getPrototypeOf()`。普通原型检查与 `Symbol.hasInstance` 自定义行为的区别见 [原型与原型链](./prototype-chain.md#instanceof-检查当前关系)。
 
 :::
 

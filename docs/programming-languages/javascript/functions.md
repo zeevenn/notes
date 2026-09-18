@@ -222,7 +222,7 @@ King() // Error: King must be instantiated using "new"
 
 ## 函数属性和方法
 
-ECMAScript 中的函数是对象，因此有属性和方法。每个函数都有两个属性：`length` 和 `prototype`。其中，`length` 属性保存函数定义的命名参数的个数，`prototype` 属性保存函数的原型对象。
+ECMAScript 中的函数是对象，因此有属性和方法。`length` 表示首个带默认值的参数之前的参数个数，不包括剩余参数。普通构造函数还有 `prototype` 属性，用于指定新实例的原型；箭头函数等并没有自身的 `prototype` 属性，具体区别见 [原型与原型链](./prototype-chain.md)。
 
 函数还有两个方法：`apply()` 和 `call()`。这两个方法都会以指定的 `this` 值来调用函数，即会设置调用函数时函数体内 `this` 对象的值。
 

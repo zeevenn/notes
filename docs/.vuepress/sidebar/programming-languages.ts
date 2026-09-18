@@ -16,6 +16,7 @@ export default [
       'collection-types',
       'array-like-objects',
       'object-properties',
+      'prototype-chain',
       'creating-objects',
       'inheritance',
       'class',
