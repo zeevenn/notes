@@ -13,15 +13,17 @@ tag:
 - 常见的面向对象的编程语言中，如 Java、C++、Swift 等，`this` 通常只会出现在类的方法中，`this` 代表的是当前调用对象；
 - 但是 JavaScript 中的 `this` 更加灵活，无论是它出现的位置还是代表的含义。
 
-在 [执行上下文](./execution-context.md) 中提到过：上下文中会包含 `this` 指向，那么不同的上下文的 `this` 指向肯定会不同。下面就来具体看看。
+`this` 与[执行上下文](./execution-context.md#this-绑定)关联，但不同执行上下文可以使用同一个 `this` 值。普通函数的 `this` 取决于调用方式，箭头函数则沿用外层绑定。
 
 ## 全局上下文
 
-无论是否处于严格模式，全局上下文中的 `this` 都指向全局对象。
+浏览器普通脚本的顶层 `this` 是 `window`，不受严格模式影响。
 
 ```js
 console.log(this === window) // true
 ```
+
+ES 模块的顶层 `this` 是 `undefined`。Node.js CommonJS 文件的顶层代码运行在模块包装函数中，`this` 是该包装函数接收到的 `module.exports`。
 
 ## 函数上下文
 
