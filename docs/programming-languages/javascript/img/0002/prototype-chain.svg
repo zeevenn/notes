@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="364" viewBox="0 0 1180 364" role="img" aria-labelledby="title desc">
+<title id="title">沿原型链查找属性</title><desc id="desc">user 的内部原型指向 defaults，defaults 的内部原型指向 Object.prototype，后者的原型为 null。各表只列出示例相关属性。</desc>
+<defs><marker id="arrow" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M2 1 L11 6 L2 11" fill="none" stroke="#252b32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<style>
+text { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; fill:#252b32; }
+.title { font-size:28px; font-weight:650; }
+.note { font-size:20px; fill:#505a66; }
+.code { font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace; font-size:20px; }
+.value { font-size:20px; }
+.head { font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace; font-size:22px; }
+.line { fill:none; stroke:#252b32; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+</style>
+<rect width="1180" height="364" fill="white"/>
+
+<text class="title" x="30" y="48" text-anchor="start">沿原型链查找属性</text>
+<text class="note" x="30" y="84" text-anchor="start">黑点与箭头表示引用；[[Prototype]] 一行标出对象的原型。</text>
+<g id="user" data-table="true">
+<rect x="30" y="130" width="320" height="152" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="31" y="131" width="318" height="47" fill="#f6f7f8"/>
+<text class="head" x="190.0" y="161" text-anchor="middle">user</text>
+<path class="line" d="M 30 178 H 350"/>
+<path class="line" d="M 210 178 V 282"/>
+<text class="code" x="44" y="211" text-anchor="start">name</text>
+<text class="value" x="280.0" y="211" text-anchor="middle">&quot;小王&quot;</text>
+<path class="line" d="M 30 230 H 350"/>
+<text class="code" x="44" y="263" text-anchor="start">[[Prototype]]</text>
+<circle cx="280.0" cy="256.0" r="5.5" fill="#252b32"/>
+</g>
+<g id="defaults" data-table="true">
+<rect x="430" y="130" width="320" height="152" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="431" y="131" width="318" height="47" fill="#f6f7f8"/>
+<text class="head" x="590.0" y="161" text-anchor="middle">defaults</text>
+<path class="line" d="M 430 178 H 750"/>
+<path class="line" d="M 610 178 V 282"/>
+<text class="code" x="444" y="211" text-anchor="start">role</text>
+<text class="value" x="680.0" y="211" text-anchor="middle">&quot;普通用户&quot;</text>
+<path class="line" d="M 430 230 H 750"/>
+<text class="code" x="444" y="263" text-anchor="start">[[Prototype]]</text>
+<circle cx="680.0" cy="256.0" r="5.5" fill="#252b32"/>
+</g>
+<g id="object-prototype" data-table="true">
+<rect x="830" y="130" width="320" height="152" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="831" y="131" width="318" height="47" fill="#f6f7f8"/>
+<text class="head" x="990.0" y="161" text-anchor="middle">Object.prototype</text>
+<path class="line" d="M 830 178 H 1150"/>
+<path class="line" d="M 1010 178 V 282"/>
+<text class="code" x="844" y="211" text-anchor="start">toString</text>
+<text class="value" x="1080.0" y="211" text-anchor="middle">函数</text>
+<path class="line" d="M 830 230 H 1150"/>
+<text class="code" x="844" y="263" text-anchor="start">[[Prototype]]</text>
+<text class="value" x="1080.0" y="263" text-anchor="middle">null</text>
+</g>
+<path class="line" d="M 280.0 256.0 H 390 V 154 H 422" marker-end="url(#arrow)"/>
+<path class="line" d="M 680.0 256.0 H 790 V 154 H 822" marker-end="url(#arrow)"/>
+<text class="note" x="30" y="332" text-anchor="start">读取 user.role 时，在 defaults 找到属性后就停止；整条链都找不到时返回 undefined。</text>
+</svg>

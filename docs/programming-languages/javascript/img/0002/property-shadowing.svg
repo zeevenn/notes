@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="734" viewBox="0 0 1120 734" role="img" aria-labelledby="title desc">
+<title id="title">属性遮蔽前后对照</title><desc id="desc">赋值前 user 沿原型在 defaults 读取 role；赋值后 user 自身保存 role 为管理员，读取在自身停止。两种状态下 user 的内部原型始终指向 defaults。</desc>
+<defs><marker id="arrow" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M2 1 L11 6 L2 11" fill="none" stroke="#252b32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<style>
+text { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; fill:#252b32; }
+.title { font-size:28px; font-weight:650; }
+.note { font-size:20px; fill:#505a66; }
+.code { font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace; font-size:20px; }
+.value { font-size:20px; }
+.head { font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace; font-size:22px; }
+.line { fill:none; stroke:#252b32; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+</style>
+<rect width="1120" height="734" fill="white"/>
+
+<text class="title" x="60" y="48" text-anchor="start">属性遮蔽：改变自身属性，原型连接保持不变</text>
+<text class="note" x="60" y="104" text-anchor="start">赋值前，或 delete user.role 之后</text>
+<g id="before-user" data-table="true">
+<rect x="60" y="132" width="330" height="100" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="61" y="133" width="328" height="47" fill="#f6f7f8"/>
+<text class="head" x="225.0" y="163" text-anchor="middle">user</text>
+<path class="line" d="M 60 180 H 390"/>
+<path class="line" d="M 240 180 V 232"/>
+<text class="code" x="74" y="213" text-anchor="start">[[Prototype]]</text>
+<circle cx="315.0" cy="206.0" r="5.5" fill="#252b32"/>
+</g>
+<g id="before-defaults" data-table="true">
+<rect x="650" y="132" width="410" height="100" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="651" y="133" width="408" height="47" fill="#f6f7f8"/>
+<text class="head" x="855.0" y="163" text-anchor="middle">defaults</text>
+<path class="line" d="M 650 180 H 1060"/>
+<path class="line" d="M 840 180 V 232"/>
+<rect x="841" y="181" width="218" height="50" fill="#e8f1e9"/>
+<text class="code" x="664" y="213" text-anchor="start">role</text>
+<text class="value" x="950.0" y="213" text-anchor="middle">&quot;普通用户&quot;</text>
+</g>
+<path class="line" d="M 315.0 206.0 H 535 V 156 H 642" marker-end="url(#arrow)"/>
+<text class="note" x="420" y="196" text-anchor="start">沿原型查找</text>
+<text class="note" x="650" y="277" text-anchor="start">读取 user.role → &quot;普通用户&quot;</text>
+<path d="M60 328 H1060" stroke="#d8dce0" stroke-width="1"/>
+<text class="note" x="60" y="384" text-anchor="start">执行 user.role = &quot;管理员&quot; 之后</text>
+<g id="after-user" data-table="true">
+<rect x="60" y="412" width="330" height="152" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="61" y="413" width="328" height="47" fill="#f6f7f8"/>
+<text class="head" x="225.0" y="443" text-anchor="middle">user</text>
+<path class="line" d="M 60 460 H 390"/>
+<path class="line" d="M 240 460 V 564"/>
+<rect x="241" y="461" width="148" height="50" fill="#e8f1e9"/>
+<text class="code" x="74" y="493" text-anchor="start">role</text>
+<text class="value" x="315.0" y="493" text-anchor="middle">&quot;管理员&quot;</text>
+<path class="line" d="M 60 512 H 390"/>
+<text class="code" x="74" y="545" text-anchor="start">[[Prototype]]</text>
+<circle cx="315.0" cy="538.0" r="5.5" fill="#252b32"/>
+</g>
+<g id="after-defaults" data-table="true">
+<rect x="650" y="412" width="410" height="100" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="651" y="413" width="408" height="47" fill="#f6f7f8"/>
+<text class="head" x="855.0" y="443" text-anchor="middle">defaults</text>
+<path class="line" d="M 650 460 H 1060"/>
+<path class="line" d="M 840 460 V 512"/>
+<text class="code" x="664" y="493" text-anchor="start">role</text>
+<text class="value" x="950.0" y="493" text-anchor="middle">&quot;普通用户&quot;</text>
+</g>
+<path class="line" d="M 315.0 538.0 H 535 V 436 H 642" marker-end="url(#arrow)"/>
+<text class="note" x="400" y="528" text-anchor="start">原型连接仍在</text>
+<text class="note" x="60" y="613" text-anchor="start">读取 user.role → &quot;管理员&quot;，在自身找到后停止</text>
+<text class="note" x="60" y="692" text-anchor="start">浅绿色单元格标出本次读取到的值；图中仅列出与 role 查找有关的属性。</text>
+</svg>

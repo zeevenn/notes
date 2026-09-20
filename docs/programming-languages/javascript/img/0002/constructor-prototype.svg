@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="692" viewBox="0 0 1120 692" role="img" aria-labelledby="title desc">
+<title id="title">构造函数、原型对象与实例</title><desc id="desc">Person 的 prototype 属性指向 Person.prototype；原型对象的 constructor 指回 Person。person1 和 person2 的内部原型均指向 Person.prototype，各实例拥有自己的 name，共享原型上的 sayName。</desc>
+<defs><marker id="arrow" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto" markerUnits="userSpaceOnUse"><path d="M2 1 L11 6 L2 11" fill="none" stroke="#252b32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<style>
+text { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; fill:#252b32; }
+.title { font-size:28px; font-weight:650; }
+.note { font-size:20px; fill:#505a66; }
+.code { font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace; font-size:20px; }
+.value { font-size:20px; }
+.head { font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace; font-size:22px; }
+.line { fill:none; stroke:#252b32; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+</style>
+<rect width="1120" height="692" fill="white"/>
+
+<text class="title" x="64" y="48" text-anchor="start">构造函数、原型对象与实例</text>
+<text class="note" x="64" y="83" text-anchor="start">每张表代表一个对象；属性值中的黑点指向它引用的对象。</text>
+<g id="person-constructor" data-table="true">
+<rect x="64" y="152" width="330" height="100" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="65" y="153" width="328" height="47" fill="#f6f7f8"/>
+<text class="head" x="229.0" y="183" text-anchor="middle">Person</text>
+<path class="line" d="M 64 200 H 394"/>
+<path class="line" d="M 244 200 V 252"/>
+<text class="code" x="78" y="233" text-anchor="start">prototype</text>
+<circle cx="319.0" cy="226.0" r="5.5" fill="#252b32"/>
+</g>
+<g id="person-prototype" data-table="true">
+<rect x="640" y="152" width="416" height="152" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="641" y="153" width="414" height="47" fill="#f6f7f8"/>
+<text class="head" x="848.0" y="183" text-anchor="middle">Person.prototype</text>
+<path class="line" d="M 640 200 H 1056"/>
+<path class="line" d="M 830 200 V 304"/>
+<text class="code" x="654" y="233" text-anchor="start">constructor</text>
+<circle cx="943.0" cy="226.0" r="5.5" fill="#252b32"/>
+<path class="line" d="M 640 252 H 1056"/>
+<text class="code" x="654" y="285" text-anchor="start">sayName</text>
+<text class="value" x="943.0" y="285" text-anchor="middle">函数</text>
+</g>
+<g id="person-one" data-table="true">
+<rect x="64" y="454" width="330" height="152" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="65" y="455" width="328" height="47" fill="#f6f7f8"/>
+<text class="head" x="229.0" y="485" text-anchor="middle">person1</text>
+<path class="line" d="M 64 502 H 394"/>
+<path class="line" d="M 244 502 V 606"/>
+<text class="code" x="78" y="535" text-anchor="start">name</text>
+<text class="value" x="319.0" y="535" text-anchor="middle">&quot;小王&quot;</text>
+<path class="line" d="M 64 554 H 394"/>
+<text class="code" x="78" y="587" text-anchor="start">[[Prototype]]</text>
+<circle cx="319.0" cy="580.0" r="5.5" fill="#252b32"/>
+</g>
+<g id="person-two" data-table="true">
+<rect x="640" y="454" width="416" height="152" fill="white" stroke="#252b32" stroke-width="1.7"/>
+<rect x="641" y="455" width="414" height="47" fill="#f6f7f8"/>
+<text class="head" x="848.0" y="485" text-anchor="middle">person2</text>
+<path class="line" d="M 640 502 H 1056"/>
+<path class="line" d="M 830 502 V 606"/>
+<text class="code" x="654" y="535" text-anchor="start">name</text>
+<text class="value" x="943.0" y="535" text-anchor="middle">&quot;小李&quot;</text>
+<path class="line" d="M 640 554 H 1056"/>
+<text class="code" x="654" y="587" text-anchor="start">[[Prototype]]</text>
+<circle cx="943.0" cy="580.0" r="5.5" fill="#252b32"/>
+</g>
+<path class="line" d="M 943.0 226.0 H 1090 V 116 H 229 V 144" marker-end="url(#arrow)"/>
+<path class="line" d="M 319.0 226.0 H 535"/>
+<path class="line" d="M 319.0 580.0 H 535"/>
+<path class="line" d="M 943.0 580.0 H 1090 V 370 H 535"/>
+<path class="line" d="M 535 580.0 V 176 H 632" marker-end="url(#arrow)"/>
+<text class="note" x="64" y="653" text-anchor="start">name 保存在各自实例中；sayName 保存在原型对象中，供两个实例共享。</text>
+</svg>
