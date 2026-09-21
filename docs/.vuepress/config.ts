@@ -10,6 +10,7 @@ export default defineUserConfig({
   base: '/notes/',
   lang: 'zh-CN',
   description: 'Personal frontend knowledge base',
+  head: [['meta', { name: 'algolia-site-verification', content: '06AEB6FEDD0D4C5A' }]],
   theme,
 
   alias: {
