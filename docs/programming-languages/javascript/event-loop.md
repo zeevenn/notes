@@ -76,16 +76,18 @@ B
 
 ### 常见的调度来源
 
-| 来源 | 如何安排后续执行 |
-| --- | --- |
-| `setTimeout()`、`setInterval()` | 延迟条件满足后安排定时器任务 |
-| 用户点击、输入 | 浏览器安排事件派发任务，在派发过程中调用监听器 |
-| `postMessage()`、`MessageChannel` | 通过消息任务调用相应处理函数 |
-| Promise 的 `then()`、`catch()`、`finally()` | Promise 状态确定后，安排相应的微任务 |
-| `queueMicrotask()` | 将回调加入微任务队列 |
-| `MutationObserver` | 在微任务中通知 DOM 变化 |
+| 回调或事件来源 | 类型 | 如何安排后续执行 |
+| --- | --- | --- |
+| `setTimeout()`、`setInterval()` 的回调 | 任务（宏任务） | 延迟条件满足后安排定时器任务 |
+| 用户点击、输入的事件派发 | 任务（宏任务） | 浏览器安排事件派发任务，在派发过程中调用监听器 |
+| `postMessage()`、`MessageChannel` 的消息处理 | 任务（宏任务） | 通过消息任务调用相应处理函数 |
+| Promise 的 `then()`、`catch()`、`finally()` 回调 | 微任务 | Promise 状态确定后，安排相应的回调执行 |
+| `queueMicrotask()` 的回调 | 微任务 | 将回调加入微任务队列 |
+| `MutationObserver` 的通知回调 | 微任务 | 在微任务中通知 DOM 变化 |
 
-浏览器可以维护多个任务队列，并选择其中有可执行任务的队列。任务按来源归类，例如用户交互、定时器、网络；同一任务源的顺序受到规范约束，不同来源之间由浏览器调度策略协调。判断执行顺序时，应依据具体接口的保证，而不能只比较回调在代码中的注册位置。见 [HTML：事件循环](https://html.spec.whatwg.org/multipage/webappapis.html#event-loops)。
+**任务（宏任务）**按来源归类，例如用户交互、定时器、网络。浏览器可以维护多个任务队列，并从中选择可执行任务；同一任务源的顺序受到规范约束，不同来源之间的相对顺序取决于具体接口和浏览器调度策略。
+
+**微任务**进入单独的微任务队列，在微任务检查点集中执行，清空后再继续处理后续任务。两类队列的调度规则见 [HTML：事件循环](https://html.spec.whatwg.org/multipage/webappapis.html#event-loops)。
 
 ## 微任务何时入队
 
