@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Mon, 21 Sep 2026 04:49:00 GMT</pubDate>
-    <lastBuildDate>Mon, 21 Sep 2026 04:49:00 GMT</lastBuildDate>
+    <pubDate>Mon, 21 Sep 2026 10:59:15 GMT</pubDate>
+    <lastBuildDate>Mon, 21 Sep 2026 10:59:15 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>JavaScript</category>
@@ -2403,16 +2403,6 @@ element<span class="token punctuation">.</span><span class="token function">addE
 ]]></content:encoded>
     </item>
     <item>
-      <title>Python</title>
-      <link>https://zeevenn.github.io/notes/notes/programming-languages/python/</link>
-      <guid>https://zeevenn.github.io/notes/notes/programming-languages/python/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Python</source>
-      <description>Python </description>
-      <pubDate>Wed, 19 Aug 2026 02:12:32 GMT</pubDate>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    <item>
       <title>类数组对象</title>
       <link>https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html</link>
       <guid>https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html</guid>
@@ -3349,7 +3339,7 @@ B
 <figure><figcaption>浏览器事件循环：任务选择与微任务检查点</figcaption></figure>
 <p>任务结束会触发检查点；浏览器调用脚本结束且调用栈为空时，也会触发检查点。因此，在浏览器派发的事件中，某个监听器结束后可能先执行微任务，再继续调用其他监听器。脚本直接调用 <code>dispatchEvent()</code> 时，外层脚本仍在调用栈中，微任务要等同步调用返回后才有机会执行。相关规则见 <a href="https://html.spec.whatwg.org/multipage/webappapis.html#clean-up-after-running-script" target="_blank" rel="noopener noreferrer">HTML：脚本执行后的清理</a>。</p>
 <h3>常见的调度来源</h3>
-<p>| 来源 | 如何安排后续执行 |<br>
+<p>| 回调或事件来源 | 类型 | 如何安排后续执行 |<br>
 |</p>
 ]]></content:encoded>
     </item>
@@ -5100,6 +5090,16 @@ console<span class="token punctuation">.</span><span class="token function">log<
       <content:encoded><![CDATA[<p>首先，三者都是 JavaScript 声明变量的方式。区别在于：</p>
 <p>|              | var                        | let                        | const                      |<br>
 |</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>https://zeevenn.github.io/notes/notes/programming-languages/python/</link>
+      <guid>https://zeevenn.github.io/notes/notes/programming-languages/python/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Python</source>
+      <description>Python </description>
+      <pubDate>Wed, 19 Aug 2026 02:12:32 GMT</pubDate>
+      <content:encoded><![CDATA[
 ]]></content:encoded>
     </item>
     <item>
