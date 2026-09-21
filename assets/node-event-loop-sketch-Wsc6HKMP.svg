@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="920" viewBox="0 0 1200 920" role="img" aria-labelledby="title desc">
+  <title id="title">Node.js 事件循环</title>
+  <desc id="desc">左侧显示 libuv 1.45 及以后版本循环主体的主要阶段。右侧显示 JavaScript 回调返回 Node 后，处理 nextTick 和微任务，再继续阶段调度。</desc>
+  <defs>
+    <pattern id="paper" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="0.7" fill="#b7afa0" opacity="0.18"/></pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#26364b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="relation" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#877199" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif; fill: #26364b; }
+      .title { font-size: 34px; font-weight: 750; }
+      .heading { font-size: 22px; font-weight: 650; }
+      .label { font-size: 20px; font-weight: 600; }
+      .body { font-size: 18px; fill: #57677a; }
+      .small { font-size: 16px; fill: #57677a; }
+      .flow { fill: none; stroke: #26364b; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+      .relation { fill: none; stroke: #877199; stroke-width: 2; stroke-dasharray: 6 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#relation); }
+    </style>
+  </defs>
+  <rect width="1200" height="920" rx="22" fill="#fffcf5"/>
+  <rect width="1200" height="920" rx="22" fill="url(#paper)"/>
+
+<text class="title" x="40" y="57" text-anchor="start">Node.js 事件循环</text>
+<text class="body" x="40" y="92" text-anchor="start">左侧看阶段推进，右侧看 JavaScript 回调返回后的处理</text>
+<rect x="40" y="144" width="606" height="692" rx="16" fill="#f6f3ec" stroke="#d5d9dd" stroke-width="1.5"/>
+<text class="heading" x="64" y="186" text-anchor="start">libuv 主要阶段</text>
+<text class="small" x="64" y="214" text-anchor="start">循环主体 · libuv 1.45+ · 有活跃工作时继续循环</text>
+<g id="pending">
+<rect x="64" y="250" width="242" height="96" rx="16" fill="#fbe9d7" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="84" y="283" text-anchor="start">pending callbacks</text>
+<text class="body" x="84" y="311" text-anchor="start">部分系统 I/O 回调</text>
+</g>
+<g id="prepare">
+<rect x="374" y="250" width="242" height="96" rx="16" fill="#eeece8" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="394" y="283" text-anchor="start">idle / prepare</text>
+<text class="body" x="394" y="311" text-anchor="start">内部准备工作</text>
+</g>
+<g id="poll">
+<rect x="374" y="450" width="242" height="96" rx="16" fill="#e5f1e7" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="394" y="483" text-anchor="start">poll</text>
+<text class="body" x="394" y="511" text-anchor="start">等待并处理 I/O 事件</text>
+</g>
+<g id="check">
+<rect x="374" y="650" width="242" height="96" rx="16" fill="#eee7f6" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="394" y="683" text-anchor="start">check</text>
+<text class="body" x="394" y="711" text-anchor="start">setImmediate 回调</text>
+</g>
+<g id="close">
+<rect x="64" y="650" width="242" height="96" rx="16" fill="#f9e5e8" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="84" y="683" text-anchor="start">close callbacks</text>
+<text class="body" x="84" y="711" text-anchor="start">部分资源关闭回调</text>
+</g>
+<g id="timers">
+<rect x="64" y="450" width="242" height="96" rx="16" fill="#e3effb" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="84" y="483" text-anchor="start">timers</text>
+<text class="body" x="84" y="511" text-anchor="start">已到期的定时器回调</text>
+</g>
+<path class="flow" d="M 312 298 H 366"/>
+<path class="flow" d="M 495 352 V 442"/>
+<path class="flow" d="M 495 552 V 642"/>
+<path class="flow" d="M 368 698 H 314"/>
+<path class="flow" d="M 185 644 V 554"/>
+<path class="flow" d="M 185 444 V 354"/>
+<text class="small" x="64" y="792" text-anchor="start">阶段调用 JavaScript 时，回调结束后按右侧流程处理。</text>
+<rect x="682" y="144" width="478" height="692" rx="16" fill="#f7f5fb" stroke="#d5d9dd" stroke-width="1.5"/>
+<text class="heading" x="708" y="186" text-anchor="start">回调返回 Node 后</text>
+<text class="small" x="708" y="214" text-anchor="start">定时器、I/O 等回调的调度边界</text>
+<g id="js-return">
+<rect x="744" y="250" width="388" height="76" rx="16" fill="#e3effb" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="938.0" y="283" text-anchor="middle">JavaScript 回调执行结束</text>
+<text class="body" x="938.0" y="311" text-anchor="middle">控制权返回 Node</text>
+</g>
+<path class="flow" d="M 938 332 V 363"/>
+<g id="next-tick">
+<rect x="744" y="371" width="388" height="76" rx="16" fill="#fff1c9" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="938.0" y="404" text-anchor="middle">清空 process.nextTick 队列</text>
+<text class="body" x="938.0" y="432" text-anchor="middle">新加入的 nextTick 继续执行</text>
+</g>
+<path class="flow" d="M 938 453 V 484"/>
+<g id="microtasks">
+<rect x="744" y="492" width="388" height="76" rx="16" fill="#e5f1e7" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="938.0" y="525" text-anchor="middle">清空 V8 微任务队列</text>
+<text class="body" x="938.0" y="553" text-anchor="middle">Promise 回调 / queueMicrotask</text>
+</g>
+<path class="flow" d="M 938 574 V 605"/>
+<g id="has-next-tick">
+<path d="M 938 612 L 1100 652 L 938 692 L 776 652 Z" fill="#fff1c9" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="938" y="658" text-anchor="middle">仍有 nextTick？</text>
+</g>
+<path class="flow" d="M 770 652 H 708 V 409 H 736"/>
+<text class="label" x="722" y="626" text-anchor="start">有</text>
+<path class="flow" d="M 938 698 V 742"/>
+<text class="label" x="953" y="725" text-anchor="start">无</text>
+<g id="resume">
+<rect x="744" y="750" width="388" height="64" rx="16" fill="#eeece8" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="938.0" y="783" text-anchor="middle">继续处理回调或推进阶段</text>
+</g>
+<text class="body" x="40" y="878" text-anchor="start">ES 模块顶层已处于微任务执行过程中，其顶层微任务先于 nextTick；示例见正文。</text>
+</svg>

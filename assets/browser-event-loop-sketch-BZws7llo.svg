@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">浏览器事件循环</title>
+  <desc id="desc">任务队列中的工作被逐个选择和执行；任务结束后处理微任务，再回到任务选择。渲染时机到来时安排渲染更新任务。</desc>
+  <defs>
+    <pattern id="paper" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="0.7" fill="#b7afa0" opacity="0.18"/></pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#26364b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="relation" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="#877199" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif; fill: #26364b; }
+      .title { font-size: 34px; font-weight: 750; }
+      .heading { font-size: 22px; font-weight: 650; }
+      .label { font-size: 20px; font-weight: 600; }
+      .body { font-size: 18px; fill: #57677a; }
+      .small { font-size: 16px; fill: #57677a; }
+      .flow { fill: none; stroke: #26364b; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+      .relation { fill: none; stroke: #877199; stroke-width: 2; stroke-dasharray: 6 6; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#relation); }
+    </style>
+  </defs>
+  <rect width="1200" height="800" rx="22" fill="#fffcf5"/>
+  <rect width="1200" height="800" rx="22" fill="url(#paper)"/>
+
+<text class="title" x="40" y="57" text-anchor="start">浏览器事件循环</text>
+<text class="body" x="40" y="92" text-anchor="start">任务选择、任务执行与微任务检查点</text>
+<path class="flow" d="M 817 64 H 859"/>
+<text class="small" x="874" y="70" text-anchor="start">执行顺序</text>
+<path class="relation" d="M 994 64 H 1036"/>
+<text class="small" x="1051" y="70" text-anchor="start">加入队列</text>
+<g id="task-queues">
+<rect x="40" y="145" width="280" height="565" rx="16" fill="#f6f3ec" stroke="#d5d9dd" stroke-width="1.5"/>
+<text class="heading" x="60" y="184" text-anchor="start">任务队列</text>
+<text class="small" x="60" y="212" text-anchor="start">按来源组织，由浏览器选择</text>
+<g id="timer-source">
+<rect x="60" y="239" width="240" height="77" rx="16" fill="#e3effb" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="80" y="272" text-anchor="start">定时器</text>
+<text class="body" x="80" y="300" text-anchor="start">setTimeout / setInterval</text>
+</g>
+<g id="interaction-source">
+<rect x="60" y="342" width="240" height="77" rx="16" fill="#eee7f6" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="80" y="375" text-anchor="start">用户交互</text>
+<text class="body" x="80" y="403" text-anchor="start">click / input 事件派发</text>
+</g>
+<g id="io-message-source">
+<rect x="60" y="445" width="240" height="77" rx="16" fill="#fbe9d7" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="80" y="478" text-anchor="start">网络与消息</text>
+<text class="body" x="80" y="506" text-anchor="start">网络处理 / 消息事件</text>
+</g>
+<g id="rendering-source">
+<rect x="60" y="548" width="240" height="100" rx="16" fill="#e5f1e7" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="80" y="581" text-anchor="start">渲染更新</text>
+<text class="body" x="80" y="609" text-anchor="start">渲染时机到来时</text>
+<text class="body" x="80" y="634" text-anchor="start">安排更新任务</text>
+</g>
+<text class="small" x="60" y="682" text-anchor="start">不同来源可共享一个队列</text>
+</g>
+<text class="heading" x="370" y="299" text-anchor="start">主线程调度</text>
+<path class="flow" d="M 321 394 H 362"/>
+<g id="select-task">
+<rect x="370" y="330" width="220" height="130" rx="16" fill="#fff1c9" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="480.0" y="363" text-anchor="middle">01  选择任务</text>
+<text class="body" x="480.0" y="391" text-anchor="middle">取出一个</text>
+<text class="body" x="480.0" y="416" text-anchor="middle">可执行的任务</text>
+</g>
+<path class="flow" d="M 595 394 H 642"/>
+<g id="run-task">
+<rect x="650" y="330" width="220" height="130" rx="16" fill="#e3effb" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="760.0" y="363" text-anchor="middle">02  执行任务</text>
+<text class="body" x="760.0" y="391" text-anchor="middle">执行 JavaScript 或</text>
+<text class="body" x="760.0" y="416" text-anchor="middle">渲染更新等步骤</text>
+</g>
+<path class="flow" d="M 875 394 H 922"/>
+<g id="microtask-checkpoint">
+<rect x="930" y="330" width="230" height="130" rx="16" fill="#fff1c9" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="1045.0" y="363" text-anchor="middle">03  微任务检查点</text>
+<text class="body" x="1045.0" y="391" text-anchor="middle">按入队顺序执行</text>
+<text class="body" x="1045.0" y="416" text-anchor="middle">直到微任务队列为空</text>
+</g>
+<path class="flow" d="M 1045 466 V 530 H 480 V 468"/>
+<rect x="668" y="513" width="192" height="34" rx="8" fill="#fffcf5" stroke="#fffcf5" stroke-width="1.5"/>
+<text class="label" x="764" y="536" text-anchor="middle">回到任务选择</text>
+<g id="microtask-queue">
+<rect x="815" y="145" width="345" height="116" rx="16" fill="#eee7f6" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="835" y="178" text-anchor="start">微任务队列</text>
+<text class="body" x="835" y="206" text-anchor="start">Promise 回调 / queueMicrotask</text>
+<text class="body" x="835" y="231" text-anchor="start">MutationObserver 通知</text>
+</g>
+<path class="relation" d="M 760 324 V 207 H 807"/>
+<text class="small" x="675" y="187" text-anchor="start">执行中入队</text>
+<path class="flow" d="M 1045 267 V 322"/>
+<text class="small" x="1060" y="299" text-anchor="start">取出执行</text>
+<g id="microtask-note">
+<rect x="370" y="588" width="380" height="122" rx="16" fill="#f4eef8" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="390" y="621" text-anchor="start">微任务中也能追加微任务</text>
+<text class="body" x="390" y="649" text-anchor="start">新回调排到队尾</text>
+<text class="body" x="390" y="674" text-anchor="start">继续在本次检查点内执行</text>
+</g>
+<g id="render-note">
+<rect x="780" y="588" width="380" height="122" rx="16" fill="#e5f1e7" stroke="#bdc6d0" stroke-width="1.5"/>
+<text class="label" x="800" y="621" text-anchor="start">渲染更新中的工作</text>
+<text class="body" x="800" y="649" text-anchor="start">requestAnimationFrame 回调</text>
+<text class="body" x="800" y="674" text-anchor="start">样式计算、布局与绘制</text>
+</g>
+<text class="body" x="40" y="757" text-anchor="start">任务结束会触发检查点；脚本调用结束且调用栈为空时，也会处理微任务。</text>
+</svg>
