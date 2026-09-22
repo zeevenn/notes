@@ -1,0 +1,15 @@
+site: docs/.vuepress/dist
+root_selector: main.vp-page:not(.not-found)
+force_language: zh
+exclude_selectors:
+  - .vp-breadcrumb
+  - .page-info
+  - .page-meta
+  - .vp-page-nav
+  - '#toc'
+  - '#comment'
+  - .header-anchor
+  - .line-numbers-wrapper
+  - .copy-code-button
+  - .external-link-icon-sr-only
+  - '[data-pagefind-ignore]'

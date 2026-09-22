@@ -18,10 +18,10 @@ jobs:
           # submodules: true
 
       - name: 安装 pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
-          run_install: true
+          version: 10.30.3
+          run_install: false
 
       - name: 设置 Node.js
         uses: actions/setup-node@v3
@@ -29,11 +29,15 @@ jobs:
           node-version: 20
           cache: pnpm
 
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
       - name: 构建文档
         env:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |-
           pnpm run build
+          pnpm run test:search
           > docs/.vuepress/dist/.nojekyll
 
       - name: 部署文档

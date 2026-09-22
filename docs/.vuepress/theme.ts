@@ -95,13 +95,7 @@ export default hopeTheme(
         darkTheme: 'transparent_dark'
       },
 
-      docsearch: {
-        // 你的选项
-        // appId, apiKey 和 indexName 是必填的
-        appId: '087S25VL4O',
-        apiKey: 'f2b6c414504143d2399831269d41e2ce',
-        indexName: 'dribble-njrio'
-      },
+      docsearch: false,
 
       // all features are enabled for demo, only preserve features you need here
       mdEnhance: {
