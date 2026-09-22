@@ -5,7 +5,7 @@ import '@pagefind/default-ui/css/ui.css'
 
 const dialog = ref<HTMLDialogElement>()
 const searchHost = ref<HTMLElement>()
-const resultHint = ref('多个关键词可用空格分隔')
+const resultHint = ref('搜索标题、正文与代码')
 let cleanupAutoLoad: (() => void) | undefined
 const loading = ref(false)
 const error = ref(false)
@@ -25,7 +25,7 @@ function setupAutoLoad() {
     frame = requestAnimationFrame(() => {
       const more = host.querySelector<HTMLButtonElement>('.pagefind-ui__button')
       const hasResults = !!host.querySelector('.pagefind-ui__result')
-      resultHint.value = more ? '向下滚动，自动加载更多' : hasResults ? '已显示全部结果' : '多个关键词可用空格分隔'
+      resultHint.value = more ? '向下滚动，自动加载更多' : hasResults ? '已显示全部结果' : '搜索标题、正文与代码'
       if (!more) return
       more.tabIndex = -1
       more.setAttribute('aria-hidden', 'true')
@@ -73,7 +73,7 @@ async function openSearch() {
       if (!dialog.value) return
       searchUI = new PagefindUI({
         element: '#pagefind-search',
-        bundlePath: withBase('/search/'),
+        bundlePath: withBase('/pagefind/'),
         baseUrl: withBase('/'),
         showSubResults: true,
         showImages: false,
