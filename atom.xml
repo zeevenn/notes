@@ -4,10 +4,11 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-09-24T14:05:16.712Z</updated>
+  <updated>2026-09-24T14:14:00.406Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
+  <category term="浏览器"/>
   <category term="java"/>
   <category term="JavaScript"/>
   <category term="前端"/>
@@ -19,6 +20,64 @@
   <category term="microservice"/>
   <category term="linux"/>
   <category term="Browser"/>
+  <entry>
+    <title type="text">Cookie 与会话机制</title>
+    <id>https://zeevenn.github.io/notes/notes/frontend/browser/cookie.html</id>
+    <link href="https://zeevenn.github.io/notes/notes/frontend/browser/cookie.html"/>
+    <updated>2026-09-24T14:05:30.000Z</updated>
+    <summary type="html"><![CDATA[<p>HTTP 请求本身不会说明它与之前的登录请求属于同一个用户。Cookie 让浏览器保存少量键值数据，并在后续符合条件的请求中自动带回；服务端可以用其中的会话 ID 找到登录状态，也可以用它保存语言偏好等信息。</p>
+<h2>从登录到下一次请求</h2>
+<p>假设页面和接口都位于 <code>https://app.example.com</code>，采用服务端会话方案。Session（会话）保存用户身份、有效期等状态，浏览器只保存一个随机、不可预测的 Session ID。</p>
+<p>登录成功的响应可以包含：</p>
+<div class="language-http" data-ext="http" data-title="http"><pre class="language-http"><code><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK</span></span>
+<span class="token header"><span class="token header-name keyword">Set-Cookie</span><span class="token punctuation">:</span> <span class="token header-value">sid=&lt;random-session-id&gt;; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=1800</span></span>
+<span class="token header"><span class="token header-name keyword">Set-Cookie</span><span class="token punctuation">:</span> <span class="token header-value">theme=dark; Path=/; Secure; SameSite=Lax</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+<span class="token application-json">
+<span class="token punctuation">{</span><span class="token property">"ok"</span><span class="token operator">:</span><span class="token boolean">true</span><span class="token punctuation">}</span>
+</span></code></pre></div>]]></summary>
+    <content type="html"><![CDATA[<p>HTTP 请求本身不会说明它与之前的登录请求属于同一个用户。Cookie 让浏览器保存少量键值数据，并在后续符合条件的请求中自动带回；服务端可以用其中的会话 ID 找到登录状态，也可以用它保存语言偏好等信息。</p>
+<h2>从登录到下一次请求</h2>
+<p>假设页面和接口都位于 <code>https://app.example.com</code>，采用服务端会话方案。Session（会话）保存用户身份、有效期等状态，浏览器只保存一个随机、不可预测的 Session ID。</p>
+<p>登录成功的响应可以包含：</p>
+<div class="language-http" data-ext="http" data-title="http"><pre class="language-http"><code><span class="token response-status"><span class="token http-version property">HTTP/1.1</span> <span class="token status-code number">200</span> <span class="token reason-phrase string">OK</span></span>
+<span class="token header"><span class="token header-name keyword">Set-Cookie</span><span class="token punctuation">:</span> <span class="token header-value">sid=&lt;random-session-id&gt;; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=1800</span></span>
+<span class="token header"><span class="token header-name keyword">Set-Cookie</span><span class="token punctuation">:</span> <span class="token header-value">theme=dark; Path=/; Secure; SameSite=Lax</span></span>
+<span class="token header"><span class="token header-name keyword">Content-Type</span><span class="token punctuation">:</span> <span class="token header-value">application/json</span></span>
+<span class="token application-json">
+<span class="token punctuation">{</span><span class="token property">"ok"</span><span class="token operator">:</span><span class="token boolean">true</span><span class="token punctuation">}</span>
+</span></code></pre></div><p>之后请求 <code>/api/me</code> 时，浏览器根据保存的规则生成请求头：</p>
+<div class="language-http" data-ext="http" data-title="http"><pre class="language-http"><code><span class="token request-line"><span class="token method property">GET</span> <span class="token request-target url">/api/me</span> <span class="token http-version property">HTTP/1.1</span></span>
+<span class="token header"><span class="token header-name keyword">Host</span><span class="token punctuation">:</span> <span class="token header-value">app.example.com</span></span>
+<span class="token header"><span class="token header-name keyword">Cookie</span><span class="token punctuation">:</span> <span class="token header-value">sid=&lt;random-session-id&gt;; theme=dark</span></span>
+</code></pre></div><p><code>Set-Cookie</code> 是服务端设置 Cookie 的响应头；<code>Cookie</code> 是浏览器回传键值对的请求头。设置多个 Cookie 要分别发送多个 <code>Set-Cookie</code>，不能用逗号合成一个字段。<code>Path</code>、<code>HttpOnly</code> 等属性由浏览器保存，不会随着 <code>Cookie</code> 请求头回传，服务端仍需验证值是否有效。</p>
+<p>页面不需要读取 <code>sid</code> 再拼接请求头；这也是 <code>HttpOnly</code> Cookie 可以维持登录态的原因。Cookie 的收发机制见 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies" target="_blank" rel="noopener noreferrer">MDN：Using HTTP cookies</a>。</p>
+<h2>属性决定保存多久、发送给谁</h2>
+<h3>Domain 与 Path：请求的目标范围</h3>
+<p>省略 <code>Domain</code> 时，Cookie 仅属于设置它的主机，称为 <strong>host-only Cookie</strong>。例如 <code>api.example.com</code> 设置的 Cookie 只发给该主机，不发给 <code>app.example.com</code> 或 <code>v2.api.example.com</code>。</p>
+<p>显式设置 <code>Domain=example.com</code> 后，<code>example.com</code> 及其子域都在范围内。服务器只能指定自己的域名或合法父域，不能替其他网站设置 Cookie，也不能使用 <code>com</code>、<code>co.uk</code> 这样的公共后缀。开头的点没有额外作用，<code>.example.com</code> 与 <code>example.com</code> 的含义相同。</p>
+<p><code>Path</code> 进一步限制请求路径。<code>Path=/api</code> 匹配 <code>/api</code>、<code>/api/me</code>，不匹配 <code>/apix</code>。省略时，默认路径由设置 Cookie 的请求路径推导：<code>/auth/login</code> 对应 <code>/auth</code>，不一定是 <code>/</code>。因此登录接口设置会话 Cookie 时常显式写 <code>Path=/</code>。</p>
+<p>Cookie 不按端口隔离：同一主机不同端口的服务，不能依靠端口隔离 Cookie。<code>Path</code> 也不是可靠的安全隔离边界，只用于筛选请求。基础匹配规则见 <a href="https://www.rfc-editor.org/rfc/rfc6265.html#section-5.1.3" target="_blank" rel="noopener noreferrer">RFC 6265 §5.1.3–5.1.4 与 §8.5</a>。</p>
+<h3>Max-Age 与 Expires：浏览器端的生命周期</h3>
+<ul>
+<li><code>Max-Age=1800</code>：从接收时起最多保留 1800 秒；<code>0</code> 或负数表示立即过期。</li>
+<li><code>Expires=Wed, 23 Sep 2026 00:00:00 GMT</code>：指定绝对过期时间。</li>
+<li>两者同时存在时，<code>Max-Age</code> 优先。</li>
+<li>两者都没有时，是<strong>会话 Cookie</strong>，由浏览器定义会话何时结束。会话恢复功能可能恢复它，不能承诺“关闭浏览器就退出登录”。</li>
+</ul>
+<p>到期前，用户清理、存储配额和隐私策略也可能移除 Cookie。服务端 Session 的有效期独立于 Cookie：浏览器还带着 <code>sid</code>，服务端会话也可能已经失效。时间属性和恢复行为见 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#expiresdate_optional" target="_blank" rel="noopener noreferrer">MDN：Set-Cookie</a>。</p>
+<h3>Secure 与 HttpOnly：传输和脚本访问</h3>
+<p><code>Secure</code> 要求通过安全连接发送 Cookie，生产环境按 HTTPS 配置；本地 <code>localhost</code> 的开发例外取决于浏览器。它不负责加密 Cookie 的存储内容，也不阻止页面脚本读取未设置 <code>HttpOnly</code> 的 Cookie。</p>
+<p><code>HttpOnly</code> 禁止页面通过 <code>document.cookie</code> 等 API 读取或修改该 Cookie，但浏览器仍可随 <code>fetch</code>、表单等请求发送它。<code>HttpOnly</code> 并不是“只通过 HTTP 明文传输”，它和 <code>Secure</code> 经常同时使用。<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#httponly_optional" target="_blank" rel="noopener noreferrer">属性定义</a></p>
+<h2>SameSite：先区分同源和同站</h2>
+<p>**同源（same-origin）**要求协议、主机和端口都相同，主要用于浏览器的同源策略和跨源资源共享（CORS）。**同站（same-site）**在现代浏览器中按协议和可注册域判断；可注册域是公共后缀之上可由组织注册的域，例如 <code>example.com</code>、<code>example.co.uk</code>。端口不参与同站判断。</p>
+<p>以顶层页面 <code>https://app.example.com</code> 为基准，考虑它直接发起的请求：</p>
+<p>| 目标 | 同源 | 同站 | 原因 |<br>
+|</p>
+]]></content>
+    <category term="浏览器"/>
+    <published>2026-09-22T00:00:00.000Z</published>
+  </entry>
   <entry>
     <title type="text">类与对象</title>
     <id>https://zeevenn.github.io/notes/notes/programming-languages/java/language/classes-and-objects.html</id>
@@ -9146,49 +9205,6 @@ labels<span class="token punctuation">.</span><span class="token function">put</
 <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">ProductKey</span><span class="token punctuation">,</span> <span class="token class-name">Product</span><span class="token punctuation">&gt;</span></span> products <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div><h2>实现选择</h2>
 <p>| 需求 | 选择 |<br>
-|</p>
-]]></content>
-    <category term="java"/>
-    <published>2026-08-05T00:00:00.000Z</published>
-  </entry>
-  <entry>
-    <title type="text">Queue 与 Deque</title>
-    <id>https://zeevenn.github.io/notes/notes/programming-languages/java/standard-library/queue-and-deque.html</id>
-    <link href="https://zeevenn.github.io/notes/notes/programming-languages/java/standard-library/queue-and-deque.html"/>
-    <updated>2026-09-24T14:02:11.000Z</updated>
-    <summary type="html"><![CDATA[<p><code>Queue&lt;E&gt;</code> 表示等待处理的元素容器，通常以先进先出（FIFO）顺序取出；<code>Deque&lt;E&gt;</code> 是双端队列，可以在首尾两端插入、查看和删除元素，也能表达后进先出（LIFO）栈。</p>
-<h2>Queue 的两组方法</h2>
-<p>队列为失败情况提供两组操作：一组抛出异常，另一组返回特殊值。</p>
-<table>
-<thead>
-<tr>
-<th>操作</th>
-<th>失败时抛异常</th>
-<th>失败时返回特殊值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>插入</td>
-<td><code>add(e)</code></td>
-<td><code>offer(e)</code> 返回 <code>false</code></td>
-</tr>
-<tr>
-<td>删除队首</td>
-<td><code>remove()</code></td>
-<td><code>poll()</code> 返回 <code>null</code></td>
-</tr>
-<tr>
-<td>查看队首</td>
-<td><code>element()</code></td>
-<td><code>peek()</code> 返回 <code>null</code></td>
-</tr>
-</tbody>
-</table>]]></summary>
-    <content type="html"><![CDATA[<p><code>Queue&lt;E&gt;</code> 表示等待处理的元素容器，通常以先进先出（FIFO）顺序取出；<code>Deque&lt;E&gt;</code> 是双端队列，可以在首尾两端插入、查看和删除元素，也能表达后进先出（LIFO）栈。</p>
-<h2>Queue 的两组方法</h2>
-<p>队列为失败情况提供两组操作：一组抛出异常，另一组返回特殊值。</p>
-<p>| 操作 | 失败时抛异常 | 失败时返回特殊值 |<br>
 |</p>
 ]]></content>
     <category term="java"/>
