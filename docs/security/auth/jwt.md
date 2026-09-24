@@ -170,7 +170,7 @@ Refresh Token 是否采用 JWT 格式并不重要。为了支持注销、设备�
 Set-Cookie: refresh_token=<random-token>; Path=/auth/refresh; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000
 ```
 
-`HttpOnly` 阻止 JavaScript 读取 Cookie，`Secure` 要求 Cookie 只通过 HTTPS 发送，`SameSite` 控制跨站请求是否携带 Cookie，`Max-Age` 设置 Cookie 的存活秒数。前端和认证服务处于跨站环境时，Cookie 配置以及 CSRF 防护需要根据部署域名单独设计，不能直接照搬上述示例。
+`HttpOnly` 阻止 JavaScript 读取 Cookie，`Secure` 要求 Cookie 只通过 HTTPS 发送，`SameSite` 控制跨站请求是否携带 Cookie，`Max-Age` 设置 Cookie 的存活秒数。前端和认证服务处于跨站环境时，Cookie 配置以及 CSRF 防护需要根据部署域名单独设计，不能直接照搬上述示例。属性匹配、同源与同站的区别及跨源请求配置见 [Cookie 与会话机制](../../frontend/browser/cookie.md)。
 
 ## Axios 拦截器处理刷新
 

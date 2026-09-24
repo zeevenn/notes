@@ -59,6 +59,7 @@ export default [
       'memory-management',
       'cross-origin',
       'web-storage',
+      'cookie',
       'web-worker',
       'service-worker',
       'webassembly',

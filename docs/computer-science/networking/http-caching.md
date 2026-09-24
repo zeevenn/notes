@@ -9,142 +9,112 @@ tag:
   - 浏览器缓存
 ---
 
-HTTP 缓存保存已经取得的响应，并在后续请求中复用它。复用未过期的缓存响应可以省去网络请求；验证过期响应仍需访问服务器，但在内容未变化时只传输响应头，从而减少延迟、流量和服务器工作量。
+HTTP 缓存保存已经取得的响应，供后续请求复用。以浏览器缓存为例，复用有两条常见路径：
 
-浏览器既是 HTTP 的客户端，也维护一种 private cache（私有缓存）。内容分发网络（Content Delivery Network，CDN）和代理还可能维护供多个用户使用的 shared cache（共享缓存）。两者遵循相同的 HTTP 缓存语义，但 `private`、`public` 和 `s-maxage` 等指令会区分它们。
+- **强缓存**：浏览器判断缓存仍在有效期内，且策略允许直接使用，就读取本地响应，不发送网络请求。
+- **协商缓存**：浏览器把已保存内容的版本标识或修改时间发给服务器验证。内容未变化时，服务器返回 `304 Not Modified`，浏览器继续使用本地响应体；内容变化时，服务器返回 `200 OK` 和新内容。
 
-本文讨论 HTTP 缓存。它与浏览器中的其他缓存机制并不相同：
-
-- memory cache 和 disk cache 是浏览器保存 HTTP 响应的实现位置，不是两套独立的协议规则；
-- 后退/前进缓存（Back/Forward Cache，BFCache）保存的是可恢复的完整页面状态；
-- Service Worker 可以拦截请求，Cache API 则由应用代码显式读写；
-- DNS 缓存保存域名解析结果，不保存 HTTP 响应。
+两者可以配合使用：先按有效期判断能否直接复用，需要验证时再向服务器确认。
 
 ## 一次完整的缓存流程
 
-服务器返回下面的 JavaScript 文件，并允许缓存使用 60 秒：
+浏览器第一次请求 `/app.js`，服务器返回：
 
 ```http
 HTTP/1.1 200 OK
 Date: Fri, 17 Jul 2026 02:00:00 GMT
 Content-Type: text/javascript
-Cache-Control: public, max-age=60
+Cache-Control: max-age=60
 ETag: "asset-v3"
 
 console.log('v3')
 ```
 
-浏览器保存的是整个响应，包括状态、响应头和响应体。随后对相同缓存键发起请求时，主要有三条路径：
+这里的两个**响应头**分别承担不同职责：`Cache-Control: max-age=60` 规定缓存有效期为 60 秒；`ETag: "asset-v3"` 是服务器给这份内容的版本标识，供之后验证时使用。浏览器会把它们与响应体一起保存。
+
+假设浏览器直接访问源站、忽略传输耗时，且使用默认缓存策略：
+
+1. 02:00:30 再次加载同一文件，缓存仍未过期，浏览器直接读取本地文件，命中强缓存。
+2. 02:01:10 再次加载，缓存已经过期。浏览器发出请求，把先前收到的 ETag 值放进 **`If-None-Match` 请求头**：
+
+   ```http
+   GET /app.js HTTP/1.1
+   Host: static.example.com
+   If-None-Match: "asset-v3"
+   ```
+
+3. 服务器比较当前版本与 `"asset-v3"`。相同则返回 `304`，不传文件内容；不同则返回 `200`、新的 ETag 和完整文件。
+
+下图中的 HTTP 缓存位于浏览器内部。强缓存命中时，流程停在本地缓存；需要协商验证时，才访问服务器：
 
 ```mermaid
 sequenceDiagram
   autonumber
-  participant Browser as 浏览器
-  participant Cache as HTTP 缓存
+  participant Browser as 浏览器加载资源
+  participant Cache as 浏览器 HTTP 缓存
   participant Server as 服务器
 
-  Browser->>Server: 首次 GET /app.js
-  Server-->>Browser: 200 + Cache-Control + ETag + 响应体
-  Browser->>Cache: 保存响应
+  Browser->>Cache: 首次加载 /app.js
+  Cache->>Server: GET /app.js
+  Server-->>Cache: 200 + Cache-Control + ETag + 文件内容
+  Note over Cache: 保存响应头和响应体
+  Cache-->>Browser: 返回文件内容
 
-  Browser->>Cache: 60 秒内再次请求
-  Cache-->>Browser: 返回未过期响应，不访问服务器
+  Browser->>Cache: 有效期内再次加载
+  Cache-->>Browser: 强缓存命中，直接返回本地内容
 
-  Browser->>Cache: 60 秒后再次请求
+  Browser->>Cache: 过期后再次加载
   Cache->>Server: GET /app.js + If-None-Match: "asset-v3"
-  alt 内容没有变化
-    Server-->>Cache: 304 Not Modified，无响应体
-    Cache-->>Browser: 合并新元数据与已有响应体
-  else 内容已经变化
-    Server-->>Cache: 200 + 新 ETag + 新响应体
-    Cache-->>Browser: 替换并返回新响应
+  alt 版本没有变化
+    Server-->>Cache: 304 + 更新后的响应头，无响应体
+    Note over Cache: 更新响应头，保留已有响应体
+    Cache-->>Browser: 返回本地内容
+  else 版本已经变化
+    Server-->>Cache: 200 + 新 ETag + 新文件内容
+    Note over Cache: 替换已存响应
+    Cache-->>Browser: 返回新内容
   end
 ```
 
-第一条复用路径一般称为“强缓存”，第二条验证路径一般称为“协商缓存”。过期响应不会立即被删除，通常需要向源站验证后才能复用。
+缓存过期不代表文件已经改变，也不代表本地文件立即被删除；它表示不能再仅凭原来的有效期直接复用。
 
-## 缓存键决定能否找到响应
+## 强缓存：用响应头确定有效期
 
-缓存必须先找到与当前请求匹配的已存响应，才能判断它是否过期。缓存键至少受请求方法和目标 URI 影响；响应中的 `Vary` 还可以把指定请求头加入匹配条件。
+### Cache-Control: max-age
 
-例如服务器按语言返回不同内容时，需要声明：
-
-```http
-Vary: Accept-Language
-```
-
-缓存随后会分别保存中文和英文响应。遗漏 `Vary` 可能把一种响应错误地复用于另一种请求；在共享缓存中，这还可能造成跨用户数据泄漏。个性化响应通常应使用 `private` 或 `no-store`，不能只依赖默认缓存键。
-
-URL 不同也会产生不同的缓存项。构建工具利用这一点给静态资源添加内容指纹，例如 `/app.a81f3c.js`：内容改变时 URL 也改变，浏览器自然取得新文件。
-
-## 缓存有效期与过期
-
-响应的 **freshness lifetime（新鲜度寿命，也就是缓存有效期）** 表示它可以不经验证直接复用多久。缓存会计算响应的当前年龄；当年龄没有超过有效期时，规范称响应为 `fresh`（未过期），否则为 `stale`（过期）。
-
-### Cache-Control
-
-`Cache-Control` 是控制缓存行为的主要响应头，可以组合多个指令：
+服务器通过响应头声明有效期：
 
 ```http
-Cache-Control: public, max-age=3600
+Cache-Control: max-age=3600
 ```
 
-常用响应指令如下：
+`max-age` 的单位是秒。缓存计算出的响应年龄小于 3600 秒时，响应未过期；达到有效期时，响应变为过期。规范将这两种状态分别称为 `fresh` 和 `stale`。
 
-| 指令 | 含义 |
-| --- | --- |
-| `max-age=3600` | 响应年龄超过 3600 秒后变为过期 |
-| `s-maxage=3600` | 只用于共享缓存，并覆盖其中的 `max-age` 或 `Expires` |
-| `private` | 共享缓存不得存储；浏览器私有缓存仍可存储 |
-| `public` | 明确允许共享缓存存储，即使响应通常不能由共享缓存存储 |
-| `no-cache` | 可以存储，但每次复用前必须成功验证 |
-| `no-store` | 私有和共享缓存都不得有意存储该请求或响应 |
-| `must-revalidate` | 响应过期后必须成功验证；断网时也不能直接复用旧响应 |
-| `immutable` | 响应未过期期间内容不会变化，不必因刷新操作而验证 |
-
-`no-cache` 不是“不缓存”。需要禁止存储时使用 `no-store`；需要保存响应体、但每次使用前确认内容是否变化时使用 `no-cache`。
-
-`must-revalidate` 也不是“每次都验证”。未过期响应仍可直接使用，只有过期后才强制验证。
-
-### max-age、Date 和 Age
-
-`max-age` 的起点不是“浏览器收到响应的时刻”。缓存计算当前年龄时会考虑源站的 `Date`、上游缓存提供的 `Age`、传输时间以及响应在缓存中停留的时间。因此，经过 CDN 20 秒后到达浏览器的 `max-age=60` 响应，并不一定还能保持 60 秒新鲜。
-
-```http
-Date: Fri, 17 Jul 2026 02:00:00 GMT
-Age: 20
-Cache-Control: public, max-age=60
-```
-
-`Age` 表示响应自源站生成或上次验证以来的估算秒数，常用于观察共享缓存已经持有响应多久。
+**命中浏览器强缓存时，不会发送用于验证的请求头，因为根本没有网络请求。** 判断依据来自上一次保存的响应头。
 
 ### Expires
 
-`Expires` 使用绝对时间表达过期时刻：
+`Expires` 也是响应头，使用绝对时间表达过期时刻：
 
 ```http
 Expires: Fri, 17 Jul 2026 03:00:00 GMT
 ```
 
-绝对时间容易受到时钟偏差影响。响应同时包含 `Cache-Control: max-age` 和 `Expires` 时，接收方按 `max-age` 计算；共享缓存收到 `s-maxage` 时按 `s-maxage` 计算。现代服务应优先发送 `Cache-Control`，`Expires` 主要用于兼容旧实现。
+响应同时包含 `Cache-Control: max-age` 和 `Expires` 时，按 `max-age` 计算有效期。`Expires` 容易受到时钟偏差影响，主要用于兼容旧实现。
 
-即使响应没有显式过期时间，规范也允许缓存根据 `Last-Modified` 等信息估算有效期。因此，“没有缓存头”不等于“不会缓存”；需要确定行为时应显式设置策略。
+## 协商缓存：用请求头携带旧版本信息
 
-## 过期后的条件请求
+缓存需要验证时，可以携带服务器之前返回的版本标识或修改时间。这类信息称为**验证器**（validator），带有验证条件的请求称为**条件请求**。
 
-缓存拥有 validator（验证器）时，可以把普通 `GET` 转为条件请求。服务器据此判断表示形式是否变化：没有变化时返回 `304 Not Modified`，发生变化时返回带新响应体的 `200 OK`。
+### ETag 响应头 → If-None-Match 请求头
 
-`304` 不包含新的响应体。缓存会用 `304` 中的元数据更新已存响应，再把元数据和旧响应体组合为完整响应。
-
-### ETag 和 If-None-Match
-
-`ETag`（entity tag，实体标签）标识所选资源表示形式的版本。它的生成方式由服务器决定，不保证一定是内容哈希：
+服务器通过 `ETag`（实体标签）标识资源内容的版本：
 
 ```http
 ETag: "asset-v3"
 ```
 
-缓存验证该响应时，把标签放入请求头 `If-None-Match`，不是请求体：
+浏览器验证时，把保存的值放入 `If-None-Match` 请求头：
 
 ```http
 GET /app.js HTTP/1.1
@@ -152,19 +122,22 @@ Host: static.example.com
 If-None-Match: "asset-v3"
 ```
 
-对于 `GET` 或 `HEAD`，当前表示形式的标签匹配时，服务器返回 `304`；不匹配时返回 `200` 和完整的新表示形式。
+`If-None-Match` 表达的是“当前版本与这个标签不匹配时，才发送完整内容”。对于正常的 `GET` 请求：
 
-强 ETag 可用于要求字节级一致的比较。以 `W/` 开头的是弱 ETag，例如 `W/"article-v3"`，只表示语义等价，不保证字节完全相同。`If-None-Match` 的缓存验证使用弱比较，因此两种 ETag 都能用于普通的 `GET` 重验证；范围请求等场景可能要求强验证器。
+- 标签匹配：返回 `304 Not Modified`，没有响应体，浏览器复用已有内容。
+- 标签不匹配：返回 `200 OK`、新 ETag 和新响应体，浏览器更新缓存。
 
-### Last-Modified 和 If-Modified-Since
+ETag 的生成方式由服务器决定，可以使用版本号或内容哈希，但不保证一定是哈希值。
 
-`Last-Modified` 表示源站认为资源最后一次修改的时间：
+### Last-Modified 响应头 → If-Modified-Since 请求头
+
+服务器也可以通过 `Last-Modified` 返回资源最后修改的时间：
 
 ```http
 Last-Modified: Fri, 17 Jul 2026 01:50:00 GMT
 ```
 
-没有 ETag 时，缓存可以把该值放入 `If-Modified-Since`：
+浏览器可以把这个时间放入 `If-Modified-Since` 请求头：
 
 ```http
 GET /app.js HTTP/1.1
@@ -172,15 +145,76 @@ Host: static.example.com
 If-Modified-Since: Fri, 17 Jul 2026 01:50:00 GMT
 ```
 
-如果当前修改时间早于或等于请求中的时间，条件不成立，服务器返回 `304`；如果当前修改时间更晚，则返回 `200` 和新响应体。
+服务器检查资源是否在这个时间之后被修改：没有则返回 `304`；有则返回 `200` 和新内容。这里发送的是之前收到的修改时间，不是浏览器当前时间。
 
-HTTP 日期的精度有限，时钟也可能不一致，因此 `Last-Modified` 通常不如 ETag 准确，但它容易由文件系统或服务器自动生成。
+HTTP 日期精确到秒，同一秒内的多次修改可能无法区分；ETag 可以根据实际内容或版本区分变化。
 
-### 两种验证器的关系
+### 两组头的优先级与验证结果
 
-服务器可以同时返回 `ETag` 和 `Last-Modified`。浏览器可能在条件请求中同时携带两组请求头，但当 `If-None-Match` 存在时，接收方必须忽略 `If-Modified-Since`，以实体标签的判断为准。
+服务器可以同时返回 `ETag` 和 `Last-Modified`，浏览器也可能同时发送 `If-None-Match` 和 `If-Modified-Since`。两者同时存在时，服务器按 `If-None-Match` 判断，忽略 `If-Modified-Since`。
 
-因此，这不是浏览器先后尝试两套验证器的流程，而是服务器按 HTTP 条件请求的优先级求值。
+收到 `304` 后，缓存会用其中的响应头更新已存响应，并保留原响应体。例如，更新后的策略仍为 `max-age=60`，后续请求就可能再次命中强缓存；如果策略为 `no-cache`，下次复用前仍需验证。
+
+如果没有可用的验证器，需要重新获取资源时通常只能发送普通请求，接收完整响应。
+
+## 请求头与响应头对照
+
+| 机制 | 服务器返回的响应头 | 浏览器之后发送的请求头 | 作用 |
+| --- | --- | --- | --- |
+| 强缓存 | `Cache-Control: max-age=…`、`Expires` | 命中时不发送网络请求 | 判断缓存是否仍在有效期内 |
+| 协商缓存：版本标识 | `ETag` | `If-None-Match` | 比较当前版本与已保存版本 |
+| 协商缓存：修改时间 | `Last-Modified` | `If-Modified-Since` | 判断资源是否在指定时间之后修改 |
+
+`Cache-Control` 控制整个缓存流程，并不只用于强缓存；它也可以出现在请求头中。
+
+## Cache-Control：控制存储、直接复用与验证
+
+### 响应头定义缓存策略
+
+除了浏览器缓存，内容分发网络（Content Delivery Network，CDN）和代理也可能保存响应。浏览器维护的是供单个用户使用的**私有缓存**，CDN 和代理通常维护供多个用户使用的**共享缓存**。
+
+服务器可以组合多个响应指令：
+
+```http
+Cache-Control: public, max-age=3600
+```
+
+| 响应指令 | 含义 |
+| --- | --- |
+| `max-age=3600` | 缓存有效期为 3600 秒 |
+| `s-maxage=3600` | 只用于共享缓存，并覆盖其中的 `max-age` 或 `Expires` |
+| `private` | 共享缓存不得存储；浏览器私有缓存仍可存储 |
+| `public` | 明确允许共享缓存存储，即使响应通常不能由共享缓存存储 |
+| `no-cache` | 可以存储，但每次复用前必须成功验证 |
+| `no-store` | 私有和共享缓存都不得有意存储该响应 |
+| `must-revalidate` | 响应过期后必须成功验证；断网时也不能直接复用旧响应 |
+| `immutable` | 响应未过期期间内容不会变化，不必因刷新操作而验证 |
+
+`no-cache` 与 `no-store` 的区别是**保存后验证**与**禁止保存**。例如下面的响应允许保存内容，但每次复用前都需要携带 ETag 验证，不能直接命中强缓存：
+
+```http
+Cache-Control: no-cache
+ETag: "asset-v3"
+```
+
+`must-revalidate` 则只在过期后要求验证，未过期时仍可直接复用。
+
+### 请求头表达本次请求的缓存要求
+
+客户端也可以在请求中发送 `Cache-Control`：
+
+```http
+GET /app.js HTTP/1.1
+Host: static.example.com
+Cache-Control: no-cache
+If-None-Match: "asset-v3"
+```
+
+这里，`Cache-Control: no-cache` 表达“这次使用缓存前需要向源站验证”，即使缓存尚未过期；`If-None-Match` 提供要验证的旧版本。两者职责不同。
+
+同一个指令在请求和响应中的含义也需要区分：响应中的 `max-age=60` 设定有效期，请求中的 `max-age=60` 则表示客户端希望收到年龄不超过 60 秒的响应，不会把服务器原有的有效期延长。
+
+请求缓存指令的定义见 [RFC 9111 §5.2.1](https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.1)。浏览器刷新操作或 Fetch API 的缓存选项可能改变本次请求的缓存行为，不能只看服务端的 `max-age`。
 
 ## 按资源类型配置
 
@@ -226,7 +260,52 @@ Cache-Control: no-store
 
 `no-store` 是缓存行为指令，不是完整的隐私或传输安全机制。敏感响应仍需使用 HTTPS，并控制认证、授权、日志和客户端代码中的数据暴露。
 
-## 可选的过期响应策略
+## 进阶：缓存匹配与实现细节
+
+### 缓存键与 Vary
+
+缓存必须先找到与当前请求匹配的已存响应，才能判断它是否过期。缓存键至少受请求方法和目标 URI 影响；响应中的 `Vary` 还可以把指定请求头加入匹配条件。
+
+例如服务器按语言返回不同内容时，需要声明：
+
+```http
+Vary: Accept-Language
+```
+
+缓存随后会分别保存中文和英文响应。遗漏 `Vary` 可能把一种响应错误地复用于另一种请求；在共享缓存中，这还可能造成跨用户数据泄漏。个性化响应通常应使用 `private` 或 `no-store`，不能只依赖默认缓存键。
+
+URL 不同也会产生不同的缓存项。构建工具利用这一点给静态资源添加内容指纹，例如 `/app.a81f3c.js`：内容改变时 URL 也改变，浏览器自然取得新文件。
+
+### max-age、Date 和 Age
+
+`max-age` 的起点不是“浏览器收到响应的时刻”。缓存计算当前年龄时会考虑源站的 `Date`、上游缓存提供的 `Age`、传输时间以及响应在缓存中停留的时间。因此，经过 CDN 20 秒后到达浏览器的 `max-age=60` 响应，并不一定还能保持 60 秒新鲜。
+
+```http
+Date: Fri, 17 Jul 2026 02:00:00 GMT
+Age: 20
+Cache-Control: public, max-age=60
+```
+
+`Age` 表示响应自源站生成或上次验证以来的估算秒数，常用于观察共享缓存已经持有响应多久。
+
+### 没有显式有效期时的估算
+
+即使响应没有显式过期时间，规范也允许缓存在满足条件时根据 `Last-Modified` 等信息估算有效期。因此，“没有缓存头”不等于“不会缓存”；需要确定行为时应显式设置策略。
+
+### 强 ETag 与弱 ETag
+
+强 ETag 可用于要求字节级一致的比较。以 `W/` 开头的是弱 ETag，例如 `W/"article-v3"`，只表示语义等价，不保证字节完全相同。`If-None-Match` 的缓存验证使用弱比较，因此两种 ETag 都能用于普通的 `GET` 重验证；范围请求等场景可能要求强验证器。
+
+这里的“强、弱”描述的是版本比较方式，与是否命中“强缓存”无关。
+
+### HTTP 缓存与其他浏览器缓存
+
+- memory cache 和 disk cache 是浏览器保存 HTTP 响应的实现位置，不是两套独立的协议规则；
+- 后退/前进缓存（Back/Forward Cache，BFCache）保存的是可恢复的完整页面状态；
+- Service Worker 可以拦截请求，Cache API 则由应用代码显式读写；
+- DNS 缓存保存域名解析结果，不保存 HTTP 响应。
+
+### 可选的过期响应策略
 
 某些业务允许短时间使用旧响应，以换取低延迟或故障可用性。扩展指令 `stale-while-revalidate` 允许缓存先返回过期响应，同时在后台验证：
 
@@ -296,8 +375,6 @@ curl -i https://static.example.com/app.js \
 | CDN 没有缓存公开响应 | 是否存在 `private`、`no-store`、`Set-Cookie`、`Authorization` 或 CDN 自身规则 |
 | 不同用户或语言得到错误内容 | 是否错误缓存了个性化响应；`private`、`no-store` 或 `Vary` 是否缺失 |
 | DevTools 中看不到真实缓存行为 | 是否勾选了 Disable cache；是否由 Service Worker 返回响应 |
-
-HTTP 允许一些响应在没有显式指令时被缓存，也允许部分缓存实现应用启发式规则。明确声明每类资源的缓存策略，比依赖浏览器或 CDN 的默认值更容易预测和调试。
 
 ## 参考资料
 

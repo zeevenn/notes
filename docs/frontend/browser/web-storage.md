@@ -9,28 +9,13 @@ tag:
 
 浏览器提供了多种本地存储机制，各自有不同的容量、生命周期和适用场景。
 
-## cookie
+## Cookie
 
-HTTP Cookie（也叫 Web Cookie 或浏览器 Cookie）是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。通常，它用于告知服务端两个请求是否来自同一浏览器，如保持用户的登录状态。Cookie 使基于无状态的 HTTP 协议记录稳定的状态信息成为了可能。
+Cookie 是浏览器保存并按规则随 HTTP 请求发送的少量键值数据，常用于携带会话 ID，也可保存语言等偏好。是否发送取决于目标域名、路径、有效期、Secure、SameSite、请求凭据模式和浏览器策略，不能概括为“同域请求都会携带”。
 
-Cookie 主要用于以下三个方面：
+Cookie 单条容量通常约 4 KiB，数量和计量方式因浏览器实现而异。`HttpOnly` 可以禁止页面脚本读取和修改 Cookie，浏览器仍可随请求发送它。
 
-- 会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）
-- 个性化设置（如用户自定义设置、主题等）
-- 浏览器行为跟踪（如跟踪分析用户行为等）
-
-Cookie 的特点：
-
-Cookie 的大小受限，单条一般为 4 KB；同一个域名下存放 Cookie 的个数有限制，不同浏览器不同，通常在数百条；Cookie 支持设置过期时间，当过期时自动销毁；每次发起同域下的 HTTP 请求时，都会携带当前域名下的 Cookie（Cookie 越多，请求开销越大）；支持设置为 HttpOnly，防止 Cookie 被客户端的 JavaScript 访问。
-
-登录态设计还需要同时考虑 XSS、CSRF、跨域和服务端撤销能力，详见 [认证与授权](../../security/auth/README.md) 和 [JWT](../../security/auth/jwt.md)。
-
-```js
-document.cookie = 'msg1=hello'
-document.cookie = 'msg2=cookie'
-
-console.log(document.cookie) // msg1=hello;msg2=cookie
-```
+[Cookie 与会话机制](./cookie.md) 详细说明登录流程、属性、跨源携带、JavaScript 操作、注销，以及 XSS / CSRF 的防护边界。Token 的校验和刷新见 [JWT](../../security/auth/jwt.md)。
 
 ## Web Storage
 
@@ -101,7 +86,7 @@ window.addEventListener('storage', (event) => alert('Storage changed for ${event
 
 ### 过期时间
 
-- cookie：可以设置过期时间，没设置默认浏览器关闭后失效
+- Cookie：可用 Max-Age / Expires 设置有效期；未设置时由浏览器会话生命周期决定，会话恢复可能保留它
 - localStorage：除非手动清除，否则永久保存
 - sessionStorage：当前标签页有效，关闭页面或浏览器则会失效
 
@@ -109,12 +94,12 @@ window.addEventListener('storage', (event) => alert('Storage changed for ${event
 
 ### 存储大小
 
-- cookie：4KB 左右
+- Cookie：单条通常约 4 KiB，具体限制因实现而异
 - localStorage 和 sessionStorage：5MB 字符串的长度 或 10MB 字节数
 
 ### http 请求是否携带
 
-- cookie：请求时会被 http 头部自动携带，如果数据过多会影响性能
+- Cookie：符合发送条件时由浏览器写入 Cookie 请求头，增加请求开销
 - localStorage 和 sessionStorage：不参与服务器通信
 
 ## IndexedDB
@@ -176,7 +161,7 @@ const response = await caches.match('/index.html')
 | **容量**        | 单条 ~4KB          | ~5MB               | ~5MB           | 无硬限制       | 无硬限制         |
 | **生命周期**    | 可设过期时间       | 永久               | 标签页关闭清除 | 永久           | 永久             |
 | **跨 Tab 共享** | ✓                  | ✓                  | ✗              | ✓              | ✓                |
-| **随请求发送**  | ✓                  | ✗                  | ✗              | ✗              | ✗                |
+| **随请求发送**  | 符合规则时自动发送                  | ✗                  | ✗              | ✗              | ✗                |
 | **数据类型**    | 字符串             | 字符串             | 字符串         | 任意结构化数据 | Request/Response |
 | **API 类型**    | 同步               | 同步               | 同步           | 异步           | 异步（Promise）  |
 | **典型用途**    | 登录态、服务端通信 | 用户偏好、持久配置 | 表单临时数据   | 离线数据库     | 静态资源缓存     |

@@ -39,6 +39,7 @@ JavaScript 引擎实现 ECMAScript 语言并执行代码。DOM、定时器、网
 - [内存管理](./memory-management.md)
 - [跨域](./cross-origin.md)
 - [浏览器存储](./web-storage.md)
+- [Cookie 与会话机制](./cookie.md)
 - [Service Worker](./service-worker.md)
 - [Web Worker](./web-worker.md)
 - [WebAssembly](./webassembly.md)

@@ -76,6 +76,7 @@ Cookie 是浏览器携带凭据的机制，JWT 是 Token 格式，两者可以�
 
 ## 相关入口
 
+- [Cookie 与会话机制](../../frontend/browser/cookie.md)
 - [浏览器存储](../../frontend/browser/web-storage.md)
 - [跨域](../../frontend/browser/cross-origin.md)
 - [401 和 403 状态码](../../computer-science/networking/401-vs-403.md)
