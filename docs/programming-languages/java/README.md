@@ -1,13 +1,22 @@
 # Java
 
-## 目录
+默认以 Java 17 为语言和标准库基线，后续版本的扩展在对应主题中标注。
 
-### 子目录
+## 语言基础
 
-- [Java 语言基础](./language/README.md)
-- [Java 标准库](./standard-library/README.md)
+[语言基础目录](./language/README.md)按基础语法、面向对象、类型声明与建模、语言机制组织。
 
-### 笔记
+- [基础语法](./language/README.md#基础语法)
+- [面向对象](./language/README.md#面向对象)
+- [类型声明与建模](./language/README.md#类型声明与建模)
+- [语言机制](./language/README.md#语言机制)
+
+## 标准库
+
+- [常用类](./standard-library/README.md#常用类)：String、包装类
+- [集合框架](./standard-library/README.md#集合框架)：List、Set、Map、Queue、遍历比较与不可修改集合
+
+## Maven
 
 - [Maven](./maven/README.md)
   - [生命周期与插件](./maven/lifecycle-and-plugins.md)

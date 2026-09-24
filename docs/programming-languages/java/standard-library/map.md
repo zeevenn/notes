@@ -234,14 +234,6 @@ Map<ProductKey, Product> products = new HashMap<>();
 | 键是枚举 | `EnumMap` |
 | 多线程共享并更新 | 根据操作语义评估 `ConcurrentHashMap` |
 
-## 相关内容
-
-- [集合框架总览](./collections-overview.md)
-- [Set](./set.md)
-- [遍历、比较与排序](./iteration-and-comparison.md)
-- [Object 的通用契约](../language/object-contract.md)
-- [不可修改集合与防御性复制](./immutable-collections.md)
-
 ## 参考资料
 
 - [Dev.java：Using Maps to Store Key Value Pairs](https://dev.java/learn/api/collections-framework/maps/)

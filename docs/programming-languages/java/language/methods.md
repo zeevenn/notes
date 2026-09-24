@@ -1,10 +1,10 @@
 ---
-title: 方法
+title: 方法与参数传递
 date: 2026-08-05
 category: java
 ---
 
-方法用名称封装一段操作，通过参数接收输入，并通过返回值给出结果。方法必须声明在类、接口、枚举或 Record 等类型内部；不能在普通类式源码中直接声明顶层方法。
+方法用名称封装一段操作，通过参数接收输入，并通过返回值给出结果。下面把方法声明在 `PriceCalculator` 类中，再通过对象调用它。
 
 ```java
 public class PriceCalculator {
@@ -14,9 +14,15 @@ public class PriceCalculator {
 }
 ```
 
+```java
+PriceCalculator calculator = new PriceCalculator();
+int amount = calculator.total(10, 3);
+System.out.println(amount); // 30
+```
+
 这个方法包含：
 
-- `public`：访问修饰符；
+- `public`：允许外部代码调用这个方法；
 - `int`：返回类型；
 - `total`：方法名；
 - `(int unitPrice, int quantity)`：参数列表；
@@ -24,7 +30,7 @@ public class PriceCalculator {
 
 ## 实例方法与静态方法
 
-实例方法属于对象，可以访问对象的实例字段；调用前通常需要创建对象。
+实例方法通过某个对象调用，可以读取或修改这个对象的字段，也就是对象保存的数据。
 
 ```java
 public class Counter {
@@ -44,7 +50,7 @@ counter.increment();
 System.out.println(counter.value()); // 1
 ```
 
-静态方法属于类，不依赖某个对象，也不能直接访问实例字段或使用 `this`。
+带 `static` 的方法称为静态方法，通过类名调用，不要求先创建对象。它没有隐式的当前对象，因此不能直接访问某个对象的字段。
 
 ```java
 public class Numbers {
@@ -95,7 +101,7 @@ public String sign(int value) {
 
 ## Java 只有值传递
 
-调用方法时，Java 会把实参的值复制给形参。基本类型复制具体数值，引用类型复制“对象引用的值”。两者都属于值传递。
+调用时传入的值称为实参，方法声明中的参数变量称为形参。Java 会把实参的值复制给形参，这称为值传递。整数等基本类型直接复制数值；对象变量保存的是访问对象的引用，复制后两个变量仍可以访问同一个对象。
 
 ### 基本类型参数
 
@@ -112,6 +118,15 @@ System.out.println(count); // 1
 方法修改的是参数副本，不会改变调用方的 `count`。
 
 ### 引用类型参数
+
+```java
+class User {
+    private String name;
+    User(String name) { this.name = name; }
+    void setName(String name) { this.name = name; }
+    String getName() { return name; }
+}
+```
 
 ```java
 static void rename(User user) {
@@ -150,7 +165,7 @@ public static double area(double radius) {
 }
 ```
 
-方法签名由方法名和参数类型组成，不包含返回类型。下面两个方法不能同时存在：
+编译器区分这里的方法时，使用方法名和参数类型组成的签名，不使用返回类型。下面两个方法不能同时存在：
 
 ```java
 // int parse(String text) { ... }
@@ -166,7 +181,7 @@ static void print(Integer value) {}
 // print(null); // 编译错误：无法判断选择哪个重载
 ```
 
-重载是编译期选择；子类的方法重写则依赖对象的运行时类型。两者不要混为一谈。
+方法重载根据调用处的参数类型和数量选择方法；对象继承关系中的方法选择见[多态与类型转换](./polymorphism.md)。
 
 ## 可变参数
 
@@ -204,22 +219,7 @@ public static long factorial(int value) {
 }
 ```
 
-每次调用都会占用调用栈空间。Java 不保证尾调用优化，递归层级取决于输入且可能很深时，应考虑循环或显式栈。
-
-## 方法设计的边界
-
-- 方法名表达动作或查询结果，例如 `calculateTotal()`、`findUser()`；
-- 参数过多通常说明缺少一个有意义的对象；
-- 查询方法应尽量避免隐藏的状态修改；
-- 不用特殊返回值同时表达正常结果和失败，失败模型应明确选择异常、空集合或 `Optional`；
-- 对外方法要说明参数是否允许为 `null`、可能抛出的异常以及副作用。
-
-## 相关内容
-
-- [类与封装](./classes-and-encapsulation.md)
-- [引用类型与对象](./reference-types.md)
-- [继承与多态](./inheritance-and-polymorphism.md)
-- [异常处理](./exceptions.md)
+每次调用都需要保存参数、局部变量和返回位置，这些信息所占用的空间称为调用栈。递归层数过深可能耗尽调用栈；深度不可控时，可以改用循环组织计算。
 
 ## 参考资料
 

@@ -232,14 +232,6 @@ int insertionPoint = -result - 1;
 
 因此 `ArrayList` 与 `LinkedList` 可以相等，`HashSet` 与 `TreeSet` 也可以相等；相等性由接口契约决定，不要求实现类相同。
 
-## 相关内容
-
-- [List](./list.md)
-- [Set](./set.md)
-- [Map](./map.md)
-- [Queue 与 Deque](./queue-and-deque.md)
-- [Lambda 与方法引用](../language/lambda-and-method-references.md)
-
 ## 参考资料
 
 - [Dev.java：Iterating over the Elements of a Collection](https://dev.java/learn/api/collections-framework/iterating/)

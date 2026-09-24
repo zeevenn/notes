@@ -4,7 +4,25 @@ date: 2026-08-05
 category: java
 ---
 
-异常表示程序无法沿当前正常路径继续执行。抛出异常时，Java 会沿调用栈向上查找能够处理该异常的 `catch`；如果一直没有找到，当前线程终止并报告异常及调用栈。
+异常表示一次操作未能正常完成。发生异常后，当前操作会中止；调用方可以捕获异常并决定如何处理。
+
+`try` 包含要执行的操作，`catch` 接收并处理匹配的异常。下面的 `Integer.parseInt()` 把字符串转换为整数，遇到无法解析的文字时会抛出 `NumberFormatException`，即数字格式异常：
+
+```java
+String input = "abc";
+try {
+    int port = Integer.parseInt(input);
+    System.out.println(port);
+} catch (NumberFormatException exception) {
+    System.out.println("输入必须是整数");
+}
+```
+
+转换失败后不会继续执行 `println(port)`，而是进入 `catch` 输出提示。
+
+## 主动报告失败
+
+`throw` 可以主动抛出异常。下面先解析端口，再检查允许的范围；`IllegalArgumentException` 表示调用方提供的参数不合法。
 
 ```java
 int parsePort(String text) {
@@ -18,32 +36,18 @@ int parsePort(String text) {
 
 异常不是普通分支的替代品。可预期且频繁发生的业务结果，通常应由返回值或明确的结果类型表达；无法在当前层完成的失败才适合抛出或继续传播。
 
-## `Throwable` 层次
-
-```text
-Throwable
-├── Error
-└── Exception
-    ├── RuntimeException
-    └── 其他受检异常
-```
-
-- `Error`：虚拟机或运行环境的严重问题，例如 `OutOfMemoryError`。应用通常不尝试恢复；
-- 受检异常（checked exception）：`Exception` 中不属于 `RuntimeException` 的类型，例如 `IOException`。编译器要求捕获或声明；
-- 非受检异常（unchecked exception）：`RuntimeException` 及其子类，例如 `IllegalArgumentException`、`NullPointerException`。编译器不强制处理。
-
-受检和非受检描述的是编译期规则，不代表异常一定能否恢复。选择异常类型时需要看调用方是否能采取有意义的恢复措施。
-
 ## 捕获异常
 
-`try` 包含可能失败的操作，`catch` 处理匹配的异常类型：
+方法调用方法会形成一条调用链；运行时保存这条链的位置称为调用栈。异常从发生位置沿调用链向外传播，直到遇到能处理它的 `catch`；始终没有找到处理者时，当前执行线程会终止并报告错误。
+
+调用上面的 `parsePort()` 时，调用方可以捕获错误，并通过异常的 `getMessage()` 读取失败原因：
 
 ```java
 try {
-    int port = Integer.parseInt(input);
+    int port = parsePort("70000");
     System.out.println("port = " + port);
-} catch (NumberFormatException exception) {
-    System.err.println("端口必须是整数：" + input);
+} catch (IllegalArgumentException exception) {
+    System.err.println("端口配置错误：" + exception.getMessage());
 }
 ```
 
@@ -70,6 +74,24 @@ try {
 ```
 
 不要为了让编译通过而写空的 `catch`。如果当前层无法恢复，应保留原因并向上传播，而不是悄悄丢弃失败。
+
+## 异常类型与编译检查
+
+`Throwable` 是 Java 可抛出对象的公共父类；继承关系决定某个 `catch` 能处理哪些具体异常。
+
+```text
+Throwable
+├── Error
+└── Exception
+    ├── RuntimeException
+    └── 其他受检异常
+```
+
+- `Error`：虚拟机或运行环境的严重问题，例如 `OutOfMemoryError`。应用通常不尝试恢复；
+- 受检异常（checked exception）：`Throwable` 层次中除 `RuntimeException`、`Error` 及其子类之外的类型，通常通过继承 `Exception` 定义，例如 `IOException`。编译器要求捕获或声明；
+- 非受检异常（unchecked exception）：`RuntimeException`、`Error` 及其子类，例如 `IllegalArgumentException`、`NullPointerException`。编译器不强制处理。
+
+受检和非受检描述的是编译期规则，不代表异常一定能否恢复。选择异常类型时需要看调用方是否能采取有意义的恢复措施。
 
 ## `finally` 与清理
 
@@ -186,11 +208,6 @@ HTTP / CLI / 消息处理结果
 - 捕获 `Error` 并假设应用仍能安全运行；
 - 手动关闭资源但没有处理中途失败；
 - 抛出缺少操作对象、参数和边界信息的宽泛异常。
-
-## 相关内容
-
-- [方法](./methods.md)
-- [引用类型与对象](./reference-types.md)
 
 ## 参考资料
 

@@ -1,187 +1,140 @@
 ---
-title: 引用类型与对象
+title: 引用与对象语义
 date: 2026-08-05
 category: java
 ---
 
-Java 的值分为基本类型值和引用值。基本类型变量直接保存 `int`、`double`、`boolean` 等值；引用类型变量保存一个引用，通过它访问对象或数组。
+对象保存在变量之外，引用是变量用来访问对象的值。把一个引用变量赋给另一个变量，会让两个变量指向同一个对象，不会自动创建第二个对象。
+
+下面的 `Box` 保存一个整数，`value` 是每个对象各自拥有的字段：
 
 ```java
-int count = 3;                  // 基本类型变量
-User user = new User("Alice"); // 引用类型变量
-```
-
-`User` 是变量的声明类型，`new User("Alice")` 创建对象，表达式结果是指向该对象的引用。变量与对象不是同一件事。
-
-## 声明类型与运行时对象
-
-引用变量的声明类型决定编译期允许访问哪些成员，实际对象类型决定被重写的实例方法如何执行。
-
-```java
-Animal animal = new Dog();
-animal.makeSound(); // 编译器按 Animal 检查，运行时调用 Dog 的实现
-```
-
-同一个引用变量可以在不同时刻指向不同对象，只要赋值满足类型兼容关系：
-
-```java
-Animal animal = new Dog();
-animal = new Cat();
-```
-
-这种“引用类型较宽、运行时对象较具体”的关系是多态的基础。
-
-## `null` 表示没有对象
-
-引用类型的值可以是 `null`，表示当前没有指向任何对象。
-
-```java
-User user = null;
-```
-
-对 `null` 解引用会抛出 `NullPointerException`：
-
-```java
-// user.getName(); // 运行时抛出 NullPointerException
-```
-
-处理可能缺失的值时，应先明确其业务含义：
-
-- 必须存在：在构造方法或方法入口校验，尽早拒绝 `null`；
-- 可以缺失：使用清楚的命名、文档或返回类型表达；
-- 返回多个结果：空集合通常比 `null` 更容易使用；
-- 单个查询结果可能不存在：在 API 边界可考虑 `Optional<T>`。
-
-`Objects.requireNonNull()` 可以在边界处检查必填引用：
-
-```java
-import java.util.Objects;
-
-public User(String name) {
-    this.name = Objects.requireNonNull(name, "name must not be null");
+class Box {
+    int value;
 }
 ```
 
-## 多个引用可以指向同一个对象
-
-复制引用不会复制对象：
+## 复制变量与共享对象
 
 ```java
-User first = new User("Alice");
-User second = first;
+Box first = new Box();
+first.value = 10;
+Box second = first;
 
-second.setName("Bob");
-System.out.println(first.getName()); // Bob
+second.value = 20;
+System.out.println(first.value); // 20
 ```
 
-`first` 和 `second` 是两个变量，但保存了指向同一对象的引用。这种关系称为别名（aliasing）。通过任一引用修改可变对象，另一方都能观察到修改。
+`new Box()` 创建对象，`first` 保存指向它的引用。`second = first` 复制这个引用，因此通过任一变量修改字段，访问的都是同一份数据。
 
-重新绑定变量不会影响另一个变量：
+```mermaid
+flowchart LR
+    first[变量 first] --> box[同一个 Box 对象：value = 20]
+    second[变量 second] --> box
+```
+
+基本类型变量的赋值则复制数值本身：
 
 ```java
-second = new User("Carol");
-
-System.out.println(first.getName());  // Bob
-System.out.println(second.getName()); // Carol
+int first = 10;
+int second = first;
+second = 20;
+System.out.println(first); // 10
 ```
 
-## `final` 限制引用，不冻结对象
+## 修改对象与重新赋值
 
-`final` 引用只能赋值一次，但对象是否可变由对象自身的 API 决定。
+`second.value = 20` 修改引用指向的对象；`second = new Box()` 改变变量指向的对象。
 
 ```java
-final User user = new User("Alice");
-user.setName("Bob");        // 可以：修改对象状态
-// user = new User("Carol"); // 编译错误：不能重新赋值
+Box first = new Box();
+first.value = 10;
+Box second = first;
+
+second = new Box();
+second.value = 30;
+System.out.println(first.value);  // 10
+System.out.println(second.value); // 30
 ```
 
-不可变对象则不会在构造完成后改变可观察状态。`String`、包装类以及设计正确的 Record 都常作为不可变值使用。
+`second` 重新赋值后指向新对象，`first` 仍指向原来的对象。变量之间不会因为曾经保存相同引用，就一直保持同步。
+
+## null 表示没有对象
+
+引用变量可以保存 `null`，表示当前没有指向对象。此时读取字段或调用对象方法会抛出 `NullPointerException`，即空指针异常。
 
 ```java
-String text = "hello";
-String upper = text.toUpperCase();
+Box box = null;
+// System.out.println(box.value); // 运行时发生空指针异常
 
-System.out.println(text);  // hello
-System.out.println(upper); // HELLO
+if (box != null) {
+    System.out.println(box.value);
+}
 ```
 
-## `==` 比较什么
+如果某项操作要求对象一定存在，应由调用方保证或在操作入口检查。`null` 与“对象存在，但字段值为零”是两种不同状态。
 
-对基本类型使用 `==`，比较的是数值。对引用类型使用 `==`，比较的是两个引用是否指向同一个对象。
+## == 判断是否为同一个对象
 
 ```java
-User first = new User("Alice");
-User second = new User("Alice");
-User same = first;
+Box first = new Box();
+Box second = new Box();
+Box same = first;
 
-System.out.println(first == second); // false：两个对象
-System.out.println(first == same);   // true：同一个对象
+System.out.println(first == second); // false
+System.out.println(first == same);   // true
 ```
 
-对象的业务内容是否相等由 `equals()` 定义：
+虽然 `first.value` 和 `second.value` 都是默认值 `0`，两个对象仍然不同。对引用使用 `==`，比较的是对象身份，不是字段内容。
+
+`equals()` 是对象提供的比较方法，是否按内容比较由具体类定义。例如字符串的 `equals()` 比较文字内容；普通类没有自定义这个方法时，默认行为仍然是比较对象身份。
+
+## final 引用与对象可变性
+
+`final` 限制变量只能赋值一次，不限制通过这个变量修改对象。
 
 ```java
-System.out.println(first.equals(second));
+final Box box = new Box();
+box.value = 20;    // 可以修改对象字段
+// box = new Box(); // 编译错误：不能重新赋值
 ```
 
-如果类没有重写 `equals()`，它会继承 `Object.equals()` 的身份比较行为。`String`、包装类、集合和 Record 已经定义了内容相等语义。
-
-比较可能为 `null` 的引用时，可以使用 `Objects.equals()`：
+对象创建后还能改变状态，称为可变对象。对象创建后不再改变可观察状态，称为不可变对象。例如 `String` 的替换操作返回处理结果，原字符串内容保持不变：
 
 ```java
-boolean sameName = Objects.equals(firstName, secondName);
+String original = "hello";
+String changed = original.toUpperCase();
+System.out.println(original); // hello
+System.out.println(changed);  // HELLO
 ```
 
-它在两个值都为 `null` 时返回 `true`，只有一个为 `null` 时返回 `false`，否则调用第一个值的 `equals()`。
+## 数组赋值与复制
 
-## 数组也是对象
-
-数组变量保存数组对象的引用，复制数组变量同样不会复制元素。
+数组也是对象。数组变量保存引用，所以赋值同样会共享原数组：
 
 ```java
 int[] first = {1, 2, 3};
 int[] second = first;
-
 second[0] = 99;
 System.out.println(first[0]); // 99
 ```
 
-创建独立的浅复制可使用 `clone()` 或 `Arrays.copyOf()`：
+数组的 `clone()` 方法会创建新数组，并复制各个元素值。对于对象数组，复制的是元素中的引用，对象本身仍共享；这称为浅复制。
 
 ```java
-int[] copy = first.clone();
-copy[0] = 1;
-System.out.println(first[0]); // 99
+Box box = new Box();
+Box[] original = {box};
+Box[] copied = original.clone();
+
+System.out.println(original == copied);       // false：两个数组
+System.out.println(original[0] == copied[0]); // true：同一个 Box
+copied[0].value = 9;
+System.out.println(original[0].value); // 9
 ```
 
-对于对象数组，浅复制只创建新的数组容器，数组元素引用仍可能指向相同对象。
-
-```java
-User[] users = {new User("Alice")};
-User[] copied = users.clone();
-
-copied[0].setName("Bob");
-System.out.println(users[0].getName()); // Bob
-```
-
-是否需要深复制取决于对象所有权和变更边界。与其默认实现通用深复制，通常更适合使用不可变值或提供符合领域含义的复制方法。
-
-## 对象何时可以被回收
-
-对象没有任何可达的强引用后，便具备被垃圾收集器回收的条件；“具备条件”不表示立即回收。局部变量离开作用域、字段被重新赋值或集合移除元素，都可能使对象失去引用。
-
-Java 不依赖垃圾收集器关闭文件、网络连接等外部资源。这类资源应通过 `try-with-resources` 确定地关闭。
-
-## 相关内容
-
-- [包装类与装箱拆箱](./wrapper-classes.md)
-- [基本数据类型](./primitive-types.md)
-- [Object 的通用契约](./object-contract.md)
-- [方法](./methods.md)
-- [继承与多态](./inheritance-and-polymorphism.md)
-- [异常处理](./exceptions.md)
+如果复制结果需要拥有独立的 `Box`，就需要另行创建 `Box` 并复制其字段。是否复制到更深一层，应由需要独立修改哪些数据决定。
 
 ## 参考资料
 
-- [Java Language Specification 17：Types, Values, and Variables](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html)
+- [Java SE 17 JLS：Reference Types and Values](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.3)
 - [Dev.java：Creating and Using Objects](https://dev.java/learn/classes-objects/creating-objects/)

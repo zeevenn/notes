@@ -175,12 +175,6 @@ public List<String> members() {
 
 返回快照适合调用方只读且不应观察后续变化的场景。若要提供动态只读视图，可以使用 `Collections.unmodifiableList()`，但需要明确它会反映底层列表的变化。
 
-## 相关内容
-
-- [集合框架总览](./collections-overview.md)
-- [遍历、比较与排序](./iteration-and-comparison.md)
-- [不可修改集合与防御性复制](./immutable-collections.md)
-
 ## 参考资料
 
 - [Dev.java：Extending Collection with List](https://dev.java/learn/api/collections-framework/lists/)

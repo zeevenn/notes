@@ -159,12 +159,6 @@ for (Task task : tasks) {
 | 每次处理最高优先级元素 | `PriorityQueue` |
 | 多线程生产者/消费者 | 根据容量和阻塞语义选择 `BlockingQueue` |
 
-## 相关内容
-
-- [集合框架总览](./collections-overview.md)
-- [List](./list.md)
-- [遍历、比较与排序](./iteration-and-comparison.md)
-
 ## 参考资料
 
 - [Dev.java：Storing Elements in Stacks and Queues](https://dev.java/learn/api/collections-framework/stacks-queues/)

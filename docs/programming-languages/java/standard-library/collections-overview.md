@@ -66,7 +66,7 @@ List<Integer> scoreList = new ArrayList<>();
 scoreList.add(90); // int 自动装箱为 Integer
 ```
 
-基本类型值如何转换成包装对象，见[包装类与装箱拆箱](../language/wrapper-classes.md)。
+基本类型值如何转换成包装对象，见[包装类与装箱拆箱](./wrapper-classes.md)。
 
 选择数组的常见情况：
 
@@ -157,15 +157,6 @@ boolean exists = users.contains(new User(1L, "Alice"));
 `ArrayList`、`HashSet`、`HashMap`、`ArrayDeque` 等通用实现不是线程安全的。多个线程共享且至少一个线程修改集合时，需要由对象所有权、同步或并发集合建立明确边界。
 
 并发场景常见类型包括 `ConcurrentHashMap`、`CopyOnWriteArrayList` 和 `BlockingQueue`。它们具有不同一致性与性能取舍，应在并发专题中结合内存模型学习；不能简单地把所有集合替换成同步包装器。
-
-## 相关内容
-
-- [List](./list.md)
-- [Set](./set.md)
-- [Map](./map.md)
-- [Queue 与 Deque](./queue-and-deque.md)
-- [遍历、比较与排序](./iteration-and-comparison.md)
-- [不可修改集合与防御性复制](./immutable-collections.md)
 
 ## 参考资料
 

@@ -6,9 +6,12 @@ category: java
 
 泛型把类型作为类、接口或方法的参数。它让编译器在使用点检查类型关系，减少显式强制转换，并让同一份实现安全地处理多种类型。
 
-没有泛型时，容器只能以 `Object` 接收和返回值，错误可能推迟到运行时：
+`List` 是按位置保存元素的列表接口，`ArrayList` 是它的一种实现。例子中的 `add()` 加入元素，`get(下标)` 取出元素。若不声明列表的元素类型，取出的值只按公共父类型 `Object` 处理，调用方需要自己确认它的具体类型：
 
 ```java
+import java.util.List;
+import java.util.ArrayList;
+
 List values = new ArrayList();
 values.add("Java");
 values.add(42);
@@ -16,7 +19,9 @@ values.add(42);
 String language = (String) values.get(1); // 运行时 ClassCastException
 ```
 
-使用参数化类型后，错误会在编译期暴露：
+`(String)` 强制把取出的值作为字符串使用，但位置 1 保存的是整数对象，因此运行时会报告类型转换错误。
+
+把类型写进尖括号后，`List<String>` 明确要求元素是字符串。这样的写法称为参数化类型，编译器会提前阻止加入不兼容的值：
 
 ```java
 List<String> values = new ArrayList<>();
@@ -28,7 +33,7 @@ String language = values.get(0); // 不需要强制转换
 
 ## 泛型类与接口
 
-类型参数写在类型名之后：
+类型参数写在类型名之后。`T` 是一个待确定的类型名称，类中的字段、参数和返回值可以用它保持类型一致：
 
 ```java
 public final class Box<T> {
@@ -86,7 +91,7 @@ Integer number = first(List.of(1, 2, 3));
 
 ## 有界类型参数
 
-上界限制类型参数必须是某个类型的子类型：
+上界限制类型参数必须是某个类型或它的子类型。下面的 `Number` 是数值包装类的公共父类，它提供 `doubleValue()` 将数值转换为 `double`：
 
 ```java
 public static <T extends Number> double sum(List<T> values) {
@@ -98,7 +103,7 @@ public static <T extends Number> double sum(List<T> values) {
 }
 ```
 
-多个上界使用 `&`，类上界必须放在最前面：
+多个上界使用 `&`，类上界必须放在最前面。`Comparable<T>` 表示对象能与同类型的值比较大小，其 `compareTo()` 返回负数、零、正数，分别表示小于、等于、大于：
 
 ```java
 <T extends Number & Comparable<T>> T max(T left, T right) {
@@ -221,14 +226,6 @@ Number[] numbers = new Integer[1];
 ```
 
 泛型在编译期拒绝对应的不安全关系，因此通用容器通常优先使用泛型集合而不是对象数组。
-
-## 相关内容
-
-- [引用类型与对象](./reference-types.md)
-- [抽象类与接口](./abstract-and-interface.md)
-- [数组](./arrays.md)
-- [异常处理](./exceptions.md)
-- [集合框架总览](../standard-library/collections-overview.md)
 
 ## 参考资料
 

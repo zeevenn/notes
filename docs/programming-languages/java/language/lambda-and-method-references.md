@@ -4,7 +4,9 @@ date: 2026-08-05
 category: java
 ---
 
-Lambda 表达式把一段行为作为值传递。它的目标类型必须是函数式接口：只有一个抽象方法的接口。
+Lambda 表达式用简短的语法提供一段可调用的行为，例如一条字符串检查规则。
+
+接口声明调用方可以使用的方法；只有一个需要实现的抽象方法的接口称为函数式接口。Lambda 为这个方法提供实现，接口类型则说明参数和返回值是什么。
 
 ```java
 @FunctionalInterface
@@ -16,7 +18,9 @@ StringRule notBlank = value -> value != null && !value.isBlank();
 boolean valid = notBlank.test("Java");
 ```
 
-`@FunctionalInterface` 不是成为函数式接口的必要条件，但能让编译器检查接口是否始终只有一个抽象方法。
+这里 `StringRule` 约定检查方法接收字符串并返回布尔值。`value -> ...` 为 `test()` 提供实现，`notBlank.test("Java")` 执行这条规则并得到 `true`。
+
+`@FunctionalInterface` 是让编译器检查接口符合函数式接口条件的标记，省略它也可以使用 Lambda。
 
 ## Lambda 语法
 
@@ -29,7 +33,15 @@ Lambda 由参数列表、箭头和方法体组成：
 }
 ```
 
-常见形式：
+下面使用标准库中已经定义好的行为类型：`Runnable` 表示无参数、无返回值的操作；`Predicate<String>` 表示字符串判断；`BinaryOperator<Integer>` 表示接收两个整数对象并返回一个的运算；`Consumer<String>` 表示接收字符串、不返回值的操作。
+
+```java
+import java.util.function.Predicate;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
+```
+
+它们对应不同的参数与返回值形式：
 
 ```java
 Runnable task = () -> System.out.println("run");
@@ -155,13 +167,6 @@ Function<String, Integer> trimmedLength = trim.andThen(length);
 ## Lambda 不是对象模型的替代品
 
 Lambda 适合传递单一行为，例如过滤条件、映射规则、回调和工厂。需要多个相关操作、明确状态、不变量或生命周期时，普通类和接口仍然更合适。
-
-## 相关内容
-
-- [方法](./methods.md)
-- [抽象类与接口](./abstract-and-interface.md)
-- [枚举与嵌套类](./enums-and-nested-classes.md)
-- [泛型](./generics.md)
 
 ## 参考资料
 

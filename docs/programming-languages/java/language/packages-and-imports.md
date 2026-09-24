@@ -4,7 +4,7 @@ date: 2026-08-05
 category: java
 ---
 
-前面的示例已经使用过标准库中的 `BigDecimal`、`Arrays` 和 `Objects`。这些类型分别属于 `java.math` 和 `java.util` 等包。以 `BigDecimal` 为例，它的完整名称是 `java.math.BigDecimal`：
+包为类型提供命名空间。例如 `BigDecimal` 位于 `java.math` 包，完整名称为 `java.math.BigDecimal`：
 
 ```java
 java.math.BigDecimal amount = new java.math.BigDecimal("10.50");
@@ -109,18 +109,11 @@ double distance(double x, double y) {
 
 静态导入适合来源明确且频繁使用的常量或测试断言。大量静态导入可能让读者难以判断方法来源。
 
-## 包访问与 `protected`
+## 包与访问边界
 
-没有访问修饰符的顶级类型或成员具有包访问权限，只能被同一包中的代码直接访问。
+同包代码与跨包代码拥有不同的访问条件。`import` 只影响名称书写方式，不会绕过访问权限；子包也不会因名称前缀相同而获得父包的包访问权限。
 
-```java
-class InvoiceValidator { // 仅 com.example.billing 包内可见
-}
-```
-
-包访问可以隐藏实现类型，减少对外 API。并非每个类型都需要声明为 `public`。
-
-`protected` 除了允许子类访问，也允许同一包中的代码访问。跨包子类访问还有额外限制，不能简单理解为“比包访问多一个子类权限”。设计 API 时应优先从明确的公开边界出发，而不是依赖复杂的 `protected` 规则共享实现。
+成员和类型的权限矩阵、跨包 `protected` 规则统一见[封装与访问控制](./encapsulation-and-access.md)。
 
 ## 未命名包
 
@@ -163,13 +156,7 @@ java -cp out com.example.App
 - 包声明与源码/输出布局不一致；
 - 把 JAR 文件所在目录加入类路径，却没有加入 JAR 文件本身。
 
-Java 9 引入模块系统和模块路径（module path）。模块通过 `module-info.java` 声明依赖、导出包和服务。多数基础学习与传统 Maven 项目可以先掌握包和类路径，再单独学习模块系统。
-
-## 相关内容
-
-- [程序基本结构](./program-structure.md)
-- [类与封装](./classes-and-encapsulation.md)
-- [Maven](../maven/README.md)
+Java 9 引入模块系统和模块路径（module path）。模块通过 `module-info.java` 声明依赖、导出包和服务。包与模块是不同层次的组织单位，包导出和模块依赖属于模块系统的规则。
 
 ## 参考资料
 

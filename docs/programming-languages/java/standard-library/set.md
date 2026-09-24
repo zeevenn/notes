@@ -157,7 +157,7 @@ accounts.add(account);
 account.setEmail("new@example.com");
 ```
 
-Set 元素应使用稳定标识或不可变值。完整规则见 [Object 的通用契约](../language/object-contract.md)。
+Set 元素应使用稳定标识或不可变值。完整规则见 [Object 类与通用方法](../language/object-contract.md)。
 
 ## 实现选择
 
@@ -167,13 +167,6 @@ Set 元素应使用稳定标识或不可变值。完整规则见 [Object 的通�
 | 唯一且保持插入/相遇顺序 | `LinkedHashSet` |
 | 唯一且始终排序、需要范围查询 | `TreeSet` |
 | 元素类型是枚举 | `EnumSet` |
-
-## 相关内容
-
-- [集合框架总览](./collections-overview.md)
-- [Map](./map.md)
-- [遍历、比较与排序](./iteration-and-comparison.md)
-- [Object 的通用契约](../language/object-contract.md)
 
 ## 参考资料
 

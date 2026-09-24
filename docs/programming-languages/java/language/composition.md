@@ -1,398 +1,93 @@
 ---
-title: Composition
+title: 组合与委托
 date: 2026-02-12
 category: java
 ---
 
-## 组合（Composition）
+组合通过持有其他对象来组织功能，委托则把某项操作交给被持有的对象完成。一个类可以只暴露自己的操作，同时复用另一个对象的实现。
 
-组合是指**一个类包含另一个类的实例作为成员变量**，通过委托的方式复用代码，而不是通过继承。
-
-### 基本示例
+## 持有对象并委托行为
 
 ```java
-// 组合：Car "has-a" Engine
-public class Engine {
-    private String type;
-
-    public Engine(String type) {
-        this.type = type;
-    }
-
-    public void start() {
-        System.out.println(type + " engine starting...");
-    }
-
-    public void stop() {
-        System.out.println(type + " engine stopping...");
-    }
+interface MessageSender {
+    void send(String text);
 }
 
-public class Car {
-    private Engine engine;  // 组合：Car 包含 Engine
-    private String brand;
-
-    public Car(String brand, String engineType) {
-        this.brand = brand;
-        this.engine = new Engine(engineType);  // 创建 Engine 实例
-    }
-
-    public void start() {
-        System.out.println(brand + " car starting...");
-        engine.start();  // 委托给 Engine
-    }
-
-    public void stop() {
-        engine.stop();  // 委托给 Engine
-        System.out.println(brand + " car stopped.");
-    }
-}
-
-// 使用
-public class Test {
-    public static void main(String[] args) {
-        Car car = new Car("Toyota", "V6");
-        car.start();
-        // 输出：
-        // Toyota car starting...
-        // V6 engine starting...
-    }
-}
-```
-
-## 组合 vs 继承
-
-### 关键区别
-
-| 特性     | 继承（Inheritance）          | 组合（Composition）            |
-| -------- | ---------------------------- | ------------------------------ |
-| 关系     | "is-a" 关系（Dog is Animal） | "has-a" 关系（Car has Engine） |
-| 耦合度   | 强耦合（子类依赖父类）       | 弱耦合（通过接口解耦）         |
-| 灵活性   | 编译时确定，难以改变         | 运行时可以动态改变             |
-| 代码复用 | 自动继承父类所有成员         | 需要显式委托                   |
-| 多重复用 | 只能继承一个父类             | 可以组合多个类                 |
-| 可见性   | 子类可以访问父类 protected   | 只能通过公共接口访问           |
-| 破坏封装 | 可能破坏（子类依赖父类实现） | 不会破坏（通过接口交互）       |
-
-### 继承的问题
-
-```java
-// ❌ 不好的设计：为了复用代码而继承
-public class Stack extends ArrayList<Integer> {
-    public void push(Integer item) {
-        add(item);
-    }
-
-    public Integer pop() {
-        return remove(size() - 1);
-    }
-}
-
-// 问题：
-// 1. Stack 暴露了 ArrayList 的所有方法（add, remove, clear 等）
-// 2. 用户可以在任意位置插入元素，破坏了栈的 LIFO 特性
-Stack stack = new Stack();
-stack.push(1);
-stack.add(0, 999);  // ❌ 可以调用，但不应该允许
-```
-
-### 使用组合改进
-
-```java
-// ✅ 好的设计：使用组合
-public class Stack {
-    private ArrayList<Integer> elements = new ArrayList<>();  // 组合
-
-    public void push(Integer item) {
-        elements.add(item);
-    }
-
-    public Integer pop() {
-        if (elements.isEmpty()) {
-            throw new EmptyStackException();
-        }
-        return elements.remove(elements.size() - 1);
-    }
-
-    public Integer peek() {
-        if (elements.isEmpty()) {
-            throw new EmptyStackException();
-        }
-        return elements.get(elements.size() - 1);
-    }
-
-    public boolean isEmpty() {
-        return elements.isEmpty();
-    }
-
-    // 只暴露栈需要的方法，隐藏了 ArrayList 的其他方法
-}
-```
-
-## 何时使用继承，何时使用组合
-
-### 使用继承的场景
-
-继承适用于**真正的 "is-a" 关系**：
-
-- 子类是父类的特化版本（Dog is Animal）
-- 需要多态行为（统一处理不同子类）
-- 符合里氏替换原则（子类可以替换父类）
-
-```java
-// ✅ 需要统一处理不同类型的图形
-public abstract class Shape {
-    public abstract double area();
-}
-
-public class Circle extends Shape {
-    private double radius;
-
+class ConsoleSender implements MessageSender {
     @Override
-    public double area() {
-        return Math.PI * radius * radius;
+    public void send(String text) {
+        System.out.println(text);
     }
 }
 
-// 多态使用
-public double totalArea(Shape[] shapes) {
-    double total = 0;
-    for (Shape shape : shapes) {
-        total += shape.area();  // 多态调用
+class OrderNotifier {
+    private final MessageSender sender;
+
+    OrderNotifier(MessageSender sender) {
+        this.sender = java.util.Objects.requireNonNull(sender);
     }
-    return total;
+
+    void notifyPaid(String orderId) {
+        sender.send("Paid: " + orderId);
+    }
 }
+
+OrderNotifier notifier = new OrderNotifier(new ConsoleSender());
+notifier.notifyPaid("A001"); // Paid: A001
 ```
 
-### 使用组合的场景
+`OrderNotifier` 负责构造订单通知，`MessageSender` 负责发送。替换发送实现时，可以保持通知对象的公开操作不变。
 
-组合适用于**"has-a" 关系**或**仅为了复用功能**：
+这里的“组合”采用代码复用中的宽泛含义，即通过对象持有关系组织功能。UML 中的组合还强调部件所有权和生命周期；构造方法接收一个外部共享对象，并不自动满足这种更严格的关系。
 
-**1. 仅为了代码复用**
+## 与继承的取舍
+
+继承建立子类型关系，并让子类拥有父类可继承的公开行为。组合不会自动把被持有对象的全部 API 暴露出去，公开哪些操作由外层类决定。
+
+例如用 `ArrayList` 实现栈时，继承会同时暴露任意位置插入、删除等列表操作；如果对象只应允许栈操作，可以持有 `Deque` 并委托：
 
 ```java
-// ❌ 不要这样做
-public class Employee extends ArrayList<String> { }
+import java.util.ArrayDeque;
+import java.util.Deque;
 
-// ✅ 应该这样做
-public class Employee {
-    private List<String> skills = new ArrayList<>();  // 组合
+class TextStack {
+    private final Deque<String> values = new ArrayDeque<>();
 
-    public void addSkill(String skill) {
-        skills.add(skill);
+    void push(String value) {
+        values.push(value);
+    }
+
+    String pop() {
+        return values.pop();
+    }
+
+    boolean isEmpty() {
+        return values.isEmpty();
     }
 }
 ```
 
-**2. 需要运行时改变行为**
+这个示例不允许 `null` 元素，空栈 `pop()` 抛出 `NoSuchElementException`，行为来自所用的 `ArrayDeque`。包装对象仍要明确对调用方承诺哪些行为。
 
-```java
-// 策略模式
-public interface PaymentStrategy {
-    void pay(double amount);
-}
+当子类可以满足父类契约，并需要以父类类型使用时，继承可以直接表达这种关系。只有实现复用需求时，组合通常更容易控制公开边界，但也需要编写转发代码。
 
-public class ShoppingCart {
-    private PaymentStrategy paymentStrategy;  // 组合
+## 对象创建与所有权
 
-    public void setPaymentStrategy(PaymentStrategy strategy) {
-        this.paymentStrategy = strategy;  // 动态切换
-    }
+被持有对象可以由类内部创建，也可以由构造方法传入。
 
-    public void checkout(double amount) {
-        paymentStrategy.pay(amount);
-    }
-}
-```
+- 内部创建：实现和生命周期集中在外层对象中，替换实现需要修改内部代码。
+- 外部传入：调用方选择实现，也可能共享同一实例，需要明确共享和关闭责任。
+- 面向接口持有：外层代码只依赖所需能力，可以提供不同实现或测试替身。
 
-**3. 需要组合多个功能**
+通过构造方法传入依赖是依赖注入的一种形式，不要求使用框架。它也不自动带来低耦合：如果接口泄露具体实现的状态和流程，调用方仍会受到实现变化影响。
 
-```java
-public class SmartPhone {
-    private Camera camera;
-    private GPS gps;
-    private MusicPlayer player;
-    // 组合多个功能
-}
-```
+## 委托的边界
 
-## 组合的实现方式
+外层对象可以转换参数、校验约束、组合多个调用并转换结果。但把内部可变对象直接返回，会让调用方绕过外层规则，见[封装与访问控制](./encapsulation-and-access.md)。
 
-### 1. 直接创建（强组合）
+与继承不同，被委托对象内部的 `this` 仍指向它自身；包装对象不会自动拦截它对自身其他方法的调用。
 
-```java
-public class Car {
-    private Engine engine = new Engine();  // Car 创建 Engine
-    // 当 Car 被销毁时，Engine 也会被销毁
-}
-```
+## 参考资料
 
-### 2. 依赖注入（松耦合）
-
-```java
-public class Car {
-    private Engine engine;
-
-    public Car(Engine engine) {
-        this.engine = engine;  // 从外部注入
-    }
-}
-
-Engine engine = new Engine("V8");
-Car car1 = new Car(engine);
-Car car2 = new Car(engine);  // 多个 Car 可以共享同一个 Engine
-```
-
-### 3. 通过接口解耦（最佳实践）
-
-```java
-// 定义接口
-public interface Engine {
-    void start();
-}
-
-// Car 依赖接口，而不是具体实现
-public class Car {
-    private Engine engine;
-
-    public Car(Engine engine) {
-        this.engine = engine;
-    }
-
-    public void start() {
-        engine.start();  // 不关心具体是什么引擎
-    }
-}
-
-// 灵活使用不同的实现
-Car electricCar = new Car(new ElectricEngine());
-Car gasCar = new Car(new GasEngine());
-```
-
-## 实际案例对比
-
-### 案例 1：文本编辑器的撤销功能
-
-```java
-// ❌ 继承：暴露了 Stack 的所有方法，破坏封装
-public class UndoManager extends Stack<Command> {
-    public void executeCommand(Command cmd) {
-        push(cmd);
-    }
-}
-
-// ✅ 组合：只暴露需要的方法
-public class UndoManager {
-    private Stack<Command> history = new Stack<>();
-
-    public void executeCommand(Command cmd) {
-        history.push(cmd);
-    }
-
-    public void undo() {
-        if (!history.isEmpty()) {
-            history.pop().undo();
-        }
-    }
-}
-```
-
-### 案例 2：员工系统
-
-```java
-// ✅ 继承：真正的 "is-a" 关系，需要多态
-public abstract class Employee {
-    public abstract double calculateSalary();
-}
-
-public class FullTimeEmployee extends Employee {
-    @Override
-    public double calculateSalary() {
-        return baseSalary;
-    }
-}
-
-// 多态使用
-public double calculateTotalPayroll(Employee[] employees) {
-    double total = 0;
-    for (Employee emp : employees) {
-        total += emp.calculateSalary();  // 多态
-    }
-    return total;
-}
-```
-
-```java
-// ✅ 组合：需要混合多种能力
-public class Employee {
-    private List<Skill> skills = new ArrayList<>();  // 组合
-
-    public void addSkill(Skill skill) {
-        skills.add(skill);
-    }
-}
-
-// 一个员工可以有多种技能
-Employee alice = new Employee("Alice");
-alice.addSkill(new JavaSkill());
-alice.addSkill(new DesignSkill());  // 灵活组合
-```
-
-## 设计原则
-
-### 组合复用原则（Composite Reuse Principle）
-
-**优先使用对象组合，而不是类继承来实现代码复用。**
-
-原因：
-
-1. 继承破坏封装性，子类依赖父类的实现细节
-2. 继承是静态的（编译时确定），组合是动态的（运行时可变）
-3. Java 只支持单继承，但可以组合多个对象
-
-### 依赖倒置原则（Dependency Inversion Principle）
-
-**依赖抽象（接口），而不是具体实现。**
-
-```java
-// ❌ 依赖具体实现：强耦合
-public class OrderService {
-    private MySQLDatabase db = new MySQLDatabase();
-}
-
-// ✅ 依赖抽象：可以轻松切换实现
-public class OrderService {
-    private Database db;  // 依赖接口
-
-    public OrderService(Database db) {
-        this.db = db;
-    }
-}
-
-OrderService service1 = new OrderService(new MySQLDatabase());
-OrderService service2 = new OrderService(new MongoDatabase());
-```
-
-## 最佳实践
-
-1. **优先考虑组合**：除非明确是 "is-a" 关系且需要多态，否则使用组合
-2. **使用接口解耦**：组合时依赖接口，而不是具体类
-3. **依赖注入**：通过构造方法或 setter 注入依赖，提高可测试性
-4. **避免过度设计**：如果关系简单明确，不要为了组合而组合
-5. **组合 + 接口 = 灵活性**：结合接口使用组合，可以获得最大的灵活性
-6. **封装性**：组合不会暴露内部实现，保持良好的封装性
-7. **单一职责**：每个类只负责一件事，通过组合多个类实现复杂功能
-
-## 总结
-
-| 选择依据               | 继承                  | 组合                    |
-| ---------------------- | --------------------- | ----------------------- |
-| 关系类型               | is-a（Dog is Animal） | has-a（Car has Engine） |
-| 是否需要多态           | ✅ 需要               | ❌ 不需要               |
-| 是否需要运行时改变行为 | ❌ 不支持             | ✅ 支持                 |
-| 是否需要复用多个类     | ❌ 只能继承一个父类   | ✅ 可以组合多个         |
-| 耦合度                 | 强耦合                | 弱耦合                  |
-| 封装性                 | 可能破坏              | 保持良好                |
-| 推荐度                 | 谨慎使用              | 优先使用                |
-
-**原则：优先使用组合，只在真正的 "is-a" 关系且需要多态时才使用继承。**
+- [Java SE 17 JLS：Field Declarations](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.3)
+- [Java SE 17 API：Deque](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Deque.html)

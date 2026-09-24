@@ -1,259 +1,132 @@
 ---
-title: Static and Final
+title: static 与 final
 date: 2026-02-02
 category: java
 ---
 
-## static 关键字
+`static` 区分类级成员与实例成员；`final` 限制变量重新赋值、方法重写或类继承。两者可以组合，但表达的是不同约束。
 
-`static` 关键字用于定义**类级别**的成员（属于类本身，而非对象实例）。
+## 类字段与实例字段
 
-### 静态变量（类变量）
-
-静态变量被所有实例共享，只有一份。
+实例字段属于对象；静态字段属于类，不会为每个实例重新建立一份。
 
 ```java
-public class Counter {
-    private static int count = 0;  // 静态变量，所有实例共享
-    private int id;                // 实例变量，每个实例独立
+class Counter {
+    private static int created;
+    private int value;
 
-    public Counter() {
-        count++;
-        this.id = count;
+    Counter(int value) {
+        this.value = value;
+        created++;
     }
 
-    public static int getCount() {
-        return count;
+    static int created() {
+        return created;
     }
-}
 
-Counter c1 = new Counter();  // count = 1
-Counter c2 = new Counter();  // count = 2
-System.out.println(Counter.getCount());  // 2（通过类名访问）
-```
-
-### 静态方法
-
-静态方法属于类，不需要创建对象就可以调用。
-
-```java
-public class MathUtils {
-    public static int add(int a, int b) {
-        return a + b;
+    int value() {
+        return value;
     }
 }
 
-int result = MathUtils.add(5, 3);  // 通过类名调用
+Counter first = new Counter(1);
+Counter second = new Counter(2);
+System.out.println(Counter.created()); // 2
+System.out.println(first.value());     // 1
+System.out.println(second.value());    // 2
 ```
 
-**限制：**
+这里的静态计数只演示共享状态，并未提供并发递增的同步保证。同名类由不同类加载器定义时是不同的运行时类型，也拥有各自的静态状态。
 
-- ❌ 静态方法不能访问实例变量
-- ❌ 静态方法不能使用 `this` 关键字
-- ✅ 静态方法可以访问静态变量
-- ✅ 实例方法可以访问静态变量
+## 静态方法
 
-### 静态代码块
-
-静态代码块在**类加载时执行一次**，用于初始化静态变量。
+静态方法没有隐式的当前对象，因此不能使用 `this`、`super`，也不能直接通过简单名称访问实例字段。它可以通过显式传入的对象访问实例成员。
 
 ```java
-public class Config {
-    private static String apiUrl;
+class CounterReader {
+    static int read(Counter counter) {
+        return counter.value();
+    }
+}
+```
+
+静态方法通过类名调用，例如 `Math.max(3, 5)`。它们不参与实例方法的动态分派；同签名静态方法涉及隐藏，见[继承与方法重写](./inheritance.md)。
+
+省略静态成员所属类名的语法见[包与导入：静态导入](./packages-and-imports.md#静态导入)。
+
+## 静态代码块
+
+静态代码块在类初始化时执行，适合需要多条语句建立的类级状态。
+
+```java
+class Lookup {
+    static final int[] SQUARES = new int[4];
 
     static {
-        apiUrl = "https://api.example.com";
-        System.out.println("Config initialized");
-    }
-}
-```
-
-**初始化顺序：**
-
-1. 静态变量初始化
-2. 静态代码块（类加载时执行一次）
-3. 实例变量初始化（创建对象时）
-4. 实例代码块（创建对象时）
-5. 构造方法（创建对象时）
-
-### 静态导入
-
-可以直接导入静态成员，避免重复写类名。
-
-```java
-import static java.lang.Math.*;
-
-double result = sqrt(16) + PI;  // 不需要写 Math.sqrt() 和 Math.PI
-```
-
-### 与 TypeScript 的区别
-
-| 特性              | Java                     | TypeScript           |
-| ----------------- | ------------------------ | -------------------- |
-| 静态方法中的 this | ❌ 不能使用              | ✅ 指向类本身        |
-| 静态代码块        | ✅ 支持 `static { ... }` | ❌ 不支持            |
-| 静态导入          | ✅ `import static`       | ❌ 没有类似语法      |
-| 访问静态成员      | 推荐用类名访问           | 类名或 `this` 都可以 |
-
-### 常见使用场景
-
-**1. 工具类**
-
-```java
-public class StringUtils {
-    public static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
-    }
-}
-```
-
-**2. 常量定义**
-
-```java
-public class Constants {
-    public static final String APP_NAME = "MyApp";
-    public static final int MAX_CONNECTIONS = 100;
-}
-```
-
-**3. 单例模式**
-
-```java
-public class Singleton {
-    private static Singleton instance;
-
-    private Singleton() {
-    }
-
-    public static Singleton getInstance() {
-        if (instance == null) {
-            instance = new Singleton();
+        for (int i = 0; i < SQUARES.length; i++) {
+            SQUARES[i] = i * i;
         }
-        return instance;
     }
 }
 ```
 
-## final 关键字
+类初始化与类加载是不同阶段，执行触发条件以及字段、代码块的顺序统一见[类与对象的初始化](./initialization.md)。
 
-`final` 关键字用于声明**不可变**的实体，可以修饰变量、方法和类。
+## final 变量
 
-### final 变量
-
-`final` 变量一旦赋值后就**不能再修改**。
+`final` 变量只允许赋值一次。对引用变量，限制的是引用重新赋值，不会冻结对象内容。
 
 ```java
-final int x = 10;
-// x = 20;  // ❌ 编译错误
-
-final StringBuilder sb = new StringBuilder("Hello");
-sb.append(" World");  // ✅ 引用不可变，但对象内容可变
-// sb = new StringBuilder();  // ❌ 不能改变引用
+final StringBuilder text = new StringBuilder("A");
+text.append("B"); // 可以改变对象
+// text = new StringBuilder("C"); // 不能重新赋值
 ```
 
-> [!TIP]
-> 类似于 JavaScript 的 `const`：基本类型不可变，引用类型的引用不可变但内容可变。
-
-**final 实例变量必须初始化：**
+没有初始化表达式的 `final` 实例字段，可以在实例初始化块或构造方法中完成赋值，编译器会检查赋值路径。静态 `final` 字段可以在声明或静态初始化块中赋值。
 
 ```java
-public class Person {
-    private final String name;  // 必须在构造方法中初始化
-
-    public Person(String name) {
-        this.name = name;
-    }
-}
-```
-
-**类常量（static final）：**
-
-```java
-public class Constants {
-    public static final String APP_NAME = "MyApp";  // 命名规范：全大写
-    public static final int MAX_CONNECTIONS = 100;
-}
-```
-
-### final 方法
-
-`final` 方法**不能被子类重写**。
-
-```java
-public class Parent {
-    public final void calculate() {
-        System.out.println("Cannot override");
-    }
-}
-
-public class Child extends Parent {
-    // ❌ 编译错误：不能重写 final 方法
-    // public void calculate() { }
-}
-```
-
-**使用场景：** 防止子类改变关键的业务逻辑。
-
-### final 类
-
-`final` 类**不能被继承**。
-
-```java
-public final class ImmutablePerson {
+class User {
     private final String name;
-    private final int age;
 
-    public ImmutablePerson(String name, int age) {
+    User(String name) {
         this.name = name;
-        this.age = age;
     }
-
-    public String getName() { return name; }
-    public int getAge() { return age; }
 }
-
-// ❌ 编译错误：不能继承 final 类
-// public class Child extends ImmutablePerson { }
 ```
 
-**常见的 final 类：** `String`、`Integer`、`Math`、`System` 等。
+## static final 与编译期常量
 
-**使用场景：**
+`static final` 表示类级、不可重新赋值的变量。它不一定是编译期常量：只有基本类型或 `String` 类型、以常量表达式初始化的 `final` 变量才属于常量变量。
 
-- 不可变类（所有字段都是 `final`）
-- 工具类（所有方法都是 `static`）
+```java
+class Settings {
+    static final int LIMIT = 10 * 2;                 // 编译期常量
+    static final String LABEL = "api-" + "v1";      // 编译期常量
+    static final Integer BOXED = 20;                 // 不是
+    static final long STARTED = System.nanoTime();   // 不是
+}
+```
 
-### 总结
+编译期常量可能被写入调用方的字节码。修改库中的常量值后，未重新编译的调用方可能仍使用旧值。读取这类常量通常不会触发声明类的初始化。
 
-| 修饰对象 | 效果            | 常见用途         |
-| -------- | --------------- | ---------------- |
-| 变量     | 值/引用不能改变 | 常量定义         |
-| 方法     | 不能被子类重写  | 保护关键逻辑     |
-| 类       | 不能被继承      | 不可变类、工具类 |
+## final 方法与类
 
-### 最佳实践
+`final` 实例方法可以被继承，但不能被子类重写；`final` 类不能有子类。它们限制扩展方式，不代表类的实例一定不可变。
 
-1. **常量命名**：`public static final` 常量使用全大写 + 下划线
+```java
+final class MutableCounter {
+    private int value;
 
-   ```java
-   public static final int MAX_SIZE = 100;
-   ```
+    void increment() {
+        value++;
+    }
+}
+```
 
-2. **不可变类设计**：类和所有字段都用 `final` 修饰，只提供 getter
+上面的类不能继承，但对象仍然可变。不可变对象还需要控制字段、状态变更和可变引用的暴露，见[封装与访问控制](./encapsulation-and-access.md)。
 
-   ```java
-   public final class Point {
-       private final int x;
-       private final int y;
-       // 构造方法 + getter，无 setter
-   }
-   ```
+## 参考资料
 
-3. **工具类设计**：类用 `final` 修饰，构造方法私有化
-
-   ```java
-   public final class Utils {
-       private Utils() { }  // 防止实例化
-       public static void doSomething() { }
-   }
-   ```
+- [Java SE 17 JLS：Field Declarations](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.3)
+- [Java SE 17 JLS：final Variables](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.12.4)
+- [Java SE 17 JLS：Initialization](https://docs.oracle.com/javase/specs/jls/se17/html/jls-12.html#jls-12.4)

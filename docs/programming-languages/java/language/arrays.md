@@ -8,7 +8,7 @@ category: java
 
 ## 固定长度与默认值
 
-Java 数组可以保存基本类型值，也可以保存对象引用：
+`int[]` 表示元素为整数的数组。花括号直接列出初始元素，`new int[3]` 创建一个长度为 3 的数组：
 
 ```java
 int[] zeros = new int[3];
@@ -19,31 +19,51 @@ System.out.println(numbers[0]);     // 99
 System.out.println(numbers.length); // 3
 ```
 
-新数组的数值元素默认为零，`char` 为 `'\u0000'`，`boolean` 为 `false`，引用元素为 `null`。数组的长度通过字段 `length` 读取，[字符串](./string.md)则调用 `length()` 方法。
+元素没有显式赋值时，数值类型默认为零，`char` 为 `'\u0000'`，`boolean` 为 `false`，对象类型的元素为 `null`，表示该位置尚未指向对象。数组用 `numbers.length` 读取长度；字符串则用 `text.length()` 调用方法读取长度。
 
-下标范围是 `0` 到 `length - 1`；上例读取 `numbers[3]` 会抛出 `ArrayIndexOutOfBoundsException`（数组下标越界异常）。需要改变长度时，要创建新数组或改用[集合](../standard-library/collections-overview.md)。
+下标范围是 `0` 到 `length - 1`；上例读取 `numbers[3]` 会抛出 `ArrayIndexOutOfBoundsException`（数组下标越界异常）。需要改变长度时，可以创建新数组，再复制原有元素。
 
-## 复制、内容比较与输出
+## 赋值与复制
 
-数组赋值只复制引用。`Arrays.copyOf()` 才会创建新的数组；`Arrays` 是 `java.util` 包中的数组工具类：
+数组变量保存的是访问数组的引用。`same = original` 会让两个变量指向同一个数组，修改其中一个位置时，两边看到的都是同一份数据。
+
+```java
+int[] original = {1, 2, 3};
+int[] same = original;
+same[0] = 9;
+System.out.println(original[0]); // 9
+```
+
+要获得独立数组，可以使用标准库的 `Arrays.copyOf()`。`Arrays` 是集中提供数组操作的工具类，下面的 `import` 让代码可以直接使用它的简单名称。
 
 ```java
 import java.util.Arrays;
 
 int[] original = {1, 2, 3};
-int[] same = original;
 int[] copy = Arrays.copyOf(original, original.length);
-System.out.println(original == same);          // true
-System.out.println(original == copy);          // false
-System.out.println(original.equals(copy));     // false：数组没有重写内容比较
-System.out.println(Arrays.equals(original, copy)); // true：逐个比较元素
-
 copy[0] = 9;
-System.out.println(Arrays.toString(original)); // [1, 2, 3]
-System.out.println(Arrays.toString(copy));     // [9, 2, 3]
+System.out.println(original[0]); // 1
+System.out.println(copy[0]);     // 9
 ```
 
-直接打印 `int[]` 不会列出元素，使用 `Arrays.toString()` 才能得到上面的输出。对于对象数组，复制的元素仍是对象引用，不会复制对象本身，见[引用类型与对象](./reference-types.md)。
+`copyOf()` 的第二个参数指定新数组长度。长度更小时截去末尾元素，更大时以元素类型的默认值补齐。对象数组复制的是各个位置保存的对象引用，因此数组独立后，其中的对象仍可能共享。
+
+## 内容比较与输出
+
+`==` 检查两个变量是否指向同一个数组。数组的 `equals()` 也采用这个规则，不比较元素；逐个比较元素应使用 `Arrays.equals()`。
+
+```java
+import java.util.Arrays;
+
+int[] first = {1, 2, 3};
+int[] second = {1, 2, 3};
+System.out.println(first == second);             // false
+System.out.println(first.equals(second));        // false
+System.out.println(Arrays.equals(first, second)); // true
+System.out.println(Arrays.toString(first));      // [1, 2, 3]
+```
+
+直接打印数组不会列出所有元素。`Arrays.toString()` 生成上面这样的内容文本，适合查看一维数组。
 
 ## 排序、查找与区间复制
 
@@ -81,7 +101,7 @@ System.out.println(Arrays.deepToString(rows)); // [[1, 2], [3, 4, 5]]
 
 嵌套数组的内容输出使用 `Arrays.deepToString()`，内容比较使用 `Arrays.deepEquals()`。
 
-数组与字符串互转见 [String：与数组互转](./string.md#与数组互转)；数组与列表之间的转换见 [List：数组与 List 转换](../standard-library/list.md#数组与-list-转换)；方法参数中的 `int...` 写法见[方法：可变参数](./methods.md#可变参数)。
+数组与字符串互转见 [String：与数组互转](../standard-library/string.md#与数组互转)；数组与列表之间的转换见 [List：数组与 List 转换](../standard-library/list.md#数组与-list-转换)；方法参数中的 `int...` 写法见[方法：可变参数](./methods.md#可变参数)。
 
 ## 参考资料
 

@@ -1,264 +1,183 @@
 ---
-title: 基本数据类型
+title: 基本数据类型与类型转换
 date: 2026-01-24
 category: java
 ---
 
-Java 有八个基本数据类型（primitive data types）：
-
-- 整数类型：`byte`、`short`、`int`、`long`
-- 浮点类型：`float`、`double`
-- 字符类型：`char`
-- 布尔类型：`boolean`
-
-变量按声明位置区分：直接声明在类中、方法外的变量叫 **字段**；在方法内部声明的变量叫 **局部变量**。**数组元素** 是数组中每个位置存放的值。
-
-| 类型      | 含义                     | 字段和数组元素的默认值 |
-| --------- | ------------------------ | ---------------------- |
-| `byte`    | 8-bit signed integer     | `0`                    |
-| `short`   | 16-bit signed integer    | `0`                    |
-| `int`     | 32-bit signed integer    | `0`                    |
-| `long`    | 64-bit signed integer    | `0L`                   |
-| `float`   | 32-bit floating point    | `0.0f`                 |
-| `double`  | 64-bit floating point    | `0.0d`                 |
-| `char`    | 16-bit Unicode character | `'\u0000'`             |
-| `boolean` | true or false            | `false`                |
-
-表中的默认值由 Java 自动赋给字段和新建数组的元素。局部变量不会自动获得默认值，必须在读取前赋值：
+Java 的基本数据类型保存数值、字符编码或布尔值。声明时选择的类型，决定了值的范围，以及参与运算和赋值时的规则。
 
 ```java
-public class App {
-    static int total; // 字段：声明在类中、方法外，默认值为 0
-
-    public static void main(String[] args) {
-        int count; // 局部变量：声明在方法内，没有默认值
-
-        System.out.println(total); // 输出 0
-        // System.out.println(count); // 编译错误：count 尚未赋值
-
-        count = 1;
-        System.out.println(count); // 输出 1
-    }
-}
+int count = 3;
+long total = 3_000_000_000L;
+double price = 12.5;
+char grade = 'A';
+boolean enabled = true;
 ```
 
-> [!TIP]
-> `L`、`f` 和 `d` 后缀分别用于表示 `long`, `float` 和 `double` 类型的字面值。
-> `int` 和 `double` 是默认的数字字面量类型。
-> 最常用的是 `int`, `double`, `char` 和 `boolean`。
+## 八种基本类型
 
-## 字面量表示法
+整数类型按能表示的范围选择；浮点类型用于带小数的计算；`boolean` 只有 `true` 和 `false` 两个值。
 
-Java 支持多种进制的整数字面量表示方式：
+| 类型 | 含义 | 范围或精度 |
+| --- | --- | --- |
+| `byte` | 8 位有符号整数 | -128 ～ 127 |
+| `short` | 16 位有符号整数 | -32768 ～ 32767 |
+| `int` | 32 位有符号整数 | -2147483648 ～ 2147483647 |
+| `long` | 64 位有符号整数 | -2⁶³ ～ 2⁶³ - 1 |
+| `float` | 单精度浮点数 | 24 个二进制有效位，约 6～7 位十进制有效数字 |
+| `double` | 双精度浮点数 | 53 个二进制有效位，约 15～16 位十进制有效数字 |
+| `char` | 16 位无符号值，用于字符编码 | 0 ～ 65535 |
+| `boolean` | 布尔值 | `true`、`false` |
+
+## 字面量与数值范围
+
+直接写在代码中的 `100`、`12.5`、`'A'` 等固定值称为字面量。整数字面量通常按 `int` 处理，带小数点的字面量通常按 `double` 处理；`L` 和 `f` 后缀分别指定 `long`、`float`。
 
 ```java
-// 十进制
+long population = 8_000_000_000L;
+float ratio = 0.5f;
+double distance = 0.5;
+
 int decimal = 100;
-
-// 二进制（0b 或 0B 开头）
-int binary = 0b1100100;  // 100
-
-// 八进制（0 开头）
-int octal = 0144;        // 100
-
-// 十六进制（0x 或 0X 开头）
-int hex = 0x64;          // 100
+int binary = 0b1100100; // 二进制
+int octal = 0144;      // 八进制
+int hex = 0x64;        // 十六进制
 ```
 
-为了提高可读性，Java 7+ 支持使用下划线分隔数字：
+下划线用来分隔数字，不改变数值，不能写在数字开头、结尾或小数点旁边。八进制使用前缀 `0`，因此 `010` 表示十进制的 `8`。
+
+n 位有符号整数的范围是 -2ⁿ⁻¹ 到 2ⁿ⁻¹ - 1。运算超出范围时会溢出，保留有限位数的结果，不会自动扩大变量类型。
 
 ```java
-int million = 1_000_000;
-long cardNumber = 1234_5678_9012_3456L;
-int binary = 0b1010_1010_1010_1010;
-double pi = 3.14_15_92_65;
+int max = 2_147_483_647;
+System.out.println(max + 1); // -2147483648
+// byte small = 128;         // 编译错误：赋值不在 byte 范围内
 ```
 
-> [!TIP]
-> 下划线只能出现在数字之间，不能在开头、结尾或小数点旁边。
+直接赋入不兼容的值会编译失败；表达式运行时溢出则通常不会抛出异常，两者需要区分。
 
-## 数值范围
+## 自动类型转换
 
-对于一个 n bit 的有符号整数：
-
-- 最小值：-2^(n-1)
-- 最大值： 2^(n-1) - 1
-
-> [!TIP]
-> 为什么最大值少 1 ？因为 `0` 占用了一个正数区间的名额，而补码里 `-0` 不存在。
-
-以 byte（8 bit）为例：
-
-```
-0111 1111  ->  127   (最大 2^7 - 1)
-1000 0000  -> -128   (最小 -2^7)
-范围：[-128, 127]
-```
-
-可以通过 `MIN_VALUE` 和 `MAX_VALUE` 常量来获取各个整数类型的范围：
+把较窄的整数类型赋给较宽的整数类型，例如 `int` 赋给 `long`，可以自动完成。
 
 ```java
-System.out.println("Byte range: " + Byte.MIN_VALUE + " to " + Byte.MAX_VALUE);
-System.out.println("Short range: " + Short.MIN_VALUE + " to " + Short.MAX_VALUE);
-System.out.println("Integer range: " + Integer.MIN_VALUE + " to " + Integer.MAX_VALUE);
-System.out.println("Long range: " + Long.MIN_VALUE + " to " + Long.MAX_VALUE);
-System.out.println("Float range: " + Float.MIN_VALUE + " to " + Float.MAX_VALUE);
-System.out.println("Double range: " + Double.MIN_VALUE + " to " + Double.MAX_VALUE);
+int count = 10;
+long total = count;
 ```
 
-如果尝试赋值超出范围的值，不会导致编译错误。小于最小值称为下溢（underflow），大于最大值称为上溢（overflow）。
+Java 允许的扩大转换可以概括为：
 
-```java
-int willThisCompile = (Integer.MAX_VALUE + 1); // 编译通过，但结果是 Integer.MIN_VALUE
-System.out.println("Result of overflow: " + willThisCompile); // 输出 -2147483648
-```
-
-基本类型也有对应的对象形式，见[包装类与装箱拆箱](./wrapper-classes.md)。
-
-## Casting（类型转换）
-
-类型转换分为两种：自动类型转换（implicit casting）和强制类型转换（explicit casting）。核心判断标准只有一个：是否可能发生精度或信息丢失。
-
-### 自动类型转换
-
-当 目标类型的表示范围 ≥ 源类型，且不会丢失信息时，Java 会自动完成转换。
-
-```java
-int a = 10;
-long b = a;        // int → long
-
-float c = b;       // long → float（注意精度）
-double d = c;      // float → double
-```
-
-类型的自动提升顺序：
-
-- `byte / short / char` 在运算时会先提升为 `int`
-- `char` 是无符号的（0 ~ 65535），但提升规则与整数一致
-
-```
+```text
 byte → short → int → long → float → double
                 ↑
                char
 ```
 
-表达式中的自动提升：
+“扩大”不保证数值完全精确。`int → float`、`long → float/double` 允许自动转换，但浮点数可能没有足够的有效位保留全部整数信息。
 
 ```java
-byte myMinByteValue = Byte.MIN_VALUE;
-byte myNewByteValue = (myMinByteValue / 2); // 编译失败
+int original = 16_777_217;
+float converted = original;
+System.out.println((int) converted); // 16777216
 ```
 
-在上面的例子中，`myMinByteValue / 2` 的结果被提升为 `int` 类型，与声明类型不一致，因此需要进行强制类型转换。
+`boolean` 不参与数值转换，不能把整数直接赋给布尔变量。
 
-### 强制类型转换
+## 强制类型转换
 
-当 目标类型范围 < 源类型，可能丢失精度或发生溢出时，必须显式转换。
+在值前写 `(目标类型)`，显式执行转换。转换为较窄类型可能丢失信息，整数转为更窄整数时会丢弃高位。
 
 ```java
-byte myNewByteValue = (byte) (myMinByteValue / 2); // 强制类型转换为 byte
+long total = 100L;
+int count = (int) total;
 
-long a = 100L;
-int b = (int) a;
+double price = 3.75;
+int whole = (int) price;
+System.out.println(whole); // 3：向零截断小数
 
-double x = 3.14;
-int y = (int) x;   // 结果是 3，直接截断小数
-
-// 溢出示例：byte 只有 8 位，发生 二进制截断，不是「取最大/最小值」
-int a = 130;
-byte b = (byte) a;  // -126
+int value = 130;
+byte small = (byte) value;
+System.out.println(small); // -126
 ```
 
-`char` 在运算中会自动提升为 `int`：
+赋值存在常量特例：范围内的 `int` 常量可以直接赋给 `byte`、`short` 或 `char`，但普通变量不适用这条规则。
 
 ```java
-char a = 'A';
-char b = (char) (a + 1);  // 需要强制转换
-System.out.println(b);     // 输出：B
+byte first = 100;
+int value = 100;
+// byte second = value; // 编译错误
+byte second = (byte) value;
 ```
+
+## 运算中的类型提升
+
+`byte`、`short`、`char` 参与常见算术运算时，会先按 `int` 计算。结果不会因为左侧接收变量更窄而自动变窄。
+
+```java
+byte left = 10;
+byte right = 20;
+int sum = left + right;
+// byte small = left + right; // 编译错误：表达式结果是 int
+
+char letter = 'A';
+char next = (char) (letter + 1);
+System.out.println(next); // B
+```
+
+混合数值运算通常统一到操作数中适用的较宽类型；例如一个操作数是 `double` 时，另一个数值操作数也转换为 `double` 后参与计算。
 
 ## 浮点数精度问题
 
-浮点数使用 IEEE 754 标准表示，存在精度限制：
+浮点数使用有限位数表示二进制小数。有些十进制小数无法精确表示，计算结果会包含舍入误差。
 
 ```java
-System.out.println(0.1 + 0.2);        // 输出：0.30000000000000004
-System.out.println(0.1 + 0.2 == 0.3); // 输出：false
+System.out.println(0.1 + 0.2);        // 0.30000000000000004
+System.out.println(0.1 + 0.2 == 0.3); // false
 ```
 
-> [!TIP]
-> `double` 和 JavaScript 中的 `number` 类型类似，均基于 IEEE 754 双精度表示。
-> `0.1 + 0.2` 在 Java 和 JavaScript 中是一样的结果。
-
-**原因：**
-
-浮点数在二进制中无法精确表示某些十进制小数（如 0.1、0.2），导致舍入误差累积。
-
-**解决方案：**
-
-1. **使用 `BigDecimal` 进行精确计算**（推荐用于金融、货币等场景）：
+需要比较近似计算结果时，应根据数据尺度和允许误差判断差值；没有适合所有数值的固定误差阈值。需要按十进制精确计算时，可以使用标准库的 `BigDecimal`，它通过十进制数值及其运算方法完成计算：
 
 ```java
 import java.math.BigDecimal;
 
-BigDecimal a = new BigDecimal("0.1");
-BigDecimal b = new BigDecimal("0.2");
-BigDecimal sum = a.add(b);
-System.out.println(sum);  // 输出：0.3
+BigDecimal first = new BigDecimal("0.1");
+BigDecimal second = new BigDecimal("0.2");
+System.out.println(first.add(second)); // 0.3
 ```
 
-> [!WARNING]
-> 必须使用 `new BigDecimal("0.1")` 而非 `new BigDecimal(0.1)`，后者仍会受到 double 精度影响。
-
-**使用整数运算**（金额以“分”为单位）：
-
-```java
-int priceInCents = 100;  // 1.00 元
-int tax = priceInCents * 13 / 100;  // 计算税费
-```
-
-**浮点数比较使用误差范围**：
-
-```java
-double epsilon = 1e-10;
-boolean isEqual = Math.abs((0.1 + 0.2) - 0.3) < epsilon;  // true
-```
-
-**浮点数与整数的精度差异：**
-
-```java
-long bigNumber = 9_007_199_254_740_993L;
-float f = bigNumber;
-System.out.println((long) f == bigNumber);  // false（精度丢失）
-```
-
-> [!TIP]
-> `float` 只有 24 位有效数字，`double` 有 53 位。超过这个范围会导致精度丢失。
+这里从字符串构造十进制值。若使用 `new BigDecimal(0.1)`，得到的是那个二进制浮点值的精确十进制表示，会保留原有误差。
 
 ## char 类型的特殊性
 
-`char` 是 16 位的 Unicode 字符类型，可以用多种方式表示：
+`char` 使用单引号表示，例如 `'A'`、`'中'`。字符编码为字符分配数值；`char` 可以参与整数运算。
 
 ```java
-char c1 = 'A';           // 字符字面量
-char c2 = 65;            // 直接用整数（ASCII/Unicode 码点）
-char c3 = '\u0041';      // Unicode 转义序列
-char c4 = '\n';          // 转义字符
-
-System.out.println(c1 + c2 + c3);  // 输出：195（字符参与运算会转为 int）
+char first = 'A';
+char second = 65;
+char third = '\u0041';
+System.out.println(first == second); // true
+System.out.println(first + second + third); // 195
 ```
 
-常见的转义字符：
+Unicode 为字符分配的编号称为码点。Java 的 UTF-16 表示法用一个或两个 16 位单元表示一个码点，`char` 对应其中一个单元。因此部分字符（例如很多 emoji）需要两个 `char`，应放在字符串中处理。
 
-| 转义序列 | 含义         |
-| -------- | ------------ |
-| `\n`     | 换行         |
-| `\t`     | 制表符       |
-| `\\`     | 反斜杠       |
-| `\'`     | 单引号       |
-| `\"`     | 双引号       |
-| `\uXXXX` | Unicode 字符 |
+常见转义包括 `\n`（换行）、`\t`（制表符）、`\\`（反斜杠）、`\'`（单引号）。`\u0041` 是 Unicode 转义，表示编码值为十六进制 `0041` 的字符。
 
-> [!TIP]
-> 单个字符用 `char`，字符串用 `String` 类。详见 [String](./string.md)。
-> `char` 用单引号括起，`String` 用双引号括起。
+## 默认值与边界常量
+
+声明在类中、方法外的变量称为字段；数组元素是数组各位置保存的值。字段和新数组元素自动获得默认值：数值为零、`char` 为 `'\u0000'`、`boolean` 为 `false`。方法内部的局部变量必须在读取前明确赋值。
+
+标准库为基本类型提供了对应的工具类，例如 `Integer` 对应 `int`、`Double` 对应 `double`。可以通过这些类的常量查询类型边界：
+
+```java
+System.out.println(Integer.MIN_VALUE); // -2147483648
+System.out.println(Integer.MAX_VALUE); // 2147483647
+```
+
+`Float.MIN_VALUE` 和 `Double.MIN_VALUE` 表示最小的正非零值，不是最负值。它们与整数类型的 `MIN_VALUE` 含义不同。
+
+## 参考资料
+
+- [Java SE 17 JLS：Primitive Types and Values](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.2)
+- [Java SE 17 JLS：Conversions and Contexts](https://docs.oracle.com/javase/specs/jls/se17/html/jls-5.html)
+- [Java SE 17 API：Double](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html)

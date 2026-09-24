@@ -189,14 +189,6 @@ public final class Team {
 - 为了返回只读结果，每次都复制大型集合，却没有评估调用频率和所有权；
 - 返回内部可修改集合，让调用方绕过验证和不变量。
 
-## 相关内容
-
-- [List](./list.md)
-- [Set](./set.md)
-- [Map](./map.md)
-- [引用类型与对象](../language/reference-types.md)
-- [Record、密封类与模式匹配](../language/records-sealed-patterns.md)
-
 ## 参考资料
 
 - [Dev.java：Creating and Processing Data with Collection Factory Methods](https://dev.java/learn/api/collections-framework/immutable-collections/)

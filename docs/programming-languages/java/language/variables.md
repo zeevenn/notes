@@ -1,12 +1,10 @@
 ---
-title: 变量
+title: 变量与作用域
 date: 2026-08-05
 category: java
 ---
 
-变量把一个名称绑定到某种类型的值。Java 是静态类型语言：每个变量在编译期都有确定的类型，后续赋值必须与该类型兼容。
-
-`int` 表示整数类型，声明变量时写出类型、名称和初始值：
+变量用名称保存一个值。Java 声明变量时需要确定类型，例如 `int` 保存整数，`double` 保存浮点数，`boolean` 保存 `true` 或 `false`。
 
 ```java
 int count = 3;
@@ -14,53 +12,91 @@ count = 4;
 System.out.println(count); // 4
 ```
 
-## 变量的四种位置
+`int count = 3` 同时声明变量并给出初始值；`count = 4` 为已有变量重新赋值。变量类型已经确定，不能再把字符串赋给 `count`。这种在编译时检查类型的方式称为静态类型检查。
 
-变量所处的位置决定了它的生命周期、默认值和可见范围。
+## 局部变量需要先赋值
 
-```java
-public class Counter {
-    private static int total; // 类变量：属于 Counter 类
-    private int value;        // 实例变量：每个 Counter 对象各有一份
-
-    public void add(int step) { // step 是参数
-        int next = value + step; // next 是局部变量
-        value = next;
-    }
-}
-```
-
-| 种类     | 声明位置                         | 生命周期           | 是否有默认值 |
-| -------- | -------------------------------- | ------------------ | ------------ |
-| 类变量   | 类中，带 `static`                | 从类初始化到类卸载 | 有           |
-| 实例变量 | 类中，不带 `static`              | 与对象一致         | 有           |
-| 参数     | 方法、构造方法或 Lambda 参数列表 | 本次调用期间       | 由调用方传入 |
-| 局部变量 | 方法或代码块内部                 | 所在代码块执行期间 | 没有         |
-
-类变量和实例变量统称为**字段**，即直接声明在类中、方法外的变量。字段没有显式初始化时会得到默认值，例如数值为 `0`、`boolean` 为 `false`、引用为 `null`。局部变量必须在读取前明确赋值：
+声明在方法或代码块内部的变量称为局部变量，例如写在 `main` 方法中的 `count`。局部变量必须在读取前赋值：
 
 ```java
 int result;
-// System.out.println(result); // 编译错误：result 可能尚未初始化
-
+// System.out.println(result); // 编译错误：尚未赋值
 result = 42;
-System.out.println(result);
+System.out.println(result); // 42
 ```
 
-编译器执行“明确赋值”（definite assignment）分析。它关心的是所有可能执行路径，而不只是代码看起来是否最终会赋值。
+如果赋值发生在条件分支里，编译器会检查是否存在“没有赋值就读取”的路径。
 
 ```java
+boolean ready = false;
 int result;
-boolean ready = args.length > 0;
-
 if (ready) {
     result = 42;
+} else {
+    result = 0;
 }
+System.out.println(result); // 0
+```
 
-// System.out.println(result); // 编译错误：ready 为 false 时没有赋值
+去掉 `else` 后，最后一行不能通过编译，因为 `ready` 为 `false` 时没有给 `result` 赋值。这项检查称为明确赋值检查。
+
+## 块级作用域
+
+作用域是源码中可以使用某个变量名称的范围。局部变量从声明处开始，在所属的 `{ ... }` 代码块剩余部分可见。
+
+```java
+int total = 10;
+{
+    int extra = 2;
+    total += extra;
+}
+System.out.println(total); // 12
+// System.out.println(extra); // 编译错误：已经离开 extra 所在的代码块
+```
+
+内层代码块可以使用外层变量。重叠的局部作用域中不能重复声明同名变量，例如不能在上面的内层块再声明一个 `int total`。两个互不重叠的代码块可以各自使用同一个变量名。
+
+`for` 的初始化部分声明的变量，在循环条件、更新表达式和循环体中可用，离开循环后不可用：
+
+```java
+for (int i = 0; i < 3; i++) {
+    System.out.println(i);
+}
+// System.out.println(i); // 编译错误
+```
+
+## var 省略显式类型
+
+`var` 让编译器从初始值推断局部变量的类型，变量的类型仍然固定。
+
+```java
+var count = 3;   // 推断为 int
+var price = 2.5; // 推断为 double
+count = 4;
+// count = 4.5;  // 编译错误：double 不能直接赋给 int
+```
+
+普通局部变量使用 `var` 时必须立即给出初始值，不能只写 `var count;`。`var` 也不能代替普通方法声明中的参数类型或返回类型。
+
+## final 限制重新赋值
+
+在变量声明前加 `final`，表示这个变量只允许赋值一次。
+
+```java
+final int limit = 10;
+// limit = 20; // 编译错误
+```
+
+也可以先声明，再赋值。编译器会同时检查“读取前已经赋值”和“没有重复赋值”：
+
+```java
+final int limit;
+limit = 10;
+System.out.println(limit); // 10
 ```
 
 ## 参考资料
 
+- [Java SE 17 JLS：Local Variable Declaration Statements](https://docs.oracle.com/javase/specs/jls/se17/html/jls-14.html#jls-14.4)
+- [Java SE 17 JLS：Scope of a Declaration](https://docs.oracle.com/javase/specs/jls/se17/html/jls-6.html#jls-6.3)
 - [Dev.java：Java Language Basics](https://dev.java/learn/language-basics/)
-- [Java Language Specification 17：Types, Values, and Variables](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html)

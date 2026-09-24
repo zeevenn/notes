@@ -6,6 +6,11 @@ category: java
 
 > 默认示例以 **Java 17** 为 API 基线。Java 21 的 Sequenced Collections 等扩展会单独标注。
 
+## 常用类
+
+- [String 与字符串处理](./string.md)
+- [包装类与装箱拆箱](./wrapper-classes.md)
+
 ## 集合框架
 
 - [集合框架总览](./collections-overview.md)

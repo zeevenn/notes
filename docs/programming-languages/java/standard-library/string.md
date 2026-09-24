@@ -1,52 +1,54 @@
 ---
-title: String
+title: String 与字符串处理
 date: 2026-01-25
 category: java
 ---
 
-`String` 用来保存文本，例如姓名或一行消息。它是引用类型，但因为文本处理十分常见，Java 为字符串字面量和拼接提供了专门的语法支持。
+`String` 用来保存文本，例如姓名或一行消息。`String` 变量通过一个引用访问字符串对象，可以把引用理解为变量与某个对象之间的关联。Java 为字符串提供了双引号字面量和 `+` 拼接语法。
 
-## 基本使用
+## 字符串基础
 
-用 `String` 声明字符串变量，文本内容写在双引号中：
+字符串字面量使用双引号，字符字面量使用单引号。`""` 是长度为零的字符串；`null` 表示没有指向字符串对象。
+
+```java
+char letter = 'A';
+String text = "A";
+String empty = "";
+String missing = null;
+String message = "Hello, " + text;
+```
+
+字符串中的双引号、反斜杠或换行可用转义表达，例如 `\"`、`\\`、`\n`、`\t`。`char` 保存一个 16 位字符编码单元，`String` 保存这样的单元序列；部分字符需要两个单元，具体例子在本篇的编码部分。
+
+```java
+String quoted = "\"Java\"";
+String lines = "first\nsecond";
+System.out.println(quoted); // "Java"
+```
+
+## 文本块 [Java 15+]
+
+文本块用三引号 `"""` 表示多行字符串。开头的三引号后需要换行；编译器会去掉公共的附带缩进，并把行结束符统一为 `\n`：
 
 ```java
 String name = "Alice";
-System.out.println(name); // Alice
-
-String message = "Hello, " + name;
-System.out.println(message); // Hello, Alice
+String message = """
+    Name: %s
+    Status: active
+    """.formatted(name);
+System.out.print(message);
 ```
 
-得到字符串后，可以调用它的方法读取长度、取出一段文本，或检查是否包含某段内容：
+输出：
 
-```java
-String text = "Hello World";
-System.out.println(text.length());        // 11
-System.out.println(text.charAt(0));       // H：下标从 0 开始
-System.out.println(text.substring(0, 5)); // Hello：包含起点，不包含终点
-System.out.println(text.indexOf("Java")); // -1：未找到
-System.out.println(text.contains("World")); // true
-System.out.println("  ".isEmpty());       // false：长度不是 0
-System.out.println("  ".isBlank());       // true：仅包含空白
+```text
+Name: Alice
+Status: active
 ```
 
-`length()` 按 `char` 单位计数，部分字符占两个 `char`，因此它不一定等于看到的字符数，详见[char 类型的特殊性](./primitive-types.md#char-类型的特殊性)。
+例子中的结束三引号独占一行，因此结果末尾有换行。文本块不会自动替换 `${name}`；这里的 `.formatted(name)` 按 `%s` 占位符填入值，与 `String.format()` 使用相同的格式规则。
 
 ## 内容与对象
-
-### 内容比较
-
-判断两段文本是否相同，使用 `equals()`。即使两个字符串对象保存着相同文字，它们也可能是两个不同的对象：
-
-```java
-String text = "Hello";
-String another = new String("Hello"); // 显式创建另一个字符串对象
-System.out.println(text.equals(another)); // true：内容相同
-System.out.println(text == another);      // false：不是同一个对象
-```
-
-这里用 `new String(...)` 演示两个独立对象，普通文本赋值直接用双引号即可。`==` 检查是否为同一个对象，不能代替内容比较。两个值可能为 `null` 时，可用 `Objects.equals()`，见[引用类型与对象](./reference-types.md)。
 
 ### 不可变性
 
@@ -63,6 +65,19 @@ System.out.println(text);    // Hello World：原来的内容没有改变
 
 如果希望后续使用处理结果，也可以把它赋回原变量，例如 `text = text.replace("World", "Java")`。这会让变量指向处理后的字符串，原字符串对象的内容仍然不变。
 
+### 内容比较
+
+判断两段文本是否相同，使用 `equals()`。即使两个字符串对象保存着相同文字，它们也可能是两个不同的对象：
+
+```java
+String text = "Hello";
+String another = new String("Hello"); // 显式创建另一个字符串对象
+System.out.println(text.equals(another)); // true：内容相同
+System.out.println(text == another);      // false：不是同一个对象
+```
+
+这里用 `new String(...)` 演示两个独立对象，普通文本赋值直接用双引号即可。`==` 检查是否为同一个对象，不能代替内容比较。如果调用方法的变量为 `null`，调用会失败；可以先检查它不是 `null`，再调用 `equals()`。
+
 ### 字符串常量池（String Pool）
 
 字符串常量池用于复用内容相同的字符串实例，字符串字面量会参与这种复用。因为 `String` 不可变，共享实例不会让一个使用者改掉另一个使用者看到的内容。
@@ -77,6 +92,23 @@ System.out.println(first == separate.intern()); // true
 ```
 
 `intern()` 返回池中内容相同的实例；若不存在，则把当前实例加入池并返回它。字面量之间的 `==` 恰好为 `true`，不代表可以用 `==` 比较任意字符串的内容。
+
+## 常用操作
+
+得到字符串后，可以调用它的方法读取长度、取出一段文本，或检查是否包含某段内容：
+
+```java
+String text = "Hello World";
+System.out.println(text.length());        // 11
+System.out.println(text.charAt(0));       // H：下标从 0 开始
+System.out.println(text.substring(0, 5)); // Hello：包含起点，不包含终点
+System.out.println(text.indexOf("Java")); // -1：未找到
+System.out.println(text.contains("World")); // true
+System.out.println("  ".isEmpty());       // false：长度不是 0
+System.out.println("  ".isBlank());       // true：仅包含空白
+```
+
+`length()` 按 `char` 单位计数，部分字符占两个 `char`，因此它不一定等于看到的字符数。下方“字符、编码与 byte[] 转换”给出了例子。
 
 ## 字符串拼接
 
@@ -136,28 +168,6 @@ System.out.printf(Locale.ROOT, "value=%.2f, id=%04d%n", 12.5, 7);
 
 格式化控制的是输出文本，不会改变原数值，也不能消除浮点计算误差。
 
-## 文本块 [Java 15+]
-
-文本块用三引号 `"""` 表示多行字符串。开头的三引号后需要换行；编译器会去掉公共的附带缩进，并把行结束符统一为 `\n`：
-
-```java
-String name = "Alice";
-String message = """
-    Name: %s
-    Status: active
-    """.formatted(name);
-System.out.print(message);
-```
-
-输出：
-
-```text
-Name: Alice
-Status: active
-```
-
-例子中的结束三引号独占一行，因此结果末尾有换行。文本块不会自动替换 `${name}`；这里的 `.formatted(name)` 按 `%s` 占位符填入值，与 `String.format()` 使用相同的格式规则。
-
 ## 与数组互转
 
 `split()` 把一段文本分成字符串数组，`String.join()` 把数组中的文本按指定分隔符连接起来：
@@ -172,6 +182,37 @@ System.out.println(String.join("/", parts)); // a/b/c
 
 `split()` 的参数是正则表达式，即描述匹配规则的字符串。逗号可直接写；点号在正则表达式中有特殊含义，按普通点号分割时应写成 `"a.b.c".split("\\.")`。
 
+## 字符、编码与 byte[] 转换
+
+`String` 的 API 按 UTF-16 代码单元处理索引，一个 `char` 是一个 16 位代码单元。Unicode 为字符分配码点，基本多文种平面之外的码点需要两个 `char` 表示，称为代理对。
+
+```java
+String text = "A😀";
+System.out.println(text.length()); // 3：char 数量
+System.out.println(text.codePointCount(0, text.length())); // 2：码点数量
+System.out.println(text.codePointAt(1)); // 128512
+```
+
+`charAt()` 和 `substring()` 使用代码单元下标，截取时可能拆开代理对。码点数量也不一定等于用户看到的字符数量，例如字母和组合重音可以由多个码点组成一个显示单元。
+
+字符编码规定字符串如何转换为字节。写入文件或网络时编码，读取字节时解码，两端需要约定相同的字符集：
+
+```java
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+byte[] bytes = "中".getBytes(StandardCharsets.UTF_8);
+System.out.println(Arrays.toString(bytes)); // [-28, -72, -83]
+String restored = new String(bytes, StandardCharsets.UTF_8);
+System.out.println(restored); // 中
+```
+
+`byte` 是有符号类型，因此输出可以为负数；上例仍表示三个 UTF-8 字节。Java 17 的默认字符集可能随环境变化，省略字符集参数会使结果依赖运行环境。
+
+普通 `String` 编解码方法对部分非法输入会使用替换字符或替换字节。需要拒绝非法输入时，使用 `CharsetDecoder` 或 `CharsetEncoder` 并设置 `CodingErrorAction.REPORT`。
+
+内部存储结构属于实现细节，不应由 API 的 UTF-16 索引规则推断其底层一定是 `char[]`。
+
 ## 参考资料
 
 - [Dev.java：Strings](https://dev.java/learn/numbers-strings/strings/)
@@ -179,3 +220,6 @@ System.out.println(String.join("/", parts)); // a/b/c
 - [Java 17：StringBuilder](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html)、[StringBuffer](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html)
 - [Java 17：Formatter](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Formatter.html)
 - [Java 17：Text Blocks](https://docs.oracle.com/en/java/javase/17/text-blocks/index.html)
+- [Java SE 17 API：Charset](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/charset/Charset.html)
+- [廖雪峰：字符和字符串](https://liaoxuefeng.com/books/java/quick-start/basic/string/index.html)
+- [廖雪峰：字符串和编码](https://liaoxuefeng.com/books/java/oop/core/string-encoding/index.html)
