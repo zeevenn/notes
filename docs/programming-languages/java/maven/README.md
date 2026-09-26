@@ -10,7 +10,7 @@ tag:
 
 Maven 使用项目对象模型（Project Object Model，POM）描述项目，并由插件执行编译、测试、打包和发布等工作。POM 位于项目根目录的 `pom.xml`；它声明项目坐标、依赖、构建插件以及这些配置之间的继承关系。
 
-未特别标注时，本组笔记以 Maven 3.9.x 和 Java 17 为基线。Maven 4 的差异应单独标注，不混入 Maven 3 的默认行为。
+本组笔记使用 Maven 3.9.x，Maven 4 的差异单独标注。
 
 ## 一个最小构建
 
@@ -140,10 +140,3 @@ mvnw.cmd clean verify
 5. [仓库与 settings.xml](./repositories-and-settings.md)：理解构件从哪里下载、向哪里发布以及凭据放在哪里。
 6. [排障方法](./troubleshooting.md)：从运行环境、有效模型、依赖图和插件输出定位问题。
 7. [CI 与可复现构建](./ci-and-reproducible-builds.md)：固定工具版本、构建环境和发布边界。
-
-## 参考资料
-
-- [Maven Getting Started Guide](https://maven.apache.org/guides/getting-started/)
-- [Introduction to the Standard Directory Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html)
-- [Maven Wrapper](https://maven.apache.org/tools/wrapper/)
-- [Maven Releases History](https://maven.apache.org/docs/history.html)

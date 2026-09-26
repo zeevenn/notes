@@ -1,14 +1,14 @@
 ---
-title: 密封类与密封接口
+title: 密封类与密封接口 [Java 17+]
 date: 2026-09-24
 category: java
 ---
 
-密封类型通过 `sealed` 和 `permits` 限定直接子类型，表达由模型所有者控制的类型边界。
+密封类与密封接口在 Java 17 正式引入，通过 `sealed` 和 `permits` 限定直接子类型，表达由模型所有者控制的类型边界。
 
 ## 密封类型限制实现集合
 
-`sealed` 限定哪些类型可以直接继承类或实现接口：
+`sealed` 限定哪些类型可以直接继承类或实现接口。例子使用 Java 16 引入的 Record 作为具体实现：
 
 ```java
 public sealed interface Shape permits Circle, Rectangle {
@@ -50,9 +50,4 @@ public non-sealed class BusinessAccount extends Account {
 
 枚举限制的是固定实例集合；密封类型限制的是直接子类型集合，每个子类型仍可创建多个实例。Record 可以作为密封接口的一种数据实现，但普通类也可以。
 
-Java 17 中可以通过普通多态方法或 `instanceof` 条件处理密封层次。模式 `switch` 的正式版本用法见[模式匹配](./pattern-matching.md)的 Java 21+ 部分。
-
-## 参考资料
-
-- [JEP 409：Sealed Classes](https://openjdk.org/jeps/409)
-- [Java SE 17 JLS：Permitted Direct Subclasses](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.1.6)
+可以通过普通多态方法或 `instanceof` 条件处理密封层次。模式 `switch` 的正式版本用法见[模式匹配](./pattern-matching.md)的 Java 21+ 部分。

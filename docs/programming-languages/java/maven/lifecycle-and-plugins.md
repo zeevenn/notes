@@ -192,10 +192,3 @@ mvn verify
 | `mvn install` | 让本机其他项目可解析当前产物 |
 | `mvn deploy` | 在发布流程中上传远程仓库 |
 | `mvn clean verify` | 排除旧输出影响后完成全量检查 |
-
-## 参考资料
-
-- [Introduction to the Build Lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
-- [Guide to Configuring Plug-ins](https://maven.apache.org/guides/mini/guide-configuring-plugins.html)
-- [Maven Failsafe Plugin](https://maven.apache.org/surefire/maven-failsafe-plugin/)
-- [Maven Enforcer Plugin](https://maven.apache.org/enforcer/maven-enforcer-plugin/)

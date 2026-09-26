@@ -36,7 +36,7 @@ System.out.println(restored); // 42
 
 ## `Integer` 缓存：相同数值可能复用对象
 
-`Integer.valueOf(int)` 会复用缓存中的对象，避免为常用数值重复创建对象。它保证缓存 `-128～127`（包含边界），也允许缓存范围外的值。[Java 17 方法文档](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html#valueOf(int))
+`Integer.valueOf(int)` 会复用缓存中的对象，避免为常用数值重复创建对象。它保证缓存 `-128～127`（包含边界），也允许缓存范围外的值。
 
 ```java
 Integer a = 127;
@@ -65,7 +65,7 @@ Long longValue = 1L;
 System.out.println(integerValue.equals(longValue)); // false：包装类型不同
 ```
 
-`Integer.equals()` 要求对方也是 `Integer` 且数值相等，不会自动把不同包装类型统一为同一种数值类型。[Java 17 方法文档](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html#equals(java.lang.Object))
+`Integer.equals()` 要求对方也是 `Integer` 且数值相等，不会自动把不同包装类型统一为同一种数值类型。
 
 如果两个引用可能为 `null`，可使用 `Objects.equals()`，它会先处理空值，再比较对象内容：
 
@@ -89,7 +89,7 @@ Integer count = null;
 int value = count; // 编译通过，运行时抛出 NullPointerException（空指针异常）
 ```
 
-这里隐含了 `count.intValue()` 调用。算术运算、与基本类型比较，以及把 `Boolean` 用作 `if` 条件时，也可能触发拆箱。[Java 17：拆箱转换](https://docs.oracle.com/javase/specs/jls/se17/html/jls-5.html#jls-5.1.8)
+这里隐含了 `count.intValue()` 调用。算术运算、与基本类型比较，以及把 `Boolean` 用作 `if` 条件时，也可能触发拆箱。
 
 拆箱前需要处理空值；例如只有在业务约定“缺失数量按 0 处理”时，才使用以下默认值：
 
@@ -98,9 +98,3 @@ Integer count = null;
 int value = count != null ? count : 0;
 System.out.println(value); // 0
 ```
-
-## 参考资料
-
-- [Dev.java：Numbers](https://dev.java/learn/numbers-strings/numbers/)
-- [Oracle Java Tutorials：Autoboxing and Unboxing](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
-- [Java Language Specification 17：装箱转换](https://docs.oracle.com/javase/specs/jls/se17/html/jls-5.html#jls-5.1.7)

@@ -1,14 +1,12 @@
 # Java 语言基础
 
-默认示例以 Java 17 为基线。后续版本的特性在对应主题中单独标注。
-
 ## 基础语法
 
 - [程序基本结构](./program-structure.md)
 - [变量与作用域](./variables.md)
 - [基本数据类型与类型转换](./primitive-types.md)
+- [String 与字符串处理](./string.md)
 - [运算符与表达式](./operators-and-expressions.md)
-- [字符串基础](../standard-library/string.md#字符串基础)
 - [条件与循环](./control-flow.md)
 - [数组](./arrays.md)
 
@@ -32,15 +30,14 @@
 
 - [嵌套类、内部类与匿名类](./nested-classes.md)
 - [枚举](./enums.md)
-- [Record](./records.md)
-- [密封类与密封接口](./sealed-types.md)
+- [Record（Java 16+）](./records.md)
+- [密封类与密封接口（Java 17+）](./sealed-types.md)
 
 ## 语言机制
 
 - [异常处理](./exceptions.md)
+- [线程基础](./thread-basics.md)
 - [泛型](./generics.md)
-- [Lambda 与方法引用](./lambda-and-method-references.md)
+- [Lambda 与方法引用（Java 8+）](./lambda-and-method-references.md)
 - [模式匹配](./pattern-matching.md)
 - [注解](./annotations.md)
-
-字符串基础与标准库中的 String 指向同一篇笔记；字符串常用方法和编码规则集中在[标准库](../standard-library/README.md)中查阅。

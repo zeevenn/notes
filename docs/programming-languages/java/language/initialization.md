@@ -121,8 +121,3 @@ class Derived extends Base {
 类初始化时，先确保父类已初始化。若相关父接口声明了默认方法，即接口提供了可继承的方法实现，也会参与这一初始化过程。
 
 成功的类初始化只执行一次，由 Java 虚拟机协调多个线程的访问。这里“一次”针对同一个运行时类；负责装入类的不同类加载器可以分别定义同名类。若初始化失败，后续主动使用可能得到 `NoClassDefFoundError`，不会正常重试初始化。
-
-## 参考资料
-
-- [Java SE 17 JLS：Initialization of Classes and Interfaces](https://docs.oracle.com/javase/specs/jls/se17/html/jls-12.html#jls-12.4)
-- [Java SE 17 JLS：Creation of New Class Instances](https://docs.oracle.com/javase/specs/jls/se17/html/jls-12.html#jls-12.5)

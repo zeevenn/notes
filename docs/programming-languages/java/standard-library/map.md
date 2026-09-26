@@ -25,7 +25,7 @@ Integer previous = scores.put("Alice", 90);
 scores.put("Bob", 85);
 
 Integer alice = scores.get("Alice");
-int carol = scores.getOrDefault("Carol", 0);
+int carol = scores.getOrDefault("Carol", 0); // Java 8+
 boolean hasAlice = scores.containsKey("Alice");
 boolean hasScore90 = scores.containsValue(90);
 Integer removed = scores.remove("Bob");
@@ -47,7 +47,7 @@ values.get("present"); // null
 
 需要区分时使用 `containsKey()`。更简单的边界是避免用 `null` 同时表示真实值和缺失状态。
 
-## 按键更新
+## 按键更新 [Java 8+]
 
 ### `putIfAbsent()`
 
@@ -124,7 +124,7 @@ for (Map.Entry<String, Integer> entry : scores.entrySet()) {
 }
 ```
 
-也可以使用：
+Java 8 引入的 `Map.forEach()` 也可以遍历键值对：
 
 ```java
 scores.forEach((name, score) ->
@@ -171,7 +171,7 @@ System.out.println(scores.keySet()); // [Bob, Alice]
 
 ### SequencedMap API [Java 21+]
 
-Java 21 起 `LinkedHashMap` 实现 `SequencedMap`，可以访问首尾映射，并通过 `reversed()` 获得反向视图。Java 17 中仍通过 `entrySet()` 的迭代顺序使用 `LinkedHashMap`，没有统一的首尾 Map API。
+Java 21 起 `LinkedHashMap` 实现 `SequencedMap`，可以访问首尾映射，并通过 `reversed()` 获得反向视图。Java 8 等较早版本通过 `entrySet()` 的迭代顺序使用 `LinkedHashMap`，没有统一的首尾 Map API。
 
 ## `TreeMap`
 
@@ -216,7 +216,7 @@ labels.put(OrderStatus.PAID, "已支付");
 - 若用于 `TreeMap`，还需要稳定且最好与 `equals()` 一致的比较规则；
 - 清晰的业务唯一性，例如用户 ID、订单号或不可变复合键。
 
-Record 常适合不可变复合键：
+Java 16 引入的 Record 常适合不可变复合键：
 
 ```java
 record ProductKey(long shopId, String sku) {}
@@ -233,11 +233,3 @@ Map<ProductKey, Product> products = new HashMap<>();
 | 键始终排序、需要范围查询 | `TreeMap` |
 | 键是枚举 | `EnumMap` |
 | 多线程共享并更新 | 根据操作语义评估 `ConcurrentHashMap` |
-
-## 参考资料
-
-- [Dev.java：Using Maps to Store Key Value Pairs](https://dev.java/learn/api/collections-framework/maps/)
-- [Java SE 17 API：Map](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html)
-- [Java SE 17 API：HashMap](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html)
-- [Java SE 17 API：TreeMap](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/TreeMap.html)
-- [JEP 431：Sequenced Collections](https://openjdk.org/jeps/431)

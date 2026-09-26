@@ -50,11 +50,8 @@ export default [
               'program-structure',
               'variables',
               'primitive-types',
+              'string',
               'operators-and-expressions',
-              {
-                text: '字符串基础',
-                link: '/programming-languages/java/standard-library/string.html#字符串基础'
-              },
               'control-flow',
               'arrays'
             ]
@@ -93,6 +90,7 @@ export default [
             collapsible: true,
             children: [
               'exceptions',
+              'thread-basics',
               'generics',
               'lambda-and-method-references',
               'pattern-matching',
@@ -111,7 +109,7 @@ export default [
           {
             text: '常用类',
             collapsible: true,
-            children: ['string', 'wrapper-classes']
+            children: ['wrapper-classes']
           },
           {
             text: '集合框架',
@@ -125,6 +123,11 @@ export default [
               'iteration-and-comparison',
               'immutable-collections'
             ]
+          },
+          {
+            text: '实现原理',
+            collapsible: true,
+            children: ['string-internals']
           }
         ]
       },

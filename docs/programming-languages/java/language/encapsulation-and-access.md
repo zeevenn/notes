@@ -41,7 +41,7 @@ public class Account {
 }
 ```
 
-`Math.addExact()` 计算加法，在超出 `long` 范围时报告错误，避免溢出后得到错误余额。
+`Math.addExact()` 自 Java 8 提供，计算加法，在超出 `long` 范围时报告错误，避免溢出后得到错误余额。
 
 余额非负是对象必须持续满足的约束，也称为不变式。构造方法建立它，公开操作维护它。这里不提供 `setBalance()`，因为任意覆盖余额不属于这个对象允许的操作。
 
@@ -96,7 +96,7 @@ public class Child extends Base {
 
 即使字段是 `private`，直接保存外部传入的可变对象，或把它原样返回，也会让外部绕过方法修改内部状态。
 
-下面的 `List<String>` 是保存字符串的列表；`List.copyOf()` 复制列表内容并得到一个不允许增删或替换元素的列表：
+下面的 `List<String>` 是保存字符串的列表；Java 10 引入的 `List.copyOf()` 复制列表内容并得到一个不允许增删或替换元素的列表：
 
 ```java
 import java.util.List;
@@ -121,9 +121,3 @@ public final class Team {
 JavaBeans 使用 `getName()`、`setName(...)`、布尔属性的 `isActive()` 等命名约定，让工具识别属性。只读属性可以只有 getter；属性也不要求与某个字段一一对应。
 
 这是属性发现和访问的约定。是否需要公共无参构造方法、setter 或序列化能力，应以具体工具的实例化和绑定要求为准，不应由此要求所有业务类暴露可写属性。
-
-## 参考资料
-
-- [Java SE 17 JLS：Access Control](https://docs.oracle.com/javase/specs/jls/se17/html/jls-6.html#jls-6.6)
-- [Java SE 17 API：Introspector](https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/beans/Introspector.html)
-- [Dev.java：Objects, Classes, Interfaces, Packages, and Inheritance](https://dev.java/learn/oop/)

@@ -35,8 +35,8 @@ List<String> copied = new ArrayList<>(source);
 创建不可修改列表：
 
 ```java
-List<String> fixed = List.of("Alice", "Bob");
-List<String> snapshot = List.copyOf(source);
+List<String> fixed = List.of("Alice", "Bob"); // Java 9+
+List<String> snapshot = List.copyOf(source); // Java 10+
 ```
 
 `List.of()` 和 `List.copyOf()` 不允许 `null` 元素，也不支持增删改。它们不是 Java 列表字面量，而是接口提供的静态工厂方法。
@@ -157,10 +157,16 @@ List<String> fixedSize = Arrays.asList(array);
 List<String> mutable = new ArrayList<>(Arrays.asList(array));
 ```
 
-转回数组：
+转回数组时，Java 8 可以传入相应类型的空数组：
 
 ```java
-String[] copied = names.toArray(String[]::new);
+String[] copied = names.toArray(new String[0]);
+```
+
+Java 11 增加了接收数组生成函数的重载：
+
+```java
+String[] copied = names.toArray(String[]::new); // Java 11+
 ```
 
 ## 暴露列表的边界
@@ -174,10 +180,3 @@ public List<String> members() {
 ```
 
 返回快照适合调用方只读且不应观察后续变化的场景。若要提供动态只读视图，可以使用 `Collections.unmodifiableList()`，但需要明确它会反映底层列表的变化。
-
-## 参考资料
-
-- [Dev.java：Extending Collection with List](https://dev.java/learn/api/collections-framework/lists/)
-- [Java SE 17 API：List](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html)
-- [Java SE 17 API：ArrayList](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html)
-- [JEP 431：Sequenced Collections](https://openjdk.org/jeps/431)

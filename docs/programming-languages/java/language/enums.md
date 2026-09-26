@@ -69,7 +69,7 @@ OrderStatus parsed = OrderStatus.valueOf("PAID");
 
 ## 枚举与 `switch`
 
-枚举适合与 `switch` 表达式组合：
+枚举可以与 Java 14 正式引入的 `switch` 表达式组合；Java 8 使用传统的 `case ...:` 语句形式：
 
 ```java
 String label = switch (status) {
@@ -85,8 +85,3 @@ String label = switch (status) {
 ## 类型约束
 
 枚举隐式继承 `Enum<E>`，不能再继承其他类，但可以实现接口。不能使用 `new` 创建枚举常量之外的实例。常量还可以有自己的类体，用来重写枚举声明的方法。
-
-## 参考资料
-
-- [Dev.java：Enums](https://dev.java/learn/classes-objects/enums/)
-- [Java SE 17 JLS：Enum Classes](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.9)

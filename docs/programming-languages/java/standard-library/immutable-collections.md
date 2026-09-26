@@ -12,7 +12,7 @@ category: java
 
 Java 标准库通常使用“不可修改”（unmodifiable）描述不支持增删改的集合。即使集合结构不能修改，其中保存的可变对象仍可能改变状态。
 
-## `List.of()`、`Set.of()` 与 `Map.of()`
+## `List.of()`、`Set.of()` 与 `Map.of()` [Java 9+]
 
 Java 9 起可以创建紧凑的不可修改集合：
 
@@ -48,7 +48,7 @@ Map<String, Integer> scores = Map.ofEntries(
         Map.entry("Bob", 85));
 ```
 
-## `copyOf()` 创建不可修改快照
+## `copyOf()` 创建不可修改快照 [Java 10+]
 
 ```java
 List<String> source = new ArrayList<>();
@@ -131,6 +131,8 @@ users.get(0).setName("Bob");
 
 列表结构没有变化，但其中的 `User` 状态发生了变化。建立深层不可变边界需要元素本身不可变，或者在边界处复制元素。
 
+下面使用 Java 16 引入的 Record 组织复制结果：
+
 ```java
 public record Team(List<Member> members) {
     public Team {
@@ -188,9 +190,3 @@ public final class Team {
 - 认为不可修改集合会冻结其中的对象；
 - 为了返回只读结果，每次都复制大型集合，却没有评估调用频率和所有权；
 - 返回内部可修改集合，让调用方绕过验证和不变量。
-
-## 参考资料
-
-- [Dev.java：Creating and Processing Data with Collection Factory Methods](https://dev.java/learn/api/collections-framework/immutable-collections/)
-- [Java SE 17 Core Libraries Guide：Unmodifiable Collections](https://docs.oracle.com/en/java/javase/17/core/creating-immutable-lists-sets-and-maps.html)
-- [Java SE 17 API：Collections](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)

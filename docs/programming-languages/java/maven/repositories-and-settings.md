@@ -138,10 +138,3 @@ mvn --offline verify
 ```
 
 离线模式只使用本地仓库。如果依赖、插件或元数据从未下载，构建会失败。一次在线构建成功不必然保证长期离线可复现：动态 Snapshot、版本范围和未固定的插件版本都会引入额外解析需求。
-
-## 参考资料
-
-- [Introduction to Repositories](https://maven.apache.org/guides/introduction/introduction-to-repositories.html)
-- [Settings Reference](https://maven.apache.org/settings.html)
-- [Password Encryption](https://maven.apache.org/guides/mini/guide-encryption.html)
-- [POM Reference: Distribution Management](https://maven.apache.org/pom.html#distribution-management)

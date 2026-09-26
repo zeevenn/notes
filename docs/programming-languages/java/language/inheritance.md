@@ -117,7 +117,7 @@ class Child extends Base {
 }
 ```
 
-Java 17 要求显式构造方法委托位于构造方法体首句。如果没有显式委托，会隐式调用 `super()`；父类没有可访问的无参构造方法时，这种隐式调用会导致编译失败。
+Java 25 之前的正式语法要求显式构造方法委托位于构造方法体首句。如果没有显式委托，会隐式调用 `super()`；父类没有可访问的无参构造方法时，这种隐式调用会导致编译失败。
 
 `super.method()` 用于调用父类的方法实现；`super.field` 用于访问被隐藏且可访问的父类字段。初始化顺序见[类与对象的初始化](./initialization.md)。
 
@@ -126,9 +126,3 @@ Java 17 要求显式构造方法委托位于构造方法体首句。如果没有
 继承会把父类的公开操作一起带入子类。声明子类时，应检查子类是否能满足调用方对父类行为的约定；仅仅需要复用几段代码，不足以说明存在合理的子类型关系。
 
 若需要独立控制公开操作，或替换内部实现，可以使用[组合与委托](./composition.md)。需要统一行为而不共享父类状态时，可以通过[接口](./abstract-and-interface.md)定义契约。
-
-## 参考资料
-
-- [Java SE 17 JLS：Inheritance, Overriding, and Hiding](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.4.8)
-- [Java SE 17 JLS：Class Members](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.2)
-- [Dev.java：Inheritance](https://dev.java/learn/inheritance/)

@@ -71,9 +71,31 @@ class Receipt implements Named, Printable {
 
 接口没有构造方法或实例字段。字段隐式为 `public static final`，但如果字段引用可变对象，接口并不会冻结该对象。
 
-## 默认、静态与私有方法
+## 默认方法与静态方法 [Java 8+]
 
-Java 17 的接口可以提供默认方法、静态方法和私有辅助方法。
+Java 8 允许接口提供默认方法和静态方法。
+
+```java
+interface Named {
+    String name();
+
+    default String label() {
+        return name().trim();
+    }
+
+    static Named of(String name) {
+        return () -> name;
+    }
+}
+```
+
+`default` 方法提供可继承的实例实现，实现类可以重写。静态方法通过接口名调用，例如 `Named.of("Alice")`，不会作为实例方法继承给实现类。
+
+示例中的 Lambda 同样自 Java 8 提供，用于实现唯一的抽象方法，详细条件见 [Lambda 与方法引用](./lambda-and-method-references.md)。
+
+## 私有辅助方法 [Java 9+]
+
+Java 9 允许接口使用私有方法复用内部实现。私有方法不向实现类开放，也不被继承，还可以声明为静态方法。
 
 ```java
 interface Named {
@@ -84,22 +106,12 @@ interface Named {
     }
 
     private String normalize(String value) {
-        return value.strip();
-    }
-
-    static Named of(String name) {
-        return () -> name;
+        return value.trim();
     }
 }
 ```
 
-- `default` 方法提供可继承的实例实现，实现类可以重写。
-- 静态方法通过接口名调用，例如 `Named.of("Alice")`，不会作为实例方法继承给实现类。
-- 私有方法复用接口内部的实现，不向实现类开放，也不被继承；私有辅助方法还可以是静态方法。
-
-示例中的 Lambda 实现唯一的抽象方法，详细条件见 [Lambda 与方法引用](./lambda-and-method-references.md)。
-
-## 默认方法冲突
+## 默认方法冲突 [Java 8+]
 
 类层次中的方法声明优先于接口默认方法；更具体的子接口可以重写父接口的默认方法。两个无继承关系的接口提供同签名默认方法时，实现类需要显式解决冲突。
 
@@ -134,9 +146,3 @@ class Both implements Left, Right {
 需要共享并约束一组实例状态时，可以使用抽象类。需要为不同实现提供统一入口时，可以使用接口。两者也可以配合：接口描述公开能力，抽象类作为可选的公共实现基础。
 
 设计接口时，应让操作围绕调用方实际需要的能力组织。让实现类为不支持的操作一律抛出异常，通常说明接口包含了不属于同一个契约的职责。
-
-## 参考资料
-
-- [Java SE 17 JLS：Abstract Classes](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.1.1.1)
-- [Java SE 17 JLS：Interfaces](https://docs.oracle.com/javase/specs/jls/se17/html/jls-9.html)
-- [Dev.java：Interfaces](https://dev.java/learn/interfaces/)

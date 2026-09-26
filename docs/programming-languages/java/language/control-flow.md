@@ -25,7 +25,7 @@ System.out.println(grade); // B
 
 ## switch 语句与贯穿
 
-Java 17 的普通 `switch` 支持 `byte`、`short`、`char`、`int` 及其包装类型，以及 `String` 和枚举；不支持 `long`、浮点类型或 `boolean`。引用选择器为 `null` 时会抛出 `NullPointerException`。
+传统 `switch` 支持 `byte`、`short`、`char`、`int` 及其包装类型，以及 `String` 和枚举；不支持 `long`、浮点类型或 `boolean`。引用选择器为 `null` 时会抛出 `NullPointerException`。
 
 传统冒号形式从匹配标签开始执行，遇到 `break` 才退出；缺少 `break` 时会继续执行后续分支。
 
@@ -42,7 +42,9 @@ switch (month) {
 }
 ```
 
-箭头形式不贯穿，多个标签可以使用逗号合并：
+### 箭头分支
+
+箭头分支不贯穿，多个标签可以使用逗号合并：
 
 ```java
 switch (month) {
@@ -51,7 +53,7 @@ switch (month) {
 }
 ```
 
-## switch 表达式
+## switch 表达式 [Java 14+]
 
 `switch` 也可以产生值，表达式必须覆盖所有可能的输入。普通数值或字符串选择器通常需要 `default`；枚举覆盖全部常量时可以省略它。
 
@@ -136,10 +138,3 @@ System.out.println(found); // true
 ```
 
 当多层循环只是为了寻找并返回一个结果时，也可以提取方法，通过 `return` 直接表达结果。
-
-## 参考资料
-
-- [Java SE 17 JLS：Blocks and Statements](https://docs.oracle.com/javase/specs/jls/se17/html/jls-14.html)
-- [Java SE 17 JLS：switch Expressions](https://docs.oracle.com/javase/specs/jls/se17/html/jls-15.html#jls-15.28)
-- [Dev.java：Java Language Basics](https://dev.java/learn/language-basics/)
-- [廖雪峰：流程控制](https://liaoxuefeng.com/books/java/quick-start/flow/index.html)

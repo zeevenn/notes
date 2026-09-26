@@ -31,7 +31,7 @@ long wrong = count * count;  // 先做 int 乘法，溢出后才转 long
 long correct = (long) count * count; // 2500000000
 ```
 
-整数运算溢出通常不会抛出异常。需要检测溢出时，可以使用标准库 `Math` 类的 `addExact()`、`multiplyExact()` 方法：它们在结果超出整数范围时抛出异常。
+整数运算溢出通常不会抛出异常。需要检测溢出时，可以使用 `Math.addExact()`、`Math.multiplyExact()` 方法：它们在结果超出整数范围时抛出异常。
 
 ## 赋值、自增与复合赋值
 
@@ -66,6 +66,23 @@ boolean skip = divisor == 0 || 10 / divisor <= 1; // true，右侧不执行
 
 浮点值还需要考虑 `NaN`：它与任何值（包括自身）用 `==` 比较都为 `false`，判断应使用 `Double.isNaN()` 或 `Float.isNaN()`。
 
+## 条件表达式、优先级与求值顺序
+
+`condition ? first : second` 只计算被选中的分支。结果类型还受两个分支的类型共同影响，数值分支可能发生提升。
+
+```java
+int amount = -3;
+int positive = amount >= 0 ? amount : 0;
+System.out.println(2 + 3 * 4);      // 14
+System.out.println((2 + 3) * 4);    // 20
+System.out.println(1 + 2 + " items"); // 3 items
+System.out.println("items: " + 1 + 2); // items: 12
+```
+
+优先级决定如何分组；Java 的操作数按从左到右求值，短路与条件表达式再决定是否计算后续部分。字符串参与 `+` 时发生拼接，详细规则见 [String 与字符串处理](./string.md#字符串拼接)。
+
+不熟悉的优先级组合应使用括号明确含义。
+
 ## 位运算与移位
 
 整数的 `&`、`|`、`^`、`~` 分别进行按位与、或、异或、取反。移位运算中，`<<` 左移，`>>` 保留符号扩展，`>>>` 在高位补零。
@@ -80,32 +97,8 @@ System.out.println(1 << 32);       // 1
 
 `int` 的移位距离只取右操作数的低 5 位，`long` 取低 6 位，因此 `int` 左移 32 位等价于左移 0 位。移位前的小整数类型也会提升，不能按原来的 8 位或 16 位宽度理解结果。
 
-## 条件表达式、优先级与求值顺序
-
-`condition ? first : second` 只计算被选中的分支。结果类型还受两个分支的类型共同影响，数值分支可能发生提升。
-
-```java
-int amount = -3;
-int positive = amount >= 0 ? amount : 0;
-System.out.println(2 + 3 * 4);      // 14
-System.out.println((2 + 3) * 4);    // 20
-System.out.println(1 + 2 + " items"); // 3 items
-System.out.println("items: " + 1 + 2); // items: 12
-```
-
-优先级决定如何分组；Java 的操作数按从左到右求值，短路与条件表达式再决定是否计算后续部分。字符串参与 `+` 时发生拼接，详细规则见 [String 与字符串处理](../standard-library/string.md#字符串拼接)。
-
-不熟悉的优先级组合应使用括号明确含义。
-
 ## 对象比较与类型检查
 
 对象变量保存的是用于访问对象的引用。对两个对象变量使用 `==`，检查它们是否指向同一个对象，不会逐个比较对象中的数据。例如字符串应使用 `equals()` 比较文字内容。
 
 `instanceof` 用于检查一个对象是否属于某种类型，`(类型)` 也可以用于转换对象引用。这些操作的完整示例见[多态与类型转换](./polymorphism.md)。
-
-## 参考资料
-
-- [Java SE 17 JLS：Expressions](https://docs.oracle.com/javase/specs/jls/se17/html/jls-15.html)
-- [Java SE 17 JLS：Numeric Contexts](https://docs.oracle.com/javase/specs/jls/se17/html/jls-5.html#jls-5.6)
-- [Dev.java：Java Language Basics](https://dev.java/learn/language-basics/)
-- [廖雪峰：整数运算](https://liaoxuefeng.com/books/java/quick-start/basic/integer/index.html)

@@ -147,9 +147,3 @@ Maven 默认使用 fail-fast：一个模块失败后停止后续构建。
 同一代码库中的模块通常继承统一的项目版本，并由根 POM 的 `dependencyManagement` 和 `pluginManagement` 管理外部依赖及插件版本。每个模块仍应只在 `dependencies` 和 `plugins` 中声明自己实际使用的内容。
 
 `${project.version}` 表示当前模块的有效版本。若模块不是统一版本发布，需要显式管理模块间依赖版本，不能假设它始终等于根项目版本。
-
-## 参考资料
-
-- [Guide to Working with Multiple Modules](https://maven.apache.org/guides/mini/guide-multiple-modules.html)
-- [Introduction to the POM](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
-- [Maven CLI Options Reference](https://maven.apache.org/ref/current/maven-embedder/cli.html)

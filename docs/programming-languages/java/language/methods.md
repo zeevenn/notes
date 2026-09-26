@@ -220,8 +220,3 @@ public static long factorial(int value) {
 ```
 
 每次调用都需要保存参数、局部变量和返回位置，这些信息所占用的空间称为调用栈。递归层数过深可能耗尽调用栈；深度不可控时，可以改用循环组织计算。
-
-## 参考资料
-
-- [Dev.java：Defining Methods](https://dev.java/learn/classes-objects/defining-methods/)
-- [Java Language Specification 17：Method Declarations](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.4)

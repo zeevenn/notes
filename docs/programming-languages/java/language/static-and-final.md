@@ -124,9 +124,3 @@ final class MutableCounter {
 ```
 
 上面的类不能继承，但对象仍然可变。不可变对象还需要控制字段、状态变更和可变引用的暴露，见[封装与访问控制](./encapsulation-and-access.md)。
-
-## 参考资料
-
-- [Java SE 17 JLS：Field Declarations](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.3)
-- [Java SE 17 JLS：final Variables](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.12.4)
-- [Java SE 17 JLS：Initialization](https://docs.oracle.com/javase/specs/jls/se17/html/jls-12.html#jls-12.4)

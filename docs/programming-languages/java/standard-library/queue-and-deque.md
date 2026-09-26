@@ -112,7 +112,7 @@ System.out.println(stack.pop());  // first
 
 ## `PriorityQueue`
 
-`PriorityQueue` 每次从队首取出自然顺序最小或比较器优先级最高的元素，不是普通 FIFO 队列。
+`PriorityQueue` 每次从队首取出自然顺序最小或比较器优先级最高的元素，不是普通 FIFO 队列。下面的比较器工厂、方法引用和接收比较器的构造方法均自 Java 8 提供。
 
 ```java
 Queue<Task> tasks = new PriorityQueue<>(
@@ -158,10 +158,3 @@ for (Task task : tasks) {
 | 单线程双端队列或栈 | `Deque` + `ArrayDeque` |
 | 每次处理最高优先级元素 | `PriorityQueue` |
 | 多线程生产者/消费者 | 根据容量和阻塞语义选择 `BlockingQueue` |
-
-## 参考资料
-
-- [Dev.java：Storing Elements in Stacks and Queues](https://dev.java/learn/api/collections-framework/stacks-queues/)
-- [Java SE 17 API：Queue](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html)
-- [Java SE 17 API：Deque](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Deque.html)
-- [Java SE 17 API：ArrayDeque](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayDeque.html)

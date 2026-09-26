@@ -164,10 +164,3 @@ mvn help:active-profiles
 ```
 
 Profile 适合表达确实不同的构建能力，例如发布签名或可选的兼容性测试。普通测试不应依赖开发者是否记得激活 profile。环境凭据、代理和镜像属于机器配置，应放在 `settings.xml`，而不是 POM profile。
-
-## 参考资料
-
-- [Introduction to the POM](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
-- [POM Reference](https://maven.apache.org/pom.html)
-- [Introduction to Build Profiles](https://maven.apache.org/guides/introduction/introduction-to-profiles.html)
-- [Guide to Configuring Plug-ins](https://maven.apache.org/guides/mini/guide-configuring-plugins.html)

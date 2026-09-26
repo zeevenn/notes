@@ -133,8 +133,3 @@ System.out.println(original[0].value); // 9
 ```
 
 如果复制结果需要拥有独立的 `Box`，就需要另行创建 `Box` 并复制其字段。是否复制到更深一层，应由需要独立修改哪些数据决定。
-
-## 参考资料
-
-- [Java SE 17 JLS：Reference Types and Values](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.3)
-- [Dev.java：Creating and Using Objects](https://dev.java/learn/classes-objects/creating-objects/)

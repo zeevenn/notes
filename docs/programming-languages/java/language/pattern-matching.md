@@ -4,11 +4,11 @@ date: 2026-09-24
 category: java
 ---
 
-模式匹配把结构检查与变量绑定组合起来。Java 17 的主线是 `instanceof` 类型模式；模式 `switch` 与 Record 模式在下方按 Java 21+ 单独组织。
+模式匹配把结构检查与变量绑定组合起来。`instanceof` 类型模式在 Java 16 正式引入；模式 `switch` 与 Record 模式在 Java 21 正式引入。
 
 本篇代码中的 `value` 是待检查的 `Object` 类型变量。
 
-## `instanceof` 类型模式
+## `instanceof` 类型模式 [Java 16+]
 
 传统代码需要先检查类型再强制转换：
 
@@ -37,7 +37,7 @@ if (!(value instanceof String text)) {
 System.out.println(text.length());
 ```
 
-短路逻辑也会影响作用域：
+短路逻辑也会影响作用域；例子中的 `String.isBlank()` 自 Java 11 提供：
 
 ```java
 if (value instanceof String text && !text.isBlank()) {
@@ -98,10 +98,3 @@ if (value instanceof Segment(Point(int x1, int y1), Point(int x2, int y2))) {
 ```
 
 当模式变得很长、重复或包含复杂业务判断时，应提取为普通方法或让对象自己提供行为，避免把所有领域逻辑集中到一个大型 `switch`。
-
-## 参考资料
-
-- [Java SE 17 JLS：The instanceof Operator](https://docs.oracle.com/javase/specs/jls/se17/html/jls-15.html#jls-15.20.2)
-- [Dev.java：Pattern Matching](https://dev.java/learn/pattern-matching/)
-- [JEP 440：Record Patterns](https://openjdk.org/jeps/440)
-- [JEP 441：Pattern Matching for switch](https://openjdk.org/jeps/441)

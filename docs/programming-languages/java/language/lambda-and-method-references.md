@@ -1,10 +1,10 @@
 ---
-title: Lambda 与方法引用
+title: Lambda 与方法引用 [Java 8+]
 date: 2026-08-05
 category: java
 ---
 
-Lambda 表达式用简短的语法提供一段可调用的行为，例如一条字符串检查规则。
+Lambda 与方法引用在 Java 8 引入。Lambda 表达式用简短的语法提供一段可调用的行为，例如一条字符串检查规则。
 
 接口声明调用方可以使用的方法；只有一个需要实现的抽象方法的接口称为函数式接口。Lambda 为这个方法提供实现，接口类型则说明参数和返回值是什么。
 
@@ -14,7 +14,7 @@ public interface StringRule {
     boolean test(String value);
 }
 
-StringRule notBlank = value -> value != null && !value.isBlank();
+StringRule notBlank = value -> value != null && !value.isBlank(); // isBlank(): Java 11+
 boolean valid = notBlank.test("Java");
 ```
 
@@ -58,8 +58,8 @@ Consumer<String> print = value -> {
 Lambda 本身没有独立类型，必须由赋值、参数或返回值上下文提供目标函数式接口：
 
 ```java
-// var rule = value -> value.isBlank(); // 编译错误：缺少目标类型
-Predicate<String> rule = value -> value.isBlank();
+// var rule = value -> value.isBlank(); // var: Java 10+；仍因缺少目标类型而编译失败
+Predicate<String> rule = value -> value.isBlank(); // isBlank(): Java 11+
 ```
 
 ## 常用函数式接口
@@ -134,7 +134,7 @@ public class Worker {
 
 ## 组合函数
 
-标准函数式接口提供组合方法：
+Java 8 的标准函数式接口提供组合方法；下面的 `isBlank()` 则需要 Java 11+：
 
 ```java
 Predicate<String> notNull = value -> value != null;
@@ -153,7 +153,7 @@ Function<String, Integer> trimmedLength = trim.andThen(length);
 大多数标准函数式接口没有在抽象方法上声明受检异常，因此下面的代码不能直接编译：
 
 ```java
-// Function<Path, String> read = Files::readString;
+// Function<Path, String> read = Files::readString; // readString(): Java 11+
 ```
 
 可选方案取决于边界：
@@ -167,9 +167,3 @@ Function<String, Integer> trimmedLength = trim.andThen(length);
 ## Lambda 不是对象模型的替代品
 
 Lambda 适合传递单一行为，例如过滤条件、映射规则、回调和工厂。需要多个相关操作、明确状态、不变量或生命周期时，普通类和接口仍然更合适。
-
-## 参考资料
-
-- [Dev.java：Lambda Expressions](https://dev.java/learn/lambdas/)
-- [Java SE 17 API：java.util.function](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/package-summary.html)
-- [Java Language Specification 17：Lambda Expressions](https://docs.oracle.com/javase/specs/jls/se17/html/jls-15.html#jls-15.27)

@@ -180,9 +180,3 @@ mvn dependency:analyze
 - POM 声明了依赖，但分析阶段没有发现代码使用。
 
 分析基于字节码，反射、服务加载和框架配置可能让“未使用”成为误报。结论需要结合实际加载方式判断，不能机械删除依赖。
-
-## 参考资料
-
-- [Introduction to the Dependency Mechanism](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html)
-- [Optional Dependencies and Dependency Exclusions](https://maven.apache.org/guides/introduction/introduction-to-optional-and-excludes-dependencies.html)
-- [Apache Maven Dependency Plugin](https://maven.apache.org/plugins/maven-dependency-plugin/)

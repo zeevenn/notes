@@ -34,7 +34,17 @@ Use neutral, literal language for factual material. Prefer concrete subjects and
 
 Default technical notes to neutral, third-person documentation. A personal knowledge base describes how knowledge is selected and organized; it does not imply first-person narration. Use first-person wording only for an actual project decision, observation, unresolved question, or reading note. Otherwise describe the fact or trade-off directly.
 
+Let headings describe their content. Avoid repetitive "什么是 X", "为什么需要 X", "优点", "缺点", "适用场景", and "总结" sections when the same information fits more naturally into a definition, comparison, constraint, or example.
+
+Examples should clarify a specific claim. Explain non-obvious behavior, assumptions, and expected output, but do not restate code line by line or repeat the same conclusion before and after an example.
+
+When editing existing notes, remove repetitive sentence patterns, exaggerated certainty, generic recommendations, emoji checklists, broad claims without context, and conclusions that only repeat earlier sections. Preserve quotations, intentional personal notes, and the surrounding author's style; do not rewrite unrelated passages merely for uniformity.
+
+## Teaching Order & Technical Verification
+
 For introductory and foundational notes, assume the reader understands the surrounding domain but does not yet know the topic's jargon. Establish the concrete problem and the smallest complete flow before introducing internal formats, implementation variants, edge cases, or security hardening. Prefer this progression when it fits the topic: problem and context, minimal example or end-to-end flow, vocabulary and mechanism, practical implementation, then advanced and reference material. Do not open with a dense taxonomy, a standards quotation, or an exhaustive list of adjacent concepts.
+
+Order explanations by their dependencies: introduce the key concepts and handling patterns an example relies on before using them. Place constructor catalogs, API comparison tables, and other lookup material after the main learning flow.
 
 Explain unfamiliar, topic-specific acronyms and specialized terms in plain Chinese when first needed. Do not re-explain the reader's assumed prerequisites or introduce a term merely for completeness. If several advanced terms are only needed later, move them into a clearly named advanced or reference section, or link to a separate note. Tables and checklists may summarize concepts after they have been explained; they must not replace the explanation or introduce many unknown terms at once.
 
@@ -42,26 +52,28 @@ Keep the main learning path distinct from implementation details and reference m
 
 Before drafting or substantially rewriting a foundational concept note, review at least two reputable introductory explanations for teaching order and examples, and verify technical claims against primary standards, official documentation, or current security guidance. Borrow the progression, not unsupported claims or outdated recommendations. When tutorial advice conflicts with primary or current security sources, keep the clearer explanation but follow the primary source for the technical conclusion.
 
-Let headings describe their content. Avoid repetitive "什么是 X", "为什么需要 X", "优点", "缺点", "适用场景", and "总结" sections when the same information fits more naturally into a definition, comparison, constraint, or example.
+Distinguish language or API guarantees from implementation-specific behavior and observations from a particular run. State the conditions necessary for an example's conclusion to hold. A single execution does not establish a general guarantee, especially for concurrency or performance.
 
-Examples should clarify a specific claim. Explain non-obvious behavior, assumptions, and expected output, but do not restate code line by line or repeat the same conclusion before and after an example.
+For all articles in this repository, verification sources do not automatically belong in the published note: do not routinely add broad official documentation links or reference lists. Include further reading only when an article or focused explanation offers substantial value for a specific difficult or important concept, such as a substantive technical blog post; do not add references merely to demonstrate that verification was performed.
 
-When editing existing notes, remove repetitive sentence patterns, exaggerated certainty, generic recommendations, emoji checklists, broad claims without context, and conclusions that only repeat earlier sections. Preserve quotations, intentional personal notes, and the surrounding author's style; do not rewrite unrelated passages merely for uniformity.
+When reviewing existing notes, distinguish factual errors, obstacles to understanding, and optional refinements. Keeping an article unchanged is a valid outcome; do not force a new order when its structure already works. Add only details that affect the reader's current understanding or use, rather than every edge case discovered during verification.
 
 ## Linking & Knowledge Graph
 
-Internal links should use relative Markdown links that VuePress can resolve. When adding or moving content, check nearby pages for references that should point to the new note. Do not leave orphan pages: every important page should be reachable from a README, sidebar entry, or related note.
+Internal links should use relative Markdown links that VuePress can resolve. When adding or moving content, check nearby pages for references that should point to the new note. When changing headings or reorganizing sections, check incoming anchor links and preserve or update their targets. Do not leave orphan pages: every important page should be reachable from a README, sidebar entry, or related note.
 
 ## Java Documentation Baseline
 
-Treat Java 17 as the default baseline for notes under `docs/programming-languages/java/`. Java examples without an explicit version marker must compile against the Java 17 language and standard library API, preferably verified with `javac --release 17` when practical.
+Treat Java 17 as the implicit default baseline for notes under `docs/programming-languages/java/`. Do not routinely state or label this baseline in the notes. Java examples without an explicit version marker must compile against the Java 17 language and standard library API, preferably verified with `javac --release 17` when practical.
 
 Place features introduced after Java 17 in a clearly separated section whose heading includes the minimum version, for example `[Java 21+]` or `[Java 25+]`. Explain the Java 17-compatible flow before presenting the newer alternative. Do not make preview or incubator features prerequisites for the main learning path; state their exact status and JDK version when they are discussed.
 
-Use Java SE 17 specifications and API documentation for baseline claims. For later features, link to the matching versioned specification, official JEP, or API documentation. A newer JDK used to build or test examples does not change the documented target version.
+Verify baseline claims against Java SE 17 specifications and API documentation, and later features against the matching versioned specification, official JEP, or API documentation. A newer JDK used to build or test examples does not change the documented target version.
 
 ## Maintenance Workflow
 
 For content updates, preserve the existing Chinese technical writing style unless the surrounding section is already English. For config or navigation changes, edit `docs/.vuepress/config.ts`, `theme.ts`, `navbar.ts`, or `sidebar/` deliberately and avoid generated folders such as `.cache`, `.temp`, and `dist`.
+
+After changing executable examples, compile or run them where practical and check that the results match the explanation. Validate incomplete snippets by supplying the necessary context in temporary files; the note does not need to include that scaffolding.
 
 Validate with `pnpm run build` before finishing substantial changes. Use `pnpm run dev` or `pnpm run clean-dev` when checking navigation, layout, or sidebar behavior locally.

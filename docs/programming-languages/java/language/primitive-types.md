@@ -18,16 +18,16 @@ boolean enabled = true;
 
 整数类型按能表示的范围选择；浮点类型用于带小数的计算；`boolean` 只有 `true` 和 `false` 两个值。
 
-| 类型 | 含义 | 范围或精度 |
-| --- | --- | --- |
-| `byte` | 8 位有符号整数 | -128 ～ 127 |
-| `short` | 16 位有符号整数 | -32768 ～ 32767 |
-| `int` | 32 位有符号整数 | -2147483648 ～ 2147483647 |
-| `long` | 64 位有符号整数 | -2⁶³ ～ 2⁶³ - 1 |
-| `float` | 单精度浮点数 | 24 个二进制有效位，约 6～7 位十进制有效数字 |
-| `double` | 双精度浮点数 | 53 个二进制有效位，约 15～16 位十进制有效数字 |
-| `char` | 16 位无符号值，用于字符编码 | 0 ～ 65535 |
-| `boolean` | 布尔值 | `true`、`false` |
+| 类型      | 含义                        | 范围或精度                                    |
+| --------- | --------------------------- | --------------------------------------------- |
+| `byte`    | 8 位有符号整数              | -128 ～ 127                                   |
+| `short`   | 16 位有符号整数             | -32768 ～ 32767                               |
+| `int`     | 32 位有符号整数             | -2147483648 ～ 2147483647                     |
+| `long`    | 64 位有符号整数             | -2⁶³ ～ 2⁶³ - 1                               |
+| `float`   | 单精度浮点数                | 24 个二进制有效位，约 6～7 位十进制有效数字   |
+| `double`  | 双精度浮点数                | 53 个二进制有效位，约 15～16 位十进制有效数字 |
+| `char`    | 16 位无符号值，用于字符编码 | 0 ～ 65535                                    |
+| `boolean` | 布尔值                      | `true`、`false`                               |
 
 ## 字面量与数值范围
 
@@ -74,12 +74,6 @@ byte → short → int → long → float → double
 ```
 
 “扩大”不保证数值完全精确。`int → float`、`long → float/double` 允许自动转换，但浮点数可能没有足够的有效位保留全部整数信息。
-
-```java
-int original = 16_777_217;
-float converted = original;
-System.out.println((int) converted); // 16777216
-```
 
 `boolean` 不参与数值转换，不能把整数直接赋给布尔变量。
 
@@ -128,7 +122,15 @@ System.out.println(next); // B
 
 ## 浮点数精度问题
 
-浮点数使用有限位数表示二进制小数。有些十进制小数无法精确表示，计算结果会包含舍入误差。
+浮点数使用有限的二进制有效位表示数值。有效位不足时，整数转换为浮点数也可能丢失信息：
+
+```java
+int original = 16_777_217;
+float converted = original;
+System.out.println((int) converted); // 16777216
+```
+
+有些十进制小数无法用二进制浮点数精确表示，计算结果会包含舍入误差。
 
 ```java
 System.out.println(0.1 + 0.2);        // 0.30000000000000004
@@ -175,9 +177,3 @@ System.out.println(Integer.MAX_VALUE); // 2147483647
 ```
 
 `Float.MIN_VALUE` 和 `Double.MIN_VALUE` 表示最小的正非零值，不是最负值。它们与整数类型的 `MIN_VALUE` 含义不同。
-
-## 参考资料
-
-- [Java SE 17 JLS：Primitive Types and Values](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.2)
-- [Java SE 17 JLS：Conversions and Contexts](https://docs.oracle.com/javase/specs/jls/se17/html/jls-5.html)
-- [Java SE 17 API：Double](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html)

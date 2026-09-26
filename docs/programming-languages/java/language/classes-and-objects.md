@@ -100,9 +100,3 @@ public class Counter {
 ```
 
 外部代码通过 `increment()` 修改数值，通过 `value()` 读取数值，不能直接给字段赋值。这建立了“调用方使用公开操作、类内部管理状态”的边界。
-
-## 参考资料
-
-- [Java SE 17 JLS：Class Members](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.2)
-- [Dev.java：Classes and Objects](https://dev.java/learn/classes-objects/)
-- [廖雪峰：面向对象基础](https://liaoxuefeng.com/books/java/oop/basic/index.html)

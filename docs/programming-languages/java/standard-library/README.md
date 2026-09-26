@@ -4,11 +4,8 @@ date: 2026-08-05
 category: java
 ---
 
-> 默认示例以 **Java 17** 为 API 基线。Java 21 的 Sequenced Collections 等扩展会单独标注。
-
 ## 常用类
 
-- [String 与字符串处理](./string.md)
 - [包装类与装箱拆箱](./wrapper-classes.md)
 
 ## 集合框架
@@ -20,3 +17,7 @@ category: java
 - [Queue 与 Deque](./queue-and-deque.md)
 - [遍历、比较与排序](./iteration-and-comparison.md)
 - [不可修改集合与防御性复制](./immutable-collections.md)
+
+## 实现原理
+
+- [字符串实现与源码分析](./string-internals.md)

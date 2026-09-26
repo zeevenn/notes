@@ -86,8 +86,3 @@ class TextStack {
 外层对象可以转换参数、校验约束、组合多个调用并转换结果。但把内部可变对象直接返回，会让调用方绕过外层规则，见[封装与访问控制](./encapsulation-and-access.md)。
 
 与继承不同，被委托对象内部的 `this` 仍指向它自身；包装对象不会自动拦截它对自身其他方法的调用。
-
-## 参考资料
-
-- [Java SE 17 JLS：Field Declarations](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.3)
-- [Java SE 17 API：Deque](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Deque.html)

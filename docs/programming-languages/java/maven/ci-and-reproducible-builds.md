@@ -32,7 +32,7 @@ mvnw.cmd
 - `--no-transfer-progress` 隐藏重复的下载进度，但保留构建日志。
 - `clean verify` 从干净输出开始，执行到集成测试和质量校验。
 
-Wrapper 固定 Maven，不固定 JDK。CI 镜像或 runner 仍需明确选择 Java 17。
+Wrapper 固定 Maven，不固定 JDK。CI 镜像或 runner 仍需明确选择与项目构建要求一致的 JDK。
 
 ## 固定 JDK 与编译目标
 
@@ -116,11 +116,3 @@ CI 通常缓存 Maven 本地仓库以减少网络下载。缓存应被视为性�
 ```
 
 普通分支不应拥有发布仓库的写权限。执行 `mvn -X` 或打印有效 settings 时，也应避免把认证信息带入公开日志。
-
-## 参考资料
-
-- [Maven Wrapper](https://maven.apache.org/tools/wrapper/)
-- [Configuring for Reproducible Builds](https://maven.apache.org/guides/mini/guide-reproducible-builds.html)
-- [Guide to Using Toolchains](https://maven.apache.org/guides/mini/guide-using-toolchains.html)
-- [Maven Enforcer Plugin](https://maven.apache.org/enforcer/maven-enforcer-plugin/)
-- [Maven Releases History](https://maven.apache.org/docs/history.html)

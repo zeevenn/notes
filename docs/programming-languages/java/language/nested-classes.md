@@ -80,7 +80,7 @@ Runnable task(String message) {
 }
 ```
 
-匿名类在创建对象的同时定义一次性实现：
+匿名类在创建对象的同时定义一次性实现。下面匿名类构造时的 `<>` 写法自 Java 9 支持；Java 8 需要写成 `new Comparator<String>()`：
 
 ```java
 Comparator<String> byLength = new Comparator<>() {
@@ -91,7 +91,7 @@ Comparator<String> byLength = new Comparator<>() {
 };
 ```
 
-匿名类仍然是类，可以声明字段和额外方法。只需要实现函数式接口的一段行为时，Lambda 通常更简洁：
+匿名类仍然是类，可以声明字段和额外方法。只需要实现函数式接口的一段行为时，可以使用 Java 8 引入的 Lambda：
 
 ```java
 Comparator<String> byLength =
@@ -108,8 +108,3 @@ Comparator<String> byLength =
 - 只在单个方法中使用且需要命名实现：局部类；
 - 一次性扩展类或实现非函数式接口：匿名类；
 - 提供一段函数式接口行为：Lambda。
-
-## 参考资料
-
-- [Dev.java：Nested Classes](https://dev.java/learn/classes-objects/nested-classes/)
-- [Java SE 17 JLS：Inner Classes and Enclosing Instances](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.1.3)

@@ -32,7 +32,7 @@ boolean empty = permissions.isEmpty();
 从集合或其他元素容器去重：
 
 ```java
-List<String> names = List.of("Alice", "Bob", "Alice");
+List<String> names = List.of("Alice", "Bob", "Alice"); // List.of(): Java 9+
 Set<String> uniqueNames = new HashSet<>(names);
 ```
 
@@ -70,7 +70,7 @@ System.out.println(names); // [Bob, Alice]
 
 ### SequencedSet API [Java 21+]
 
-Java 21 起 `LinkedHashSet` 实现 `SequencedSet`，可使用 `getFirst()`、`getLast()`、`addFirst()`、`addLast()` 和 `reversed()`。Java 17 中仍使用原有的 `Set` 接口；需要读取首个元素时通过迭代器表达，不应假设 `HashSet` 具有顺序。
+Java 21 起 `LinkedHashSet` 实现 `SequencedSet`，可使用 `getFirst()`、`getLast()`、`addFirst()`、`addLast()` 和 `reversed()`。Java 8 等较早版本使用原有的 `Set` 接口；需要读取首个元素时通过迭代器表达，不应假设 `HashSet` 具有顺序。
 
 ## `TreeSet`
 
@@ -100,7 +100,7 @@ System.out.println(scores.ceiling(90)); // 95
 自然顺序要求元素实现 `Comparable`；否则构造时传入 `Comparator`：
 
 ```java
-Set<User> users = new TreeSet<>(Comparator.comparing(User::name));
+Set<User> users = new TreeSet<>(Comparator.comparing(User::name)); // Java 8+
 ```
 
 在 `TreeSet` 中，比较结果为 `0` 就表示元素重复。比较器只按姓名比较时，两个同名但 ID 不同的用户只能保留一个。比较规则应完整表达 Set 所需的唯一性，并尽量与 `equals()` 一致。
@@ -126,7 +126,7 @@ EnumSet<Permission> none = EnumSet.noneOf(Permission.class);
 `Set` 继承的批量操作可以表达并集、交集和差集。操作会修改接收者，因此通常先复制：
 
 ```java
-Set<String> left = Set.of("A", "B");
+Set<String> left = Set.of("A", "B"); // Set.of(): Java 9+
 Set<String> right = Set.of("B", "C");
 
 Set<String> union = new HashSet<>(left);
@@ -167,10 +167,3 @@ Set 元素应使用稳定标识或不可变值。完整规则见 [Object 类与�
 | 唯一且保持插入/相遇顺序 | `LinkedHashSet` |
 | 唯一且始终排序、需要范围查询 | `TreeSet` |
 | 元素类型是枚举 | `EnumSet` |
-
-## 参考资料
-
-- [Dev.java：Set, SortedSet and NavigableSet](https://dev.java/learn/api/collections-framework/sets/)
-- [Java SE 17 API：Set](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html)
-- [Java SE 17 API：TreeSet](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/TreeSet.html)
-- [JEP 431：Sequenced Collections](https://openjdk.org/jeps/431)

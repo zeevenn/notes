@@ -31,7 +31,7 @@ public String toString() {
 
 ### `@Deprecated`
 
-标记不建议继续使用的 API。通常配合 Javadoc 的 `@deprecated` 说明替代方案和迁移原因。
+标记不建议继续使用的 API。通常配合 Javadoc 的 `@deprecated` 说明替代方案和迁移原因。下面的 `since` 和 `forRemoval` 属性自 Java 9 提供；Java 8 使用不带这些属性的 `@Deprecated`。
 
 ```java
 /**
@@ -53,7 +53,7 @@ public User find(long id) {
 
 它应放在能够解释并验证安全性的最小作用域，不应用于隐藏尚未理解的泛型或废弃 API 问题。
 
-### `@FunctionalInterface`
+### `@FunctionalInterface` [Java 8+]
 
 要求接口保持只有一个抽象方法，使其可以作为 Lambda 的目标类型。
 
@@ -121,7 +121,7 @@ public @interface Retry {
 - `FIELD`：字段；
 - `PARAMETER`：参数；
 - `CONSTRUCTOR`：构造方法；
-- `TYPE_USE`：任何使用类型的位置。
+- `TYPE_USE`：任何使用类型的位置，Java 8 引入。
 
 可以同时允许多个位置：
 
@@ -145,7 +145,7 @@ public @interface Retry {
 
 它只影响类上的注解通过父类继承，不适用于接口、方法或字段，也不表示框架一定采用相同的查找规则。
 
-### `@Repeatable`
+### `@Repeatable` [Java 8+]
 
 允许同一种注解在同一位置出现多次，需要指定一个容器注解。只有确实需要多项独立配置时才使用，数组元素有时更简单。
 
@@ -172,9 +172,3 @@ if (retry != null) {
 - 运行时反射：启动或调用时扫描注解，配置灵活，但错误可能推迟到运行时。
 
 注解适合表达声明式元数据，不适合隐藏关键业务流程。读者仍应能找到是谁读取注解、何时执行以及失败如何处理。
-
-## 参考资料
-
-- [Dev.java：Annotations](https://dev.java/learn/annotations/)
-- [Java Language Specification 17：Annotation Interfaces](https://docs.oracle.com/javase/specs/jls/se17/html/jls-9.html#jls-9.6)
-- [Java SE 17 API：java.lang.annotation](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/package-summary.html)

@@ -80,7 +80,7 @@ public final class User {
 }
 ```
 
-`instanceof User` 确认参数是用户对象，再通过 `(User) other` 以 `User` 类型访问其编号。`Long.hashCode(id)` 是标准库根据 `long` 数值计算整数哈希值的方法；它与相等性之间的要求如下。
+`instanceof User` 确认参数是用户对象，再通过 `(User) other` 以 `User` 类型访问其编号。`Long.hashCode(id)` 是 Java 8 引入的静态方法，根据 `long` 数值计算整数哈希值；它与相等性之间的要求如下。
 
 ## `hashCode()` 必须与 `equals()` 一致
 
@@ -210,11 +210,11 @@ class Signal {
 }
 ```
 
-虚假唤醒指等待中的线程在没有相应通知时也可能结束等待。即使收到了通知，也可能有其他线程先改变了条件，所以等待必须放在检查条件的循环中。这里的方法只提供对象级的基础协调能力，线程池、阻塞队列等属于并发专题。
+虚假唤醒指等待中的线程在没有相应通知时也可能结束等待。即使收到了通知，也可能有其他线程先改变了条件，所以等待必须放在检查条件的循环中。两个线程如何通过这些方法交接消息，见[线程基础中的信箱示例](./thread-basics.md#等待条件成立-wait-与-notifyall)。
 
 ## finalize 与资源释放
 
-`finalize()` 在 Java 17 中已废弃。它不提供及时执行保证，不能用于保证文件、连接或锁等外部资源的释放。
+`finalize()` 自 Java 9 起被标记为废弃。它不提供及时执行保证，不能用于保证文件、连接或锁等外部资源的释放。
 
 `AutoCloseable` 表示资源提供 `close()` 关闭方法；`try-with-resources` 是在代码块结束时自动调用该方法的语法，具体例子见[异常处理](./exceptions.md#try-with-resources)。`final` 是语言修饰符，`finally` 是异常处理结构，二者也都不是 `finalize()` 的替代名称。
 
@@ -237,9 +237,4 @@ class Signal {
 | `toString()` | 默认生成类名和哈希值形式的文本 | 是 |
 | `clone()` | 受保护的浅复制入口 | 是，受 `Cloneable` 约束 |
 | `wait()`、`notify()`、`notifyAll()` | 在对象监视器上进行线程等待与通知 | 否，`final` |
-| `finalize()` | 历史上的终结回调，Java 17 已废弃 | 技术上可以，不应作为资源清理机制 |
-
-## 参考资料
-
-- [Java SE 17 API：Object](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html)
-- [Dev.java：Object as a Superclass](https://dev.java/learn/inheritance/objects/)
+| `finalize()` | 历史上的终结回调，Java 9 起废弃 | 技术上可以，不应作为资源清理机制 |

@@ -83,7 +83,7 @@ public static <T> T first(List<T> values) {
     return values.get(0);
 }
 
-String name = first(List.of("Alice", "Bob"));
+String name = first(List.of("Alice", "Bob")); // List.of(): Java 9+
 Integer number = first(List.of(1, 2, 3));
 ```
 
@@ -116,7 +116,7 @@ public static <T extends Number> double sum(List<T> values) {
 即使 `Integer` 是 `Number` 的子类型，`List<Integer>` 也不是 `List<Number>` 的子类型：
 
 ```java
-List<Integer> integers = List.of(1, 2, 3);
+List<Integer> integers = List.of(1, 2, 3); // Java 9+
 // List<Number> numbers = integers; // 编译错误
 ```
 
@@ -206,7 +206,7 @@ System.out.println(names.getClass() == numbers.getClass()); // true
 - 类的静态字段不能使用该类的类型参数；
 - 两个方法擦除后签名相同时不能重载。
 
-运行时需要创建对象时，可以显式接收工厂：
+运行时需要创建对象时，可以显式接收工厂。下面的 `Supplier` 和构造方法引用均在 Java 8 引入：
 
 ```java
 static <T> T create(Supplier<T> factory) {
@@ -226,10 +226,3 @@ Number[] numbers = new Integer[1];
 ```
 
 泛型在编译期拒绝对应的不安全关系，因此通用容器通常优先使用泛型集合而不是对象数组。
-
-## 参考资料
-
-- [Dev.java：Generics](https://dev.java/learn/generics/)
-- [Dev.java：Wildcards](https://dev.java/learn/generics/wildcards/)
-- [Dev.java：Type Erasure](https://dev.java/learn/generics/type-erasure/)
-- [Java Language Specification 17：Type Parameters](https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.4)

@@ -54,7 +54,7 @@ Map<K, V>
 
 Java 21 增加了 `SequencedCollection`、`SequencedSet` 和 `SequencedMap`，统一表示具有明确相遇顺序、能够访问首尾元素并获得反向视图的容器。`List`、`Deque`、`LinkedHashSet`、`TreeSet` 和 `LinkedHashMap` 等类型接入了相应接口。
 
-Java 17 中仍然可以使用这些具体容器及其原有操作，只是没有统一的 `Sequenced*` 接口。例如，Java 17 的 `List` 使用 `get(0)` 和 `get(size() - 1)` 访问首尾元素，升级到 Java 21 后才可以统一使用 `getFirst()` 和 `getLast()`。
+Java 8 等较早版本可以使用这些具体容器及其原有操作，但没有统一的 `Sequenced*` 接口。例如，`List` 使用 `get(0)` 和 `get(size() - 1)` 访问首尾元素，升级到 Java 21 后才可以统一使用 `getFirst()` 和 `getLast()`。
 
 ## 数组与集合
 
@@ -85,7 +85,7 @@ scoreList.add(90); // int 自动装箱为 Integer
 `Collection`、`List`、`Set` 和 `Map` 中部分修改方法属于可选操作。接口上存在 `add()` 不表示每个实现都允许修改：
 
 ```java
-List<String> names = List.of("Alice", "Bob");
+List<String> names = List.of("Alice", "Bob"); // Java 9+
 // names.add("Carol"); // 抛出 UnsupportedOperationException
 ```
 
@@ -157,9 +157,3 @@ boolean exists = users.contains(new User(1L, "Alice"));
 `ArrayList`、`HashSet`、`HashMap`、`ArrayDeque` 等通用实现不是线程安全的。多个线程共享且至少一个线程修改集合时，需要由对象所有权、同步或并发集合建立明确边界。
 
 并发场景常见类型包括 `ConcurrentHashMap`、`CopyOnWriteArrayList` 和 `BlockingQueue`。它们具有不同一致性与性能取舍，应在并发专题中结合内存模型学习；不能简单地把所有集合替换成同步包装器。
-
-## 参考资料
-
-- [Dev.java：The Collections Framework](https://dev.java/learn/api/collections-framework/)
-- [Java SE 17 API：Collections Framework Overview](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/doc-files/coll-overview.html)
-- [JEP 431：Sequenced Collections](https://openjdk.org/jeps/431)

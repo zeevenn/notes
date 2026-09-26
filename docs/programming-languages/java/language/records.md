@@ -1,10 +1,10 @@
 ---
-title: Record
+title: Record [Java 16+]
 date: 2026-09-24
 category: java
 ---
 
-Record 用组件声明数据值，并提供与组件对应的访问器及通用对象方法。它适合以组件共同定义相等性的模型。
+Record 在 Java 16 正式引入，用组件声明数据值，并提供与组件对应的访问器及通用对象方法。它适合以组件共同定义相等性的模型。
 
 ## Record 表达数据值
 
@@ -33,7 +33,7 @@ Record 隐式继承 `java.lang.Record`，并且是 `final`，不能继承其他�
 
 ## 紧凑构造方法
 
-紧凑构造方法适合校验或规范化组件。参数赋给字段的代码由编译器补充：
+紧凑构造方法适合校验或规范化组件。参数赋给字段的代码由编译器补充；例子中的 `String.isBlank()` 和 `strip()` 均自 Java 11 提供：
 
 ```java
 public record ProductCode(String value) {
@@ -50,7 +50,7 @@ public record ProductCode(String value) {
 
 ## Record 不保证深层不可变
 
-组件字段不能重新赋值，但组件引用指向的对象仍可能可变：
+组件字段不能重新赋值，但组件引用指向的对象仍可能可变。下面使用 Java 10 引入的 `List.copyOf()` 复制列表：
 
 ```java
 public record Team(List<String> members) {
@@ -69,8 +69,3 @@ Record 适合所有组件共同定义值的类型，例如坐标、金额和数�
 Record 不能额外声明实例字段或实例初始化块；可以声明静态字段、静态初始化块和普通方法。额外的非规范构造方法必须通过 `this(...)` 委托到其他构造方法，最终到达规范构造方法。
 
 组件访问器使用 `name()` 形式，而不是 JavaBeans 的 `getName()`。与框架结合时，需要确认框架如何读取组件和创建实例。
-
-## 参考资料
-
-- [Java SE 17 JLS：Record Classes](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.10)
-- [Dev.java：Records](https://dev.java/learn/records/)

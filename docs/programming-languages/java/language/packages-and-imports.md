@@ -157,8 +157,3 @@ java -cp out com.example.App
 - 把 JAR 文件所在目录加入类路径，却没有加入 JAR 文件本身。
 
 Java 9 引入模块系统和模块路径（module path）。模块通过 `module-info.java` 声明依赖、导出包和服务。包与模块是不同层次的组织单位，包导出和模块依赖属于模块系统的规则。
-
-## 参考资料
-
-- [Dev.java：Packages](https://dev.java/learn/packages/)
-- [Java Language Specification 17：Packages and Modules](https://docs.oracle.com/javase/specs/jls/se17/html/jls-7.html)

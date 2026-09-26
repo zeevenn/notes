@@ -58,19 +58,17 @@ App.java → javac 编译 → App.class → java App → 执行 main
 
 ## `main` 方法与命令行参数
 
-传统入口的写法是：
+程序入口的写法是：
 
 ```java
 public static void main(String[] args)
 ```
 
-- `public`：公开方法，满足传统启动器的访问要求；
+- `public`：公开方法，供启动器调用；
 - `static`：静态方法，调用入口时不需要先创建 `App` 对象；
 - `void`：方法不返回值；
 - `main`：启动器识别的方法名；
 - `String[] args`：名为 `args` 的字符串数组，用来接收命令行参数。
-
-Java 20 及更早版本要求上述入口形式；从 Java 5 起，`String[] args` 也可写成等价的 `String... args`。无参数的 `public static void main()` 可以编译，但这些版本的启动器不会将它识别为入口。
 
 例如：
 
@@ -80,7 +78,7 @@ java App hello Java
 
 此时 `args` 包含两个字符串：`args[0]` 是 `"hello"`，`args[1]` 是 `"Java"`，数组下标从 `0` 开始。前面的程序没有读取 `args`，所以仍然只输出 `Hello, Java`。不传参数时，`args` 是空数组。
 
-## 直接运行源码 [Java 11+]
+## 直接运行源码
 
 前面的 `App.java` 也可以用一条命令运行：
 
@@ -103,11 +101,3 @@ void main() {
 使用 JDK 25 或更高版本运行 `java Hello.java`，输出 `Hello, Java`。启动器会创建对象并调用 `main`，输出语句仍然写在方法内部。
 
 简化入口在 Java 21～24 中属于需要启用 `--enable-preview` 的预览功能。
-
-## 参考资料
-
-- [Oracle Java Tutorials：理解 Hello World 程序](https://docs.oracle.com/javase/tutorial/getStarted/application/index.html)
-- [Dev.java：Getting Started with Java](https://dev.java/learn/getting-started/)
-- [Java 17：`java` 启动器](https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html)
-- [Java Language Specification 17：顶级类与接口声明](https://docs.oracle.com/javase/specs/jls/se17/html/jls-7.html#jls-7.6)
-- [Java 25：紧凑源文件与实例 main](https://docs.oracle.com/en/java/javase/25/language/compact-source-files-instance-main-methods.html)

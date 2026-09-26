@@ -24,11 +24,11 @@ for (String name : names) {
 }
 ```
 
-需要替换元素时使用索引、`ListIterator.set()` 或 `List.replaceAll()`。
+需要替换元素时使用索引、`ListIterator.set()` 或 Java 8 引入的 `List.replaceAll()`。
 
 ## `Iterator`
 
-需要在遍历中安全删除当前元素时显式使用迭代器：
+需要在遍历中安全删除当前元素时显式使用迭代器。下面用 Java 11 引入的 `String.isBlank()` 判断空白字符串：
 
 ```java
 Iterator<String> iterator = names.iterator();
@@ -53,7 +53,7 @@ for (String name : names) {
 
 通用集合的 fail-fast 迭代器会尽力检测迭代期间的意外结构修改。它是错误检测机制，不是并发安全保证，也不能把捕获 `ConcurrentModificationException` 当成控制流程。
 
-只按条件删除时可以直接使用：
+只按条件删除时可以使用 Java 8 引入的 `removeIf()` 和方法引用；这个例子使用的 `isBlank()` 需要 Java 11+：
 
 ```java
 names.removeIf(String::isBlank);
@@ -85,7 +85,7 @@ while (iterator.hasPrevious()) {
 
 ### 反向视图 [Java 21+]
 
-Java 21 起，对具有相遇顺序的集合还可以使用 `reversed()` 视图。Java 17 需要使用反向 `ListIterator`、倒序索引循环，或者复制后调用 `Collections.reverse()`。
+Java 21 起，对具有相遇顺序的集合还可以使用 `reversed()` 视图。Java 8 等较早版本可使用反向 `ListIterator`、倒序索引循环，或者复制后调用 `Collections.reverse()`。
 
 ## 按索引遍历
 
@@ -111,7 +111,7 @@ for (Map.Entry<String, Integer> entry : scores.entrySet()) {
 }
 ```
 
-只需要键或值时分别使用 `keySet()`、`values()`。Lambda 形式：
+只需要键或值时分别使用 `keySet()`、`values()`。Java 8 引入的 `Map.forEach()` 可以配合 Lambda 使用：
 
 ```java
 scores.forEach((name, score) ->
@@ -122,7 +122,7 @@ scores.forEach((name, score) ->
 
 ## 自然顺序 `Comparable`
 
-类型只有一个明确的默认顺序时，可以实现 `Comparable<T>`：
+类型只有一个明确的默认顺序时，可以实现 `Comparable<T>`。下面用 Java 16 引入的 Record 定义示例类型；普通类也可以实现这个接口：
 
 ```java
 public record Version(int major, int minor) implements Comparable<Version> {
@@ -148,7 +148,7 @@ return Integer.compare(left, right);
 
 ## 外部顺序 `Comparator`
 
-同一类型存在多个排序方式时使用 `Comparator<T>`：
+同一类型存在多个排序方式时使用 `Comparator<T>`。下面的 `comparing()`、`comparingInt()`、`thenComparing()`、`reversed()` 和 `nullsLast()` 均自 Java 8 提供：
 
 ```java
 Comparator<User> byName = Comparator.comparing(User::name);
@@ -179,7 +179,7 @@ Comparator<User> byAgeDescThenNameAsc =
                   .thenComparing(User::name);
 ```
 
-## 排序 List
+## List.sort() 排序 [Java 8+]
 
 原地排序会修改可变列表：
 
@@ -200,7 +200,7 @@ sorted.sort(Comparator.comparing(User::name));
 不可修改列表不支持原地排序：
 
 ```java
-List<String> names = List.of("Bob", "Alice");
+List<String> names = List.of("Bob", "Alice"); // List.of(): Java 9+
 // names.sort(Comparator.naturalOrder()); // UnsupportedOperationException
 ```
 
@@ -209,7 +209,7 @@ List<String> names = List.of("Bob", "Alice");
 `Collections.binarySearch()` 要求列表已经按同一个顺序排序：
 
 ```java
-List<Integer> values = new ArrayList<>(List.of(30, 10, 20));
+List<Integer> values = new ArrayList<>(List.of(30, 10, 20)); // List.of(): Java 9+
 values.sort(Comparator.naturalOrder());
 
 int index = Collections.binarySearch(values, 20); // 1
@@ -231,9 +231,3 @@ int insertionPoint = -result - 1;
 - `Map.equals()`：包含相同的键值映射，遍历顺序无关。
 
 因此 `ArrayList` 与 `LinkedList` 可以相等，`HashSet` 与 `TreeSet` 也可以相等；相等性由接口契约决定，不要求实现类相同。
-
-## 参考资料
-
-- [Dev.java：Iterating over the Elements of a Collection](https://dev.java/learn/api/collections-framework/iterating/)
-- [Java SE 17 API：Comparator](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html)
-- [Java SE 17 API：Collections](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)

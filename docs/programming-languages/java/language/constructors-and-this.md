@@ -103,7 +103,7 @@ System.out.println(page.number); // 1
 System.out.println(page.size);   // 20
 ```
 
-Java 17 要求 `this(...)` 是构造方法体的第一条语句。它是特殊的构造方法委托语法，与普通的 `this.method()` 调用不同。构造方法之间不能形成循环调用。
+Java 25 之前的正式语法要求 `this(...)` 是构造方法体的第一条语句。它是特殊的构造方法委托语法，与普通的 `this.method()` 调用不同。构造方法之间不能形成循环调用。
 
 ## 父类构造方法与 super
 
@@ -128,12 +128,10 @@ Child child = new Child();
 System.out.println(child.name); // Alice
 ```
 
-在 Java 17 中，显式的 `super(...)` 也必须位于构造方法体首句。同一个构造方法体中不能同时直接调用 `this(...)` 和 `super(...)`；通过 `this(...)` 委托时，最终由委托链中的另一个构造方法调用父类。
+在 Java 25 之前的正式语法中，显式的 `super(...)` 也必须位于构造方法体首句。同一个构造方法体中不能同时直接调用 `this(...)` 和 `super(...)`；通过 `this(...)` 委托时，最终由委托链中的另一个构造方法调用父类。
 
 若没有显式委托，编译器隐式调用 `super()`。父类没有可访问的无参构造方法时，这种隐式调用会编译失败，必须像上例一样提供参数。
 
-## 参考资料
+## 构造方法体的扩展 [Java 25+]
 
-- [Java SE 17 JLS：Constructor Declarations](https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.8)
-- [Java SE 17 JLS：The this Keyword](https://docs.oracle.com/javase/specs/jls/se17/html/jls-15.html#jls-15.8.3)
-- [Dev.java：Providing Constructors](https://dev.java/learn/classes-objects/defining-constructors/)
+Java 25 正式引入灵活构造方法体，允许在显式 `this(...)` 或 `super(...)` 之前放置符合限制的语句，例如检查参数。这里仍受对象尚未完成构造的访问限制，不能任意使用当前实例。
