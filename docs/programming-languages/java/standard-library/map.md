@@ -85,7 +85,7 @@ for (String word : words) {
 }
 ```
 
-键不存在时直接写入 `1`；存在时调用合并函数。合并函数返回 `null` 会删除该键。
+键不存在或旧值为 `null` 时直接写入 `1`；旧值非 `null` 时调用合并函数。合并函数返回 `null` 会删除该键。
 
 ### `compute()`
 
@@ -193,7 +193,7 @@ Map.Entry<Integer, String> higher = levels.higherEntry(10); // 20=error
 NavigableMap<Integer, String> range = levels.subMap(5, true, 20, false);
 ```
 
-视图与原 Map 共享数据。比较器结果为 `0` 的键被视为同一个键，因此比较规则必须完整表达键唯一性。
+视图与原 Map 共享数据。比较器结果为 `0` 的键被视为同一个键。要遵守 `Map` 的相等性约定，比较结果为 `0` 应与 `equals()` 为 `true` 一致；否则 `TreeMap` 仍能运行，但可能破坏 Map 之间的相等性判断。
 
 ## `EnumMap`
 
@@ -213,7 +213,7 @@ labels.put(OrderStatus.PAID, "已支付");
 
 - 一致的 `equals()` 与 `hashCode()`；
 - 加入 Map 后不变化的相等字段；
-- 若用于 `TreeMap`，还需要稳定且最好与 `equals()` 一致的比较规则；
+- 若用于 `TreeMap`，还需要稳定且与 `equals()` 一致的比较规则；
 - 清晰的业务唯一性，例如用户 ID、订单号或不可变复合键。
 
 Java 16 引入的 Record 常适合不可变复合键：

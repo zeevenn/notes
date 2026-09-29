@@ -21,6 +21,8 @@ String language = (String) values.get(1); // 运行时 ClassCastException
 
 `(String)` 强制把取出的值作为字符串使用，但位置 1 保存的是整数对象，因此运行时会报告类型转换错误。
 
+省略类型实参的 `List` 称为原始类型（raw type），主要用于兼容泛型出现之前的代码。通过原始类型写入元素会绕过部分类型检查，并产生 unchecked 警告。
+
 把类型写进尖括号后，`List<String>` 明确要求元素是字符串。这样的写法称为参数化类型，编译器会提前阻止加入不兼容的值：
 
 ```java
@@ -31,18 +33,25 @@ values.add("Java");
 String language = values.get(0); // 不需要强制转换
 ```
 
+新代码应使用参数化类型，不应使用 `@SuppressWarnings` 隐藏尚未验证的类型问题。
+
 ## 泛型类与接口
 
-类型参数写在类型名之后。`T` 是一个待确定的类型名称，类中的字段、参数和返回值可以用它保持类型一致：
+类型参数写在类型名之后。`T` 是一个待确定的类型名称，字段、参数和返回值可以用它保持类型一致。下面的 `ValueSource<T>` 约定返回 `T` 类型的值，`Box<T>` 实现这个接口并保留类型参数：
 
 ```java
-public final class Box<T> {
+interface ValueSource<T> {
+    T get();
+}
+
+public final class Box<T> implements ValueSource<T> {
     private T value;
 
     public Box(T value) {
         this.value = value;
     }
 
+    @Override
     public T get() {
         return value;
     }
@@ -61,6 +70,26 @@ Box<Integer> number = new Box<>(42);
 ```
 
 右侧的 `<>` 称为菱形语法，编译器从上下文推断类型实参。
+
+实现类也可以直接确定接口的类型实参，自身不再声明类型参数：
+
+```java
+class Greeting implements ValueSource<String> {
+    @Override
+    public String get() {
+        return "hello";
+    }
+}
+```
+
+`Box<T>` 将类型的选择留给使用方，`Greeting` 则固定实现 `ValueSource<String>`。两者都可以通过相应的接口类型使用：
+
+```java
+ValueSource<Integer> numberSource = new Box<>(42);
+ValueSource<String> greeting = new Greeting();
+Integer number = numberSource.get();
+String message = greeting.get();
+```
 
 常见类型参数名称：
 
@@ -174,16 +203,6 @@ static void addDefaults(List<? super Integer> target) {
 - 同时需要精确读写时，使用明确的类型参数，不使用通配符。
 
 这描述的是 API 中的数据方向，不表示 `extends` 容器严格不可变。
-
-## 原始类型
-
-省略类型实参的 `List`、`Box` 称为原始类型（raw type）。它主要用于兼容泛型出现之前的代码。
-
-```java
-List raw = new ArrayList();
-```
-
-原始类型绕过部分编译期检查并产生 unchecked 警告。新代码应使用 `List<String>`、`List<?>` 等参数化类型，不应使用 `@SuppressWarnings` 隐藏尚未验证的类型问题。
 
 ## 类型擦除
 

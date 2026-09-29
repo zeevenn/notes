@@ -1,5 +1,5 @@
 ---
-title: Maven 生命周期与插件
+title: Maven 基础与构建
 date: 2026-09-08
 icon: gears
 category:
@@ -9,186 +9,155 @@ tag:
   - build
 ---
 
-Maven 把构建过程拆成有顺序的阶段，但阶段本身不包含编译器或测试框架。真正的工作由插件目标完成，Maven 根据项目的打包类型和 POM 配置，把目标绑定到相应阶段。
+Maven 用项目根目录的 `pom.xml` 描述项目、依赖和构建配置，再调用插件完成编译、测试和打包。POM 是项目对象模型（Project Object Model），不是按 XML 书写顺序执行的脚本。
 
-## 从命令看执行模型
+## 从一个项目完成构建
 
-```shell
-mvn clean package
+Maven 默认识别以下目录：
+
+```text
+hello-maven/
+├── pom.xml
+└── src/
+    ├── main/
+    │   ├── java/com/example/App.java
+    │   └── resources/
+    └── test/
+        ├── java/
+        └── resources/
 ```
 
-这条命令依次调用两套生命周期：
+`main` 保存应用代码和资源，`test` 保存测试代码和资源；编译结果、测试报告和最终产物写入 `target/`。
 
-1. 执行 `clean` 生命周期直到 `clean` 阶段，删除上次构建产生的 `target`。
-2. 执行 `default` 生命周期，从起点一直运行到 `package` 阶段。
+`pom.xml`：
 
-`clean` 不属于 `default` 生命周期，也不会在 `package`、`verify` 前自动执行。只有命令显式包含 `clean` 时，Maven 才先清理旧输出。IDEA 的 Maven 面板通常把 Clean 生命周期显示在 Default 生命周期前面，这只是分组和显示顺序，不表示执行 Default 阶段时会自动运行 Clean。
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>hello-maven</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
 
-`package` 也不是只执行打包。Maven 到达它之前，会依次完成资源处理、主代码编译、测试代码编译和单元测试。
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.16.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.5</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+
+`groupId:artifactId:version` 构成项目的基本坐标，这里是 `com.example:hello-maven:1.0.0-SNAPSHOT`。`groupId` 表示组织或命名空间，`artifactId` 表示项目名，`version` 表示版本。`packaging` 决定打包类型，省略时为 `jar`。
+
+`properties` 保存可复用的配置值。`maven.compiler.release` 同时约束 Java 语法、标准库 API 和 class 文件目标版本，不决定运行 Maven 自身的 JDK。
+
+`src/main/java/com/example/App.java`：
+
+```java
+package com.example;
+
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello, Maven");
+    }
+}
+```
+
+在项目根目录执行：
+
+```shell
+mvn clean verify
+java -cp target/hello-maven-1.0.0-SNAPSHOT.jar com.example.App
+```
+
+构建成功后生成 JAR，运行输出 `Hello, Maven`。项目依赖的声明见 [依赖与仓库管理](./dependency-management.md)。
+
+## 生命周期与阶段
+
+`mvn clean verify` 先清理旧输出，再执行默认生命周期直到 `verify`。生命周期是一组有顺序的阶段，调用后面的阶段会包含前面的阶段。
+
+默认生命周期的主要阶段如下，图中省略了资源处理等中间阶段：
 
 ```mermaid
 flowchart LR
-    subgraph cleanLifecycle[Clean 生命周期]
-        PC[pre-clean] --> CL[clean]
-        CL --> POC[post-clean]
-    end
-
-    subgraph defaultLifecycle[Default 生命周期]
-        V[validate] --> C[compile]
-        C --> T[test]
-        T --> P[package]
-        P --> VE[verify]
-        VE --> I[install]
-        I --> D[deploy]
-    end
+    V[validate] --> C[compile]
+    C --> T[test]
+    T --> P[package]
+    P --> VE[verify]
+    VE --> I[install]
+    I --> D[deploy]
 ```
 
-上方是两条独立链路。执行 `mvn clean verify` 时，Maven 先沿 Clean 链路运行到 `clean`，再沿 Default 链路运行到 `verify`。
+| 阶段 | 作用 |
+| --- | --- |
+| `validate` | 执行构建前的校验目标 |
+| `compile` | 编译主代码 |
+| `test` | 运行单元测试 |
+| `package` | 生成 JAR、WAR 等产物 |
+| `verify` | 执行已配置的集成测试结果检查和质量校验 |
+| `install` | 把产物和 POM 写入本地仓库 |
+| `deploy` | 把产物发布到远程仓库 |
 
-调用较后的阶段会包含此前阶段。因此日常完整检查通常使用 `verify`，而不是依次执行 `compile test package verify`。
+因此 `mvn package` 也会编译、运行单元测试；日常完整检查可直接使用 `mvn verify`，无需重复写 `compile test package verify`。集成测试和额外校验需要配置对应插件，不是执行 `verify` 就自动具备。
 
-## 生命周期、阶段、插件与目标
+`clean` 属于独立的清理生命周期，不会在 `package`、`verify` 前自动执行。另有生成项目站点的 `site` 生命周期，普通构建通常不涉及。
 
-这四个概念处在不同层次：
+## 插件如何参与构建
 
-| 概念 | 示例 | 作用 |
-| --- | --- | --- |
-| 生命周期 | `default` | 定义阶段的顺序 |
-| 阶段 | `compile` | 表示构建进行到哪个位置 |
-| 插件 | `maven-compiler-plugin` | 提供一组可执行能力 |
-| 目标 | `compiler:compile` | 插件中的一个具体操作 |
+阶段决定执行顺序，插件目标执行具体工作。例如 Compiler 插件提供 `compiler:compile` 和 `compiler:testCompile` 两个目标。`jar` 项目的部分默认绑定是：
 
-目标可以直接调用：
+| 阶段 | 插件目标 |
+| --- | --- |
+| `process-resources` | `resources:resources` |
+| `compile` | `compiler:compile` |
+| `test-compile` | `compiler:testCompile` |
+| `test` | `surefire:test` |
+| `package` | `jar:jar` |
+
+前面的 POM 固定了编译器和测试插件版本，它们的目标已有默认绑定。其他插件可通过 `<executions>` 指定目标及绑定阶段；不同 `packaging` 的默认绑定也不同。
+
+目标也可以直接调用，例如查看依赖树：
 
 ```shell
 mvn dependency:tree
 ```
 
-其中 `dependency` 是插件前缀，`tree` 是目标。直接目标适合查询或一次性操作；项目的稳定构建流程应尽量把目标绑定到生命周期阶段，然后由 `verify` 等阶段统一触发。
+`dependencies` 中的库供项目代码使用，`build/plugins` 中的插件供构建过程使用。声明一个依赖不会自动执行插件，声明一个插件也不会把它作为应用库打包。
 
-## 三套内置生命周期
+## 查看实际生效的配置
 
-### default
-
-`default` 负责生成和发布项目产物。常用阶段如下：
-
-| 阶段 | 含义 |
-| --- | --- |
-| `validate` | 检查项目模型和构建前提 |
-| `compile` | 编译主代码 |
-| `test` | 运行单元测试，不要求产物已经打包 |
-| `package` | 生成 JAR、WAR 等产物 |
-| `verify` | 执行集成测试结果检查和其他质量校验 |
-| `install` | 把产物和 POM 写入本地仓库 |
-| `deploy` | 把产物发布到远程仓库 |
-
-完整生命周期还包含 `process-resources`、`test-compile`、`pre-integration-test`、`integration-test`、`post-integration-test` 等阶段。配置插件时应绑定语义最接近的阶段，而不是统一塞到 `package`。
-
-### clean
-
-`clean` 生命周期负责清理构建输出，常用阶段是 `clean`。它和 `default` 是两套独立生命周期，所以经常组合为 `mvn clean verify`。
-
-### site
-
-`site` 生命周期生成项目站点和报告。它不是编译、测试所必需的主流程。
-
-## packaging 决定默认绑定
-
-POM 未声明 `<packaging>` 时默认为 `jar`。`jar` 打包会提供一组默认绑定，例如：
-
-```text
-process-resources       -> resources:resources
-compile                 -> compiler:compile
-process-test-resources  -> resources:testResources
-test-compile            -> compiler:testCompile
-test                    -> surefire:test
-package                 -> jar:jar
-install                 -> install:install
-deploy                  -> deploy:deploy
-```
-
-`war`、`pom` 等打包类型具有不同绑定。`pom` 通常用于父 POM 或聚合项目，本身没有需要编译的 Java 代码。
-
-## 配置插件
-
-下面把 Enforcer 插件的 `enforce` 目标绑定到 `validate`，在正式编译前检查 Maven 和 Java 版本：
-
-```xml
-<build>
-  <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-enforcer-plugin</artifactId>
-      <version>3.6.3</version>
-      <executions>
-        <execution>
-          <id>check-build-environment</id>
-          <phase>validate</phase>
-          <goals>
-            <goal>enforce</goal>
-          </goals>
-          <configuration>
-            <rules>
-              <requireMavenVersion>
-                <version>[3.9,4.0)</version>
-              </requireMavenVersion>
-              <requireJavaVersion>
-                <version>[17,18)</version>
-              </requireJavaVersion>
-            </rules>
-          </configuration>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
-```
-
-插件是否需要显式 `<phase>`，取决于目标是否已经声明默认阶段以及项目是否使用默认绑定。显式绑定能表达项目意图，但不应重复配置已有的默认行为。
-
-## 构建插件不是项目依赖
-
-`dependencies` 中的库进入项目的编译、测试或运行类路径，例如 JUnit、数据库驱动和日志 API。
-
-`build/plugins` 中的插件运行在 Maven 的构建环境中，例如编译器、测试运行器和打包插件。插件依赖不会自动成为应用依赖，应用依赖也不会自动获得插件能力。
-
-## 单元测试与集成测试
-
-Surefire 插件通常在 `test` 阶段运行单元测试。测试失败会立即使构建失败。
-
-Failsafe 插件用于集成测试：
-
-```xml
-<plugin>
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-failsafe-plugin</artifactId>
-  <version>3.5.5</version>
-  <executions>
-    <execution>
-      <goals>
-        <goal>integration-test</goal>
-        <goal>verify</goal>
-      </goals>
-    </execution>
-  </executions>
-</plugin>
-```
-
-Failsafe 把测试执行和最终结果校验分开，使 `post-integration-test` 有机会清理测试环境。运行集成测试时应调用：
+Maven 会合并 Super POM 的默认值、父 POM 和当前 POM 等配置，形成有效 POM。配置从哪里来、最终采用哪个插件版本，可以用以下命令确认：
 
 ```shell
-mvn verify
+mvn -version
+mvn help:effective-pom
 ```
 
-不要把 `mvn integration-test` 当作完整入口，否则后续清理和结果校验阶段可能不会执行。
+`mvn -version` 同时显示 Maven 和运行它的 Java。IDE、终端与 CI 构建不一致时，先比较这些信息。
 
-## 常用命令的边界
+测试失败时先查看 `target/surefire-reports/`；配置了 Failsafe 的集成测试报告位于 `target/failsafe-reports/`。普通日志不足时，可用 `mvn -e verify` 查看异常堆栈。
 
-| 命令 | 适合的用途 |
-| --- | --- |
-| `mvn test` | 快速运行单元测试 |
-| `mvn package` | 生成本地可检查的产物 |
-| `mvn verify` | 完成集成测试和质量校验 |
-| `mvn install` | 让本机其他项目可解析当前产物 |
-| `mvn deploy` | 在发布流程中上传远程仓库 |
-| `mvn clean verify` | 排除旧输出影响后完成全量检查 |
+## 项目自带的 Maven Wrapper
+
+仓库中已有 `mvnw`、`mvnw.cmd` 和 `.mvn/wrapper/` 时，使用项目自带的 Wrapper，按仓库记录的 Maven 版本构建：
+
+```shell
+./mvnw clean verify
+```
+
+Windows 使用 `mvnw.cmd clean verify`。Wrapper 固定 Maven 版本，使用的 JDK 仍由启动环境决定。

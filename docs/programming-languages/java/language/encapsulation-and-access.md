@@ -41,11 +41,35 @@ public class Account {
 }
 ```
 
-`Math.addExact()` 自 Java 8 提供，计算加法，在超出 `long` 范围时报告错误，避免溢出后得到错误余额。
+`Math.addExact()` 计算加法，在超出 `long` 范围时报告错误，避免溢出后得到错误余额。
 
 余额非负是对象必须持续满足的约束，也称为不变式。构造方法建立它，公开操作维护它。这里不提供 `setBalance()`，因为任意覆盖余额不属于这个对象允许的操作。
 
 Getter 是读取属性的方法，setter 是修改属性的方法。它们可以表达属性访问，但字段私有化后自动为所有字段生成 setter，并不自动形成合理的封装。
+
+## 不泄露内部可变状态
+
+即使字段是 `private`，直接保存外部传入的可变对象，或把它原样返回，也会让外部绕过方法修改内部状态。
+
+下面的 `List<String>` 是保存字符串的列表；`List.copyOf()` 复制列表内容并得到一个不允许增删或替换元素的列表：
+
+```java
+import java.util.List;
+
+public final class Team {
+    private final List<String> members;
+
+    public Team(List<String> members) {
+        this.members = List.copyOf(members);
+    }
+
+    public List<String> members() {
+        return members;
+    }
+}
+```
+
+这里复制列表结构，并返回不可修改的列表。元素是不可变的 `String`，因此调用方也不能通过元素改变成员姓名。若元素本身可变，还需要明确元素的共享或复制策略，见[不可修改集合与防御性复制](../standard-library/immutable-collections.md)。
 
 ## 类型和成员的访问权限
 
@@ -91,30 +115,6 @@ public class Child extends Base {
 ```
 
 这使子类能够使用自己的继承状态，同时限制它通过任意父类引用访问其他对象的受保护状态。
-
-## 不泄露内部可变状态
-
-即使字段是 `private`，直接保存外部传入的可变对象，或把它原样返回，也会让外部绕过方法修改内部状态。
-
-下面的 `List<String>` 是保存字符串的列表；Java 10 引入的 `List.copyOf()` 复制列表内容并得到一个不允许增删或替换元素的列表：
-
-```java
-import java.util.List;
-
-public final class Team {
-    private final List<String> members;
-
-    public Team(List<String> members) {
-        this.members = List.copyOf(members);
-    }
-
-    public List<String> members() {
-        return members;
-    }
-}
-```
-
-这里复制列表结构，并返回不可修改的列表。元素是不可变的 `String`，因此调用方也不能通过元素改变成员姓名。若元素本身可变，还需要明确元素的共享或复制策略，见[不可修改集合与防御性复制](../standard-library/immutable-collections.md)。
 
 ## JavaBeans 属性约定
 

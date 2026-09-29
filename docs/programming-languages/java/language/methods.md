@@ -209,8 +209,8 @@ sum(new int[] {1, 2, 3});
 
 ```java
 public static long factorial(int value) {
-    if (value < 0) {
-        throw new IllegalArgumentException("value must be non-negative");
+    if (value < 0 || value > 20) {
+        throw new IllegalArgumentException("value must be between 0 and 20");
     }
     if (value <= 1) {
         return 1;
@@ -218,5 +218,7 @@ public static long factorial(int value) {
     return value * factorial(value - 1);
 }
 ```
+
+`long` 能准确保存的阶乘范围是 `0!` 到 `20!`，因此示例限制了输入范围。
 
 每次调用都需要保存参数、局部变量和返回位置，这些信息所占用的空间称为调用栈。递归层数过深可能耗尽调用栈；深度不可控时，可以改用循环组织计算。

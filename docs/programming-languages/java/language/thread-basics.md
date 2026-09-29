@@ -88,7 +88,41 @@ first.start();
 second.start();
 ```
 
-这里创建了一个任务对象和两个线程对象。两个线程都会执行这个任务的 `run()`；循环中的局部变量 `i` 各属于一次方法调用，不会共用一个计数值。如果任务对象还有可修改的字段，则两个线程会访问同一个对象的字段。
+这里创建了一个任务对象和两个线程对象。两个线程都会执行这个任务的 `run()`；循环中的局部变量 `i` 各属于一次方法调用，不会共用一个计数值。
+
+如果把计数值放到任务对象的字段中，情况就不同了：
+
+```java
+class CountTask implements Runnable {
+    int count = 0;
+
+    @Override
+    public void run() {
+        count++;
+    }
+}
+
+CountTask task = new CountTask();
+Thread first = new Thread(task, "first");
+Thread second = new Thread(task, "second");
+first.start();
+second.start();
+```
+
+两个线程拿到的是同一个 `task`，因此两次 `run()` 中的 `this` 都指向这个 `CountTask` 对象，修改的也是同一个 `count` 字段。创建两个 `Thread` 对象，不会把传入的任务对象复制成两份。
+
+如果改为分别创建任务对象，字段也就各自独立：
+
+```java
+Thread first = new Thread(new CountTask(), "first");
+Thread second = new Thread(new CountTask(), "second");
+first.start();
+second.start();
+```
+
+这里有两个 `CountTask` 对象，每个对象都有自己的 `count`。决定是否共享字段的是任务对象是否相同，而不是任务类是否相同。
+
+共享字段时还要考虑修改冲突：`count++` 包含读取、计算和写回，两个线程可能同时读到旧值，再把对方的修改覆盖掉。因此第一个例子即使两个线程都执行完，也不保证最终计数一定为 `2`。
 
 `Thread` 负责启动和控制执行，`Runnable` 负责说明要执行什么。直接调用 `task.run()` 同样不会启动新线程。
 
@@ -390,6 +424,30 @@ public class MailboxDemo {
 
 线程对象刚创建时还没有执行，调用 `start()` 后才进入可运行状态。运行期间，它可能因为休眠、等待另一个线程结束、等待条件或争用锁而暂停。`run()` 执行结束后，线程进入终止状态，不能再次启动。
 
+```mermaid
+stateDiagram-v2
+    direction TB
+
+    [*] --> NEW
+    NEW --> RUNNABLE: start()
+    RUNNABLE --> TERMINATED: run() 结束
+    TERMINATED --> [*]
+
+    RUNNABLE --> BLOCKED: 争用监视器锁
+    BLOCKED --> RUNNABLE: 获得锁
+
+    RUNNABLE --> WAITING: wait() / join()
+    RUNNABLE --> TIMED_WAITING: 有时限的等待
+    WAITING --> RUNNABLE: 等待结束且可继续执行
+    TIMED_WAITING --> RUNNABLE: 等待结束且可继续执行
+    WAITING --> BLOCKED: 重新争锁
+    TIMED_WAITING --> BLOCKED: 重新争锁
+```
+
+有时限的等待包括 `sleep(t)`、`wait(t)` 和 `join(t)`，其中 `t` 为正的等待时长。等待可能因计时结束、目标线程结束、通知或中断等原因结束，具体取决于调用的方法。
+
+`wait()` 结束等待后必须重新获得监视器锁，才能返回或抛出中断异常；若锁仍被占用，线程会进入 `BLOCKED`，而不是立即继续执行。
+
 Java 用 [`Thread.State`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.State.html) 表达这些情况，`getState()` 可以读取状态：
 
 | 状态            | 对应情况                                                                   |
@@ -412,8 +470,6 @@ System.out.println(worker.getState());
 ```
 
 第一次读取状态发生在 `start()` 之前，第二次发生在 `join()` 等待线程结束之后，对应 `NEW` 和 `TERMINATED`。
-
-`WAITING` 和 `TIMED_WAITING` 描述等待阶段；从 `wait()` 被通知后，如果尚未重新获得锁，线程会处于 `BLOCKED`，直到可以继续执行。
 
 `getState()` 只是观察那一刻的状态，读取以后可能马上变化。因此不要靠反复检查状态来安排线程先后关系，应使用前面的 `join()` 或条件等待。
 

@@ -144,7 +144,7 @@ public record Version(int major, int minor) implements Comparable<Version> {
 return Integer.compare(left, right);
 ```
 
-比较关系应满足反对称性、传递性和一致性。用于 `TreeSet`、`TreeMap` 时，比较结果为 `0` 会被当作相同元素或键，因此自然顺序最好与 `equals()` 一致。
+比较关系应满足反对称性、传递性和一致性。一般排序不强制比较结果与 `equals()` 一致；用于 `TreeSet`、`TreeMap` 并需要遵守集合的相等性约定时，比较结果为 `0` 应与 `equals()` 为 `true` 一致，因为这些集合将比较结果为 `0` 的元素或键视为相同。
 
 ## 外部顺序 `Comparator`
 

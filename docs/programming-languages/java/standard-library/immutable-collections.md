@@ -4,17 +4,11 @@ date: 2026-08-05
 category: java
 ---
 
-集合 API 中需要区分三件事：调用方能否通过当前引用修改、底层数据是否仍会变化，以及集合中的元素对象是否可变。
-
-```text
-不可修改引用 ≠ 独立快照 ≠ 元素深层不可变
-```
-
-Java 标准库通常使用“不可修改”（unmodifiable）描述不支持增删改的集合。即使集合结构不能修改，其中保存的可变对象仍可能改变状态。
+不可修改（unmodifiable）集合不支持通过自身增删或替换元素，但底层数据和元素对象仍可能变化。选择 API 时，需要区分不可修改集合、实时视图和独立快照。
 
 ## `List.of()`、`Set.of()` 与 `Map.of()` [Java 9+]
 
-Java 9 起可以创建紧凑的不可修改集合：
+直接声明固定内容时使用 `of()` 工厂：
 
 ```java
 List<String> names = List.of("Alice", "Bob");
@@ -33,12 +27,7 @@ Map<String, Integer> scores = Map.of(
 - 不保证返回对象的具体实现类；
 - `Set` 和 `Map` 的遍历顺序不应被依赖。
 
-修改会抛出 `UnsupportedOperationException`：
-
-```java
-// names.add("Carol");
-// scores.put("Carol", 88);
-```
+调用 `add()`、`set()`、`put()` 等方法修改这些集合会抛出 `UnsupportedOperationException`。
 
 超过十组或由动态数据创建 Map 时使用 `Map.ofEntries()`：
 
@@ -78,12 +67,7 @@ source.add("Bob");
 System.out.println(view); // [Alice, Bob]
 ```
 
-不可修改视图阻止调用方通过 `view` 修改，但仍然反映底层集合的变化：
-
-```java
-// view.add("Carol"); // UnsupportedOperationException
-source.add("Carol");  // view 随之变化
-```
+不可修改视图阻止调用方通过 `view` 修改，但仍然反映底层集合的变化。
 
 对应方法包括 `unmodifiableList()`、`unmodifiableSet()`、`unmodifiableMap()` 等。
 
@@ -93,63 +77,11 @@ source.add("Carol");  // view 随之变化
 - 调用方需要稳定结果，不应受后续变化影响：`copyOf()` 快照；
 - 直接声明少量固定值：`of()` 工厂。
 
-## `Arrays.asList()` 只是固定大小
-
-```java
-String[] array = {"A", "B"};
-List<String> list = Arrays.asList(array);
-```
-
-它返回由数组支持的固定大小列表：
-
-```java
-list.set(0, "X");           // 允许
-System.out.println(array[0]); // X
-
-// list.add("C");           // UnsupportedOperationException
-// list.remove("B");        // UnsupportedOperationException
-```
-
-它既不是普通可变 `ArrayList`，也不是完全不可修改集合。需要可变副本时：
-
-```java
-List<String> mutable = new ArrayList<>(Arrays.asList(array));
-```
-
-需要不可修改快照时：
-
-```java
-List<String> snapshot = List.copyOf(Arrays.asList(array));
-```
-
-## 不可修改集合不是深层不可变
-
-```java
-List<User> users = List.of(new User("Alice"));
-users.get(0).setName("Bob");
-```
-
-列表结构没有变化，但其中的 `User` 状态发生了变化。建立深层不可变边界需要元素本身不可变，或者在边界处复制元素。
-
-下面使用 Java 16 引入的 Record 组织复制结果：
-
-```java
-public record Team(List<Member> members) {
-    public Team {
-        List<Member> copied = new ArrayList<>(members.size());
-        for (Member member : members) {
-            copied.add(member.copy());
-        }
-        members = List.copyOf(copied);
-    }
-}
-```
-
-是否进行深复制取决于对象所有权。盲目深复制大型对象图可能成本很高，也可能无法定义共享资源的复制语义；优先使用不可变值对象和清晰的所有权边界。
+`Arrays.asList()` 返回的固定大小列表仍允许替换元素，不属于不可修改集合，详见 [数组与 List 转换](./list.md#数组与-list-转换)。
 
 ## 构造时防御性复制
 
-保存调用方提供的可变集合会泄露内部状态：
+直接保存调用方提供的可变集合，会让外部修改影响对象内部状态。构造时用 `copyOf()` 隔离输入：
 
 ```java
 public final class Team {
@@ -165,9 +97,21 @@ public final class Team {
 }
 ```
 
-构造时复制后，调用方继续修改原列表不会改变 `Team`。字段本身已经是不可修改集合，因此访问器可以直接返回它。
+构造时复制后，调用方继续修改原列表不会改变 `Team`。列表不可修改，元素 `String` 也不可变，因此访问器可以直接返回它。
 
-如果元素可变且不应被共享，还需要复制元素或改用不可变元素类型。
+## 不可修改集合不是深层不可变
+
+集合复制只复制元素引用，不会冻结或自动复制元素对象：
+
+```java
+List<String> group = new ArrayList<>(List.of("Alice"));
+List<List<String>> groups = List.copyOf(List.of(group));
+
+group.set(0, "Bob");
+System.out.println(groups); // [[Bob]]
+```
+
+外层列表不可修改，但它与输入共享内部列表。需要稳定的对象边界时，优先使用不可变元素类型；仅在构造时复制可变元素，仍不能阻止调用方通过访问器修改复制后的元素。
 
 ## 返回集合的 API 契约
 
@@ -181,12 +125,3 @@ public final class Team {
 - 多线程读取期间是否稳定。
 
 除非修改就是 API 的目的，否则公共方法通常不应直接暴露内部可修改集合。
-
-## 常见错误
-
-- 把 `List.of()` 当成可修改列表；
-- 把 `Arrays.asList()` 当成 `ArrayList`；
-- 认为 `Collections.unmodifiableList()` 会复制数据；
-- 认为不可修改集合会冻结其中的对象；
-- 为了返回只读结果，每次都复制大型集合，却没有评估调用频率和所有权；
-- 返回内部可修改集合，让调用方绕过验证和不变量。

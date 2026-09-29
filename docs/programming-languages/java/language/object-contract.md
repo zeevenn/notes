@@ -24,14 +24,6 @@ System.out.println(first.toString());    // 例如 Note@1a2b3c，后半部分不
 
 `==` 判断两个引用是否指向同一个对象，`equals()` 判断类所定义的逻辑相等关系。
 
-```java
-User first = new User(1L, "Alice");
-User second = new User(1L, "Alice");
-
-System.out.println(first == second);      // false
-System.out.println(first.equals(second)); // 取决于 User.equals() 的实现
-```
-
 没有重写时，`Object.equals()` 的行为与引用身份比较相同。例如两个用户对象的编号相同，就可以按业务规则认为它们代表同一个用户，即使它们是分别创建的对象。这种由类定义的相等关系称为逻辑相等。
 
 ## `equals()` 的约束
@@ -43,6 +35,16 @@ System.out.println(first.equals(second)); // 取决于 User.equals() 的实现
 - 传递性：如果 `x` 等于 `y` 且 `y` 等于 `z`，则 `x` 等于 `z`；
 - 一致性：参与比较的状态没有变化时，多次调用结果一致；
 - 非空性：`x.equals(null)` 为 `false`。
+
+## `hashCode()` 必须与 `equals()` 一致
+
+哈希值是一个用于快速缩小查找范围的整数。基于哈希值保存数据的容器先按它定位候选位置，再用 `equals()` 确认是否找到目标。因此必须满足：
+
+> 如果 `a.equals(b)` 为 `true`，那么 `a.hashCode() == b.hashCode()` 必须为 `true`。
+
+反过来不成立：不同对象可以产生相同哈希值，容器会继续用 `equals()` 区分它们。
+
+只重写 `equals()` 而不重写 `hashCode()`，可能使逻辑相等的对象得到不同哈希值，导致查找失败。
 
 下面的 `User` 按用户编号 `id` 判断相等。`@Override` 表示重写已有方法，由编译器检查签名；`final` 字段只能赋值一次，`final` 类不能再定义子类，避免子类增加另一套比较规则。
 
@@ -80,17 +82,15 @@ public final class User {
 }
 ```
 
-`instanceof User` 确认参数是用户对象，再通过 `(User) other` 以 `User` 类型访问其编号。`Long.hashCode(id)` 是 Java 8 引入的静态方法，根据 `long` 数值计算整数哈希值；它与相等性之间的要求如下。
+`instanceof User` 确认参数是用户对象，再通过 `(User) other` 以 `User` 类型访问其编号。`Long.hashCode(id)` 根据 `long` 数值计算整数哈希值。这里两个方法都依据稳定的 `id`，因此编号相同的对象具有相同哈希值。
 
-## `hashCode()` 必须与 `equals()` 一致
+```java
+User first = new User(1L, "Alice");
+User second = new User(1L, "Alice");
 
-哈希值是一个用于快速缩小查找范围的整数。基于哈希值保存数据的容器先按它定位候选位置，再用 `equals()` 确认是否找到目标。因此必须满足：
-
-> 如果 `a.equals(b)` 为 `true`，那么 `a.hashCode() == b.hashCode()` 必须为 `true`。
-
-反过来不成立：不同对象可以产生相同哈希值，容器会继续用 `equals()` 区分它们。
-
-只重写 `equals()` 而不重写 `hashCode()`，可能使逻辑相等的对象得到不同哈希值，导致查找失败。
+System.out.println(first == second);      // false
+System.out.println(first.equals(second)); // true：编号相同
+```
 
 例如 `HashSet` 是按哈希值保存不重复元素的集合，`Set<User>` 表示集合里存放 `User` 对象。`add()` 加入元素，`contains()` 检查是否存在逻辑相等的元素：
 
@@ -182,35 +182,9 @@ System.out.println(original.values[0]); // 9
 
 ## wait、notify 与线程协调
 
-线程是一条独立的执行流程；多个线程可以同时访问同一个对象。Java 为对象关联了监视器，用来协调“谁可以进入受保护的代码”以及“谁正在等待条件变化”。
+`wait()`、`notify()` 和 `notifyAll()` 是 `Object` 提供的线程协调方法，用于在对象上等待条件变化和通知等待线程。
 
-`synchronized (lock)` 让线程获得 `lock` 对象的监视器锁；`synchronized` 实例方法使用当前对象的锁。同一时刻只有一个线程持有同一把锁。调用 `wait()`、`notify()` 或 `notifyAll()` 时必须持有对应对象的锁，否则抛出 `IllegalMonitorStateException`。
-
-- `wait()` 释放当前对象的监视器锁并等待，返回或因中断抛出异常前会重新获得该锁；它不会释放线程持有的其他对象锁。
-- `notify()` 选择一个等待线程发出通知，`notifyAll()` 通知所有等待线程。
-- 通知不会立即交出锁；被通知线程仍要竞争锁，并重新检查等待条件。
-
-下面用一个可消费一次的信号说明条件检查与等待的关系：
-
-```java
-class Signal {
-    private boolean ready;
-
-    public synchronized void await() throws InterruptedException {
-        while (!ready) {
-            wait();
-        }
-        ready = false;
-    }
-
-    public synchronized void fire() {
-        ready = true;
-        notifyAll();
-    }
-}
-```
-
-虚假唤醒指等待中的线程在没有相应通知时也可能结束等待。即使收到了通知，也可能有其他线程先改变了条件，所以等待必须放在检查条件的循环中。两个线程如何通过这些方法交接消息，见[线程基础中的信箱示例](./thread-basics.md#等待条件成立-wait-与-notifyall)。
+调用时必须先通过 `synchronized` 获得对应对象的监视器锁，否则抛出 `IllegalMonitorStateException`。等待、释放锁、通知以及重新检查条件的流程见[线程基础中的信箱示例](./thread-basics.md#等待条件成立-wait-与-notifyall)。
 
 ## finalize 与资源释放
 
@@ -221,7 +195,7 @@ class Signal {
 ## 常见错误
 
 - 使用 `==` 比较 `String` 或包装类内容；
-- `equals()` 使用一个字段，`hashCode()` 使用另一组字段；
+- `equals()` 判断相等的对象产生不同的哈希值；
 - 把可变字段纳入哈希键的相等语义；
 - 在继承层次中让父类和子类采用不兼容的相等规则；
 - 为了测试方便而让所有字段都参与实体相等判断；

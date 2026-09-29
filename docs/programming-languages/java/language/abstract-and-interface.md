@@ -71,9 +71,9 @@ class Receipt implements Named, Printable {
 
 接口没有构造方法或实例字段。字段隐式为 `public static final`，但如果字段引用可变对象，接口并不会冻结该对象。
 
-## 默认方法与静态方法 [Java 8+]
+## 默认方法与静态方法
 
-Java 8 允许接口提供默认方法和静态方法。
+接口可以提供默认方法和静态方法。
 
 ```java
 interface Named {
@@ -91,11 +91,11 @@ interface Named {
 
 `default` 方法提供可继承的实例实现，实现类可以重写。静态方法通过接口名调用，例如 `Named.of("Alice")`，不会作为实例方法继承给实现类。
 
-示例中的 Lambda 同样自 Java 8 提供，用于实现唯一的抽象方法，详细条件见 [Lambda 与方法引用](./lambda-and-method-references.md)。
+示例中的 Lambda 用于实现唯一的抽象方法，详细条件见 [Lambda 与方法引用](./lambda-and-method-references.md)。
 
-## 私有辅助方法 [Java 9+]
+## 私有辅助方法
 
-Java 9 允许接口使用私有方法复用内部实现。私有方法不向实现类开放，也不被继承，还可以声明为静态方法。
+接口可以使用私有方法复用内部实现。私有方法不向实现类开放，也不被继承，还可以声明为静态方法。
 
 ```java
 interface Named {
@@ -111,7 +111,7 @@ interface Named {
 }
 ```
 
-## 默认方法冲突 [Java 8+]
+## 默认方法冲突
 
 类层次中的方法声明优先于接口默认方法；更具体的子接口可以重写父接口的默认方法。两个无继承关系的接口提供同签名默认方法时，实现类需要显式解决冲突。
 

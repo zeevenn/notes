@@ -4,30 +4,7 @@ date: 2026-08-05
 category: java
 ---
 
-包为类型提供命名空间。例如 `BigDecimal` 位于 `java.math` 包，完整名称为 `java.math.BigDecimal`：
-
-```java
-java.math.BigDecimal amount = new java.math.BigDecimal("10.50");
-```
-
-重复书写完整名称会降低可读性，`import` 允许在当前文件中使用简单名称：
-
-```java
-import java.math.BigDecimal;
-
-BigDecimal amount = new BigDecimal("10.50");
-```
-
 包（package）为类型提供命名空间，并参与访问控制。不同包可以声明同名类型，例如 `java.util.Date` 和 `java.sql.Date`，代码通过全限定名区分它们。
-
-```java
-package com.example.billing;
-
-public class Invoice {
-}
-```
-
-`com.example.billing.Invoice` 是这个类的全限定名。包名使用小写字母，通常以组织控制的反向域名开头。
 
 ## 包声明与目录布局
 
@@ -43,7 +20,7 @@ public class Invoice {
 }
 ```
 
-常见源码布局让目录结构与包名对应：
+`com.example.billing.Invoice` 是这个类的全限定名。包名使用小写字母，通常以组织控制的反向域名开头。常见源码布局让目录结构与包名对应：
 
 ```text
 src/
@@ -124,7 +101,9 @@ double distance(double x, double y) {
 - 目录和依赖边界不清楚；
 - 构建工具和测试布局通常假设使用具名包。
 
-## 编译包中的类
+## 编译运行与类路径
+
+类路径（classpath）是一组供编译器和运行时查找类及资源的位置，可以包含目录和 JAR 文件。
 
 下面的源码位于 `src/com/example/App.java`：
 
@@ -147,13 +126,13 @@ java -cp out com.example.App
 
 `-d out` 让编译器按包结构输出 `.class` 文件；`-cp out` 把 `out` 加入类路径。启动时使用全限定类名，而不是文件路径。
 
-## 类路径与模块路径
+常见错误包括：
 
-类路径（classpath）是一组供编译器和运行时查找类及资源的位置。它可以包含目录和 JAR 文件。常见错误包括：
-
-- 编译时存在依赖，运行时类路径缺失，产生 `ClassNotFoundException`；
-- 编译和运行使用了不同版本的依赖，产生 `NoSuchMethodError`；
+- 编译时存在依赖，运行时类路径缺失，导致找不到依赖类；
+- 编译和运行使用了不同版本的依赖，可能产生 `NoSuchMethodError`；
 - 包声明与源码/输出布局不一致；
 - 把 JAR 文件所在目录加入类路径，却没有加入 JAR 文件本身。
 
-Java 9 引入模块系统和模块路径（module path）。模块通过 `module-info.java` 声明依赖、导出包和服务。包与模块是不同层次的组织单位，包导出和模块依赖属于模块系统的规则。
+## 包与模块
+
+模块系统通过模块路径（module path）查找模块。模块通过 `module-info.java` 声明依赖、导出包和服务。包与模块是不同层次的组织单位，包导出和模块依赖属于模块系统的规则。

@@ -12,16 +12,13 @@
 ## 标准库
 
 - [常用类](./standard-library/README.md#常用类)：包装类
-- [集合框架](./standard-library/README.md#集合框架)：List、Set、Map、Queue、遍历比较与不可修改集合
+- [集合框架](./standard-library/README.md#集合框架)：List、Set、Map、Queue、遍历比较、Stream 与不可修改集合
+- [文件与 I/O](./standard-library/file-io.md)：文本与二进制读写、路径和目录操作
 - [实现原理](./standard-library/README.md#实现原理)：字符串实现与源码分析
 
 ## Maven
 
-- [Maven](./maven/README.md)
-  - [生命周期与插件](./maven/lifecycle-and-plugins.md)
-  - [依赖管理](./maven/dependency-management.md)
-  - [POM、继承与配置](./maven/pom-and-inheritance.md)
-  - [多模块构建](./maven/multi-module-builds.md)
-  - [仓库与 settings.xml](./maven/repositories-and-settings.md)
-  - [排障方法](./maven/troubleshooting.md)
-  - [CI 与可复现构建](./maven/ci-and-reproducible-builds.md)
+- [Maven 目录](./maven/README.md)
+- [基础与构建](./maven/lifecycle-and-plugins.md)
+- [依赖与仓库管理](./maven/dependency-management.md)
+- [多模块项目](./maven/multi-module-builds.md)

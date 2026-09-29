@@ -112,17 +112,22 @@ System.out.println(stack.pop());  // first
 
 ## `PriorityQueue`
 
-`PriorityQueue` 每次从队首取出自然顺序最小或比较器优先级最高的元素，不是普通 FIFO 队列。下面的比较器工厂、方法引用和接收比较器的构造方法均自 Java 8 提供。
+`PriorityQueue` 每次从队首取出自然顺序或比较器认定的最小元素，不是普通 FIFO 队列。业务上的优先级由比较规则决定；下面约定数字越小越优先，同级任务按入队序号排序：
 
 ```java
+record Task(String name, int priority, long sequence) {}
+
 Queue<Task> tasks = new PriorityQueue<>(
         Comparator.comparingInt(Task::priority)
-                  .thenComparing(Task::createdAt));
+                  .thenComparingLong(Task::sequence));
 
-tasks.offer(lowPriorityTask);
-tasks.offer(highPriorityTask);
+tasks.offer(new Task("普通任务", 5, 1));
+tasks.offer(new Task("紧急任务 A", 1, 2));
+tasks.offer(new Task("紧急任务 B", 1, 3));
 
-Task next = tasks.poll();
+System.out.println(tasks.poll().name()); // 紧急任务 A
+System.out.println(tasks.poll().name()); // 紧急任务 B
+System.out.println(tasks.poll().name()); // 普通任务
 ```
 
 插入和删除队首为 `O(log n)`，查看队首为 `O(1)`。
@@ -141,7 +146,41 @@ for (Task task : tasks) {
 
 ## 队列与并发
 
-`ArrayDeque` 和 `PriorityQueue` 不支持无同步的多线程共享修改。并发生产者/消费者通常需要：
+`ArrayDeque` 和 `PriorityQueue` 不支持无同步的多线程共享修改。在线程之间传递任务时，可以使用线程安全的 `BlockingQueue`：`put()` 在队列满时等待空位，`take()` 在队列空时等待元素。
+
+下面用容量为 1 的 `ArrayBlockingQueue` 传递三条消息。主线程生产消息，消费线程按入队顺序取出，处理完三条后结束：
+
+```java
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+public class QueueDemo {
+    public static void main(String[] args) throws InterruptedException {
+        BlockingQueue<String> messages = new ArrayBlockingQueue<>(1);
+
+        Thread consumer = new Thread(() -> {
+            try {
+                for (int i = 0; i < 3; i++) {
+                    System.out.println(messages.take());
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        consumer.start();
+        for (String message : List.of("compile", "test", "package")) {
+            messages.put(message);
+        }
+        consumer.join();
+    }
+}
+```
+
+输出依次为 `compile`、`test`、`package`。容量限制使生产者无法无限积压消息，这种让生产速度受消费速度约束的机制称为背压。`put()` 和 `take()` 的等待可以被中断；示例中的消费线程捕获异常后恢复中断标记并结束。
+
+不希望一直等待时，可以使用带超时的 `offer()`、`poll()`。常见并发队列包括：
 
 - `ArrayBlockingQueue`：固定容量数组阻塞队列；
 - `LinkedBlockingQueue`：可选容量的链式阻塞队列；

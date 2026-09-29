@@ -55,27 +55,27 @@ record Circle(double radius) implements Shape {}
 record Rectangle(double width, double height) implements Shape {}
 ```
 
-按形状计算面积：
+按形状分类，矩形分支通过 `when` 进一步区分正方形与普通矩形：
 
 ```java
-static double area(Shape shape) {
+static String shapeLabel(Shape shape) {
     return switch (shape) {
-        case Circle circle -> Math.PI * circle.radius() * circle.radius();
+        case Circle circle -> "圆形";
         case Rectangle rectangle
                 when rectangle.width() == rectangle.height()
-                -> rectangle.width() * rectangle.width();
-        case Rectangle rectangle -> rectangle.width() * rectangle.height();
+                -> "正方形";
+        case Rectangle rectangle -> "矩形";
     };
 }
 ```
 
 对于密封层次，编译器知道允许的直接子类型，可以检查 `switch` 是否穷尽所有分支。通常不应添加无意义的 `default`，否则将来新增允许子类型时，编译器无法提示这里需要处理新分支。
 
-`case` 按从上到下匹配。宽泛类型放在具体类型之前会遮蔽后续分支并产生编译错误。
+`case` 按从上到下匹配。没有额外守卫条件的宽泛类型分支放在具体类型之前，会遮蔽后续分支并产生编译错误。带守卫条件的分支还要判断条件，不能仅根据类型范围判断是否遮蔽后续分支。
 
 ## Record 模式 [Java 21+]
 
-Record 模式可以在类型检查的同时解构组件：
+Record 模式可以在类型检查的同时解构组件，例如直接取出尺寸计算面积：
 
 ```java
 static double area(Shape shape) {

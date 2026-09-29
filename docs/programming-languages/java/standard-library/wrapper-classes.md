@@ -34,22 +34,23 @@ System.out.println(restored); // 42
 
 包装对象不可变。对 `Integer` 变量做 `count++`，会经过拆箱、加一、重新装箱并赋值，不会修改原对象中保存的值。
 
-## `Integer` 缓存：相同数值可能复用对象
+## 字符串与数值之间的转换
 
-`Integer.valueOf(int)` 会复用缓存中的对象，避免为常用数值重复创建对象。它保证缓存 `-128～127`（包含边界），也允许缓存范围外的值。
+包装类还提供文本解析和数值转字符串的方法：
 
 ```java
-Integer a = 127;
-Integer b = 127;
-System.out.println(a == b); // true：引用同一个缓存对象
+int value = Integer.parseInt("42");
+Integer boxed = Integer.valueOf("42");
+String text = Integer.toString(value);
 
-Integer c = 128;
-Integer d = 128;
-System.out.println(c == d); // 结果取决于是否复用对象，不保证为 false
-System.out.println(c.equals(d)); // true：保存的整数值相等
+System.out.println(value); // 42
+System.out.println(boxed); // 42
+System.out.println(text);  // 42
 ```
 
-缓存的是包装对象。两个 `Integer` 使用 `==` 时比较对象身份，因此不能用它判断数值是否相等。其他包装类的复用规则也不能直接套用 `Integer` 的缓存范围。
+`parseInt()` 返回基本类型 `int`，`valueOf(String)` 返回包装类型 `Integer`；`toString(int)` 则把整数转换为十进制文本。`Long`、`Double` 等数值包装类也提供相应的解析方法，例如 `Long.parseLong()`、`Double.parseDouble()`。
+
+`Integer.parseInt()` 和 `Integer.valueOf(String)` 在文本格式不合法或数值超出 `int` 范围时抛出 `NumberFormatException`，处理方式见[异常处理](../language/exceptions.md)。
 
 ## 比较时区分对象和值
 
@@ -98,3 +99,20 @@ Integer count = null;
 int value = count != null ? count : 0;
 System.out.println(value); // 0
 ```
+
+## `Integer` 缓存：相同数值可能复用对象
+
+`Integer.valueOf(int)` 会复用缓存中的对象，避免为常用数值重复创建对象。它保证缓存 `-128～127`（包含边界），也允许缓存范围外的值。
+
+```java
+Integer a = 127;
+Integer b = 127;
+System.out.println(a == b); // true：引用同一个缓存对象
+
+Integer c = 128;
+Integer d = 128;
+System.out.println(c == d); // 结果取决于是否复用对象，不保证为 false
+System.out.println(c.equals(d)); // true：保存的整数值相等
+```
+
+缓存的是包装对象。两个 `Integer` 使用 `==` 时比较对象身份，因此不能用它判断数值是否相等。其他包装类的复用规则也不能直接套用 `Integer` 的缓存范围。

@@ -1,5 +1,5 @@
 ---
-title: Maven 多模块构建
+title: Maven 多模块项目
 date: 2026-09-08
 icon: sitemap
 category:
@@ -9,27 +9,27 @@ tag:
   - multi-module
 ---
 
-多模块构建把若干 Maven 项目放进同一次构建。Maven Reactor（反应堆）收集模块，依据模块间关系计算顺序，再按该顺序执行每个模块的生命周期。
+一个代码库可以包含多个 Maven 项目，每个模块有自己的 POM 和产物。根项目把模块纳入同一次构建；父 POM 则让模块共享版本和构建配置，这两种关系分别称为聚合与继承。
 
-## 最小目录结构
+## 根项目与子模块
+
+以接口模块依赖领域模块为例：
 
 ```text
 shop/
 ├── pom.xml
 ├── shop-domain/
 │   ├── pom.xml
-│   └── src/
+│   └── src/main/java/
 └── shop-api/
     ├── pom.xml
-    └── src/
+    └── src/main/java/
 ```
 
-根 POM 聚合两个模块：
+根 `pom.xml` 同时组织模块并提供共同的编译配置：
 
 ```xml
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example</groupId>
   <artifactId>shop</artifactId>
@@ -40,110 +40,121 @@ shop/
     <module>shop-domain</module>
     <module>shop-api</module>
   </modules>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.16.0</version>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 ```
 
-`<module>` 是相对根 POM 的目录路径，不是 Maven 坐标。聚合 POM 通常使用 `packaging=pom`，因为它的主要作用是组织构建而不是生成 JAR。
+聚合 POM 必须使用 `packaging=pom`。`modules` 中填写相对于根 POM 的目录路径，不是构件坐标。
 
-## 聚合与继承是两种关系
-
-| 关系 | 由什么声明 | 解决的问题 |
-| --- | --- | --- |
-| 聚合（aggregation） | 根 POM 的 `<modules>` | 哪些项目参加本次 Reactor 构建 |
-| 继承（inheritance） | 子 POM 的 `<parent>` | 子项目从哪里获得通用配置 |
-
-一个根 POM 经常同时是 aggregator 和 parent，但这不是强制关系：
-
-- 模块可以参加根项目的 Reactor 构建，却继承另一个已发布的父 POM。
-- 子项目可以继承组织父 POM，却不在父 POM 的 `<modules>` 中。
-
-子模块继承根 POM 的示例：
+`shop-domain/pom.xml` 通过 `parent` 继承根项目：
 
 ```xml
-<parent>
-  <groupId>com.example</groupId>
-  <artifactId>shop</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-  <relativePath>../pom.xml</relativePath>
-</parent>
-
-<artifactId>shop-domain</artifactId>
-```
-
-## Reactor 如何确定顺序
-
-如果 `shop-api` 依赖 `shop-domain`：
-
-```xml
-<dependency>
-  <groupId>com.example</groupId>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.example</groupId>
+    <artifactId>shop</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
   <artifactId>shop-domain</artifactId>
-  <version>${project.version}</version>
-</dependency>
+</project>
 ```
 
-即使 `<modules>` 先写 `shop-api`，Reactor 也会先构建 `shop-domain`。影响排序的已实例化关系包括：
+`groupId`、`version`、属性和编译插件配置都可继承，子模块保留自己的 `artifactId`。`relativePath` 指向本地父 POM；父 POM 也可以是从仓库解析的公共构件。
 
-- 模块间的项目依赖。
-- 使用 Reactor 中另一个模块作为构建插件。
-- 插件对 Reactor 中模块的依赖。
-- 构建扩展关系。
-- 没有其他关系可判断时，才使用 `<modules>` 中的声明顺序。
+聚合与继承不要求绑定在一起：模块可以参加当前根项目的构建，却继承另一个父 POM；继承某个父 POM，也不代表自动加入它的模块列表。
 
-只有写在 `dependencyManagement` 或 `pluginManagement` 中、但未实际使用的声明，不会改变 Reactor 顺序。
+## 声明模块间依赖
 
-## 选择部分模块
+`shop-api/pom.xml` 同样继承根项目，并声明对领域模块的依赖：
 
-从根目录执行以下命令。
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.example</groupId>
+    <artifactId>shop</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>shop-api</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>shop-domain</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+</project>
+```
 
-只构建指定模块：
+`${project.version}` 是当前模块的有效版本。此例各模块统一版本，因此可以这样引用；独立发布的模块需要分别管理依赖版本。
+
+在根目录执行 `mvn clean verify` 时，Maven Reactor 会收集模块，按依赖关系排序并构建。即使 `modules` 先列出 `shop-api`，也会先构建它依赖的 `shop-domain`；彼此没有排序约束的模块才按声明顺序排列。
+
+同一次 Reactor 构建可以使用上游模块的构建结果，无需先逐个执行 `install`。
+
+## 统一依赖与插件版本
+
+父 POM 可以继承普通 `dependencies`，但这样所有子模块都会获得这些依赖。只想统一版本、让子模块按需使用时，应放进 `dependencyManagement`。具体写法见 [依赖版本管理](./dependency-management.md#dependencymanagement)。
+
+插件的管理也有类似区别。父 POM 中可用 `pluginManagement` 提供版本和配置：
+
+```xml
+<build>
+  <pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.5</version>
+      </plugin>
+    </plugins>
+  </pluginManagement>
+</build>
+```
+
+`pluginManagement` 本身不会新增插件执行。插件被生命周期默认绑定或被子模块实际声明使用时，才应用这些管理配置。Surefire 已绑定 `jar` 项目的 `test` 阶段，因此上面的配置能统一测试插件版本。
+
+当前 POM 与父 POM 的配置会按元素规则覆盖或合并。需要确认某个模块实际使用的版本时，查看该模块的有效 POM：
 
 ```shell
-./mvnw -pl :shop-api verify
+mvn -f shop-api/pom.xml help:effective-pom
 ```
 
-同时构建它依赖的 Reactor 模块：
+仅出现在管理区、未被实际使用的依赖或插件，不会建立模块间的构建依赖。
+
+## 选择模块构建
+
+从根目录构建接口模块及其上游依赖：
 
 ```shell
-./mvnw -pl :shop-api -am verify
+mvn -pl :shop-api -am verify
 ```
 
-同时构建依赖它的模块：
+`-pl` 选择模块，`-am` 同时加入它依赖的 Reactor 模块。只写 `-pl` 时，上游产物需要能从仓库解析；本地联调通常一起使用这两个选项。
+
+修改领域模块后，也可以选择它及依赖它的下游模块进行验证：
 
 ```shell
-./mvnw -pl :shop-domain -amd verify
+mvn -pl :shop-domain -amd verify
 ```
 
-从失败模块继续：
+`-amd` 加入依赖所选模块的项目。冒号后的名称是 `artifactId`，也可以用 `-pl shop-api` 按相对路径选择。
 
-```shell
-./mvnw -rf :shop-api verify
-```
-
-常用选项：
-
-| 短选项 | 长选项 | 含义 |
-| --- | --- | --- |
-| `-pl` | `--projects` | 选择要构建的项目 |
-| `-am` | `--also-make` | 加入所选项目依赖的模块 |
-| `-amd` | `--also-make-dependents` | 加入依赖所选项目的模块 |
-| `-rf` | `--resume-from` | 从指定模块恢复构建 |
-| `-N` | `--non-recursive` | 只构建当前 POM，不进入模块 |
-
-`:shop-api` 使用 artifactId 选择项目，可以避免输入完整坐标。大型项目中如果 artifactId 不唯一，应改用完整坐标或明确的相对路径。
-
-## 失败处理
-
-Maven 默认使用 fail-fast：一个模块失败后停止后续构建。
-
-```shell
-./mvnw --fail-at-end verify
-```
-
-`--fail-at-end` 会尽可能继续构建不受影响的模块，最后统一报告失败，适合在 CI 中收集更多错误。它不会让依赖失败模块的下游绕过缺失产物继续成功。
-
-## 多模块版本管理
-
-同一代码库中的模块通常继承统一的项目版本，并由根 POM 的 `dependencyManagement` 和 `pluginManagement` 管理外部依赖及插件版本。每个模块仍应只在 `dependencies` 和 `plugins` 中声明自己实际使用的内容。
-
-`${project.version}` 表示当前模块的有效版本。若模块不是统一版本发布，需要显式管理模块间依赖版本，不能假设它始终等于根项目版本。
+构建失败时先看 Reactor Summary 中第一个失败模块。下游的 `SKIPPED` 通常由上游失败造成，应先解决源头问题。

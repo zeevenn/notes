@@ -103,7 +103,9 @@ System.out.println(scores.ceiling(90)); // 95
 Set<User> users = new TreeSet<>(Comparator.comparing(User::name)); // Java 8+
 ```
 
-在 `TreeSet` 中，比较结果为 `0` 就表示元素重复。比较器只按姓名比较时，两个同名但 ID 不同的用户只能保留一个。比较规则应完整表达 Set 所需的唯一性，并尽量与 `equals()` 一致。
+在 `TreeSet` 中，比较结果为 `0` 就表示元素重复。比较器只按姓名比较时，两个同名但 ID 不同的用户只能保留一个。
+
+要遵守 `Set` 的相等性约定，比较结果为 `0` 应与 `equals()` 为 `true` 一致。不一致时，`TreeSet` 仍能运行，但可能破坏集合之间的相等性判断。
 
 ## `EnumSet`
 
@@ -150,12 +152,16 @@ boolean subset = union.containsAll(left);
 对象加入 `HashSet` 后，如果参与 `equals()` 或 `hashCode()` 的字段改变，集合可能无法再找到或删除它。
 
 ```java
-Set<Account> accounts = new HashSet<>();
-Account account = new Account("alice@example.com");
-accounts.add(account);
+Set<List<String>> groups = new HashSet<>();
+List<String> group = new ArrayList<>(List.of("A"));
+groups.add(group);
 
-account.setEmail("new@example.com");
+System.out.println(groups.contains(group)); // true
+group.add("B");
+System.out.println(groups.contains(group)); // 本例为 false
 ```
+
+`List` 的相等性和哈希值取决于其中的元素。本例修改列表后，哈希值发生变化，查找无法定位到原先存入的元素。
 
 Set 元素应使用稳定标识或不可变值。完整规则见 [Object 类与通用方法](../language/object-contract.md)。
 

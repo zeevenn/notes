@@ -109,21 +109,6 @@ System.out.println(users.size()); // 0
 
 普通列表通常优先 `ArrayList`。只需要队列或栈语义时，优先使用 `ArrayDeque`；确实需要在已定位位置频繁插入删除时，再评估 `LinkedList`。
 
-## 首尾与反向视图 [Java 21+]
-
-Java 21 起，`List` 作为 `SequencedCollection` 提供统一的首尾操作：
-
-```java
-String first = names.getFirst();
-String last = names.getLast();
-names.addFirst("Admin");
-names.addLast("Guest");
-
-List<String> reversed = names.reversed();
-```
-
-`reversed()` 返回反向顺序视图，不是副本。修改允许修改的原列表会反映到视图，反之亦然。
-
 ## `subList()` 是视图
 
 ```java
@@ -180,3 +165,18 @@ public List<String> members() {
 ```
 
 返回快照适合调用方只读且不应观察后续变化的场景。若要提供动态只读视图，可以使用 `Collections.unmodifiableList()`，但需要明确它会反映底层列表的变化。
+
+## 首尾与反向视图 [Java 21+]
+
+Java 21 起，`List` 作为 `SequencedCollection` 提供统一的首尾操作：
+
+```java
+String first = names.getFirst();
+String last = names.getLast();
+names.addFirst("Admin");
+names.addLast("Guest");
+
+List<String> reversed = names.reversed();
+```
+
+`reversed()` 返回反向顺序视图，不是副本。修改允许修改的原列表会反映到视图，反之亦然。

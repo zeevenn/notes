@@ -53,9 +53,9 @@ Consumer<String> print = value -> {
 };
 ```
 
-单个可推断类型的参数可以省略括号；表达式方法体会隐式返回表达式结果。代码块方法体需要显式 `return`，除非目标方法返回 `void`。
+单个可推断类型的参数可以省略括号。目标方法有返回值时，表达式体提供返回值，代码块体通过 `return` 给出结果。目标方法返回 `void` 时，表达式体可以是方法调用等能独立作为语句的表达式，调用产生的返回值会被丢弃；代码块体不返回值。
 
-Lambda 本身没有独立类型，必须由赋值、参数或返回值上下文提供目标函数式接口：
+Lambda 依赖上下文确定目标函数式接口，例如赋值、参数或返回值上下文：
 
 ```java
 // var rule = value -> value.isBlank(); // var: Java 10+；仍因缺少目标类型而编译失败
@@ -79,10 +79,36 @@ Predicate<String> rule = value -> value.isBlank(); // isBlank(): Java 11+
 
 ```java
 IntPredicate positive = value -> value > 0;
-ToIntFunction<String> length = String::length;
+ToIntFunction<String> length = text -> text.length();
 ```
 
 优先复用标准接口。只有标准接口无法表达有意义的领域契约或需要声明特定异常时，才定义新函数式接口。
+
+## 将行为作为参数传入
+
+方法可以固定处理流程，将其中的判断规则交给调用方提供：
+
+```java
+import java.util.List;
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
+static List<String> select(List<String> values, Predicate<String> rule) {
+    List<String> selected = new ArrayList<>();
+    for (String value : values) {
+        if (rule.test(value)) {
+            selected.add(value);
+        }
+    }
+    return selected;
+}
+
+List<String> names = List.of("Alice", "Bob", "Anna");
+List<String> selected = select(names, name -> name.startsWith("A"));
+System.out.println(selected); // [Alice, Anna]
+```
+
+`select()` 负责遍历和收集结果，调用方提供筛选条件。传入 Lambda 时并不执行它的判断逻辑；方法内部调用 `rule.test(value)` 时才执行。
 
 ## 方法引用
 
@@ -160,9 +186,9 @@ Function<String, Integer> trimmedLength = trim.andThen(length);
 
 - 在 Lambda 内捕获并转换为当前层的非受检异常；
 - 定义声明了相应异常的领域函数式接口；
-- 把可能失败的操作移到普通方法，让方法边界显式声明异常。
+- 将可能失败的操作移出这个函数式接口的调用流程，由普通方法处理或声明异常。
 
-不要只为塞进 Stream 流程就无条件吞掉异常或包装成缺少上下文的 `RuntimeException`。
+仅把操作提取成普通方法，再从同一个 Lambda 调用它，并不会消除受检异常的处理要求。不要只为塞进 Stream 流程就无条件吞掉异常或包装成缺少上下文的 `RuntimeException`。
 
 ## Lambda 不是对象模型的替代品
 

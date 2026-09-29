@@ -53,7 +53,9 @@ String result = formatter.format("Java");
 
 子类没有重写某个方法时，可以直接执行继承的实现。动态分派不要求每个子类都重新写一遍方法。
 
-## 重载选择不会在运行期重做
+## 向上转型
+
+把子类型对象作为父类或接口类型使用，称为向上转型。子类型引用可以直接赋给父类或接口类型的变量：
 
 ```java
 class Animal {
@@ -63,7 +65,19 @@ class Animal {
 class Dog extends Animal {
     @Override public String sound() { return "dog"; }
 }
+```
 
+```java
+Dog dog = new Dog();
+Animal animal = dog;
+System.out.println(animal == dog); // true
+```
+
+转型不会复制对象，也不会改变对象的实际类型。父类引用只能直接使用其编译期类型允许的成员，即使实际对象还提供额外方法。
+
+## 重载选择不会在运行期重做
+
+```java
 class Demo {
     static String choose(Animal value) { return "Animal overload"; }
     static String choose(Dog value) { return "Dog overload"; }
@@ -77,18 +91,6 @@ class Demo {
 ```
 
 `choose(value)` 的参数编译期类型是 `Animal`，所以选中对应重载；`sound()` 则沿实际对象类型查找重写实现。字段和静态方法不使用这一动态分派机制，见[重写、重载与隐藏](./inheritance.md#重写、重载与隐藏)。
-
-## 向上转型
-
-把子类型引用赋给父类或接口类型，是扩大引用的可用类型范围，通常可以隐式完成：
-
-```java
-Dog dog = new Dog();
-Animal animal = dog;
-System.out.println(animal == dog); // true
-```
-
-转型不会复制对象，也不会改变对象的实际类型。父类引用只能直接使用其编译期类型允许的成员，即使实际对象还提供额外方法。
 
 ## 向下转型与 instanceof
 
@@ -104,7 +106,7 @@ Animal other = new Animal();
 
 `instanceof` 检查对象是否属于目标类型或其子类型。对 `null` 的检查结果是 `false`；引用强制转换 `null` 的结果仍是 `null`。
 
-类型检查与变量声明可以合并为类型模式，以下写法自 Java 16 正式提供：
+类型检查与变量声明可以合并为类型模式：
 
 ```java
 if (animal instanceof Dog dogValue) {

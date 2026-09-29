@@ -121,9 +121,11 @@ export default [
               'map',
               'queue-and-deque',
               'iteration-and-comparison',
+              'stream-processing',
               'immutable-collections'
             ]
           },
+          'file-io',
           {
             text: '实现原理',
             collapsible: true,
@@ -140,11 +142,7 @@ export default [
         children: [
           'lifecycle-and-plugins',
           'dependency-management',
-          'pom-and-inheritance',
-          'multi-module-builds',
-          'repositories-and-settings',
-          'troubleshooting',
-          'ci-and-reproducible-builds'
+          'multi-module-builds'
         ]
       }
     ]

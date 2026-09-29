@@ -16,7 +16,12 @@ category: java
 - [Map](./map.md)
 - [Queue 与 Deque](./queue-and-deque.md)
 - [遍历、比较与排序](./iteration-and-comparison.md)
+- [Stream 与集合数据处理](./stream-processing.md)
 - [不可修改集合与防御性复制](./immutable-collections.md)
+
+## 文件与 I/O
+
+- [文件与 I/O](./file-io.md)
 
 ## 实现原理
 

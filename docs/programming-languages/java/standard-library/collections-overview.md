@@ -23,12 +23,14 @@ Iterable<E>
 └── Collection<E>
     ├── List<E>
     ├── Set<E>
-    │   └── SortedSet<E> / NavigableSet<E>
+    │   └── SortedSet<E>
+    │       └── NavigableSet<E>
     └── Queue<E>
         └── Deque<E>
 
 Map<K, V>
-└── SortedMap<K, V> / NavigableMap<K, V>
+└── SortedMap<K, V>
+    └── NavigableMap<K, V>
 ```
 
 `Map` 不继承 `Collection`。它保存键值映射，并通过 `keySet()`、`values()` 和 `entrySet()` 提供集合视图。
@@ -50,15 +52,9 @@ Map<K, V>
 
 先选择能表达业务约束的接口，再根据访问模式和性能选择实现。不要只因为熟悉 `ArrayList` 或 `HashMap` 就让它们承担所有数据结构角色。
 
-## Sequenced Collections [Java 21+]
-
-Java 21 增加了 `SequencedCollection`、`SequencedSet` 和 `SequencedMap`，统一表示具有明确相遇顺序、能够访问首尾元素并获得反向视图的容器。`List`、`Deque`、`LinkedHashSet`、`TreeSet` 和 `LinkedHashMap` 等类型接入了相应接口。
-
-Java 8 等较早版本可以使用这些具体容器及其原有操作，但没有统一的 `Sequenced*` 接口。例如，`List` 使用 `get(0)` 和 `get(size() - 1)` 访问首尾元素，升级到 Java 21 后才可以统一使用 `getFirst()` 和 `getLast()`。
-
 ## 数组与集合
 
-数组长度固定，可以存放基本类型或引用；集合能够动态扩容，只保存引用类型。
+数组长度固定，可以存放基本类型或引用；集合只保存引用类型。`ArrayList` 等常用可变实现允许增删元素，固定大小列表和不可修改集合则有不同的修改限制。
 
 ```java
 int[] scores = {90, 85};
@@ -147,13 +143,19 @@ boolean exists = users.contains(new User(1L, "Alice"));
 | 操作 | `ArrayList` | `HashSet` / `HashMap` | `TreeSet` / `TreeMap` |
 | --- | --- | --- | --- |
 | 按索引读取 | `O(1)` | 不支持 | 不支持 |
-| 按值或键查找 | `O(n)` | 平均 `O(1)` | `O(log n)` |
+| 按元素或映射键查找 | `O(n)` | 平均 `O(1)` | `O(log n)` |
 | 保持排序 | 不自动保持 | 不保持 | 自动保持 |
 
-复杂度描述基于正常哈希分布、比较器稳定等前提。数据规模小或操作不频繁时，语义清晰通常比微小的常数差异更重要。
+表中 `Map` 的查找指按键访问，按值查找不享有相同的复杂度保证。复杂度描述基于正常哈希分布、比较器稳定等前提。数据规模小或操作不频繁时，语义清晰通常比微小的常数差异更重要。
 
 ## 并发边界
 
 `ArrayList`、`HashSet`、`HashMap`、`ArrayDeque` 等通用实现不是线程安全的。多个线程共享且至少一个线程修改集合时，需要由对象所有权、同步或并发集合建立明确边界。
 
 并发场景常见类型包括 `ConcurrentHashMap`、`CopyOnWriteArrayList` 和 `BlockingQueue`。它们具有不同一致性与性能取舍，应在并发专题中结合内存模型学习；不能简单地把所有集合替换成同步包装器。
+
+## Sequenced Collections [Java 21+]
+
+Java 21 增加了 `SequencedCollection`、`SequencedSet` 和 `SequencedMap`，统一表示具有明确相遇顺序、能够访问首尾元素并获得反向视图的容器。`List`、`Deque`、`LinkedHashSet`、`TreeSet` 和 `LinkedHashMap` 等类型接入了相应接口。
+
+Java 8 等较早版本可以使用这些具体容器及其原有操作，但没有统一的 `Sequenced*` 接口。例如，`List` 使用 `get(0)` 和 `get(size() - 1)` 访问首尾元素，升级到 Java 21 后才可以统一使用 `getFirst()` 和 `getLast()`。

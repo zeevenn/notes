@@ -4,17 +4,116 @@ date: 2026-08-05
 category: java
 ---
 
-注解（annotation）用 `@名称` 为类、方法、字段等代码元素附加说明。例如，可以标记某个方法已经不建议使用，让编译器提示调用方。
+注解（annotation）用 `@名称` 为类、方法、字段等代码元素附加元数据。注解本身不执行操作，需要由编译器或其他工具读取后产生相应效果。
 
-这些附加说明称为元数据。注解本身不执行操作，需要由编译器或其他工具读取后产生相应效果。
+## 定义注解类型
+
+使用 `@interface` 声明注解类型。下面的 `Retry` 为方法记录重试次数和等待间隔，元素的 `default` 指定未显式赋值时采用的值：
 
 ```java
-@Deprecated
-public void oldMethod() {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Retry {
+    int maxAttempts() default 3;
+    long delayMillis() default 0;
 }
 ```
 
-上面的 `@Deprecated` 标记 `oldMethod()` 已废弃，调用方编译时可能收到警告；方法仍然可以执行。
+`@Target` 和 `@Retention` 是描述注解本身的元注解。这里限定 `Retry` 用于方法，并保留到运行时，供后面的反射代码读取。
+
+## 标注方法并读取配置
+
+在 `MessageService` 的方法上使用同一个 `Retry`，覆盖默认配置：
+
+```java
+public class MessageService {
+    @Retry(maxAttempts = 5, delayMillis = 1000)
+    public void sendMessage() {
+    }
+}
+```
+
+下面的程序取得这个方法，再读取它的注解属性：
+
+```java
+import java.lang.reflect.Method;
+
+public class AnnotationDemo {
+    public static void main(String[] args) throws NoSuchMethodException {
+        Method method = MessageService.class.getMethod("sendMessage");
+        Retry retry = method.getAnnotation(Retry.class);
+
+        if (retry != null) {
+            System.out.println(retry.maxAttempts()); // 5
+            System.out.println(retry.delayMillis()); // 1000
+        }
+    }
+}
+```
+
+读取元数据不等于自动实现重试。仍然需要代理、拦截器或显式调用逻辑根据注解执行行为。
+
+## 注解元素与赋值
+
+注解元素类型受到限制，可以使用基本类型、`String`、`Class`、枚举、注解以及这些类型的一维数组。元素不能使用普通对象或 `null` 作为值。
+
+只有一个名为 `value` 的元素时，使用方可以省略元素名：
+
+```java
+public @interface Role {
+    String value();
+}
+
+@Role("admin")
+public void deleteUser() {
+}
+```
+
+## 元注解
+
+元注解用于描述另一个注解的适用位置和生命周期。
+
+### `@Target`
+
+限定注解可以出现的位置，例如：
+
+- `TYPE`：类、接口、枚举或注解类型；
+- `METHOD`：方法；
+- `FIELD`：字段；
+- `PARAMETER`：参数；
+- `CONSTRUCTOR`：构造方法；
+- `TYPE_USE`：任何使用类型的位置，Java 8 引入。
+
+可以同时允许多个位置：
+
+```java
+@Target({ElementType.TYPE, ElementType.METHOD})
+```
+
+### `@Retention`
+
+决定注解保留到哪个阶段：
+
+| 策略 | 保留范围 | 常见用途 |
+| --- | --- | --- |
+| `SOURCE` | 仅源码 | 编译器检查、代码生成提示 |
+| `CLASS` | 写入 class 文件，运行时不保证可读 | 字节码工具 |
+| `RUNTIME` | 运行时可通过反射读取 | 运行时框架配置 |
+
+不要因为“可能会用到”就一律选择 `RUNTIME`。只有运行时确实需要反射读取时才保留到运行期。
+
+### `@Inherited`
+
+它只影响类上的注解通过父类继承，不适用于接口、方法或字段，也不表示框架一定采用相同的查找规则。
+
+### `@Repeatable` [Java 8+]
+
+允许同一种注解在同一位置出现多次，需要指定一个容器注解。只有确实需要多项独立配置时才使用，数组元素有时更简单。
 
 ## 常用内置注解
 
@@ -63,106 +162,6 @@ public interface Validator<T> {
     boolean test(T value);
 }
 ```
-
-## 定义注解类型
-
-```java
-public @interface Retry {
-    int maxAttempts() default 3;
-    long delayMillis() default 0;
-}
-```
-
-使用时为元素赋值：
-
-```java
-@Retry(maxAttempts = 5, delayMillis = 1000)
-public void sendMessage() {
-}
-```
-
-注解元素类型受到限制，可以使用基本类型、`String`、`Class`、枚举、注解以及这些类型的一维数组。元素不能使用普通对象或 `null` 作为值。
-
-只有一个名为 `value` 的元素时，使用方可以省略元素名：
-
-```java
-public @interface Role {
-    String value();
-}
-
-@Role("admin")
-public void deleteUser() {
-}
-```
-
-## 元注解
-
-元注解用于描述另一个注解的适用位置和生命周期。
-
-```java
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Retry {
-    int maxAttempts() default 3;
-}
-```
-
-### `@Target`
-
-限定注解可以出现的位置，例如：
-
-- `TYPE`：类、接口、枚举或注解类型；
-- `METHOD`：方法；
-- `FIELD`：字段；
-- `PARAMETER`：参数；
-- `CONSTRUCTOR`：构造方法；
-- `TYPE_USE`：任何使用类型的位置，Java 8 引入。
-
-可以同时允许多个位置：
-
-```java
-@Target({ElementType.TYPE, ElementType.METHOD})
-```
-
-### `@Retention`
-
-决定注解保留到哪个阶段：
-
-| 策略 | 保留范围 | 常见用途 |
-| --- | --- | --- |
-| `SOURCE` | 仅源码 | 编译器检查、代码生成提示 |
-| `CLASS` | 写入 class 文件，运行时不保证可读 | 字节码工具 |
-| `RUNTIME` | 运行时可通过反射读取 | 运行时框架配置 |
-
-不要因为“可能会用到”就一律选择 `RUNTIME`。只有运行时确实需要反射读取时才保留到运行期。
-
-### `@Inherited`
-
-它只影响类上的注解通过父类继承，不适用于接口、方法或字段，也不表示框架一定采用相同的查找规则。
-
-### `@Repeatable` [Java 8+]
-
-允许同一种注解在同一位置出现多次，需要指定一个容器注解。只有确实需要多项独立配置时才使用，数组元素有时更简单。
-
-## 运行时读取注解
-
-保留策略为 `RUNTIME` 的注解可以通过反射读取：
-
-```java
-Method method = MessageService.class.getMethod("sendMessage");
-Retry retry = method.getAnnotation(Retry.class);
-
-if (retry != null) {
-    System.out.println(retry.maxAttempts());
-}
-```
-
-读取元数据不等于自动实现重试。仍然需要代理、拦截器或显式调用逻辑根据注解执行行为。
 
 ## 注解处理器与运行时反射
 
