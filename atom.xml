@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-09-29T08:05:32.017Z</updated>
+  <updated>2026-09-29T10:49:10.446Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -8043,47 +8043,37 @@ counter<span class="token punctuation">.</span><span class="token function">incr
     <title type="text">Object 类与通用方法</title>
     <id>https://zeevenn.github.io/notes/notes/programming-languages/java/language/object-contract.html</id>
     <link href="https://zeevenn.github.io/notes/notes/programming-languages/java/language/object-contract.html"/>
-    <updated>2026-09-29T08:02:56.000Z</updated>
-    <summary type="html"><![CDATA[<p><code>Object</code> 是 Java 类层次的根。除它自身外，其他类直接或间接继承它；数组对象也支持它提供的方法。引用声明为 <code>Object</code> 后，可以使用这些通用方法，但访问具体类型的额外成员需要相应类型信息。</p>
-<p>普通类不需要自己声明 <code>toString()</code> 或 <code>equals()</code> 就能调用它们，因为这些方法已经由 <code>Object</code> 提供。类可以重新定义其中一些方法的实现，这称为重写。</p>
+    <updated>2026-09-29T10:45:18.000Z</updated>
+    <summary type="html"><![CDATA[<p><code>Object</code> 是 Java 类层次的根，其他类直接或间接继承它，数组对象也支持它提供的方法。即使一个类没有声明任何方法，它的对象也能进行相等比较、转换为字符串、获取运行时类型。</p>
+<p>这些通用方法可以按用途分成六组：比较、复制、文本表示、线程协调、类型信息，以及已经废弃的终结回调。</p>
+<h2>对象比较：equals 与 hashCode</h2>
+<p>两个分别创建的用户对象，可能代表同一个用户。比较时需要先确定：关注的是不是同一个对象，还是是否代表同一份业务数据。</p>
+<h3>身份相等与逻辑相等</h3>
+<p><code>==</code> 比较引用时，判断它们是否指向同一个对象，这称为<strong>身份相等</strong>。<code>equals()</code> 则允许类定义自己的相等规则，例如用户编号相同就认为相等，这称为<strong>逻辑相等</strong>。</p>]]></summary>
+    <content type="html"><![CDATA[<p><code>Object</code> 是 Java 类层次的根，其他类直接或间接继承它，数组对象也支持它提供的方法。即使一个类没有声明任何方法，它的对象也能进行相等比较、转换为字符串、获取运行时类型。</p>
+<p>这些通用方法可以按用途分成六组：比较、复制、文本表示、线程协调、类型信息，以及已经废弃的终结回调。</p>
+<h2>对象比较：equals 与 hashCode</h2>
+<p>两个分别创建的用户对象，可能代表同一个用户。比较时需要先确定：关注的是不是同一个对象，还是是否代表同一份业务数据。</p>
+<h3>身份相等与逻辑相等</h3>
+<p><code>==</code> 比较引用时，判断它们是否指向同一个对象，这称为<strong>身份相等</strong>。<code>equals()</code> 则允许类定义自己的相等规则，例如用户编号相同就认为相等，这称为<strong>逻辑相等</strong>。</p>
+<p>没有重写时，<code>Object.equals()</code> 也只比较身份：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">Note</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
 <span class="token class-name">Note</span> first <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Note</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">Note</span> second <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Note</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>first<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first <span class="token operator">==</span> second<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// false</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// false</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 例如 Note@1a2b3c，后半部分不固定</span>
-</code></pre></div>]]></summary>
-    <content type="html"><![CDATA[<p><code>Object</code> 是 Java 类层次的根。除它自身外，其他类直接或间接继承它；数组对象也支持它提供的方法。引用声明为 <code>Object</code> 后，可以使用这些通用方法，但访问具体类型的额外成员需要相应类型信息。</p>
-<p>普通类不需要自己声明 <code>toString()</code> 或 <code>equals()</code> 就能调用它们，因为这些方法已经由 <code>Object</code> 提供。类可以重新定义其中一些方法的实现，这称为重写。</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">Note</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-
-<span class="token class-name">Note</span> first <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Note</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">Note</span> second <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Note</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>first<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// true</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// false</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 例如 Note@1a2b3c，后半部分不固定</span>
-</code></pre></div><p>这些默认行为分别用于比较对象和生成描述文本。需要按业务数据比较对象时，再为类定义相应规则。</p>
-<h2>身份相等与逻辑相等</h2>
-<p><code>==</code> 判断两个引用是否指向同一个对象，<code>equals()</code> 判断类所定义的逻辑相等关系。</p>
-<p>没有重写时，<code>Object.equals()</code> 的行为与引用身份比较相同。例如两个用户对象的编号相同，就可以按业务规则认为它们代表同一个用户，即使它们是分别创建的对象。这种由类定义的相等关系称为逻辑相等。</p>
-<h2><code>equals()</code> 的约束</h2>
-<p>对任意非 <code>null</code> 引用，正确的 <code>equals()</code> 应满足：</p>
-<ul>
-<li>自反性：<code>x.equals(x)</code> 为 <code>true</code>；</li>
-<li>对称性：<code>x.equals(y)</code> 与 <code>y.equals(x)</code> 结果一致；</li>
-<li>传递性：如果 <code>x</code> 等于 <code>y</code> 且 <code>y</code> 等于 <code>z</code>，则 <code>x</code> 等于 <code>z</code>；</li>
-<li>一致性：参与比较的状态没有变化时，多次调用结果一致；</li>
-<li>非空性：<code>x.equals(null)</code> 为 <code>false</code>。</li>
-</ul>
-<h2><code>hashCode()</code> 必须与 <code>equals()</code> 一致</h2>
-<p>哈希值是一个用于快速缩小查找范围的整数。基于哈希值保存数据的容器先按它定位候选位置，再用 <code>equals()</code> 确认是否找到目标。因此必须满足：</p>
+</code></pre></div><p>因此，调用 <code>equals()</code> 不代表自动比较字段；按编号、内容或其他数据比较，都需要类提供相应实现。<code>String</code> 就重写了这个方法，按字符串内容判断相等。</p>
+<h3>重写 equals 时也要重写 hashCode</h3>
+<p><code>HashSet</code>、<code>HashMap</code> 等哈希容器需要快速找到对象。它们利用 <code>hashCode()</code> 返回的整数缩小候选范围，再通过身份或 <code>equals()</code> 确认匹配。</p>
+<p><strong><code>hashCode()</code> 决定到哪里找，<code>equals()</code> 决定找到的是不是目标。</strong> 两者必须满足：</p>
 <blockquote>
-<p>如果 <code>a.equals(b)</code> 为 <code>true</code>，那么 <code>a.hashCode() == b.hashCode()</code> 必须为 <code>true</code>。</p>
+<p><code>a.equals(b)</code> 为 <code>true</code> ⇒ <code>a.hashCode() == b.hashCode()</code>。</p>
 </blockquote>
-<p>反过来不成立：不同对象可以产生相同哈希值，容器会继续用 <code>equals()</code> 区分它们。</p>
-<p>只重写 <code>equals()</code> 而不重写 <code>hashCode()</code>，可能使逻辑相等的对象得到不同哈希值，导致查找失败。</p>
-<p>下面的 <code>User</code> 按用户编号 <code>id</code> 判断相等。<code>@Override</code> 表示重写已有方法，由编译器检查签名；<code>final</code> 字段只能赋值一次，<code>final</code> 类不能再定义子类，避免子类增加另一套比较规则。</p>
+<p>反过来不成立。不同对象可能得到相同哈希值，这称为<strong>哈希冲突</strong>，所以不能用哈希值相同代替相等判断。</p>
+<p><strong>重写 <code>equals()</code> 定义逻辑相等时，也要配套重写 <code>hashCode()</code>。</strong> <code>Object</code> 默认的两个方法按对象身份配合工作；只把 <code>equals()</code> 改为按用户编号比较，继承的 <code>Object.hashCode()</code> 并不会自动改为按编号计算，因此不能保证同编号的两个对象具有相同哈希值。这是方法契约的要求，编译器不会强制两个方法一起重写。</p>
+<p>下面的 <code>User</code> 以 <code>id</code> 为相等依据，姓名只用于展示。类声明为 <code>final</code>，避免子类引入不兼容的相等规则：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">long</span> id<span class="token punctuation">;</span>
     <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
@@ -8098,10 +8088,9 @@ counter<span class="token punctuation">.</span><span class="token function">incr
         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token operator">==</span> other<span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>other <span class="token keyword">instanceof</span> <span class="token class-name">User</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>other <span class="token keyword">instanceof</span> <span class="token class-name">User</span> user<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
-        <span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">User</span><span class="token punctuation">)</span> other<span class="token punctuation">;</span>
         <span class="token keyword">return</span> id <span class="token operator">==</span> user<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
@@ -8115,86 +8104,37 @@ counter<span class="token punctuation">.</span><span class="token function">incr
         <span class="token keyword">return</span> <span class="token string">"User[id="</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">", name="</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">"]"</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-</code></pre></div><p><code>instanceof User</code> 确认参数是用户对象，再通过 <code>(User) other</code> 以 <code>User</code> 类型访问其编号。<code>Long.hashCode(id)</code> 根据 <code>long</code> 数值计算整数哈希值。这里两个方法都依据稳定的 <code>id</code>，因此编号相同的对象具有相同哈希值。</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">User</span> first <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">,</span> <span class="token string">"Alice"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">User</span> second <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">,</span> <span class="token string">"Alice"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>两个方法都依据 <code>id</code>，所以即使姓名不同，同编号的对象仍然相等，也能在哈希集合中匹配：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">HashSet</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Set</span></span><span class="token punctuation">;</span>
+
+<span class="token class-name">User</span> first <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">,</span> <span class="token string">"Alice"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">User</span> second <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">,</span> <span class="token string">"Alicia"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first <span class="token operator">==</span> second<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// false</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true：编号相同</span>
-</code></pre></div><p>例如 <code>HashSet</code> 是按哈希值保存不重复元素的集合，<code>Set&lt;User&gt;</code> 表示集合里存放 <code>User</code> 对象。<code>add()</code> 加入元素，<code>contains()</code> 检查是否存在逻辑相等的元素：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Set</span></span><span class="token punctuation">;</span>
-<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">HashSet</span></span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
 
 <span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> users <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-users<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">,</span> <span class="token string">"Alice"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+users<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>first<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>users<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>users<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// false：已有相等元素</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>users<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// 1</span>
+</code></pre></div><p>如果删掉 <code>User</code> 中的 <code>hashCode()</code> 实现，保留 <code>equals()</code>，再运行下面的代码，就能观察两套规则不一致的问题：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">User</span> first <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">,</span> <span class="token string">"Alice"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">User</span> second <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">,</span> <span class="token string">"Alicia"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">User</span><span class="token punctuation">&gt;</span></span> users <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+users<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>first<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token keyword">boolean</span> found <span class="token operator">=</span> users<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">,</span> <span class="token string">"Alice"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>要保证查找遵守逻辑相等规则，两个方法必须满足“相等对象具有相同哈希值”的约束。按同一组稳定字段实现是常用方式；不同对象的哈希值仍然允许相同。</p>
-<h2>哈希查找中的可变字段</h2>
-<p>如果用某个字段计算哈希值，把对象放入集合后再修改该字段，新的哈希值可能指向另一处查找位置，导致无法找到原对象。</p>
-<p>因此，上例的 <code>id</code> 在构造后保持不变。若按姓名判断相等并计算哈希值，又允许修改姓名，就需要在对象进入哈希集合时额外约束修改行为。参与相等判断的字段是否稳定，取决于对象的使用方式。</p>
-<h2><code>toString()</code> 用于可读表示</h2>
-<p><code>Object.toString()</code> 默认生成 <code>getClass().getName() + "@" + Integer.toHexString(hashCode())</code>。其中是哈希值的十六进制表示，不是对象内存地址；默认结果通常不包含业务状态。</p>
-<p>重写后可改善日志、调试和失败信息：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token annotation punctuation">@Override</span>
-<span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"User[id="</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">", name="</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">"]"</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>不要在 <code>toString()</code> 中输出密码、令牌、完整身份证号等敏感数据，也不要让它执行数据库查询或其他昂贵操作。</p>
-<h2>getClass 与运行时类型</h2>
-<p><code>getClass()</code> 返回一个描述实际对象类型的 <code>Class</code> 对象。可以通过它的 <code>getName()</code> 读取类名，或与 <code>类型名.class</code> 比较，判断是否为精确的同一个类型。</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">Note</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-
-<span class="token class-name">Object</span> value <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Note</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Note</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token class-name">Note</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
-</code></pre></div><p>变量声明为 <code>Object</code>，实际创建的仍然是 <code>Note</code> 对象，所以结果取决于实际对象。<code>instanceof Note</code> 则检查对象是否为 <code>Note</code> 或其子类型。对 <code>null</code> 调用 <code>getClass()</code> 会失败，而 <code>null instanceof Note</code> 为 <code>false</code>。</p>
-<p>通过 <code>Class</code> 进一步检查字段和调用方法的能力称为反射，属于运行时类型信息的扩展用法。</p>
-<h2>clone 与浅复制</h2>
-<p>浅复制创建一个新对象，再复制原对象的字段值；如果字段指向其他对象，复制结果仍指向那些对象。</p>
-<p><code>Object.clone()</code> 提供这种复制行为。它的 <code>protected</code> 权限允许子类使用，但普通外部代码不能直接调用。类通过 <code>implements Cloneable</code> 声明支持复制；<code>Cloneable</code> 只是一个标记，不包含需要实现的方法。不提供这个标记时，调用 <code>Object.clone()</code> 会抛出 <code>CloneNotSupportedException</code>，表示不支持复制。</p>
-<p>下面把复制方法公开给调用方，<code>super.clone()</code> 调用 <code>Object</code> 提供的实现：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">Snapshot</span> <span class="token keyword">implements</span> <span class="token class-name">Cloneable</span> <span class="token punctuation">{</span>
-    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> values<span class="token punctuation">;</span>
-
-    <span class="token class-name">Snapshot</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> values<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>values <span class="token operator">=</span> values<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">Snapshot</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">Snapshot</span><span class="token punctuation">)</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">CloneNotSupportedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">AssertionError</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token class-name">Snapshot</span> original <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Snapshot</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">Snapshot</span> copy <span class="token operator">=</span> original<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-copy<span class="token punctuation">.</span>values<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">;</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>original <span class="token operator">==</span> copy<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// false</span>
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>original<span class="token punctuation">.</span>values<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 9</span>
-</code></pre></div><p><code>Object.clone()</code> 创建新的对象并复制字段值，不会递归复制引用字段指向的对象，也不会执行该对象的构造方法。例子中两份对象仍共享数组。若需要独立数组，要显式复制它；更复杂的对象图则需要定义具体的复制边界。</p>
-<p>数组可以直接调用公开的 <code>clone()</code>。对于自定义业务对象，复制构造方法或命名工厂也能表达复制语义，并让初始化逻辑更明确。</p>
-<h2>wait、notify 与线程协调</h2>
-<p><code>wait()</code>、<code>notify()</code> 和 <code>notifyAll()</code> 是 <code>Object</code> 提供的线程协调方法，用于在对象上等待条件变化和通知等待线程。</p>
-<p>调用时必须先通过 <code>synchronized</code> 获得对应对象的监视器锁，否则抛出 <code>IllegalMonitorStateException</code>。等待、释放锁、通知以及重新检查条件的流程见。</p>
-<h2>finalize 与资源释放</h2>
-<p><code>finalize()</code> 自 Java 9 起被标记为废弃。它不提供及时执行保证，不能用于保证文件、连接或锁等外部资源的释放。</p>
-<p><code>AutoCloseable</code> 表示资源提供 <code>close()</code> 关闭方法；<code>try-with-resources</code> 是在代码块结束时自动调用该方法的语法，具体例子见。<code>final</code> 是语言修饰符，<code>finally</code> 是异常处理结构，二者也都不是 <code>finalize()</code> 的替代名称。</p>
-<h2>常见错误</h2>
-<ul>
-<li>使用 <code>==</code> 比较 <code>String</code> 或包装类内容；</li>
-<li><code>equals()</code> 判断相等的对象产生不同的哈希值；</li>
-<li>把可变字段纳入哈希键的相等语义；</li>
-<li>在继承层次中让父类和子类采用不兼容的相等规则；</li>
-<li>为了测试方便而让所有字段都参与实体相等判断；</li>
-<li>在 <code>toString()</code> 中泄露敏感信息。</li>
-</ul>
-<h2>方法概览</h2>
-<p>| 方法 | 默认行为或用途 | 是否可以重写 |<br>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// true</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>first<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> second<span class="token punctuation">.</span><span class="token function">hashCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 可能为 false</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>users<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">// 可能为 false</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>users<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>second<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                     <span class="token comment">// 可能为 true</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>users<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                          <span class="token comment">// 可能为 2</span>
+</code></pre></div><p>当这两个对象的默认哈希值不同时，<code>contains(second)</code> 找不到已存入的 <code>first</code>，<code>add(second)</code> 还会把逻辑相等的对象再次加入集合。<code>HashMap</code> 也可能出现用相等的键取不到值、同一逻辑键存出两条记录的情况。默认哈希值允许碰撞，所以这些失败结果不是每次运行都必然出现；偶然查找成功也不代表实现符合契约。</p>
+<p>修复时让两个方法使用一致的相等依据：上例恢复 <code>return Long.hashCode(id)</code> 即可。不能在 <code>equals()</code> 中只比较 <code>id</code>，却在 <code>hashCode()</code> 中额外混入 <code>name</code>，否则同编号、不同姓名的对象仍可能违反约束。</p>
+<h3>相等规则的约束</h3>
+<p><code>equals()</code> 定义的是一种等价关系。对非 <code>null</code> 引用，它需要满足：</p>
+<p>| 约束 | 含义 |<br>
 |</p>
 ]]></content>
     <category term="java"/>
