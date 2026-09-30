@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Wed, 30 Sep 2026 08:26:59 GMT</pubDate>
-    <lastBuildDate>Wed, 30 Sep 2026 08:26:59 GMT</lastBuildDate>
+    <pubDate>Wed, 30 Sep 2026 09:49:26 GMT</pubDate>
+    <lastBuildDate>Wed, 30 Sep 2026 09:49:26 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
@@ -342,17 +342,21 @@ OK
       <link>https://zeevenn.github.io/notes/notes/programming-languages/java/standard-library/stream-processing.html</link>
       <guid>https://zeevenn.github.io/notes/notes/programming-languages/java/standard-library/stream-processing.html</guid>
       <source url="https://zeevenn.github.io/notes/notes/rss.xml">Stream 与集合数据处理</source>
-      <description>从订单列表中筛选已支付订单，再提取编号，可以把处理步骤连成一条 Stream 流水线。集合保存数据，Stream 描述如何处理这些数据；操作中的判断和转换由 提供。 从订单列表得到处理结果 下面的例子共用这组订单，金额以分为单位： 这条处理链由三部分组成： filter() 保留满足条件的元素，map() 将每个元素转换成另一个值，因此这里从 Stre...</description>
+      <description>从订单列表中筛选已支付订单，再提取编号，可以把处理步骤连成一条 Stream 流水线。集合保存数据，Stream 描述如何处理这些数据；操作中的判断和转换由 提供。 常用方法总览 一条流水线从创建流开始，经过零个或多个中间操作描述筛选、转换等步骤，最后由一个终止操作触发计算，得到结果或执行动作。中间操作返回流，可以继续串联；终止操作结束这条处理链。 从...</description>
       <category>java</category>
       <pubDate>Tue, 29 Sep 2026 00:00:00 GMT</pubDate>
       <content:encoded><![CDATA[<p>从订单列表中筛选已支付订单，再提取编号，可以把处理步骤连成一条 Stream 流水线。集合保存数据，Stream 描述如何处理这些数据；操作中的判断和转换由  提供。</p>
+<h2>常用方法总览</h2>
+<p>一条流水线从创建流开始，经过零个或多个<strong>中间操作</strong>描述筛选、转换等步骤，最后由一个<strong>终止操作</strong>触发计算，得到结果或执行动作。中间操作返回流，可以继续串联；终止操作结束这条处理链。</p>
 <h2>从订单列表得到处理结果</h2>
 <p>下面的例子共用这组订单，金额以分为单位：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">ArrayList</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Arrays</span></span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Comparator</span></span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span></span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Map</span></span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span><span class="token class-name">Collectors</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span><span class="token class-name">LongStream</span></span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span></span><span class="token class-name">Stream</span></span><span class="token punctuation">;</span>
 
 <span class="token keyword">record</span> <span class="token class-name">Order</span><span class="token punctuation">(</span><span class="token class-name">String</span> id<span class="token punctuation">,</span> <span class="token class-name">String</span> customer<span class="token punctuation">,</span> <span class="token keyword">long</span> totalCents<span class="token punctuation">,</span>
