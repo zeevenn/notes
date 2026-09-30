@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Tue, 29 Sep 2026 10:49:10 GMT</pubDate>
-    <lastBuildDate>Tue, 29 Sep 2026 10:49:10 GMT</lastBuildDate>
+    <pubDate>Wed, 30 Sep 2026 03:41:48 GMT</pubDate>
+    <lastBuildDate>Wed, 30 Sep 2026 03:41:48 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>java</category>
@@ -3342,6 +3342,16 @@ element<span class="token punctuation">.</span><span class="token function">addE
 ]]></content:encoded>
     </item>
     <item>
+      <title>Python</title>
+      <link>https://zeevenn.github.io/notes/notes/programming-languages/python/</link>
+      <guid>https://zeevenn.github.io/notes/notes/programming-languages/python/</guid>
+      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Python</source>
+      <description>Python </description>
+      <pubDate>Wed, 19 Aug 2026 02:12:32 GMT</pubDate>
+      <content:encoded><![CDATA[
+]]></content:encoded>
+    </item>
+    <item>
       <title>类数组对象</title>
       <link>https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html</link>
       <guid>https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html</guid>
@@ -6032,16 +6042,6 @@ console<span class="token punctuation">.</span><span class="token function">log<
 ]]></content:encoded>
     </item>
     <item>
-      <title>Python</title>
-      <link>https://zeevenn.github.io/notes/notes/programming-languages/python/</link>
-      <guid>https://zeevenn.github.io/notes/notes/programming-languages/python/</guid>
-      <source url="https://zeevenn.github.io/notes/notes/rss.xml">Python</source>
-      <description>Python </description>
-      <pubDate>Wed, 19 Aug 2026 02:12:32 GMT</pubDate>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    <item>
       <title>TypeScript</title>
       <link>https://zeevenn.github.io/notes/notes/programming-languages/typescript/</link>
       <guid>https://zeevenn.github.io/notes/notes/programming-languages/typescript/</guid>
@@ -7525,20 +7525,14 @@ names<span class="token punctuation">.</span><span class="token function">add</s
 names<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"Bob"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div><p>变量通常声明为接口类型 <code>List&lt;String&gt;</code>，创建对象时再选择 <code>ArrayList</code>。调用方依赖“有序、可按索引访问”的契约，而不是依赖可变数组的内部实现。</p>
 <h2>接口层次</h2>
-<p>集合框架有两个主要分支：元素集合与键值映射。</p>
-<div class="language-text" data-ext="text" data-title="text"><pre class="language-text"><code>Iterable&lt;E&gt;
-└── Collection&lt;E&gt;
-    ├── List&lt;E&gt;
-    ├── Set&lt;E&gt;
-    │   └── SortedSet&lt;E&gt;
-    │       └── NavigableSet&lt;E&gt;
-    └── Queue&lt;E&gt;
-        └── Deque&lt;E&gt;
-
-Map&lt;K, V&gt;
-└── SortedMap&lt;K, V&gt;
-    └── NavigableMap&lt;K, V&gt;
-</code></pre></div><p><code>Map</code> 不继承 <code>Collection</code>。它保存键值映射，并通过 <code>keySet()</code>、<code>values()</code> 和 <code>entrySet()</code> 提供集合视图。</p>
+<p>集合框架分为 <code>Collection</code> 元素集合与 <code>Map</code> 键值映射两条主线。下图展示常用接口、实现类，以及迭代器、集合视图和工具类的关系；省略抽象基类与并发集合。</p>
+<figure><figcaption>Java 集合框架：接口、实现类、迭代器与工具类</figcaption></figure>
+<p>图可点击放大。实线空心三角表示继承（<code>extends</code>），虚线空心三角表示实现接口，包含通过父类继承的实现，三角均指向父类型；点线箭头表示方法返回或类型关联。例如，<code>PriorityQueue</code> 通过省略的 <code>AbstractQueue</code> 实现 <code>Queue</code>。</p>
+<ul>
+<li><code>LinkedList</code> 同时实现 <code>List</code> 和 <code>Deque</code>，既可作为列表，也可作为双端队列。</li>
+<li><code>Map</code> 不继承 <code>Collection</code>，但 <code>values()</code> 返回 <code>Collection</code> 视图，<code>keySet()</code> 与 <code>entrySet()</code> 返回 <code>Set</code> 视图；<code>Map.Entry</code> 表示一条键值对。</li>
+<li><code>Iterator</code> 与 <code>ListIterator</code> 用于遍历；<code>Comparable</code> 与 <code>Comparator</code> 定义比较规则；<code>Collections</code> 和 <code>Arrays</code> 是工具类。</li>
+</ul>
 <h2>根据数据约束选择接口</h2>
 <p>| 需要表达的约束 | 接口 | 常用实现 |<br>
 |</p>

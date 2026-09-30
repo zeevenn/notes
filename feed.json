@@ -758,6 +758,17 @@
       "tags": []
     },
     {
+      "title": "Python",
+      "url": "https://zeevenn.github.io/notes/notes/programming-languages/python/",
+      "id": "https://zeevenn.github.io/notes/notes/programming-languages/python/",
+      "summary": "Python ",
+      "content_html": "\n",
+      "date_published": "2026-08-19T02:12:32.000Z",
+      "date_modified": "2026-08-19T02:12:32.000Z",
+      "authors": [],
+      "tags": []
+    },
+    {
       "title": "类数组对象",
       "url": "https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html",
       "id": "https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html",
@@ -1020,17 +1031,6 @@
       ]
     },
     {
-      "title": "Python",
-      "url": "https://zeevenn.github.io/notes/notes/programming-languages/python/",
-      "id": "https://zeevenn.github.io/notes/notes/programming-languages/python/",
-      "summary": "Python ",
-      "content_html": "\n",
-      "date_published": "2026-08-19T02:12:32.000Z",
-      "date_modified": "2026-08-19T02:12:32.000Z",
-      "authors": [],
-      "tags": []
-    },
-    {
       "title": "TypeScript",
       "url": "https://zeevenn.github.io/notes/notes/programming-languages/typescript/",
       "id": "https://zeevenn.github.io/notes/notes/programming-languages/typescript/",
@@ -1252,9 +1252,9 @@
       "url": "https://zeevenn.github.io/notes/notes/programming-languages/java/standard-library/collections-overview.html",
       "id": "https://zeevenn.github.io/notes/notes/programming-languages/java/standard-library/collections-overview.html",
       "summary": "Java 集合框架（Collections Framework）用一组接口和实现类表示内存中的多元素容器。接口描述集合能够做什么，实现类决定顺序、查找方式、时间复杂度、空值支持和并发行为。 变量通常声明为接口类型 List<String>，创建对象时再选择 ArrayList。调用方依赖“有序、可按索引访问”的契约，而不是依赖可变数组的内部实现。 接口...",
-      "content_html": "<p>Java 集合框架（Collections Framework）用一组接口和实现类表示内存中的多元素容器。接口描述集合能够做什么，实现类决定顺序、查找方式、时间复杂度、空值支持和并发行为。</p>\n<div class=\"language-java\" data-ext=\"java\" data-title=\"java\"><pre class=\"language-java\"><code><span class=\"token class-name\">List</span><span class=\"token generics\"><span class=\"token punctuation\">&lt;</span><span class=\"token class-name\">String</span><span class=\"token punctuation\">&gt;</span></span> names <span class=\"token operator\">=</span> <span class=\"token keyword\">new</span> <span class=\"token class-name\">ArrayList</span><span class=\"token generics\"><span class=\"token punctuation\">&lt;</span><span class=\"token punctuation\">&gt;</span></span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\nnames<span class=\"token punctuation\">.</span><span class=\"token function\">add</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Alice\"</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\nnames<span class=\"token punctuation\">.</span><span class=\"token function\">add</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Bob\"</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n</code></pre></div><p>变量通常声明为接口类型 <code>List&lt;String&gt;</code>，创建对象时再选择 <code>ArrayList</code>。调用方依赖“有序、可按索引访问”的契约，而不是依赖可变数组的内部实现。</p>\n<h2>接口层次</h2>\n<p>集合框架有两个主要分支：元素集合与键值映射。</p>\n<div class=\"language-text\" data-ext=\"text\" data-title=\"text\"><pre class=\"language-text\"><code>Iterable&lt;E&gt;\n└── Collection&lt;E&gt;\n    ├── List&lt;E&gt;\n    ├── Set&lt;E&gt;\n    │   └── SortedSet&lt;E&gt;\n    │       └── NavigableSet&lt;E&gt;\n    └── Queue&lt;E&gt;\n        └── Deque&lt;E&gt;\n\nMap&lt;K, V&gt;\n└── SortedMap&lt;K, V&gt;\n    └── NavigableMap&lt;K, V&gt;\n</code></pre></div><p><code>Map</code> 不继承 <code>Collection</code>。它保存键值映射，并通过 <code>keySet()</code>、<code>values()</code> 和 <code>entrySet()</code> 提供集合视图。</p>\n<h2>根据数据约束选择接口</h2>\n<p>| 需要表达的约束 | 接口 | 常用实现 |<br>\n|</p>\n",
+      "content_html": "<p>Java 集合框架（Collections Framework）用一组接口和实现类表示内存中的多元素容器。接口描述集合能够做什么，实现类决定顺序、查找方式、时间复杂度、空值支持和并发行为。</p>\n<div class=\"language-java\" data-ext=\"java\" data-title=\"java\"><pre class=\"language-java\"><code><span class=\"token class-name\">List</span><span class=\"token generics\"><span class=\"token punctuation\">&lt;</span><span class=\"token class-name\">String</span><span class=\"token punctuation\">&gt;</span></span> names <span class=\"token operator\">=</span> <span class=\"token keyword\">new</span> <span class=\"token class-name\">ArrayList</span><span class=\"token generics\"><span class=\"token punctuation\">&lt;</span><span class=\"token punctuation\">&gt;</span></span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\nnames<span class=\"token punctuation\">.</span><span class=\"token function\">add</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Alice\"</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\nnames<span class=\"token punctuation\">.</span><span class=\"token function\">add</span><span class=\"token punctuation\">(</span><span class=\"token string\">\"Bob\"</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n</code></pre></div><p>变量通常声明为接口类型 <code>List&lt;String&gt;</code>，创建对象时再选择 <code>ArrayList</code>。调用方依赖“有序、可按索引访问”的契约，而不是依赖可变数组的内部实现。</p>\n<h2>接口层次</h2>\n<p>集合框架分为 <code>Collection</code> 元素集合与 <code>Map</code> 键值映射两条主线。下图展示常用接口、实现类，以及迭代器、集合视图和工具类的关系；省略抽象基类与并发集合。</p>\n<figure><figcaption>Java 集合框架：接口、实现类、迭代器与工具类</figcaption></figure>\n<p>图可点击放大。实线空心三角表示继承（<code>extends</code>），虚线空心三角表示实现接口，包含通过父类继承的实现，三角均指向父类型；点线箭头表示方法返回或类型关联。例如，<code>PriorityQueue</code> 通过省略的 <code>AbstractQueue</code> 实现 <code>Queue</code>。</p>\n<ul>\n<li><code>LinkedList</code> 同时实现 <code>List</code> 和 <code>Deque</code>，既可作为列表，也可作为双端队列。</li>\n<li><code>Map</code> 不继承 <code>Collection</code>，但 <code>values()</code> 返回 <code>Collection</code> 视图，<code>keySet()</code> 与 <code>entrySet()</code> 返回 <code>Set</code> 视图；<code>Map.Entry</code> 表示一条键值对。</li>\n<li><code>Iterator</code> 与 <code>ListIterator</code> 用于遍历；<code>Comparable</code> 与 <code>Comparator</code> 定义比较规则；<code>Collections</code> 和 <code>Arrays</code> 是工具类。</li>\n</ul>\n<h2>根据数据约束选择接口</h2>\n<p>| 需要表达的约束 | 接口 | 常用实现 |<br>\n|</p>\n",
       "date_published": "2026-08-05T00:00:00.000Z",
-      "date_modified": "2026-09-29T08:02:56.000Z",
+      "date_modified": "2026-09-30T03:40:05.000Z",
       "authors": [],
       "tags": [
         "java"
