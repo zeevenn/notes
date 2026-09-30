@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="1080" viewBox="0 0 2100 1080" role="img" aria-labelledby="title desc">
+<title id="title">Java 集合框架：接口、实现类与相关工具</title>
+<desc id="desc">Collection 继承 Iterable，分为 List、Queue 和 Set；Map 为独立分支。图中包含常用实现、迭代器、Map 集合视图、比较接口及工具类。实线空心三角表示继承，虚线空心三角表示实现（含通过父类继承的实现），点线箭头表示关联。省略抽象基类和并发集合。</desc>
+<defs>
+<marker id="inherit" markerWidth="13" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L12,6 L1,11 Z" fill="white" stroke="#52637a" stroke-width="1.6"/></marker>
+<marker id="assoc" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#7d689c" stroke-width="1.8"/></marker>
+<style>
+text {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; fill:#24344c}
+.node-title {font-size:22px; font-weight:600; text-anchor:middle}
+.node-desc {font-size:17px; fill:#506079; text-anchor:middle}
+.edge {fill:none; stroke:#52637a; stroke-width:2; marker-end:url(#inherit)}
+.impl {stroke-dasharray:7 5}
+.assoc {fill:none; stroke:#7d689c; stroke-width:1.8; stroke-dasharray:3 5; marker-end:url(#assoc)}
+.label {font-size:17px; fill:#71588f; paint-order:stroke; stroke:#fff; stroke-width:7px; stroke-linejoin:round}
+.note {font-size:19px; fill:#506079}
+</style>
+</defs>
+<rect width="2100" height="1080" rx="20" fill="#ffffff"/>
+<text x="48" y="50" font-size="30" font-weight="700">Java 集合框架</text>
+<text x="310" y="49" class="note">接口 · 实现类 · 迭代器 · 比较与工具</text>
+<path d="M48 77 H2052" stroke="#e2e8f0"/>
+
+<path d="M160 238 L160 182" class="edge"/>
+<path d="M760 238 L760 182" class="edge"/>
+<path d="M330 378 L760 302" class="edge"/>
+<path d="M760 378 L760 302" class="edge"/>
+<path d="M1110 378 L760 302" class="edge"/>
+<path d="M320 658 L320 582" class="edge"/>
+<path d="M860 518 L760 442" class="edge"/>
+<path d="M1080 658 L1080 582" class="edge"/>
+<path d="M1290 518 L1110 442" class="edge"/>
+<path d="M1290 658 L1290 582" class="edge"/>
+<path d="M1510 518 L1510 442" class="edge"/>
+<path d="M1730 518 L1730 442" class="edge"/>
+<path d="M1950 378 L1730 182" class="edge"/>
+<path d="M1950 518 L1950 442" class="edge"/>
+<path d="M120 518 L330 442" class="edge impl"/>
+<path d="M320 518 L330 442" class="edge impl"/>
+<path d="M650 518 L760 442" class="edge impl"/>
+<path d="M860 768 L860 582" class="edge impl"/>
+<path d="M1080 518 L1110 442" class="edge impl"/>
+<path d="M1290 798 L1290 722" class="edge impl"/>
+<path d="M1510 378 L1730 182" class="edge impl"/>
+<path d="M1730 378 L1730 182" class="edge impl"/>
+<path d="M1950 658 L1950 582" class="edge impl"/>
+<path d="M520 768 V480 L390 442" class="edge impl"/>
+<path d="M550 768 V635 H820 V582" class="edge impl"/>
+<text x="560" y="657" class="label">同一个 LinkedList 同时实现 List 与 Deque</text>
+<path d="M668 150 H252" class="assoc"/>
+<text x="356" y="137" class="label">iterator() 返回</text>
+<path d="M238 410 H160 V302" class="assoc"/>
+<text x="44" y="369" class="label">listIterator() 返回</text>
+<path d="M1638 150 H1420 V270 H852" class="assoc"/>
+<text x="1100" y="255" class="label">values() → Collection</text>
+<path d="M1730 182 V330 H1110 V378" class="assoc"/>
+<text x="1190" y="319" class="label">keySet() → Set / entrySet() → Set&lt;Map.Entry&gt;</text>
+<path d="M1822 150 H1950 V238" class="assoc"/>
+<text x="1883" y="212" class="label">嵌套接口</text>
+<g><rect x="68.0" y="118" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="160" y="147" class="node-title">Iterator</text><text x="160" y="171" class="node-desc">逐个遍历</text></g>
+<g><rect x="68.0" y="238" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="160" y="267" class="node-title">ListIterator</text><text x="160" y="291" class="node-desc">列表双向遍历</text></g>
+<g><rect x="668.0" y="118" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="760" y="147" class="node-title">Iterable</text><text x="760" y="171" class="node-desc">提供迭代器</text></g>
+<g><rect x="668.0" y="238" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="760" y="267" class="node-title">Collection</text><text x="760" y="291" class="node-desc">元素集合</text></g>
+<g><rect x="238.0" y="378" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="330" y="407" class="node-title">List</text><text x="330" y="431" class="node-desc">可重复、按索引访问</text></g>
+<g><rect x="668.0" y="378" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="760" y="407" class="node-title">Queue</text><text x="760" y="431" class="node-desc">队列</text></g>
+<g><rect x="1018.0" y="378" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="1110" y="407" class="node-title">Set</text><text x="1110" y="431" class="node-desc">元素不重复</text></g>
+<g><rect x="28.0" y="518" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="120" y="547" class="node-title">ArrayList</text><text x="120" y="571" class="node-desc">动态数组</text></g>
+<g><rect x="228.0" y="518" width="184" height="64" rx="9" fill="#f0f2f5" stroke="#8a96a6" stroke-width="1.5"/><text x="320" y="547" class="node-title">Vector</text><text x="320" y="571" class="node-desc">传统同步列表</text></g>
+<g><rect x="228.0" y="658" width="184" height="64" rx="9" fill="#f0f2f5" stroke="#8a96a6" stroke-width="1.5"/><text x="320" y="687" class="node-title">Stack</text><text x="320" y="711" class="node-desc">继承 Vector 的栈</text></g>
+<g><rect x="428.0" y="768" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="520" y="797" class="node-title">LinkedList</text><text x="520" y="821" class="node-desc">双向链表</text></g>
+<g><rect x="558.0" y="518" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="650" y="547" class="node-title">PriorityQueue</text><text x="650" y="571" class="node-desc">优先队列</text></g>
+<g><rect x="768.0" y="518" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="860" y="547" class="node-title">Deque</text><text x="860" y="571" class="node-desc">双端队列</text></g>
+<g><rect x="768.0" y="768" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="860" y="797" class="node-title">ArrayDeque</text><text x="860" y="821" class="node-desc">数组实现的双端队列</text></g>
+<g><rect x="988.0" y="518" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="1080" y="547" class="node-title">HashSet</text><text x="1080" y="571" class="node-desc">哈希集合</text></g>
+<g><rect x="988.0" y="658" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="1080" y="687" class="node-title">LinkedHashSet</text><text x="1080" y="711" class="node-desc">保留插入顺序</text></g>
+<g><rect x="1198.0" y="518" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="1290" y="547" class="node-title">SortedSet</text><text x="1290" y="571" class="node-desc">按元素排序</text></g>
+<g><rect x="1198.0" y="658" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="1290" y="687" class="node-title">NavigableSet</text><text x="1290" y="711" class="node-desc">查找邻近元素</text></g>
+<g><rect x="1198.0" y="798" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="1290" y="827" class="node-title">TreeSet</text><text x="1290" y="851" class="node-desc">有序集合</text></g>
+<g><rect x="1638.0" y="118" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="1730" y="147" class="node-title">Map</text><text x="1730" y="171" class="node-desc">键值映射、键唯一</text></g>
+<g><rect x="1858.0" y="238" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="1950" y="267" class="node-title">Map.Entry</text><text x="1950" y="291" class="node-desc">一条键值对</text></g>
+<g><rect x="1418.0" y="378" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="1510" y="407" class="node-title">HashMap</text><text x="1510" y="431" class="node-desc">哈希映射</text></g>
+<g><rect x="1418.0" y="518" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="1510" y="547" class="node-title">LinkedHashMap</text><text x="1510" y="571" class="node-desc">插入 / 访问顺序</text></g>
+<g><rect x="1638.0" y="378" width="184" height="64" rx="9" fill="#f0f2f5" stroke="#8a96a6" stroke-width="1.5"/><text x="1730" y="407" class="node-title">Hashtable</text><text x="1730" y="431" class="node-desc">传统同步映射</text></g>
+<g><rect x="1638.0" y="518" width="184" height="64" rx="9" fill="#f0f2f5" stroke="#8a96a6" stroke-width="1.5"/><text x="1730" y="547" class="node-title">Properties</text><text x="1730" y="571" class="node-desc">属性配置</text></g>
+<g><rect x="1858.0" y="378" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="1950" y="407" class="node-title">SortedMap</text><text x="1950" y="431" class="node-desc">按键排序</text></g>
+<g><rect x="1858.0" y="518" width="184" height="64" rx="9" fill="#eaf2ff" stroke="#5885c0" stroke-width="1.5"/><text x="1950" y="547" class="node-title">NavigableMap</text><text x="1950" y="571" class="node-desc">查找邻近键</text></g>
+<g><rect x="1858.0" y="658" width="184" height="64" rx="9" fill="#fff2dd" stroke="#cc994e" stroke-width="1.5"/><text x="1950" y="687" class="node-title">TreeMap</text><text x="1950" y="711" class="node-desc">有序映射</text></g>
+<g transform="translate(48,895)">
+<rect width="2004" height="149" rx="12" fill="#f7f9fc" stroke="#e2e8f0"/>
+<rect x="22" y="18" width="18" height="18" rx="4" fill="#eaf2ff" stroke="#5885c0"/><text x="50" y="34" class="note">接口</text>
+<rect x="122" y="18" width="18" height="18" rx="4" fill="#fff2dd" stroke="#cc994e"/><text x="150" y="34" class="note">实现类</text>
+<rect x="252" y="18" width="18" height="18" rx="4" fill="#f0f2f5" stroke="#8a96a6"/><text x="280" y="34" class="note">传统类 / 配置类</text>
+<path d="M480 27 H535" class="edge"/><text x="549" y="34" class="note">继承 extends</text>
+<path d="M725 27 H780" class="edge impl"/><text x="794" y="34" class="note">实现（含间接）</text>
+<path d="M1010 27 H1065" class="assoc"/><text x="1080" y="34" class="note">返回 / 关联</text>
+<text x="1350" y="34" class="note">空心三角指向父类型；省略抽象基类与并发集合</text>
+<path d="M22 51 H1982" stroke="#e2e8f0"/>
+<text x="22" y="82" font-size="20" font-weight="600">Comparable / Comparator · 比较接口</text>
+<text x="22" y="113" class="note">自然顺序 / 外部比较规则；TreeSet、PriorityQueue 比较元素，TreeMap 比较键。</text>
+<text x="915" y="82" font-size="20" font-weight="600">Collections · 集合工具类</text>
+<text x="915" y="113" class="note">排序、查找、包装集合</text>
+<text x="1460" y="82" font-size="20" font-weight="600">Arrays · 数组工具类</text>
+<text x="1460" y="113" class="note">排序、查找、asList() 转换</text>
+</g>
+</svg>

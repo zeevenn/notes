@@ -16,24 +16,15 @@ names.add("Bob");
 
 ## 接口层次
 
-集合框架有两个主要分支：元素集合与键值映射。
+集合框架分为 `Collection` 元素集合与 `Map` 键值映射两条主线。下图展示常用接口、实现类，以及迭代器、集合视图和工具类的关系；省略抽象基类与并发集合。
 
-```text
-Iterable<E>
-└── Collection<E>
-    ├── List<E>
-    ├── Set<E>
-    │   └── SortedSet<E>
-    │       └── NavigableSet<E>
-    └── Queue<E>
-        └── Deque<E>
+![Java 集合框架：接口、实现类、迭代器与工具类](./assets/collections-framework.svg)
 
-Map<K, V>
-└── SortedMap<K, V>
-    └── NavigableMap<K, V>
-```
+图可点击放大。实线空心三角表示继承（`extends`），虚线空心三角表示实现接口，包含通过父类继承的实现，三角均指向父类型；点线箭头表示方法返回或类型关联。例如，`PriorityQueue` 通过省略的 `AbstractQueue` 实现 `Queue`。
 
-`Map` 不继承 `Collection`。它保存键值映射，并通过 `keySet()`、`values()` 和 `entrySet()` 提供集合视图。
+- `LinkedList` 同时实现 `List` 和 `Deque`，既可作为列表，也可作为双端队列。
+- `Map` 不继承 `Collection`，但 `values()` 返回 `Collection` 视图，`keySet()` 与 `entrySet()` 返回 `Set` 视图；`Map.Entry` 表示一条键值对。
+- `Iterator` 与 `ListIterator` 用于遍历；`Comparable` 与 `Comparator` 定义比较规则；`Collections` 和 `Arrays` 是工具类。
 
 ## 根据数据约束选择接口
 
@@ -124,14 +115,14 @@ boolean exists = users.contains(new User(1L, "Alice"));
 
 只有 `User.equals()` 与 `hashCode()` 一致表达用户身份时，查询结果才符合预期。对象放入 `HashSet` 或作为 `HashMap` 键之后，不应修改参与相等判断的字段。
 
-排序集合使用自然顺序或 `Comparator` 判断位置和元素是否重复。比较结果为 `0` 的两个值在 `TreeSet` 中视为同一个元素，即使其 `equals()` 返回 `false`；比较规则最好与 `equals()` 一致。
+排序集合使用自然顺序或 `Comparator` 判断位置和元素是否重复。比较结果为 `0` 的两个值在 `TreeSet` 中视为同一个元素，即使其 `equals()` 返回 `false`。要遵守 `Set` 的相等性契约，比较结果为 `0` 必须与 `equals()` 返回 `true` 一致；否则 `TreeSet` 仍按比较规则运行，但不满足 `Set` 的通用契约。
 
 ## 顺序不是同一个概念
 
 - 索引顺序：`List` 中每个元素有位置；
 - 插入顺序：`LinkedHashSet`、默认模式的 `LinkedHashMap`；
 - 排序顺序：`TreeSet`、`TreeMap`；
-- 优先级顺序：`PriorityQueue` 只保证队首是当前最小或最高优先级元素；
+- 优先级顺序：`PriorityQueue` 的队首是按自然顺序或指定比较器确定的最小元素，遍历不保证有序；
 - 未指定顺序：`HashSet`、`HashMap`，不能依赖观察到的遍历顺序。
 
 若顺序会影响序列化、测试或业务结果，应在类型与实现选择中明确表达，而不是依赖某次运行的偶然顺序。
