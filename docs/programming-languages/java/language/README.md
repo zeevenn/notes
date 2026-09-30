@@ -40,4 +40,6 @@
 - [泛型](./generics.md)
 - [Lambda 与方法引用（Java 8+）](./lambda-and-method-references.md)
 - [模式匹配](./pattern-matching.md)
+- [反射](./reflection.md)
 - [注解](./annotations.md)
+- [静态代理与动态代理](./proxies.md)

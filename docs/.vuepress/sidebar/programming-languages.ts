@@ -94,7 +94,9 @@ export default [
               'generics',
               'lambda-and-method-references',
               'pattern-matching',
-              'annotations'
+              'reflection',
+              'annotations',
+              'proxies'
             ]
           }
         ]

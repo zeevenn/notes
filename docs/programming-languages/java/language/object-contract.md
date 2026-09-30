@@ -245,7 +245,7 @@ System.out.println(value.getClass().getSimpleName()); // Note
 System.out.println(value.getClass() == Note.class);  // true
 ```
 
-`getClass() == Note.class` 要求实际类型恰好是 `Note`；`instanceof Note` 则允许 `Note` 的子类型。通过 `Class` 进一步检查字段、方法或调用方法，就是反射的用途。
+`getClass() == Note.class` 要求实际类型恰好是 `Note`；`instanceof Note` 则允许 `Note` 的子类型。通过 `Class` 进一步检查字段、方法或调用方法，就是[反射](./reflection.md)的用途。
 
 `getClass()` 声明为 `final`，不能重写。对 `null` 调用它会抛出 `NullPointerException`，而 `null instanceof Note` 为 `false`。
 

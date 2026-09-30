@@ -66,7 +66,7 @@ public class UserService {
 
 ### 读取信息并决定输出
 
-Java 的**反射** API 可以在运行时检查类、方法、字段等信息，也能读取其中保留到运行时的注解。`UserService.class` 表示这个类的 `Class` 对象，用它可以查询类上的注解，无需创建 `UserService` 实例。
+Java 的[反射](./reflection.md) API 可以在运行时检查类、方法、字段等信息，也能读取其中保留到运行时的注解。`UserService.class` 表示这个类的 `Class` 对象，用它可以查询类上的注解，无需创建 `UserService` 实例。
 
 在 `AnnotationDemo.java` 中编写读取逻辑：
 
@@ -86,20 +86,13 @@ public class AnnotationDemo {
 
 `Class<?>` 表示所描述的类可以是任意类型。`getAnnotation(DisplayName.class)` 按注解类型查询：找到时返回注解对象，没有找到时返回 `null`。`annotation.value()` 读到的是 `"用户服务"`，而 `getSimpleName()` 返回不含包名的类名。
 
-将三个文件放在同一目录中，编译并运行：
-
-```sh
-javac -encoding UTF-8 DisplayName.java UserService.java AnnotationDemo.java
-java AnnotationDemo
-```
-
 输出为：
 
 ```text
 用户服务
 ```
 
-删除 `UserService` 上的 `@DisplayName` 后重新编译运行，`getAnnotation()` 返回 `null`，程序输出类名 `UserService`。
+删除 `UserService` 上的 `@DisplayName` 后，`getAnnotation()` 返回 `null`，程序输出类名 `UserService`。
 
 ## 注解元素与赋值
 

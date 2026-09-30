@@ -7,7 +7,7 @@
 - [基础语法](./language/README.md#基础语法)
 - [面向对象](./language/README.md#面向对象)
 - [类型声明与建模](./language/README.md#类型声明与建模)
-- [语言机制](./language/README.md#语言机制)：异常处理、线程基础、泛型等
+- [语言机制](./language/README.md#语言机制)：异常处理、线程基础、泛型、反射、注解与代理等
 
 ## 标准库
 
