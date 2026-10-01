@@ -101,4 +101,4 @@ System.out.println(Arrays.deepToString(rows)); // [[1, 2], [3, 4, 5]]
 
 嵌套数组的内容输出使用 `Arrays.deepToString()`，内容比较使用 `Arrays.deepEquals()`。
 
-数组与字符串互转见 [String：与数组互转](./string.md#与数组互转)；数组与列表之间的转换见 [List：数组与 List 转换](../standard-library/list.md#数组与-list-转换)；方法参数中的 `int...` 写法见[方法：可变参数](./methods.md#可变参数)。
+数组与字符串互转见 [String：与数组互转](./string.md#与数组互转)；数组与列表之间的转换见 [List：数组与 List 转换](../standard-library/collections/list.md#数组与-list-转换)；方法参数中的 `int...` 写法见[方法：可变参数](./methods.md#可变参数)。

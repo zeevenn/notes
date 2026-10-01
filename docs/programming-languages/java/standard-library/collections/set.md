@@ -32,7 +32,7 @@ boolean empty = permissions.isEmpty();
 从集合或其他元素容器去重：
 
 ```java
-List<String> names = List.of("Alice", "Bob", "Alice"); // List.of(): Java 9+
+List<String> names = List.of("Alice", "Bob", "Alice");
 Set<String> uniqueNames = new HashSet<>(names);
 ```
 
@@ -43,19 +43,26 @@ Set<String> uniqueNames = new HashSet<>(names);
 `HashSet` 使用哈希表，根据 `hashCode()` 定位候选位置，再使用 `equals()` 判断元素是否相同。
 
 ```java
-Set<User> users = new HashSet<>();
-users.add(new User(1L, "Alice"));
+record User(long id, String name) {}
 
-boolean exists = users.contains(new User(1L, "Alice"));
+Set<User> users = new HashSet<>();
+System.out.println(users.add(new User(1L, "Alice"))); // true
+System.out.println(users.add(new User(1L, "Alice"))); // false
+
+System.out.println(users.contains(new User(1L, "Alice"))); // true
 ```
+
+这里的 Record 按 `id` 和 `name` 共同生成 `equals()`、`hashCode()`，所以两个不同对象也可以被视为同一个元素。普通类若沿用 `Object.equals()`，只有同一个对象引用才相等；仅仅字段值相同不会自动去重。若业务只按 ID 去重，应按 ID 定义相等性，或用 ID 作为 Map 的键。
+
+相等对象必须具有相同哈希值；哈希值相同并不代表对象相等，这种情况称为哈希冲突，需要继续区分元素。
 
 正常哈希分布下，`add()`、`contains()` 和 `remove()` 平均为 `O(1)`。它不保证遍历顺序，不能依赖当前观察到的输出顺序。
 
-`HashSet` 允许一个 `null` 元素，但在业务模型中是否允许缺失值应由 API 明确决定，不应只依据实现能力。
+`HashSet` 允许一个 `null` 元素。
 
 ## `LinkedHashSet`
 
-`LinkedHashSet` 在哈希表之外维护明确的相遇顺序，常用于“去重但保留首次出现顺序”：
+`LinkedHashSet` 在哈希表之外维护插入顺序，常用于“去重但保留首次出现顺序”：
 
 ```java
 Set<String> names = new LinkedHashSet<>();
@@ -67,10 +74,6 @@ System.out.println(names); // [Bob, Alice]
 ```
 
 它仍具有接近 `HashSet` 的基本查找特征，但为维护顺序付出额外内存成本。
-
-### SequencedSet API [Java 21+]
-
-Java 21 起 `LinkedHashSet` 实现 `SequencedSet`，可使用 `getFirst()`、`getLast()`、`addFirst()`、`addLast()` 和 `reversed()`。Java 8 等较早版本使用原有的 `Set` 接口；需要读取首个元素时通过迭代器表达，不应假设 `HashSet` 具有顺序。
 
 ## `TreeSet`
 
@@ -97,19 +100,23 @@ System.out.println(scores.ceiling(90)); // 95
 | `higher(x)` | 严格大于 `x` 的最小元素 |
 | `subSet()` | 返回指定范围的视图 |
 
-自然顺序要求元素实现 `Comparable`；否则构造时传入 `Comparator`：
+自然顺序由元素的 `Comparable` 定义，也可以在构造时传入外部比较规则 `Comparator`，见[遍历、比较与排序](./iteration-and-comparison.md#自然顺序-comparable)。下面仍使用前面定义的 `User`：
 
 ```java
-Set<User> users = new TreeSet<>(Comparator.comparing(User::name)); // Java 8+
+Set<User> byName = new TreeSet<>(Comparator.comparing(User::name));
+System.out.println(byName.add(new User(1L, "Alice"))); // true
+System.out.println(byName.add(new User(2L, "Alice"))); // false
 ```
 
 在 `TreeSet` 中，比较结果为 `0` 就表示元素重复。比较器只按姓名比较时，两个同名但 ID 不同的用户只能保留一个。
 
 要遵守 `Set` 的相等性约定，比较结果为 `0` 应与 `equals()` 为 `true` 一致。不一致时，`TreeSet` 仍能运行，但可能破坏集合之间的相等性判断。
 
+如果要按姓名排序，同时保留不同 ID 的用户，可以用 `Comparator.comparing(User::name).thenComparingLong(User::id)`；它与这里按两个字段判断相等的 `User` 一致。仅展示排序结果而不去重时，用列表排序即可。
+
 ## `EnumSet`
 
-枚举元素应优先考虑 `EnumSet`。它为枚举值使用紧凑的位表示，语义明确且效率高。
+元素来自同一种枚举时可以使用 `EnumSet`。它用位表示各个枚举值是否在集合中。
 
 ```java
 enum Permission {
@@ -128,17 +135,17 @@ EnumSet<Permission> none = EnumSet.noneOf(Permission.class);
 `Set` 继承的批量操作可以表达并集、交集和差集。操作会修改接收者，因此通常先复制：
 
 ```java
-Set<String> left = Set.of("A", "B"); // Set.of(): Java 9+
+Set<String> left = Set.of("A", "B");
 Set<String> right = Set.of("B", "C");
 
 Set<String> union = new HashSet<>(left);
-union.addAll(right); // [A, B, C]
+union.addAll(right); // 包含 A、B、C，不保证遍历顺序
 
 Set<String> intersection = new HashSet<>(left);
-intersection.retainAll(right); // [B]
+intersection.retainAll(right); // 仅包含 B
 
 Set<String> difference = new HashSet<>(left);
-difference.removeAll(right); // [A]
+difference.removeAll(right); // 仅包含 A
 ```
 
 子集判断：
@@ -158,12 +165,12 @@ groups.add(group);
 
 System.out.println(groups.contains(group)); // true
 group.add("B");
-System.out.println(groups.contains(group)); // 本例为 false
+System.out.println(groups.contains(group)); // OpenJDK 17 中本例为 false
 ```
 
-`List` 的相等性和哈希值取决于其中的元素。本例修改列表后，哈希值发生变化，查找无法定位到原先存入的元素。
+`List` 的相等性和哈希值取决于其中的元素。修改列表不会通知 `HashSet` 重新放置元素，后续查找却会使用新哈希值。上面的 `false` 是具体实现中的观察结果；修改参与相等判断的字段后，Set 的行为不再有契约保证，不能依赖查找一定成功或一定失败。
 
-Set 元素应使用稳定标识或不可变值。完整规则见 [Object 类与通用方法](../language/object-contract.md)。
+Set 元素应使用稳定标识或不可变值。完整规则见 [Object 类与通用方法](../../language/object-contract.md)。
 
 ## 实现选择
 
@@ -173,3 +180,7 @@ Set 元素应使用稳定标识或不可变值。完整规则见 [Object 类与�
 | 唯一且保持插入/相遇顺序 | `LinkedHashSet` |
 | 唯一且始终排序、需要范围查询 | `TreeSet` |
 | 元素类型是枚举 | `EnumSet` |
+
+## SequencedSet API [Java 21+]
+
+Java 21 起 `LinkedHashSet` 实现 `SequencedSet`，提供 `getFirst()`、`getLast()` 和 `reversed()`。`addFirst()`、`addLast()` 可以指定位置；元素已存在时会将它移到指定端点，而普通 `add()` 不改变已有元素的位置。

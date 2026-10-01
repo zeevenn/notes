@@ -69,7 +69,7 @@ public final class Team {
 }
 ```
 
-这里复制列表结构，并返回不可修改的列表。元素是不可变的 `String`，因此调用方也不能通过元素改变成员姓名。若元素本身可变，还需要明确元素的共享或复制策略，见[不可修改集合与防御性复制](../standard-library/immutable-collections.md)。
+这里复制列表结构，并返回不可修改的列表。元素是不可变的 `String`，因此调用方也不能通过元素改变成员姓名。若元素本身可变，还需要明确元素的共享或复制策略，见[不可修改集合与防御性复制](../standard-library/collections/immutable-collections.md)。
 
 ## 类型和成员的访问权限
 

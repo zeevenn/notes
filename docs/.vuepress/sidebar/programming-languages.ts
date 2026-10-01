@@ -116,8 +116,9 @@ export default [
           {
             text: '集合框架',
             collapsible: true,
+            link: 'collections/',
+            prefix: 'collections/',
             children: [
-              'collections-overview',
               'list',
               'set',
               'map',

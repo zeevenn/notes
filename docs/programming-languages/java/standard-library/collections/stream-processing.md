@@ -4,33 +4,7 @@ date: 2026-09-29
 category: java
 ---
 
-从订单列表中筛选已支付订单，再提取编号，可以把处理步骤连成一条 Stream 流水线。集合保存数据，Stream 描述如何处理这些数据；操作中的判断和转换由 [Lambda 与方法引用](../language/lambda-and-method-references.md) 提供。
-
-## 常用方法总览
-
-一条流水线从创建流开始，经过零个或多个**中间操作**描述筛选、转换等步骤，最后由一个**终止操作**触发计算，得到结果或执行动作。中间操作返回流，可以继续串联；终止操作结束这条处理链。
-
-```mermaid
-flowchart LR
-    S[Stream 数据处理] --> A[创建流：取得数据源]
-    A --> A1["集合：集合.stream()"]
-    A --> A2["数组或给定值：Arrays.stream() / Stream.of()"]
-
-    S --> B[中间操作：描述处理步骤]
-    B --> B1["筛选与去重：filter() / distinct()"]
-    B --> B2["转换与展开：map() / flatMap()"]
-    B --> B3["排序：sorted()"]
-    B --> B4["截取与跳过：limit() / skip()"]
-    B --> B5["转为数值流：mapToInt() / mapToLong() / mapToDouble()"]
-
-    S --> C[终止操作：执行并结束]
-    C --> C1["收集结果：toList() / toArray() / collect()"]
-    C --> C2["计数、最值与归约：count() / min() / max() / reduce()"]
-    C --> C3["数值流求和与平均：sum() / average()"]
-    C --> C4["条件判断：anyMatch() / allMatch() / noneMatch()"]
-    C --> C5["查找元素：findFirst() / findAny()"]
-    C --> C6["逐项执行动作：forEach() / forEachOrdered()"]
-```
+从订单列表中筛选已支付订单，再提取编号，可以把处理步骤连成一条 Stream 流水线。集合保存数据，Stream 描述如何处理这些数据；操作中的判断和转换由 [Lambda 与方法引用](../../language/lambda-and-method-references.md) 提供。
 
 ## 从订单列表得到处理结果
 
@@ -355,3 +329,29 @@ System.out.println(selectedIds); // [A001, A003, A004]
 筛选、转换、分组和汇总能清楚地表达成一条数据处理链时，Stream 可以减少手动维护中间集合的代码。处理过程中有复杂分支、多个相互影响的变量、逐项异常恢复或外部 I/O 时，普通循环往往更直接。
 
 不要在处理链中增删正在遍历的源集合，也不要为了收集结果，在 `forEach()` 中不断向外部列表追加；使用 `toList()` 或 `collect()` 表达结果的构造。Stream 本身也不会让集合中的元素变成不可变对象。
+
+## 常用方法总览
+
+一条流水线从创建流开始，经过零个或多个**中间操作**描述筛选、转换等步骤，最后由一个**终止操作**触发计算，得到结果或执行动作。中间操作返回流，可以继续串联；终止操作结束这条处理链。
+
+```mermaid
+flowchart LR
+    S[Stream 数据处理] --> A[创建流：取得数据源]
+    A --> A1["集合：集合.stream()"]
+    A --> A2["数组或给定值：Arrays.stream() / Stream.of()"]
+
+    S --> B[中间操作：描述处理步骤]
+    B --> B1["筛选与去重：filter() / distinct()"]
+    B --> B2["转换与展开：map() / flatMap()"]
+    B --> B3["排序：sorted()"]
+    B --> B4["截取与跳过：limit() / skip()"]
+    B --> B5["转为数值流：mapToInt() / mapToLong() / mapToDouble()"]
+
+    S --> C[终止操作：执行并结束]
+    C --> C1["收集结果：toList() / toArray() / collect()"]
+    C --> C2["计数、最值与归约：count() / min() / max() / reduce()"]
+    C --> C3["数值流求和与平均：sum() / average()"]
+    C --> C4["条件判断：anyMatch() / allMatch() / noneMatch()"]
+    C --> C5["查找元素：findFirst() / findAny()"]
+    C --> C6["逐项执行动作：forEach() / forEachOrdered()"]
+```

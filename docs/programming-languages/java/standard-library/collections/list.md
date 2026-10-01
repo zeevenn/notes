@@ -4,7 +4,7 @@ date: 2026-08-05
 category: java
 ---
 
-`List<E>` 表示具有稳定顺序、允许重复元素并支持索引访问的序列。
+`List<E>` 表示允许重复元素并支持索引访问的有序序列。这里的“有序”指元素有明确的位置，不表示元素已经按大小排序。
 
 ```java
 import java.util.ArrayList;
@@ -17,29 +17,6 @@ names.add("Alice");
 ```
 
 遍历顺序与列表顺序一致，索引从 `0` 开始。
-
-## 创建列表
-
-可修改的空列表：
-
-```java
-List<String> names = new ArrayList<>();
-```
-
-从已有集合复制：
-
-```java
-List<String> copied = new ArrayList<>(source);
-```
-
-创建不可修改列表：
-
-```java
-List<String> fixed = List.of("Alice", "Bob"); // Java 9+
-List<String> snapshot = List.copyOf(source); // Java 10+
-```
-
-`List.of()` 和 `List.copyOf()` 不允许 `null` 元素，也不支持增删改。它们不是 Java 列表字面量，而是接口提供的静态工厂方法。
 
 ## 常用操作
 
@@ -59,6 +36,8 @@ int size = names.size();
 
 索引必须处于方法允许的范围，否则抛出 `IndexOutOfBoundsException`。插入允许索引等于当前 `size()`，读取和替换不允许。
 
+`indexOf()` 找不到元素时返回 `-1`；`remove(Object)` 只删除第一个相等元素，找不到时返回 `false`。`set()` 替换已有位置的元素，不改变列表长度。
+
 ### `remove()` 的重载陷阱
 
 `List<Integer>` 同时存在按索引删除和按元素删除：
@@ -71,6 +50,29 @@ numbers.remove(Integer.valueOf(10)); // 删除值 10
 ```
 
 传入 `int` 会选择 `remove(int index)`。需要按整数值删除时，显式提供 `Integer`。
+
+## 创建列表
+
+可修改的空列表：
+
+```java
+List<String> names = new ArrayList<>();
+```
+
+从已有集合复制：
+
+```java
+List<String> copied = new ArrayList<>(source);
+```
+
+创建不可修改列表：
+
+```java
+List<String> readOnly = List.of("Alice", "Bob");
+List<String> snapshot = List.copyOf(source);
+```
+
+`List.of()` 和 `List.copyOf()` 不允许 `null` 元素，也不支持增删或替换元素。
 
 ## `ArrayList`
 
@@ -119,7 +121,7 @@ middle.set(0, "X");
 System.out.println(names); // [A, X, C, D]
 ```
 
-起始索引包含，结束索引不包含。`subList()` 与原列表共享数据；在视图之外对原列表做结构性修改后再使用视图，行为可能未定义并常抛出 `ConcurrentModificationException`。
+起始索引包含，结束索引不包含。`subList()` 是由原列表支持的视图，通过它执行 `set()`、`clear()` 等修改会作用于原列表。在视图之外对原列表做增删等结构性修改后，视图的语义不再有保证；`ArrayList` 通常会在后续使用视图时抛出 `ConcurrentModificationException`。
 
 需要独立列表时显式复制：
 
@@ -134,7 +136,14 @@ String[] array = {"A", "B"};
 List<String> fixedSize = Arrays.asList(array);
 ```
 
-`Arrays.asList()` 返回由原数组支持的固定大小列表：允许 `set()`，不允许 `add()` 和 `remove()`，对数组或列表元素的替换会相互反映。
+`Arrays.asList()` 返回由原数组支持的固定大小列表：允许 `set()`，不支持改变长度，对数组或列表元素的替换会相互反映。
+
+```java
+fixedSize.set(0, "X");
+System.out.println(array[0]); // X
+array[1] = "Y";
+System.out.println(fixedSize); // [X, Y]
+```
 
 需要普通可修改列表：
 
@@ -142,16 +151,21 @@ List<String> fixedSize = Arrays.asList(array);
 List<String> mutable = new ArrayList<>(Arrays.asList(array));
 ```
 
-转回数组时，Java 8 可以传入相应类型的空数组：
+基本类型数组不会被自动拆成包装对象列表：
 
 ```java
-String[] copied = names.toArray(new String[0]);
+int[] scores = {90, 85};
+List<int[]> oneArray = Arrays.asList(scores);
+System.out.println(oneArray.size()); // 1，唯一元素是整个 int[]
+
+List<Integer> boxedScores = Arrays.stream(scores).boxed().toList();
 ```
 
-Java 11 增加了接收数组生成函数的重载：
+转回引用类型数组时，可以传入数组生成函数，也可以传入相应类型的空数组：
 
 ```java
-String[] copied = names.toArray(String[]::new); // Java 11+
+String[] copied = names.toArray(String[]::new);
+String[] alsoCopied = names.toArray(new String[0]);
 ```
 
 ## 暴露列表的边界
@@ -179,4 +193,4 @@ names.addLast("Guest");
 List<String> reversed = names.reversed();
 ```
 
-`reversed()` 返回反向顺序视图，不是副本。修改允许修改的原列表会反映到视图，反之亦然。
+`reversed()` 返回反向顺序视图，不是副本。若实现允许修改该视图，修改会写回原列表；原列表的修改是否在视图中可见，要看具体实现。对这里使用的 `ArrayList`，两边的修改会相互反映。

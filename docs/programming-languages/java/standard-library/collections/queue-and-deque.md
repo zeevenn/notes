@@ -8,14 +8,6 @@ category: java
 
 ## Queue 的两组方法
 
-队列为失败情况提供两组操作：一组抛出异常，另一组返回特殊值。
-
-| 操作 | 失败时抛异常 | 失败时返回特殊值 |
-| --- | --- | --- |
-| 插入 | `add(e)` | `offer(e)` 返回 `false` |
-| 删除队首 | `remove()` | `poll()` 返回 `null` |
-| 查看队首 | `element()` | `peek()` 返回 `null` |
-
 ```java
 Queue<String> jobs = new ArrayDeque<>();
 
@@ -28,7 +20,15 @@ String second = jobs.poll(); // test
 String missing = jobs.poll(); // null
 ```
 
-容量受限队列中，`offer()` 可以明确表示“当前无法加入”。普通读取流程通常使用 `poll()` 和 `peek()`，避免把空队列当成异常。
+`offer()` 入队，`poll()` 取出并删除队首，`peek()` 只查看队首。对容量不足和队列为空，Queue 提供两组处理方式：
+
+| 操作与条件 | 抛异常 | 返回特殊值 |
+| --- | --- | --- |
+| 插入时容量不足 | `add(e)` 抛 `IllegalStateException` | `offer(e)` 返回 `false` |
+| 删除时队列为空 | `remove()` 抛 `NoSuchElementException` | `poll()` 返回 `null` |
+| 查看时队列为空 | `element()` 抛 `NoSuchElementException` | `peek()` 返回 `null` |
+
+特殊值只处理表中的条件。非法元素仍可能引发异常，例如 `ArrayDeque.offer(null)` 抛出 `NullPointerException`。`ArrayDeque` 会自动扩容，没有可配置的固定容量上限；其构造参数指定初始容量。
 
 队列实现通常不允许 `null`，因为 `poll()` 和 `peek()` 使用 `null` 表示为空。
 

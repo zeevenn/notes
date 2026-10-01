@@ -125,7 +125,7 @@ static void copyBytes(Path source, Path target) throws IOException {
 
 ## 目录遍历
 
-`Files.list()` 返回目录下的直接子项，不递归进入子目录。可以结合 [Stream](./stream-processing.md) 筛选普通文件并排序：
+`Files.list()` 返回目录下的直接子项，不递归进入子目录。可以结合 [Stream](./collections/stream-processing.md) 筛选普通文件并排序：
 
 ```java
 import java.util.List;

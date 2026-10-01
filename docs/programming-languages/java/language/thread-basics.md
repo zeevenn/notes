@@ -418,7 +418,7 @@ public class MailboxDemo {
 
 `wait()` 只释放调用对象的监视器锁，不释放当前线程可能持有的其他锁。这与 `sleep()` 保留监视器锁的行为不同。即使因中断而退出等待，`wait()` 也要重新获得该锁后，才会抛出 `InterruptedException`。这些规则见 [Java 17 Object.wait API](<https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)>)。
 
-实际需要在线程间传递任务或消息时，可以使用封装了等待逻辑的 [BlockingQueue](../standard-library/queue-and-deque.md#队列与并发)。
+实际需要在线程间传递任务或消息时，可以使用封装了等待逻辑的 [BlockingQueue](../standard-library/collections/queue-and-deque.md#队列与并发)。
 
 ## 线程的生命周期
 

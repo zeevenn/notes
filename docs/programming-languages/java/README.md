@@ -12,7 +12,7 @@
 ## 标准库
 
 - [常用类](./standard-library/README.md#常用类)：包装类
-- [集合框架](./standard-library/README.md#集合框架)：List、Set、Map、Queue、遍历比较、Stream 与不可修改集合
+- [集合框架](./standard-library/collections/README.md)：List、Set、Map、Queue、遍历比较、Stream 与不可修改集合
 - [文件与 I/O](./standard-library/file-io.md)：文本与二进制读写、路径和目录操作
 - [实现原理](./standard-library/README.md#实现原理)：字符串实现与源码分析
 

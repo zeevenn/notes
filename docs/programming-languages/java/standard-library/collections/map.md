@@ -7,11 +7,14 @@ category: java
 `Map<K, V>` 保存键到值的映射。键不能重复；对已存在的键调用 `put()` 会替换旧值。不同键可以映射到相同值。
 
 ```java
+record User(long id, String name) {}
+
 Map<Long, User> usersById = new HashMap<>();
 usersById.put(1L, new User(1L, "Alice"));
 usersById.put(2L, new User(2L, "Bob"));
 
 User user = usersById.get(1L);
+System.out.println(user.name()); // Alice
 ```
 
 `Map` 不继承 `Collection`。它的操作围绕键值映射，而不是单独的元素。
@@ -25,13 +28,13 @@ Integer previous = scores.put("Alice", 90);
 scores.put("Bob", 85);
 
 Integer alice = scores.get("Alice");
-int carol = scores.getOrDefault("Carol", 0); // Java 8+
+int carol = scores.getOrDefault("Carol", 0);
 boolean hasAlice = scores.containsKey("Alice");
 boolean hasScore90 = scores.containsValue(90);
 Integer removed = scores.remove("Bob");
 ```
 
-`put()` 返回此前与键关联的值；没有旧映射时通常返回 `null`。
+`put()` 返回此前与键关联的值；没有旧映射时返回 `null`。
 
 ### 区分“键不存在”和“值为 null”
 
@@ -45,9 +48,16 @@ values.get("missing"); // null
 values.get("present"); // null
 ```
 
-需要区分时使用 `containsKey()`。更简单的边界是避免用 `null` 同时表示真实值和缺失状态。
+需要区分时使用 `containsKey()`。`getOrDefault()` 只在键不存在时使用默认值，不会替换已经关联的 `null`：
 
-## 按键更新 [Java 8+]
+```java
+System.out.println(values.getOrDefault("missing", "default")); // default
+System.out.println(values.getOrDefault("present", "default")); // null
+```
+
+因此，把可能为 `null` 的 `Integer` 结果直接赋给 `int`，仍会在自动拆箱时抛出 `NullPointerException`。
+
+## 按键更新
 
 ### `putIfAbsent()`
 
@@ -57,7 +67,7 @@ values.get("present"); // null
 usersById.putIfAbsent(user.id(), user);
 ```
 
-这比“先 `containsKey()` 再 `put()`”更直接；在支持原子操作的并发 Map 中也具有正确的并发语义。
+键已经映射到 `null` 时也会写入，因此它与“仅在 `containsKey()` 为 `false` 时调用 `put()`”不同。`HashMap` 的这个操作不保证线程安全；`ConcurrentHashMap.putIfAbsent()` 则保证检查和写入不可被其他线程的操作插入打断，即原子执行。
 
 ### `computeIfAbsent()`
 
@@ -69,9 +79,13 @@ Map<String, List<String>> membersByTeam = new HashMap<>();
 membersByTeam
         .computeIfAbsent("backend", key -> new ArrayList<>())
         .add("Alice");
+
+System.out.println(membersByTeam.get("backend")); // [Alice]
 ```
 
-映射函数应短小并避免修改同一个 Map。它返回 `null` 时不会建立映射。
+没有对应键或旧值为 `null` 时，才调用映射函数；返回非空结果时写入并返回它，返回 `null` 时不建立新映射。映射函数不应修改同一个 Map。
+
+换成 `ConcurrentHashMap` 只能保证创建映射的原子性，不会让值中的 `ArrayList` 或后续 `.add()` 自动变得线程安全。
 
 ### `merge()`
 
@@ -79,10 +93,13 @@ membersByTeam
 
 ```java
 Map<String, Integer> counts = new HashMap<>();
+List<String> words = List.of("java", "map", "java");
 
 for (String word : words) {
     counts.merge(word, 1, Integer::sum);
 }
+
+System.out.println(counts.get("java")); // 2
 ```
 
 键不存在或旧值为 `null` 时直接写入 `1`；旧值非 `null` 时调用合并函数。合并函数返回 `null` 会删除该键。
@@ -96,7 +113,7 @@ scores.compute("Alice", (name, oldScore) ->
         oldScore == null ? 0 : Math.min(100, oldScore + 5));
 ```
 
-简单写入优先使用 `put()`、`putIfAbsent()` 或 `merge()`，避免把所有更新都写成难读的 `compute()`。
+`compute()` 总会调用函数，即使键不存在；函数返回 `null` 时删除已有映射，或让不存在的键继续保持不存在。
 
 ## 遍历 Map
 
@@ -124,14 +141,27 @@ for (Map.Entry<String, Integer> entry : scores.entrySet()) {
 }
 ```
 
-Java 8 引入的 `Map.forEach()` 也可以遍历键值对：
+`Map.forEach()` 也可以遍历键值对：
 
 ```java
 scores.forEach((name, score) ->
         System.out.println(name + " = " + score));
 ```
 
-`keySet()`、`values()` 和 `entrySet()` 通常是由 Map 支持的视图，不是独立副本。通过视图删除元素会影响 Map，Map 的修改也会反映到视图。
+`keySet()`、`values()` 和 `entrySet()` 是由 Map 支持的视图，不是独立副本。以可修改的 `HashMap` 为例：
+
+```java
+Map<String, Integer> stock = new HashMap<>();
+stock.put("book", 3);
+Set<String> products = stock.keySet();
+products.remove("book");
+System.out.println(stock.isEmpty()); // true
+
+stock.put("pen", 5);
+System.out.println(products.contains("pen")); // true
+```
+
+通过视图删除元素会删除对应映射；这些视图不支持 `add()`、`addAll()`，新增映射应调用 Map 的方法。`values()` 可以包含重复值，因此它是 `Collection<V>`，不是 `Set<V>`。
 
 ## `HashMap`
 
@@ -145,19 +175,9 @@ Map<String, User> users = new HashMap<>();
 
 键的 `hashCode()` 用于定位桶，`equals()` 用于确认相等。键对象加入 Map 后不应改变参与这两个方法的字段。
 
-### 按预计映射数量创建 [Java 19+]
-
-Java 19 起，已知预计映射数量时可使用：
-
-```java
-HashMap<String, User> users = HashMap.newHashMap(expectedSize);
-```
-
-它根据预计映射数选择适当容量，比把“预计元素数”直接误当成底层容量更清楚。
-
 ## `LinkedHashMap`
 
-`LinkedHashMap` 维护明确的相遇顺序。默认是插入顺序：更新已有键的值不会把它移到末尾。
+`LinkedHashMap` 默认维护插入顺序：更新已有键的值不会把它移到末尾。
 
 ```java
 Map<String, Integer> scores = new LinkedHashMap<>();
@@ -167,11 +187,17 @@ scores.put("Alice", 90);
 System.out.println(scores.keySet()); // [Bob, Alice]
 ```
 
-它也可以使用访问顺序，常用于实现有界缓存的基础结构，但并不自动提供线程安全或完整缓存策略。
+构造时设置 `accessOrder = true`，可以改为按访问顺序排列，最近访问的键移到末尾：
 
-### SequencedMap API [Java 21+]
+```java
+Map<String, Integer> recent = new LinkedHashMap<>(16, 0.75f, true);
+recent.put("A", 1);
+recent.put("B", 2);
+recent.get("A");
+System.out.println(recent.keySet()); // [B, A]
+```
 
-Java 21 起 `LinkedHashMap` 实现 `SequencedMap`，可以访问首尾映射，并通过 `reversed()` 获得反向视图。Java 8 等较早版本通过 `entrySet()` 的迭代顺序使用 `LinkedHashMap`，没有统一的首尾 Map API。
+这可以作为按最近访问情况淘汰缓存条目的基础，但还需要另行实现容量与淘汰规则；`LinkedHashMap` 本身也不是线程安全的。
 
 ## `TreeMap`
 
@@ -216,7 +242,7 @@ labels.put(OrderStatus.PAID, "已支付");
 - 若用于 `TreeMap`，还需要稳定且与 `equals()` 一致的比较规则；
 - 清晰的业务唯一性，例如用户 ID、订单号或不可变复合键。
 
-Java 16 引入的 Record 常适合不可变复合键：
+字段本身不可变的 Record 可以作为复合键：
 
 ```java
 record ProductKey(long shopId, String sku) {}
@@ -233,3 +259,17 @@ Map<ProductKey, Product> products = new HashMap<>();
 | 键始终排序、需要范围查询 | `TreeMap` |
 | 键是枚举 | `EnumMap` |
 | 多线程共享并更新 | 根据操作语义评估 `ConcurrentHashMap` |
+
+## 按预计映射数量创建 [Java 19+]
+
+Java 19 起，已知预计映射数量时可使用：
+
+```java
+HashMap<String, User> users = HashMap.newHashMap(expectedSize);
+```
+
+它根据预计映射数选择适当容量，比把“预计元素数”直接误当成底层容量更清楚。
+
+## SequencedMap API [Java 21+]
+
+Java 21 起 `LinkedHashMap` 实现 `SequencedMap`，可以通过 `firstEntry()`、`lastEntry()` 访问首尾映射，并通过 `reversed()` 获得反向视图。

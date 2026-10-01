@@ -6,7 +6,7 @@ category: java
 
 不可修改（unmodifiable）集合不支持通过自身增删或替换元素，但底层数据和元素对象仍可能变化。选择 API 时，需要区分不可修改集合、实时视图和独立快照。
 
-## `List.of()`、`Set.of()` 与 `Map.of()` [Java 9+]
+## `List.of()`、`Set.of()` 与 `Map.of()`
 
 直接声明固定内容时使用 `of()` 工厂：
 
@@ -37,7 +37,7 @@ Map<String, Integer> scores = Map.ofEntries(
         Map.entry("Bob", 85));
 ```
 
-## `copyOf()` 创建不可修改快照 [Java 10+]
+## `copyOf()` 创建不可修改快照
 
 ```java
 List<String> source = new ArrayList<>();
@@ -49,7 +49,9 @@ source.add("Bob");
 System.out.println(snapshot); // [Alice]
 ```
 
-对应方法包括 `List.copyOf()`、`Set.copyOf()` 和 `Map.copyOf()`。它们创建与后续源集合结构变化隔离的不可修改结果，并拒绝 `null`。
+对应方法包括 `List.copyOf()`、`Set.copyOf()` 和 `Map.copyOf()`。源集合后续增删或替换元素，不会改变结果保存的元素引用；元素对象本身仍然共享。这些方法拒绝 `null` 元素、键或值。
+
+`List.copyOf()` 保留源集合的遍历顺序；`Set.copyOf()`、`Map.copyOf()` 不保证保留源集合的顺序。需要保留插入顺序的不可修改映射时，可以用 `Collections.unmodifiableMap(new LinkedHashMap<>(sourceMap))`，先复制再包装，并且不再修改内部副本。
 
 如果输入已经是合适的不可修改集合，实现可能直接返回原对象；不要依赖返回对象是否与输入具有相同身份。
 
