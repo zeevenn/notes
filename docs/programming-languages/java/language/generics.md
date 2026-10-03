@@ -112,15 +112,17 @@ public static <T> T first(List<T> values) {
     return values.get(0);
 }
 
-String name = first(List.of("Alice", "Bob")); // List.of(): Java 9+
+String name = first(List.of("Alice", "Bob"));
 Integer number = first(List.of(1, 2, 3));
 ```
 
 通常不必显式写类型实参，编译器会根据参数和赋值上下文推断。必要时可以写成 `TypeName.<String>method(...)`。
 
-## 有界类型参数
+## 类型参数的约束
 
-上界限制类型参数必须是某个类型或它的子类型。下面的 `Number` 是数值包装类的公共父类，它提供 `doubleValue()` 将数值转换为 `double`：
+求和方法需要把列表中的数值转成 `double`。如果只声明 `<T>`，编译器只知道 `T` 可以作为 `Object` 使用，无法确定它有没有 `doubleValue()` 方法。
+
+`Integer`、`Long`、`Double` 等数值类型都继承 `Number`，而 `Number` 定义了 `doubleValue()`。声明 `<T extends Number>` 后，`T` 就只能是 `Number` 或它的子类型，方法内可以调用这个公共方法：
 
 ```java
 public static <T extends Number> double sum(List<T> values) {
@@ -132,44 +134,42 @@ public static <T extends Number> double sum(List<T> values) {
 }
 ```
 
-多个上界使用 `&`，类上界必须放在最前面。`Comparable<T>` 表示对象能与同类型的值比较大小，其 `compareTo()` 返回负数、零、正数，分别表示小于、等于、大于：
-
 ```java
-<T extends Number & Comparable<T>> T max(T left, T right) {
-    return left.compareTo(right) >= 0 ? left : right;
-}
+double integers = sum(List.of(1, 2, 3));     // 6.0，T 为 Integer
+double decimals = sum(List.of(1.5, 2.5));    // 4.0，T 为 Double
+// sum(List.of("1", "2"));                 // 编译错误，String 不是 Number 的子类型
 ```
 
-## 泛型是不变的
+这种带类型限制的参数称为**有界类型参数**。“界”指类型的范围，不是数值的大小。按父类型在上、子类型在下的关系理解，`Number` 是这里的**上界**：允许的类型是 `Number` 本身及其下面的子类型。
 
-即使 `Integer` 是 `Number` 的子类型，`List<Integer>` 也不是 `List<Number>` 的子类型：
+这里的 `extends` 也可以跟接口，例如 `<T extends Runnable>` 表示 `T` 必须实现 `Runnable`。
+
+<a id="list-integer-不能当作-list-number"></a>
+
+## 泛型的不变性
+
+一个 `Integer` 对象可以赋给 `Number` 变量，但这个关系不会自动延伸到列表：
 
 ```java
-List<Integer> integers = List.of(1, 2, 3); // Java 9+
+Number number = Integer.valueOf(1); // 可以
+
+List<Integer> integers = new ArrayList<>();
 // List<Number> numbers = integers; // 编译错误
 ```
 
-如果允许该赋值，调用方就能向 `numbers` 添加 `Double`，从而破坏原本只保存 `Integer` 的列表。
+`List<Number>` 允许加入 `Integer`，也允许加入 `Double`。假如上面的赋值成立，就可以通过 `numbers.add(3.14)` 把 `Double` 放进原本只允许 `Integer` 的同一个列表。
 
-需要表达一组相关的参数化类型时使用通配符。
+因此，`List<Integer>` 不是 `List<Number>` 的子类型。这种类型参数之间不随继承关系变化的性质称为**不变性**。
+
+但求和方法只需读取数字，不需要添加元素。如果参数写成 `List<Number>`，就会拒绝 `List<Integer>`、`List<Double>` 等本来可以处理的列表。通配符用于表达这种更宽的接收范围。
 
 ## 通配符
 
-### 无界通配符 `?`
+`?` 表示一个未知的类型。例如 `List<?>` 可以指向 `List<String>`，也可以指向 `List<Integer>`；通过这个引用，编译器不知道元素的具体类型。
 
-`List<?>` 表示元素类型未知的列表。可以安全读取为 `Object`，但通常不能添加非 `null` 元素。
+### 上界通配符
 
-```java
-static int sizeOf(List<?> values) {
-    return values.size();
-}
-```
-
-当方法只使用与元素具体类型无关的操作时，无界通配符比原始类型 `List` 安全。
-
-### 上界通配符 `? extends T`
-
-上界适合从结构中读取 `T`：
+`List<? extends Number>` 表示“元素类型是 `Number` 或它的某个子类型的列表”。它既能接收 `List<Integer>`，也能接收 `List<Double>`：
 
 ```java
 static double sumNumbers(List<? extends Number> values) {
@@ -179,36 +179,128 @@ static double sumNumbers(List<? extends Number> values) {
     }
     return total;
 }
+
+double total = sumNumbers(List.of(1, 2, 3)); // 6.0
 ```
 
-调用方可以传入 `List<Integer>`、`List<Long>` 或其他 `Number` 子类型列表。由于实际元素类型未知，方法不能安全地添加一个普通 `Number`。
+具体元素类型虽然未知，但取出的值一定能作为 `Number` 使用，所以可以调用 `doubleValue()`。
 
-### 下界通配符 `? super T`
+反过来，方法不能随意往这个列表里添加数字：
 
-下界适合向结构中写入 `T`：
+```java
+List<? extends Number> values = new ArrayList<Integer>();
+// values.add(3.14); // 编译错误，实际列表可能只允许 Integer
+// values.add(1);    // 也编译错误，声明本身没有保证实际列表允许 Integer
+```
+
+`? extends Number` 称为**上界通配符**。它保证“读出来能当作 `Number`”，却没有确定“写进去必须是哪种数”。
+
+无法通过 `List<? extends Number>` 直接添加非 `null` 值，不代表列表不可修改。例如，它仍允许调用 `clear()`；操作能否执行取决于实际列表是否支持它。
+
+### 下界通配符
+
+添加默认整数的方法，可以接收 `List<Integer>`，也可以接收能容纳整数的 `List<Number>` 或 `List<Object>`：
 
 ```java
 static void addDefaults(List<? super Integer> target) {
     target.add(0);
     target.add(1);
 }
+
+List<Number> numbers = new ArrayList<>();
+numbers.add(3.14);
+addDefaults(numbers);
+System.out.println(numbers); // [3.14, 0, 1]
 ```
 
-调用方可以传入 `List<Integer>`、`List<Number>` 或 `List<Object>`。读取时只能确定结果是 `Object`。
+`? super Integer` 表示未知类型是 `Integer` 本身或它的父类型。这些类型都能接收 `Integer`，所以 `target.add(1)` 是安全的。
 
-常用记忆方式是 PECS：
+但已有元素不一定是整数。示例中的 `List<Number>` 还保存了 `Double`；若传入 `List<Object>`，里面也可能有字符串。因此，通过 `target.get(0)` 读取时只能按 `Object` 处理。
 
-- Producer Extends：参数向方法提供数据时使用 `? extends T`；
-- Consumer Super：参数接收方法写入的数据时使用 `? super T`；
-- 同时需要精确读写时，使用明确的类型参数，不使用通配符。
+这称为**下界通配符**：以 `Integer` 为下界，允许沿父类型方向选择 `Number`、`Object` 等类型。
 
-这描述的是 API 中的数据方向，不表示 `extends` 容器严格不可变。
+### 无界通配符
+
+只统计列表长度或打印元素时，不需要知道具体元素类型，也不需要把范围限定在数字类型上：
+
+```java
+static void printAll(List<?> values) {
+    for (Object value : values) {
+        System.out.println(value);
+    }
+}
+
+printAll(List.of("Java", "Go"));
+printAll(List.of(1, 2, 3));
+```
+
+单独的 `?` 称为**无界通配符**，表示不额外限制元素类型。读取的值可以作为 `Object` 使用，但不能直接添加非 `null` 值，因为实际列表可能是 `List<String>`、`List<Integer>` 或其他类型。
+
+`List<Object>` 则明确允许添加各种对象，不能用它替代 `List<?>` 来接收任意元素类型的列表。
+
+### 通配符的读写约束
+
+| 参数类型 | 可以接收的列表 | 读取时可直接使用的类型 | 可以直接添加的非 `null` 值 |
+| --- | --- | --- | --- |
+| `List<? extends Number>` | `List<Number>`、`List<Integer>`、`List<Double>` 等 | `Number` | 无 |
+| `List<? super Integer>` | `List<Integer>`、`List<Number>`、`List<Object>` 等 | `Object` | `Integer` |
+| `List<?>` | 任意元素类型的列表 | `Object` | 无 |
+
+上表描述编译器允许的操作；实际添加元素还要求列表支持修改。
+
+方法从参数中取出 `T` 类型的数据时，通常使用 `? extends T`；向参数中放入 `T` 类型的数据时，通常使用 `? super T`。这个规则简称 **PECS**：Producer Extends（提供数据的一侧用 `extends`），Consumer Super（接收数据的一侧用 `super`）。
+
+例如，把源列表的元素复制到目标列表：
+
+```java
+static <T> void copy(List<? extends T> source, List<? super T> target) {
+    for (T value : source) {
+        target.add(value);
+    }
+}
+
+List<Integer> source = List.of(1, 2, 3);
+List<Number> target = new ArrayList<>();
+copy(source, target);
+System.out.println(target); // [1, 2, 3]
+```
+
+方法声明中的 `<T>` 声明了本次调用使用的类型参数。两个参数中的 `T` 是同一个类型，用来保证源列表提供的值能被目标列表接收：
+
+- `List<? extends T> source`：源列表的元素类型是 `T` 或它的子类型，因此读取的元素可以赋给 `T value`。
+- `List<? super T> target`：目标列表的元素类型是 `T` 或它的父类型，因此可以把这个 `T value` 添加进去。
+
+对于 `copy(source, target)` 这次调用，可以按 `T` 为 `Integer` 来理解。源列表是 `List<Integer>`，取出的整数可以作为 `Integer` 使用；目标列表是 `List<Number>`，而 `Number` 能接收 `Integer`，所以满足 `? super Integer` 的要求。两个列表的元素类型不必相同，只要取出的值能放进目标列表。
+
+循环依次取出 `1`、`2`、`3`，通过 `target.add(value)` 追加到目标列表末尾。目标列表原先为空，因此打印结果是 `[1, 2, 3]`；如果目标列表已有元素，新元素会排在它们之后。源列表仍保留原来的三个元素。
+
+反方向则不成立：`List<Number>` 中可能有 `Double`，不能保证每个元素都能放进 `List<Integer>`，因此下面的调用会被编译器拒绝：
+
+```java
+List<Number> source = List.of(1, 2.5);
+List<Integer> target = new ArrayList<>();
+// copy(source, target); // 编译错误，源列表可能提供非 Integer 的数值
+```
+
+## 多个类型约束
+
+类型参数还可以同时满足多个约束。例如，比较两个数并返回较大的那个，需要 `T` 既是 `Number` 的子类型，又能与同类型的值比较。
+
+`Comparable<T>` 接口定义了 `compareTo(T other)`，返回负数、零、正数分别表示小于、等于、大于：
+
+```java
+static <T extends Number & Comparable<T>> T max(T left, T right) {
+    return left.compareTo(right) >= 0 ? left : right;
+}
+
+Integer larger = max(3, 5); // 5
+```
+
+`&` 表示这些约束需要同时满足。若包含一个类，该类必须放在最前面，其余约束只能是接口；这里 `Number` 是类，`Comparable<T>` 是接口。
 
 ## 类型擦除
 
-Java 泛型主要由编译器实现。编译后大部分类型参数信息被擦除，编译器在需要的位置插入类型转换，并可能生成桥接方法维持多态。
-
-因此：
+泛型的类型检查主要发生在编译期。运行时不会为 `ArrayList<String>` 和 `ArrayList<Integer>` 各生成一个类，两者使用同一个 `ArrayList` 类：
 
 ```java
 List<String> names = new ArrayList<>();
@@ -216,6 +308,8 @@ List<Integer> numbers = new ArrayList<>();
 
 System.out.println(names.getClass() == numbers.getClass()); // true
 ```
+
+这种处理称为**类型擦除**：`List<String>` 擦除后是 `List`；类型参数 `T` 擦除为它的第一个上界，没有显式约束时是 `Object`。编译器会在需要的位置插入类型转换，例如把 `List<String>` 取出的元素转换为 `String`。
 
 类型擦除带来一些限制：
 
@@ -225,7 +319,7 @@ System.out.println(names.getClass() == numbers.getClass()); // true
 - 类的静态字段不能使用该类的类型参数；
 - 两个方法擦除后签名相同时不能重载。
 
-运行时需要创建对象时，可以显式接收工厂。下面的 `Supplier` 和构造方法引用均在 Java 8 引入：
+运行时需要创建对象时，可以显式接收工厂。`Supplier<T>` 用 `get()` 提供一个 `T` 类型的对象，构造方法引用 `User::new` 可以充当这个工厂：
 
 ```java
 static <T> T create(Supplier<T> factory) {
@@ -234,14 +328,3 @@ static <T> T create(Supplier<T> factory) {
 
 User user = create(User::new);
 ```
-
-## 泛型与数组的区别
-
-数组在运行时知道组件类型，并且具有协变关系；泛型通常在运行时擦除，并且是不变的。
-
-```java
-Number[] numbers = new Integer[1];
-// numbers[0] = 3.14; // 编译通过，运行时抛出 ArrayStoreException
-```
-
-泛型在编译期拒绝对应的不安全关系，因此通用容器通常优先使用泛型集合而不是对象数组。
