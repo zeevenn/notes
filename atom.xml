@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-10-02T05:42:16.703Z</updated>
+  <updated>2026-10-03T05:46:28.352Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -9249,7 +9249,7 @@ search<span class="token operator">:</span>
     <title type="text">泛型</title>
     <id>https://zeevenn.github.io/notes/notes/programming-languages/java/language/generics.html</id>
     <link href="https://zeevenn.github.io/notes/notes/programming-languages/java/language/generics.html"/>
-    <updated>2026-09-29T08:02:56.000Z</updated>
+    <updated>2026-10-03T05:44:58.000Z</updated>
     <summary type="html"><![CDATA[<p>泛型把类型作为类、接口或方法的参数。它让编译器在使用点检查类型关系，减少显式强制转换，并让同一份实现安全地处理多种类型。</p>
 <p><code>List</code> 是按位置保存元素的列表接口，<code>ArrayList</code> 是它的一种实现。例子中的 <code>add()</code> 加入元素，<code>get(下标)</code> 取出元素。若不声明列表的元素类型，取出的值只按公共父类型 <code>Object</code> 处理，调用方需要自己确认它的具体类型：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span></span><span class="token punctuation">;</span>
@@ -9335,11 +9335,12 @@ values<span class="token punctuation">.</span><span class="token function">add</
     <span class="token keyword">return</span> values<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token class-name">String</span> name <span class="token operator">=</span> <span class="token function">first</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"Alice"</span><span class="token punctuation">,</span> <span class="token string">"Bob"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// List.of(): Java 9+</span>
+<span class="token class-name">String</span> name <span class="token operator">=</span> <span class="token function">first</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"Alice"</span><span class="token punctuation">,</span> <span class="token string">"Bob"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">Integer</span> number <span class="token operator">=</span> <span class="token function">first</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div><p>通常不必显式写类型实参，编译器会根据参数和赋值上下文推断。必要时可以写成 <code>TypeName.&lt;String&gt;method(...)</code>。</p>
-<h2>有界类型参数</h2>
-<p>上界限制类型参数必须是某个类型或它的子类型。下面的 <code>Number</code> 是数值包装类的公共父类，它提供 <code>doubleValue()</code> 将数值转换为 <code>double</code>：</p>
+<h2>类型参数的约束</h2>
+<p>求和方法需要把列表中的数值转成 <code>double</code>。如果只声明 <code>&lt;T&gt;</code>，编译器只知道 <code>T</code> 可以作为 <code>Object</code> 使用，无法确定它有没有 <code>doubleValue()</code> 方法。</p>
+<p><code>Integer</code>、<code>Long</code>、<code>Double</code> 等数值类型都继承 <code>Number</code>，而 <code>Number</code> 定义了 <code>doubleValue()</code>。声明 <code>&lt;T extends Number&gt;</code> 后，<code>T</code> 就只能是 <code>Number</code> 或它的子类型，方法内可以调用这个公共方法：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span> <span class="token keyword">extends</span> <span class="token class-name">Number</span><span class="token punctuation">&gt;</span></span> <span class="token keyword">double</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> values<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">double</span> total <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">T</span> value <span class="token operator">:</span> values<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -9347,25 +9348,25 @@ values<span class="token punctuation">.</span><span class="token function">add</
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span> total<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre></div><p>多个上界使用 <code>&amp;</code>，类上界必须放在最前面。<code>Comparable&lt;T&gt;</code> 表示对象能与同类型的值比较大小，其 <code>compareTo()</code> 返回负数、零、正数，分别表示小于、等于、大于：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span> <span class="token keyword">extends</span> <span class="token class-name">Number</span> <span class="token operator">&amp;</span> <span class="token class-name">Comparable</span><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">T</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token class-name">T</span> left<span class="token punctuation">,</span> <span class="token class-name">T</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> left<span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>right<span class="token punctuation">)</span> <span class="token operator">&gt;=</span> <span class="token number">0</span> <span class="token operator">?</span> left <span class="token operator">:</span> right<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2>泛型是不变的</h2>
-<p>即使 <code>Integer</code> 是 <code>Number</code> 的子类型，<code>List&lt;Integer&gt;</code> 也不是 <code>List&lt;Number&gt;</code> 的子类型：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> integers <span class="token operator">=</span> <span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Java 9+</span>
+</code></pre></div><div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">double</span> integers <span class="token operator">=</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 6.0，T 为 Integer</span>
+<span class="token keyword">double</span> decimals <span class="token operator">=</span> <span class="token function">sum</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1.5</span><span class="token punctuation">,</span> <span class="token number">2.5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 4.0，T 为 Double</span>
+<span class="token comment">// sum(List.of("1", "2"));                 // 编译错误，String 不是 Number 的子类型</span>
+</code></pre></div><p>这种带类型限制的参数称为<strong>有界类型参数</strong>。“界”指类型的范围，不是数值的大小。按父类型在上、子类型在下的关系理解，<code>Number</code> 是这里的<strong>上界</strong>：允许的类型是 <code>Number</code> 本身及其下面的子类型。</p>
+<p>这里的 <code>extends</code> 也可以跟接口，例如 <code>&lt;T extends Runnable&gt;</code> 表示 <code>T</code> 必须实现 <code>Runnable</code>。</p>
+<p><a id="list-integer-不能当作-list-number"></a></p>
+<h2>泛型的不变性</h2>
+<p>一个 <code>Integer</code> 对象可以赋给 <code>Number</code> 变量，但这个关系不会自动延伸到列表：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">Number</span> number <span class="token operator">=</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 可以</span>
+
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> integers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// List&lt;Number&gt; numbers = integers; // 编译错误</span>
-</code></pre></div><p>如果允许该赋值，调用方就能向 <code>numbers</code> 添加 <code>Double</code>，从而破坏原本只保存 <code>Integer</code> 的列表。</p>
-<p>需要表达一组相关的参数化类型时使用通配符。</p>
+</code></pre></div><p><code>List&lt;Number&gt;</code> 允许加入 <code>Integer</code>，也允许加入 <code>Double</code>。假如上面的赋值成立，就可以通过 <code>numbers.add(3.14)</code> 把 <code>Double</code> 放进原本只允许 <code>Integer</code> 的同一个列表。</p>
+<p>因此，<code>List&lt;Integer&gt;</code> 不是 <code>List&lt;Number&gt;</code> 的子类型。这种类型参数之间不随继承关系变化的性质称为<strong>不变性</strong>。</p>
+<p>但求和方法只需读取数字，不需要添加元素。如果参数写成 <code>List&lt;Number&gt;</code>，就会拒绝 <code>List&lt;Integer&gt;</code>、<code>List&lt;Double&gt;</code> 等本来可以处理的列表。通配符用于表达这种更宽的接收范围。</p>
 <h2>通配符</h2>
-<h3>无界通配符 <code>?</code></h3>
-<p><code>List&lt;?&gt;</code> 表示元素类型未知的列表。可以安全读取为 <code>Object</code>，但通常不能添加非 <code>null</code> 元素。</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">sizeOf</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> values<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> values<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>当方法只使用与元素具体类型无关的操作时，无界通配符比原始类型 <code>List</code> 安全。</p>
-<h3>上界通配符 <code>? extends T</code></h3>
-<p>上界适合从结构中读取 <code>T</code>：</p>
+<p><code>?</code> 表示一个未知的类型。例如 <code>List&lt;?&gt;</code> 可以指向 <code>List&lt;String&gt;</code>，也可以指向 <code>List&lt;Integer&gt;</code>；通过这个引用，编译器不知道元素的具体类型。</p>
+<h3>上界通配符</h3>
+<p><code>List&lt;? extends Number&gt;</code> 表示“元素类型是 <code>Number</code> 或它的某个子类型的列表”。它既能接收 <code>List&lt;Integer&gt;</code>，也能接收 <code>List&lt;Double&gt;</code>：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">sumNumbers</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Number</span><span class="token punctuation">&gt;</span></span> values<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">double</span> total <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Number</span> value <span class="token operator">:</span> values<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -9373,47 +9374,44 @@ values<span class="token punctuation">.</span><span class="token function">add</
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span> total<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre></div><p>调用方可以传入 <code>List&lt;Integer&gt;</code>、<code>List&lt;Long&gt;</code> 或其他 <code>Number</code> 子类型列表。由于实际元素类型未知，方法不能安全地添加一个普通 <code>Number</code>。</p>
-<h3>下界通配符 <code>? super T</code></h3>
-<p>下界适合向结构中写入 <code>T</code>：</p>
+
+<span class="token keyword">double</span> total <span class="token operator">=</span> <span class="token function">sumNumbers</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 6.0</span>
+</code></pre></div><p>具体元素类型虽然未知，但取出的值一定能作为 <code>Number</code> 使用，所以可以调用 <code>doubleValue()</code>。</p>
+<p>反过来，方法不能随意往这个列表里添加数字：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Number</span><span class="token punctuation">&gt;</span></span> values <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// values.add(3.14); // 编译错误，实际列表可能只允许 Integer</span>
+<span class="token comment">// values.add(1);    // 也编译错误，声明本身没有保证实际列表允许 Integer</span>
+</code></pre></div><p><code>? extends Number</code> 称为<strong>上界通配符</strong>。它保证“读出来能当作 <code>Number</code>”，却没有确定“写进去必须是哪种数”。</p>
+<p>无法通过 <code>List&lt;? extends Number&gt;</code> 直接添加非 <code>null</code> 值，不代表列表不可修改。例如，它仍允许调用 <code>clear()</code>；操作能否执行取决于实际列表是否支持它。</p>
+<h3>下界通配符</h3>
+<p>添加默认整数的方法，可以接收 <code>List&lt;Integer&gt;</code>，也可以接收能容纳整数的 <code>List&lt;Number&gt;</code> 或 <code>List&lt;Object&gt;</code>：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">addDefaults</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">super</span> <span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     target<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     target<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre></div><p>调用方可以传入 <code>List&lt;Integer&gt;</code>、<code>List&lt;Number&gt;</code> 或 <code>List&lt;Object&gt;</code>。读取时只能确定结果是 <code>Object</code>。</p>
-<p>常用记忆方式是 PECS：</p>
-<ul>
-<li>Producer Extends：参数向方法提供数据时使用 <code>? extends T</code>；</li>
-<li>Consumer Super：参数接收方法写入的数据时使用 <code>? super T</code>；</li>
-<li>同时需要精确读写时，使用明确的类型参数，不使用通配符。</li>
-</ul>
-<p>这描述的是 API 中的数据方向，不表示 <code>extends</code> 容器严格不可变。</p>
-<h2>类型擦除</h2>
-<p>Java 泛型主要由编译器实现。编译后大部分类型参数信息被擦除，编译器在需要的位置插入类型转换，并可能生成桥接方法维持多态。</p>
-<p>因此：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> names <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">&gt;</span></span> numbers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>names<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> numbers<span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span>
-</code></pre></div><p>类型擦除带来一些限制：</p>
-<ul>
-<li>不能直接写 <code>new T()</code>；</li>
-<li>不能创建 <code>new List&lt;String&gt;[10]</code>；</li>
-<li>不能用 <code>instanceof List&lt;String&gt;</code> 检查元素类型；</li>
-<li>类的静态字段不能使用该类的类型参数；</li>
-<li>两个方法擦除后签名相同时不能重载。</li>
-</ul>
-<p>运行时需要创建对象时，可以显式接收工厂。下面的 <code>Supplier</code> 和构造方法引用均在 Java 8 引入：</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">T</span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> factory<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> factory<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Number</span><span class="token punctuation">&gt;</span></span> numbers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+numbers<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">3.14</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">addDefaults</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>numbers<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// [3.14, 0, 1]</span>
+</code></pre></div><p><code>? super Integer</code> 表示未知类型是 <code>Integer</code> 本身或它的父类型。这些类型都能接收 <code>Integer</code>，所以 <code>target.add(1)</code> 是安全的。</p>
+<p>但已有元素不一定是整数。示例中的 <code>List&lt;Number&gt;</code> 还保存了 <code>Double</code>；若传入 <code>List&lt;Object&gt;</code>，里面也可能有字符串。因此，通过 <code>target.get(0)</code> 读取时只能按 <code>Object</code> 处理。</p>
+<p>这称为<strong>下界通配符</strong>：以 <code>Integer</code> 为下界，允许沿父类型方向选择 <code>Number</code>、<code>Object</code> 等类型。</p>
+<h3>无界通配符</h3>
+<p>只统计列表长度或打印元素时，不需要知道具体元素类型，也不需要把范围限定在数字类型上：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">printAll</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span></span> values<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Object</span> value <span class="token operator">:</span> values<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 
-<span class="token class-name">User</span> user <span class="token operator">=</span> <span class="token function">create</span><span class="token punctuation">(</span><span class="token class-name">User</span><span class="token operator">::</span><span class="token keyword">new</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><h2>泛型与数组的区别</h2>
-<p>数组在运行时知道组件类型，并且具有协变关系；泛型通常在运行时擦除，并且是不变的。</p>
-<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">Number</span><span class="token punctuation">[</span><span class="token punctuation">]</span> numbers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token comment">// numbers[0] = 3.14; // 编译通过，运行时抛出 ArrayStoreException</span>
-</code></pre></div><p>泛型在编译期拒绝对应的不安全关系，因此通用容器通常优先使用泛型集合而不是对象数组。</p>
+<span class="token function">printAll</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"Java"</span><span class="token punctuation">,</span> <span class="token string">"Go"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">printAll</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>单独的 <code>?</code> 称为<strong>无界通配符</strong>，表示不额外限制元素类型。读取的值可以作为 <code>Object</code> 使用，但不能直接添加非 <code>null</code> 值，因为实际列表可能是 <code>List&lt;String&gt;</code>、<code>List&lt;Integer&gt;</code> 或其他类型。</p>
+<p><code>List&lt;Object&gt;</code> 则明确允许添加各种对象，不能用它替代 <code>List&lt;?&gt;</code> 来接收任意元素类型的列表。</p>
+<h3>通配符的读写约束</h3>
+<p>| 参数类型 | 可以接收的列表 | 读取时可直接使用的类型 | 可以直接添加的非 <code>null</code> 值 |<br>
+|</p>
 ]]></content>
     <category term="java"/>
     <published>2026-08-05T00:00:00.000Z</published>
