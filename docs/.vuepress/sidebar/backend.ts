@@ -65,6 +65,6 @@ export default [
     icon: 'practice',
     link: '/backend/engineering/',
     prefix: '/backend/engineering/',
-    children: ['layered-backend-boundaries', 'unit-of-work', 'testing', 'ci-cd', 'code-quality']
+    children: ['layered-backend-boundaries', 'unit-of-work', 'maven', 'testing', 'ci-cd', 'code-quality']
   }
 ]

@@ -135,18 +135,6 @@ export default [
             children: ['string-internals']
           }
         ]
-      },
-      {
-        text: 'Maven',
-        collapsible: true,
-        icon: 'Maven',
-        link: 'maven/',
-        prefix: 'maven/',
-        children: [
-          'lifecycle-and-plugins',
-          'dependency-management',
-          'multi-module-builds'
-        ]
       }
     ]
   }

@@ -16,9 +16,6 @@
 - [文件与 I/O](./standard-library/file-io.md)：文本与二进制读写、路径和目录操作
 - [实现原理](./standard-library/README.md#实现原理)：字符串实现与源码分析
 
-## Maven
+## 相关工程工具
 
-- [Maven 目录](./maven/README.md)
-- [基础与构建](./maven/lifecycle-and-plugins.md)
-- [依赖与仓库管理](./maven/dependency-management.md)
-- [多模块项目](./maven/multi-module-builds.md)
+- [Maven 构建与依赖管理](../../backend/engineering/maven.md)
