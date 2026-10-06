@@ -26,6 +26,9 @@ export default [
       'implement-call-apply-bind',
       'object-equality',
       'shallow-deep-copy',
+      'promise',
+      'promise-classic-problems',
+      'ordered-concurrent-processing',
       'event-loop'
     ]
   },

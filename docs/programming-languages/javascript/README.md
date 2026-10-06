@@ -29,6 +29,9 @@ star: true
 - [手写 call、apply、bind](./implement-call-apply-bind.md)
 - [判断对象值相等](./object-equality.md)
 - [浅拷贝与深拷贝](./shallow-deep-copy.md)
+- [Promise](./promise.md)
+- [Promise 经典题](./promise-classic-problems.md)
+- [异步任务并发与有序消费](./ordered-concurrent-processing.md)
 - [事件循环](./event-loop.md)
 
 ## 相关平台
