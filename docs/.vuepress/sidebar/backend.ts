@@ -60,6 +60,14 @@ export default [
     ]
   },
   {
+    text: 'Spring Framework',
+    collapsible: true,
+    icon: 'server',
+    link: '/backend/spring-framework/',
+    prefix: '/backend/spring-framework/',
+    children: ['ioc-container-and-beans', 'annotation-config-and-di', 'java-config']
+  },
+  {
     text: 'Engineering',
     collapsible: true,
     icon: 'practice',

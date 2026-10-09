@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="384" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+  <title id="title">Spring IoC 容器</title>
+  <desc id="desc">业务对象和配置元数据输入 Spring 容器，容器产生完成配置、可供使用的系统。依据 Spring Framework 官方容器概览示意图重绘。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1 1 L9 5 L1 9 Z" fill="#333"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #222; font-size: 28px; }
+      .input { font-weight: 700; font-size: 26px; }
+      .edge { fill: none; stroke: #333; stroke-width: 2; marker-end: url(#arrow); }
+      .box { stroke: #333; stroke-width: 2; }
+      .output { fill: #fff; font-size: 25px; }
+    </style>
+  </defs>
+  <rect width="1000" height="600" fill="#fff"/>
+
+  <text x="505" y="48" class="input">Your Business Objects (POJOs)</text>
+  <path d="M485 24 V130" class="edge"/>
+
+  <path d="M55 210 H330" class="edge"/>
+  <text x="190" y="246" text-anchor="middle" class="input">
+    <tspan x="190">Configuration</tspan>
+    <tspan x="190" dy="32">Metadata</tspan>
+  </text>
+
+  <rect x="330" y="130" width="310" height="190" fill="#bce0e3" class="box"/>
+  <text x="485" y="216" text-anchor="middle">
+    <tspan x="485">The Spring</tspan>
+    <tspan x="485" dy="34">Container</tspan>
+  </text>
+
+  <path d="M485 320 V410" class="edge"/>
+  <text x="501" y="374" font-style="italic" font-size="26">produces</text>
+
+  <rect x="315" y="410" width="340" height="160" fill="#009900" class="box"/>
+  <text x="485" y="486" text-anchor="middle" class="output">
+    <tspan x="485">Fully configured system</tspan>
+    <tspan x="485" dy="34" font-weight="700">Ready for Use</tspan>
+  </text>
+</svg>
