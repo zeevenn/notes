@@ -148,11 +148,11 @@ Java 配置中的 `@Bean` 默认还会推断公开的 `close()` 或 `shutdown()`
 
 `BeanPostProcessor` 处理已创建或正在创建的实例，可以执行注入、生命周期注解或代理包装。容器先处理定义，再建立实例处理器链，普通业务 Bean 才能接受这些处理。
 
-| 扩展接口 | 操作对象 | 主要职责 |
-| --- | --- | --- |
-| `BeanDefinitionRegistryPostProcessor` | Bean 定义注册表 | 新增、调整定义 |
-| `BeanFactoryPostProcessor` | Bean 配置元数据 | 修改创建与配置规则 |
-| `BeanPostProcessor` 及扩展接口 | 对象实例 | 参与注入、初始化、销毁、代理等处理 |
+| 扩展接口                              | 操作对象        | 主要职责                           |
+| ------------------------------------- | --------------- | ---------------------------------- |
+| `BeanDefinitionRegistryPostProcessor` | Bean 定义注册表 | 新增、调整定义                     |
+| `BeanFactoryPostProcessor`            | Bean 配置元数据 | 修改创建与配置规则                 |
+| `BeanPostProcessor` 及扩展接口        | 对象实例        | 参与注入、初始化、销毁、代理等处理 |
 
 通过配置类声明后处理器时，使用返回类型明确、没有业务依赖的 `static @Bean` 方法，可以避免配置类和业务依赖被过早实例化。自动发现的实例后处理器通常按 `PriorityOrdered`、`Ordered`、其他处理器分组注册；以编程方式直接添加时，主要遵循添加顺序，不能只看 `@Order` 推断整个处理器链。
 
@@ -485,11 +485,11 @@ sequenceDiagram
 
 Spring Framework 7.0.9 的 `DefaultSingletonBeanRegistry` 使用三个相关缓存：
 
-| 常用称呼 | 字段 | 保存内容 |
-| --- | --- | --- |
-| 一级缓存 | `singletonObjects` | 完成创建流程的共享实例或最终暴露的代理 |
-| 二级缓存 | `earlySingletonObjects` | 已经取得的早期引用，可能是代理 |
-| 三级缓存 | `singletonFactories` | 生成早期引用的 `ObjectFactory`，不是最终 Bean 实例 |
+| 常用称呼 | 字段                    | 保存内容                                           |
+| -------- | ----------------------- | -------------------------------------------------- |
+| 一级缓存 | `singletonObjects`      | 完成创建流程的共享实例或最终暴露的代理             |
+| 二级缓存 | `earlySingletonObjects` | 已经取得的早期引用，可能是代理                     |
+| 三级缓存 | `singletonFactories`    | 生成早期引用的 `ObjectFactory`，不是最终 Bean 实例 |
 
 实例化之后、属性填充之前，容器可以登记早期引用工厂。只有发生早期引用请求时，才调用工厂取得引用并存入二级缓存；完成创建后，最终对象进入一级缓存，对应的早期缓存被清理。没有循环引用请求的单例不需要依次经过三个缓存。
 
@@ -519,10 +519,10 @@ Spring Framework 7.0.9 的 `DefaultSingletonBeanRegistry` 使用三个相关缓�
 
 **原型 Bean 会执行初始化回调，但容器不自动执行其销毁回调**，包括 `@PreDestroy`、`DisposableBean` 和自定义销毁方法。对象持有需要释放的资源时，由调用方负责清理；也不会因为实现 `SmartInitializingSingleton` 就收到预实例化单例完成的回调。
 
-| 作用域 | 实例复用 | 初始化 | 容器自动销毁 |
-| --- | --- | --- | --- |
-| `singleton` | 同一容器、同一 Bean 定义共享实例 | 实例创建时执行 | 正常关闭容器等销毁路径中执行 |
-| `prototype` | 每次请求按定义创建实例 | 每个新实例都执行 | 不执行，由调用方负责清理 |
+| 作用域      | 实例复用                         | 初始化           | 容器自动销毁                 |
+| ----------- | -------------------------------- | ---------------- | ---------------------------- |
+| `singleton` | 同一容器、同一 Bean 定义共享实例 | 实例创建时执行   | 正常关闭容器等销毁路径中执行 |
+| `prototype` | 每次请求按定义创建实例           | 每个新实例都执行 | 不执行，由调用方负责清理     |
 
 ### 单例依赖原型 Bean
 
@@ -558,10 +558,10 @@ XML 中的声明可以写成：
 
 这只展示作用域和自定义回调的对应写法；若用 XML 运行完整示例，还需要声明依赖、后处理器并开启注解处理。
 
-| 配置位置 | 作用域 | 初始化回调 | 销毁回调 |
-| --- | --- | --- | --- |
-| XML 的 `<bean>` | `scope` | `init-method` | `destroy-method` |
-| 组件类 | `@Scope` | `@PostConstruct` | `@PreDestroy` |
+| 配置位置              | 作用域   | 初始化回调                  | 销毁回调                       |
+| --------------------- | -------- | --------------------------- | ------------------------------ |
+| XML 的 `<bean>`       | `scope`  | `init-method`               | `destroy-method`               |
+| 组件类                | `@Scope` | `@PostConstruct`            | `@PreDestroy`                  |
 | 配置类的 `@Bean` 方法 | `@Scope` | `@Bean(initMethod = "...")` | `@Bean(destroyMethod = "...")` |
 
 ## 创建流程的源码入口
