@@ -65,7 +65,13 @@ export default [
     icon: 'server',
     link: '/backend/spring-framework/',
     prefix: '/backend/spring-framework/',
-    children: ['ioc-container-and-beans', 'annotation-config-and-di', 'java-config', 'spring-aop']
+    children: [
+      'ioc-container-and-beans',
+      'xml-config',
+      'annotation-config-and-di',
+      'java-config',
+      'bean-scopes-and-lifecycle'
+    ]
   },
   {
     text: 'Engineering',

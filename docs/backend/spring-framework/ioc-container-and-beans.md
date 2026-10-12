@@ -31,6 +31,8 @@ Spring 的 IoC 容器承担对象的创建、配置与组装工作。应用提�
 
 ## IoC 与 DI 的关系
 
+如果 `UserService` 在内部通过 `new UserDao()` 创建依赖，服务就同时决定了业务行为和依赖的创建方式。改为由构造器接收 `UserDao` 后，创建和选择依赖的工作移到了服务之外。
+
 手动组装一个服务时，应用入口可以这样创建对象：
 
 ```java
@@ -53,16 +55,6 @@ IoC 关注对象的创建和组装由谁控制，DI 关注依赖如何交给对�
 容器需要两类输入：**组件类**描述对象能做什么，**配置元数据**描述容器应该管理哪些对象、怎样创建和连接它们。容器读取配置并完成组装后，应用可以获取 Bean 并调用业务方法。
 
 ![Spring IoC 容器：业务对象和配置元数据输入容器，生成完成配置、可供使用的系统](./assets/spring-ioc-container.svg)
-
-### 三种常见配置方式
-
-配置方式决定这些管理规则写在哪里。Spring 中常见的方式有三种：
-
-- **XML 配置**：在 XML 文件中声明 Bean 的类型、创建方式和依赖关系，容器读取文件完成组装。
-- **[注解配置](./annotation-config-and-di.md)**：在组件类上添加注解，配合组件扫描注册 Bean；依赖通过构造器或标注的注入点提供。
-- **[Java 配置类](./java-config.md)**：在专门的配置类中，用工厂方法声明 Bean，集中描述对象的创建和组装规则。
-
-注解配置与 Java 配置类都使用 Java 注解。两者的区别在于 Bean 的声明位置：前者通过组件类上的标记发现组件，后者通过配置类中的方法显式声明对象。它们可以配合使用，例如扫描业务组件，再用配置类注册数据库连接池。
 
 ### 示例组件类
 
@@ -110,11 +102,7 @@ public class UserService {
 
 这两个类只描述业务行为和对象依赖。选择怎样创建它们、使用哪个对象满足依赖，是配置的职责。
 
-## XML 配置
-
-XML 配置把 Bean 的声明和依赖关系写在组件类之外。容器读取 `<bean>` 元素确定要管理的对象，通过参数或属性配置确定对象之间的关系。
-
-### 声明 Bean 与构造器注入
+### 用配置连接依赖
 
 在 `src/main/resources/beans.xml` 中声明两个 Bean：
 
@@ -134,8 +122,6 @@ XML 配置把 Bean 的声明和依赖关系写在组件类之外。容器读取 
 ```
 
 `<bean>` 声明需要容器管理的对象：`id` 是 Bean 的标识，`class` 是组件类的全限定名。`<constructor-arg ref="userDao"/>` 表示使用名为 `userDao` 的 Bean 作为构造器参数。
-
-仅声明两个 Bean，只能让容器知道要管理哪些对象。`ref` 进一步描述它们如何协作，使容器能够为 `UserService` 提供所需的 `UserDao`。
 
 ### 创建容器并获取 Bean
 
@@ -165,124 +151,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.App
 
 程序输出 `Ada`。本例没有配置延迟初始化，两个 Bean 都采用默认的单例作用域，容器初始化时会创建并组装它们。`getBean()` 获取已经可用的服务，随后由应用调用业务方法；`try` 块结束时关闭容器，触发适用的销毁回调。
 
-容器管理的是对象的创建与协作关系。`UserService` 的查询行为仍由业务类实现，调用查询方法仍由应用发起。
+这次应用入口只提供配置并获取服务；创建 `UserDao`、创建 `UserService` 并传入依赖的工作由容器完成。服务的构造器和查询方法保持原样。
 
-### Setter 注入
-
-Setter 注入在对象创建之后调用属性的设置方法。将 `UserService` 替换为下面的版本，`UserDao` 和 `App.java` 保持原样：
-
-```java
-// UserService.java
-package com.example;
-
-public class UserService {
-    private UserDao userDao;
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public String findName() {
-        return userDao.findName();
-    }
-}
-```
-
-这个类没有显式声明构造器，使用编译器提供的无参构造器。保留 `userDao` 定义，把 `userService` 的定义替换为：
-
-```xml
-<bean id="userService" class="com.example.UserService">
-  <property name="userDao" ref="userDao"/>
-</bean>
-```
-
-`name="userDao"` 对应 `setUserDao(...)`，`ref="userDao"` 引用容器中的 Bean。容器先创建服务，再调用 Setter 注入依赖；沿用前面的运行命令，输出仍为 `Ada`。若省略这项配置，字段保持 `null`，调用查询方法时会失败。
-
-构造器注入在创建对象时提供依赖，适合必须具备的协作对象，也允许把引用声明为 `final`。Setter 注入在创建后提供依赖，适合可选依赖或只暴露 Setter 的第三方组件。本例用于对照两种注入过程，业务查询实际仍需要 `UserDao`。
-
-### Bean 的创建方式
-
-<details>
-<summary>构造器、静态工厂与实例工厂（参考）</summary>
-
-XML 中可以配置三种创建方式：构造器、静态工厂方法和实例工厂方法。以下示例使用构造器注入版本的 `UserService`；对于已有工厂方法的组件，可以通过 XML 属性指定调用方式，将方法返回的对象作为 Bean 管理。
-
-#### 构造器
-
-XML 示例中的 `class="com.example.UserService"` 指定要创建的组件类，`<constructor-arg ref="userDao"/>` 指定构造器参数，相当于调用 `new UserService(userDao)`。这里使用有参构造器，`UserService` 无需再提供无参构造器。
-
-#### 静态工厂方法
-
-使用前面的构造器注入版本 `UserDao`、`UserService`，在 `com.example` 包中新增工厂类：
-
-```java
-// StaticUserServiceFactory.java
-package com.example;
-
-public class StaticUserServiceFactory {
-    public static UserService create(UserDao userDao) {
-        return new UserService(userDao);
-    }
-}
-```
-
-保留 `beans.xml` 中的 `userDao` 定义，将原来的 `userService` 定义替换为：
-
-```xml
-<bean id="userService"
-      class="com.example.StaticUserServiceFactory"
-      factory-method="create">
-  <constructor-arg ref="userDao"/>
-</bean>
-```
-
-此时 `class` 指定包含静态工厂方法的类，`factory-method` 指定方法名，容器调用 `StaticUserServiceFactory.create(userDao)`。`<constructor-arg>` 在工厂方法配置中用于提供方法参数。工厂方法也可以定义在组件类自身中。
-
-名为 `userService` 的 Bean 是方法返回的 `UserService` 对象，因此仍通过 `getBean("userService", UserService.class)` 获取它；无需将静态工厂类另行注册为 Bean。
-
-#### 实例工厂方法
-
-实例工厂使用普通实例方法创建对象，需要先把工厂对象注册为 Bean。在 `com.example` 包中新增：
-
-```java
-// InstanceUserServiceFactory.java
-package com.example;
-
-public class InstanceUserServiceFactory {
-    public UserService create(UserDao userDao) {
-        return new UserService(userDao);
-    }
-}
-```
-
-同样保留 `userDao` 定义，将原来的 `userService` 定义替换为以下两个定义：
-
-```xml
-<!-- 将工厂类进行ioc配置 -->
-<bean id="userServiceFactory"
-      class="com.example.InstanceUserServiceFactory"/>
-
-<!-- 根据工厂对象的实例工厂方法进行实例化组件对象 -->
-<bean id="userService"
-      factory-bean="userServiceFactory"
-      factory-method="create">
-  <constructor-arg ref="userDao"/>
-</bean>
-```
-
-`factory-bean` 引用工厂 Bean 的名称，`factory-method` 指定该对象上的实例方法。容器先创建工厂 Bean，再调用它的 `create(userDao)`；返回的对象作为 `userService` Bean 管理，这个定义无需填写 `class`。
-
-两种工厂配置分别运行，每次替换原来的 `userService` 定义；沿用 XML 示例中的 `App.java` 和运行命令，输出仍为 `Ada`。
-
-| 创建方式 | XML 中的创建规则                                            | 对应调用                                   |
-| -------- | ----------------------------------------------------------- | ------------------------------------------ |
-| 构造器   | `class` 指定组件类                                          | `new UserService(userDao)`                 |
-| 静态工厂 | `class` 指定工厂类，`factory-method` 指定静态方法           | `StaticUserServiceFactory.create(userDao)` |
-| 实例工厂 | `factory-bean` 引用工厂 Bean，`factory-method` 指定实例方法 | `userServiceFactory.create(userDao)`       |
-
-工厂方法可以每次创建新对象，也可以返回已有对象，由方法实现决定；`static` 本身不表示单例。以上两个方法每次执行都会创建新对象，容器是否复用获取到的 Bean 则由作用域等配置决定。
-
-</details>
+XML 的属性配置、普通值注入和工厂方法配置，见 [XML 配置](./xml-config.md)。
 
 ## Bean 定义与 Bean 实例
 
@@ -298,7 +169,9 @@ UserService second = context.getBean("userService", UserService.class);
 System.out.println(first == second); // true
 ```
 
-单例的范围由容器和 Bean 定义共同决定。同一个类也可以配置成不同名称的多个 Bean。前面的构造器和工厂示例会为不同容器创建各自的实例；若工厂方法返回共享的已有对象，不同容器也可能引用同一个对象。
+单例的范围由容器和 Bean 定义共同决定。同一个类也可以配置成不同名称的多个 Bean。本例中的构造器配置会为不同容器创建各自的实例；若采用返回共享对象的工厂方法，不同容器也可能引用同一个对象。
+
+不同作用域下的实例复用，以及初始化、销毁回调的执行边界，见 [Bean 的作用域与生命周期](./bean-scopes-and-lifecycle.md)。
 
 ## 容器接口与 Bean 获取
 
@@ -321,3 +194,15 @@ System.out.println(first == second); // true
 | `getBean("userService", UserService.class)` | 按名称定位，并检查对象是否符合指定类型 |
 
 名称不存在、类型不匹配，或按类型获取时无法确定一个候选 Bean，都会抛出相应异常。组件之间已经声明的依赖由容器注入，业务对象直接使用这些依赖。
+
+## 配置元数据的声明方式
+
+前面的 XML 把对象类型和依赖关系写在组件类之外。同样的组装规则也可以通过注解配置或 Java 配置类表达：
+
+| 声明方式 | Bean 从哪里注册 | 依赖如何表达 |
+| --- | --- | --- |
+| [XML 配置](./xml-config.md) | XML 中的 `<bean>` 元素 | 构造器参数、属性中的引用或值 |
+| [注解配置](./annotation-config-and-di.md) | 扫描带有 `@Component` 等组件注解的类 | 构造器参数或 `@Autowired` 等注解标记的注入点 |
+| [Java 配置类](./java-config.md) | 配置类中的 `@Bean` 工厂方法 | 工厂方法参数或方法内的组装代码 |
+
+组件扫描和 Java 配置类都使用注解，也可以在同一个容器中配合使用，例如扫描业务组件，再用 `@Bean` 注册数据库连接池。注册 Bean 和为 Bean 提供依赖是两项工作：`@Component` 等标记用于发现组件，`@Autowired` 用于标记自动注入的位置。

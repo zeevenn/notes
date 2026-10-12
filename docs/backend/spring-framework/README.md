@@ -9,6 +9,7 @@ Spring Framework（Spring 框架）是一个开源的应用程序框架，由 Sp
 Spring 全家桶的其他框架都是以 SpringFramework 框架为基础！
 
 1. [IoC 与 DI](./ioc-container-and-beans.md)
-2. [注解配置与依赖注入](./annotation-config-and-di.md)
-3. [Java 配置类](./java-config.md)
-4. [Spring AOP](./spring-aop.md)
+2. [XML 配置](./xml-config.md)
+3. [注解配置](./annotation-config-and-di.md)
+4. [Java 配置类](./java-config.md)
+5. [Bean 的作用域与生命周期](./bean-scopes-and-lifecycle.md)
