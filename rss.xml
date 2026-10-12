@@ -6,8 +6,8 @@
     <link>https://zeevenn.github.io/notes/notes/</link>
     <description>Personal frontend knowledge base</description>
     <language>zh-CN</language>
-    <pubDate>Mon, 12 Oct 2026 14:30:27 GMT</pubDate>
-    <lastBuildDate>Mon, 12 Oct 2026 14:30:27 GMT</lastBuildDate>
+    <pubDate>Mon, 12 Oct 2026 14:32:10 GMT</pubDate>
+    <lastBuildDate>Mon, 12 Oct 2026 14:32:10 GMT</lastBuildDate>
     <generator>@vuepress/plugin-feed</generator>
     <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
     <category>后端</category>
@@ -89,7 +89,7 @@
 <p><code>BeanFactoryPostProcessor</code>（Bean 工厂后处理器）在普通 Bean 创建前读取或修改配置元数据，例如调整某个 Bean 定义的属性值。它处理的是创建规则，不能为了修改定义而提前 <code>getBean()</code>，否则会让对象过早创建。</p>
 <p><code>BeanDefinitionRegistryPostProcessor</code> 在此基础上提供注册 Bean 定义的入口。<code>ConfigurationClassPostProcessor</code> 使用这一机制处理配置类、组件扫描、导入和 <code>@Bean</code> 声明。</p>
 <p><code>BeanPostProcessor</code> 处理已创建或正在创建的实例，可以执行注入、生命周期注解或代理包装。容器先处理定义，再建立实例处理器链，普通业务 Bean 才能接受这些处理。</p>
-<p>| 扩展接口 | 操作对象 | 主要职责 |<br>
+<p>| 扩展接口                              | 操作对象        | 主要职责                           |<br>
 |</p>
 ]]></content:encoded>
     </item>
@@ -247,7 +247,7 @@
 <p>图中的目标对象就是承载业务逻辑的 <code>OrderService</code> 实例。调用方拿到的是代理引用，仍然按原来的方式调用 <code>placeOrder()</code>；代理把计时逻辑接入调用过程。计时逻辑也可以在方法抛出异常时执行，随后继续向调用方传播异常。</p>
 <p>把切面行为接入目标对象的过程称为<strong>织入</strong>（Weaving），Spring AOP 在运行时通过代理完成。另一项能力是<strong>引入</strong>（Introduction）：让代理额外实现目标类原本没有的接口，并提供对应实现；计时示例没有使用它。</p>
 <p>Spring 文档列出八个核心术语，可结合这条流程理解：</p>
-<p>| 术语 | 含义与示例 |<br>
+<p>| 术语                      | 含义与示例                                                                 |<br>
 |</p>
 ]]></content:encoded>
     </item>

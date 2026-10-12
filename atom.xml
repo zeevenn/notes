@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-10-12T14:30:27.804Z</updated>
+  <updated>2026-10-12T14:32:10.580Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -27,7 +27,7 @@
     <title type="text">Bean 的作用域与生命周期</title>
     <id>https://zeevenn.github.io/notes/notes/backend/spring-framework/bean-scopes-and-lifecycle.html</id>
     <link href="https://zeevenn.github.io/notes/notes/backend/spring-framework/bean-scopes-and-lifecycle.html"/>
-    <updated>2026-10-12T14:26:23.000Z</updated>
+    <updated>2026-10-12T14:30:15.000Z</updated>
     <summary type="html"><![CDATA[<p>Bean 的<strong>作用域</strong>决定容器在什么范围内复用实例，<strong>生命周期</strong>描述对象从创建、依赖装配、初始化，到使用和资源清理的过程。构造器执行完只代表对象已经实例化；它还可能需要注入依赖、执行回调，并被包装为代理，才能作为容器中的 Bean 对外提供。</p>
 <h2>从创建到关闭</h2>
 <p>以需要销毁回调、没有循环依赖和实例化前短路的普通单例 Bean 为例：</p>
@@ -87,7 +87,7 @@
 <p><code>BeanFactoryPostProcessor</code>（Bean 工厂后处理器）在普通 Bean 创建前读取或修改配置元数据，例如调整某个 Bean 定义的属性值。它处理的是创建规则，不能为了修改定义而提前 <code>getBean()</code>，否则会让对象过早创建。</p>
 <p><code>BeanDefinitionRegistryPostProcessor</code> 在此基础上提供注册 Bean 定义的入口。<code>ConfigurationClassPostProcessor</code> 使用这一机制处理配置类、组件扫描、导入和 <code>@Bean</code> 声明。</p>
 <p><code>BeanPostProcessor</code> 处理已创建或正在创建的实例，可以执行注入、生命周期注解或代理包装。容器先处理定义，再建立实例处理器链，普通业务 Bean 才能接受这些处理。</p>
-<p>| 扩展接口 | 操作对象 | 主要职责 |<br>
+<p>| 扩展接口                              | 操作对象        | 主要职责                           |<br>
 |</p>
 ]]></content>
     <category term="后端"/>
@@ -239,7 +239,7 @@
     <title type="text">Spring AOP</title>
     <id>https://zeevenn.github.io/notes/notes/backend/spring-framework/spring-aop.html</id>
     <link href="https://zeevenn.github.io/notes/notes/backend/spring-framework/spring-aop.html"/>
-    <updated>2026-10-12T11:08:08.000Z</updated>
+    <updated>2026-10-12T14:30:15.000Z</updated>
     <summary type="html"><![CDATA[<p>多个业务方法都需要记录耗时、检查权限或参与事务时，把这些逻辑分别写进每个方法，会让业务代码和公共处理混在一起。<strong>面向切面编程</strong>（Aspect-Oriented Programming，AOP）把这类跨越多个组件的行为集中定义，再指定它们应用到哪些方法。</p>
 <p>Spring AOP 通过<strong>代理对象</strong>实现这一点：调用方先调用代理，代理执行匹配的附加逻辑，再调用原来的业务对象。负责管理和组装对象，AOP 则在方法调用经过代理时添加行为。</p>
 <h2>从一次方法调用理解 AOP</h2>
@@ -251,7 +251,7 @@
 <p>图中的目标对象就是承载业务逻辑的 <code>OrderService</code> 实例。调用方拿到的是代理引用，仍然按原来的方式调用 <code>placeOrder()</code>；代理把计时逻辑接入调用过程。计时逻辑也可以在方法抛出异常时执行，随后继续向调用方传播异常。</p>
 <p>把切面行为接入目标对象的过程称为<strong>织入</strong>（Weaving），Spring AOP 在运行时通过代理完成。另一项能力是<strong>引入</strong>（Introduction）：让代理额外实现目标类原本没有的接口，并提供对应实现；计时示例没有使用它。</p>
 <p>Spring 文档列出八个核心术语，可结合这条流程理解：</p>
-<p>| 术语 | 含义与示例 |<br>
+<p>| 术语                      | 含义与示例                                                                 |<br>
 |</p>
 ]]></content>
     <category term="后端"/>
@@ -471,7 +471,7 @@
     <title type="text">IoC 与 DI</title>
     <id>https://zeevenn.github.io/notes/notes/backend/spring-framework/ioc-container-and-beans.html</id>
     <link href="https://zeevenn.github.io/notes/notes/backend/spring-framework/ioc-container-and-beans.html"/>
-    <updated>2026-10-12T14:26:23.000Z</updated>
+    <updated>2026-10-12T14:30:15.000Z</updated>
     <summary type="html"><![CDATA[<p>一个用户查询功能通常需要请求处理、业务逻辑和数据访问等对象协作。除了实现各自的方法，应用还要创建这些对象、连接它们的依赖，并在适当的时候初始化和释放资源。</p>
 <p>Spring 的 IoC 容器承担对象的创建、配置与组装工作。应用提供组件类和配置，容器据此构建可协作的对象。</p>
 <h2>组件、Bean 与容器</h2>
