@@ -13,3 +13,4 @@ Spring 全家桶的其他框架都是以 SpringFramework 框架为基础！
 3. [注解配置](./annotation-config-and-di.md)
 4. [Java 配置类](./java-config.md)
 5. [Bean 的作用域与生命周期](./bean-scopes-and-lifecycle.md)
+6. [Spring AOP](./spring-aop.md)

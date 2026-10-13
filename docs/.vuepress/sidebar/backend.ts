@@ -70,7 +70,8 @@ export default [
       'xml-config',
       'annotation-config-and-di',
       'java-config',
-      'bean-scopes-and-lifecycle'
+      'bean-scopes-and-lifecycle',
+      'spring-aop'
     ]
   },
   {
