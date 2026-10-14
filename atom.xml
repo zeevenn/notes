@@ -4,7 +4,7 @@
   <title/>
   <subtitle>Personal frontend knowledge base</subtitle>
   <icon>https://zeevenn.github.io/notes/notes/favicon.ico</icon>
-  <updated>2026-10-13T12:57:16.780Z</updated>
+  <updated>2026-10-14T09:44:57.728Z</updated>
   <generator>@vuepress/plugin-feed</generator>
   <link rel="self" href="https://zeevenn.github.io/notes/notes/atom.xml"/>
   <link rel="alternate" href="https://zeevenn.github.io/notes/notes/"/>
@@ -98,7 +98,7 @@
     <title type="text">XML 配置</title>
     <id>https://zeevenn.github.io/notes/notes/backend/spring-framework/xml-config.html</id>
     <link href="https://zeevenn.github.io/notes/notes/backend/spring-framework/xml-config.html"/>
-    <updated>2026-10-12T14:26:23.000Z</updated>
+    <updated>2026-10-14T09:42:33.000Z</updated>
     <summary type="html"><![CDATA[<p>XML 配置把 Bean 的创建规则和依赖关系写在组件类之外。容器读取 <code>&lt;bean&gt;</code> 元素，调用指定的构造器或工厂方法，再根据参数和属性配置组装对象。</p>
 <p>以下示例使用 中的 Maven 依赖，以及 <code>com.example</code> 包下通过构造器接收依赖的 <code>UserDao</code>、<code>UserService</code>。</p>
 <h2>声明 Bean 并运行查询</h2>
@@ -162,7 +162,52 @@
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">QueryOptions</span> options <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"queryOptions"</span><span class="token punctuation">,</span> <span class="token class-name">QueryOptions</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>options<span class="token punctuation">.</span><span class="token function">getLimit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 10</span>
 </code></pre></div><p>本例只有一个构造器、一个 <code>int</code> 参数，容器把 <code>"10"</code> 转换为整数；无法转换的值会导致 Bean 创建失败。<code>value="userDao"</code> 则是字符串值，不会取得名为 <code>userDao</code> 的 Bean。</p>
-<p>多参数构造器可以使用从 <code>0</code> 开始的 <code>index</code> 指定位置，或用 <code>type</code> 辅助区分重载。使用 <code>name</code> 按参数名配置时，通常需要编译器的 <code>-parameters</code> 选项保存参数名。</p>
+<h3>按构造器参数名称匹配</h3>
+<p><code>name</code> 指定构造器参数名称。例如，前面的 <code>QueryOptions(int limit)</code> 可以写成：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>limit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>10<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+</code></pre></div><p>按名称匹配需要让 Spring 能读取构造器参数名。Maven Compiler Plugin 可以通过以下属性开启 <code>-parameters</code>：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>maven.compiler.parameters</span><span class="token punctuation">&gt;</span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>maven.compiler.parameters</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h3>按构造器参数位置匹配</h3>
+<p><code>index</code> 从 <code>0</code> 开始，不依赖编译时是否保留参数名。前面的配置也可以写成：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>queryOptions<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.QueryOptions<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">index</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>10<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>多个同类型参数容易混淆时，位置可以明确区分它们。例如，假设类提供 <code>PageOptions(int offset, int limit)</code> 构造器：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pageOptions<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.PageOptions<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">index</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">index</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>10<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>对应调用 <code>new PageOptions(20, 10)</code>。参数位置由 <code>index</code> 决定，交换这两个 XML 元素的书写顺序不会交换实参。</p>
+<h3>按构造器参数类型匹配</h3>
+<p><code>type</code> 指定目标参数类型，可辅助区分构造器重载：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>queryOptions<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.QueryOptions<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>int<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>10<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>基本类型使用 <code>int</code>、<code>boolean</code> 等名称，引用类型使用 <code>java.lang.String</code> 等全限定名。假设类同时提供 <code>QueryOptions(int limit)</code> 和 <code>QueryOptions(String expression)</code>，<code>type="int"</code> 明确选择前者。</p>
+<p>多个参数的类型相同时，仅靠 <code>type</code> 无法区分它们的位置，应使用 <code>index</code> 或可读取的参数名。<code>index</code> 和 <code>type</code> 也可以组合，例如 <code>&lt;constructor-arg index="0" type="int" value="10"/&gt;</code>。</p>
+<h3>用嵌套元素传值或引用</h3>
+<p><code>value</code>、<code>ref</code> 属性也有嵌套元素形式。下面分别等价于前面的 <code>value="10"</code> 和 <code>ref="userDao"</code>：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>queryOptions<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.QueryOptions<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>value</span><span class="token punctuation">&gt;</span></span>10<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>value</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>constructor-arg</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userService<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.UserService<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ref</span> <span class="token attr-name">bean</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userDao<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>constructor-arg</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p><code>&lt;property&gt;</code> 同样支持 <code>&lt;value&gt;</code> 和 <code>&lt;ref&gt;</code> 子元素。一个参数或属性只能指定一个值来源，不能同时写 <code>value</code>、<code>ref</code> 或嵌套值。</p>
+<p>如果依赖只在当前位置使用，可以把 Bean 定义直接嵌入参数：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userService<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.UserService<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.UserDao<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>constructor-arg</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>这里的内部 Bean 无需命名，也不能作为顶层 Bean 单独通过 <code>getBean()</code> 获取。需要在多处共享同一个依赖时，使用独立的 Bean 定义和 <code>ref</code>。</p>
 <h2>Setter 属性配置</h2>
 <p>Setter 注入在对象创建后调用设置方法。用单独的类对照这个过程，主示例的 <code>UserService</code> 保持构造器注入：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token comment">// SetterUserService.java</span>
@@ -183,11 +228,124 @@
 <div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>setterUserService<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.SetterUserService<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userDao<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userDao<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p><code>name="userDao"</code> 对应 <code>setUserDao(...)</code>，<code>ref="userDao"</code> 指定传入的 Bean。容器通过无参构造器创建服务，再调用 Setter。在 <code>App</code> 的 <code>try</code> 块中执行：</p>
+</code></pre></div><p><code>name="userDao"</code> 对应 <code>setUserDao(...)</code>，匹配 JavaBean 属性名，不依赖 <code>-parameters</code>；<code>ref="userDao"</code> 指定传入的 Bean。容器通过无参构造器创建服务，再调用 Setter。在 <code>App</code> 的 <code>try</code> 块中执行：</p>
 <div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token class-name">SetterUserService</span> setterService <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"setterUserService"</span><span class="token punctuation">,</span> <span class="token class-name">SetterUserService</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>setterService<span class="token punctuation">.</span><span class="token function">findName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Ada</span>
 </code></pre></div><p>省略 <code>&lt;property&gt;</code> 时，字段保持 <code>null</code>，调用 <code>findName()</code> 会失败。Setter 注入不会自动把业务所需的依赖变成可选项。</p>
 <p>普通属性值同样用 <code>&lt;property name="属性名" value="值"/&gt;</code> 设置，目标类需要提供相应的 Setter。构造器注入在创建时提供必需依赖，并支持 <code>final</code> 字段；Setter 配置适合可选依赖或只暴露设置方法的第三方组件。</p>
+<h2>外部属性注入</h2>
+<p>数据库连接参数可以放在 properties 文件中，XML 通过 <code>${属性名}</code> 引用。下面使用独立的 <code>com.example.database</code> 示例包，DAO 保存配置并固定返回 <code>Ada</code>，不执行数据库连接。</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token comment">// UserDao.java</span>
+<span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>database</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserDao</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">String</span> url<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">String</span> username<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">String</span> password<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> connectionTimeoutSeconds<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">UserDao</span><span class="token punctuation">(</span><span class="token class-name">String</span> url<span class="token punctuation">,</span> <span class="token class-name">String</span> username<span class="token punctuation">,</span> <span class="token class-name">String</span> password<span class="token punctuation">,</span> <span class="token keyword">int</span> connectionTimeoutSeconds<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>url <span class="token operator">=</span> url<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>username <span class="token operator">=</span> username<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>password <span class="token operator">=</span> password<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>connectionTimeoutSeconds <span class="token operator">=</span> connectionTimeoutSeconds<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> url<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getUsername</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> username<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getPassword</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> password<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getConnectionTimeoutSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> connectionTimeoutSeconds<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">findName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"Ada"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>在 <code>src/main/resources/database.properties</code> 中配置：</p>
+<div class="language-properties" data-ext="properties" data-title="properties"><pre class="language-properties"><code><span class="token key attr-name">database.url</span><span class="token punctuation">=</span><span class="token value attr-value">jdbc:mysql://localhost:3306/sample_db</span>
+<span class="token key attr-name">database.username</span><span class="token punctuation">=</span><span class="token value attr-value">demo_user</span>
+<span class="token key attr-name">database.password</span><span class="token punctuation">=</span><span class="token value attr-value">demo_password</span>
+<span class="token key attr-name">database.connection-timeout-seconds</span><span class="token punctuation">=</span><span class="token value attr-value">20</span>
+</code></pre></div><p><code>database.xml</code> 放在同一资源目录，使用 <code>context:property-placeholder</code> 指定属性文件：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xmlns:</span>context</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/context<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           https://www.springframework.org/schema/context/spring-context.xsd<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token comment">&lt;!-- 这里指定传入属性文件 --&gt;</span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">context:</span>property-placeholder</span> <span class="token attr-name">location</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>classpath:database.properties<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userDao<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.database.UserDao<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${database.url}<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>username<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${database.username}<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${database.password}<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>connectionTimeoutSeconds<span class="token punctuation">"</span></span>
+                     <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>${database.connection-timeout-seconds}<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>启用前面的参数名编译配置后，加载 <code>database.xml</code>，即可验证属性读取和类型转换：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token comment">// App.java</span>
+<span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>database</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>support<span class="token punctuation">.</span></span><span class="token class-name">ClassPathXmlApplicationContext</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">(</span><span class="token keyword">var</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"database.xml"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">UserDao</span> dao <span class="token operator">=</span> context<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"userDao"</span><span class="token punctuation">,</span> <span class="token class-name">UserDao</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>dao<span class="token punctuation">.</span><span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// jdbc:mysql://localhost:3306/sample_db</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>dao<span class="token punctuation">.</span><span class="token function">getConnectionTimeoutSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 20</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>dao<span class="token punctuation">.</span><span class="token function">findName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Ada</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>容器先加载属性并解析 Bean 定义中的占位符，创建 DAO 时再把字符串 <code>"20"</code> 转换为 <code>int</code>。属性名 <code>database.connection-timeout-seconds</code> 与构造器参数名 <code>connectionTimeoutSeconds</code> 没有自动对应关系，由 XML 明确连接两者。</p>
+<p>缺失属性且未指定默认值时，默认会因无法解析占位符而初始化失败。使用 <code>${database.connection-timeout-seconds:20}</code> 可以在属性不存在时提供默认值；读取到的内容不是有效整数时，仍会在转换阶段失败。</p>
+<p>普通 Spring Framework 需要显式配置属性文件加载；仅把文件命名为 <code>application.properties</code> 或写出 <code>${...}</code> 不会自动读取。YAML 可以通过 <code>YamlPropertiesFactoryBean</code> 转换为 <code>Properties</code>，再交给占位符处理器，并需额外引入 SnakeYAML。</p>
+<h2>用 import 组合配置文件</h2>
+<p><code>database.xml</code> 集中声明 DAO 和数据库属性，其他配置文件可以通过 <code>&lt;import&gt;</code> 复用。以下服务与外部属性示例使用同一个包：</p>
+<div class="language-java" data-ext="java" data-title="java"><pre class="language-java"><code><span class="token comment">// UserService.java</span>
+<span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>database</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">UserDao</span> userDao<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">UserService</span><span class="token punctuation">(</span><span class="token class-name">UserDao</span> userDao<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>userDao <span class="token operator">=</span> userDao<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">findName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> userDao<span class="token punctuation">.</span><span class="token function">findName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>同一资源目录下的 <code>constructor.xml</code>：</p>
+<div class="language-xml" data-ext="xml" data-title="xml"><pre class="language-xml"><code><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>import</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>database.xml<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userService<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.example.database.UserService<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userDao<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userDao<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p><code>new ClassPathXmlApplicationContext("constructor.xml")</code> 会在同一个容器中读取两个文件，注册 <code>userDao</code> 和 <code>userService</code>；服务查询仍返回 <code>Ada</code>。<code>&lt;import&gt;</code> 不会为被引入的文件单独创建容器，<code>resource="database.xml"</code> 相对于当前 XML 文件的位置解析。</p>
 <h2>通过工厂方法创建 Bean</h2>
 <p>已有组件通过工厂方法创建对象时，可以让容器调用该方法，将返回对象作为 Bean 管理。以下两个示例继续使用构造器注入版本的 <code>UserService</code>。</p>
 <h3>静态工厂方法</h3>
@@ -228,7 +386,7 @@
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>constructor-arg</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>userDao<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">&gt;</span></span>
 </code></pre></div><p><code>factory-bean</code> 引用工厂 Bean 的名称，<code>factory-method</code> 指定实例方法。容器先取得工厂 Bean，再调用它的 <code>create(userDao)</code>，把返回对象作为 <code>userService</code> 管理；这个定义不填写 <code>class</code>。运行查询，输出仍为 <code>Ada</code>。</p>
-<p>| 创建方式 | XML 中的创建规则 | 对应调用 |<br>
+<p>| 创建方式 | XML 中的创建规则                                            | 对应调用                                   |<br>
 |</p>
 ]]></content>
     <category term="后端"/>
@@ -7501,17 +7659,6 @@ element<span class="token punctuation">.</span><span class="token function">addE
     <published>2026-08-19T02:12:32.000Z</published>
   </entry>
   <entry>
-    <title type="text">Python</title>
-    <id>https://zeevenn.github.io/notes/notes/programming-languages/python/</id>
-    <link href="https://zeevenn.github.io/notes/notes/programming-languages/python/"/>
-    <updated>2026-08-19T02:12:32.000Z</updated>
-    <summary type="html"><![CDATA[
-]]></summary>
-    <content type="html"><![CDATA[
-]]></content>
-    <published>2026-08-19T02:12:32.000Z</published>
-  </entry>
-  <entry>
     <title type="text">类数组对象</title>
     <id>https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html</id>
     <link href="https://zeevenn.github.io/notes/notes/programming-languages/javascript/array-like-objects.html"/>
@@ -10431,6 +10578,17 @@ console<span class="token punctuation">.</span><span class="token function">log<
 ]]></content>
     <category term="JavaScript"/>
     <published>2022-05-02T00:00:00.000Z</published>
+  </entry>
+  <entry>
+    <title type="text">Python</title>
+    <id>https://zeevenn.github.io/notes/notes/programming-languages/python/</id>
+    <link href="https://zeevenn.github.io/notes/notes/programming-languages/python/"/>
+    <updated>2026-08-19T02:12:32.000Z</updated>
+    <summary type="html"><![CDATA[
+]]></summary>
+    <content type="html"><![CDATA[
+]]></content>
+    <published>2026-08-19T02:12:32.000Z</published>
   </entry>
   <entry>
     <title type="text">TypeScript</title>
